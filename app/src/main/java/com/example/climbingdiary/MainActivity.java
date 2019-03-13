@@ -1,10 +1,9 @@
 package com.example.climbingdiary;
 
-import android.content.Context;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,12 +11,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.climbingdiary.adapter.TabAdapter;
-import com.example.climbingdiary.database.TaskRepository;
+import com.example.climbingdiary.dialog.AddRouteDialog;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -25,7 +24,6 @@ public class MainActivity extends AppCompatActivity
     private TabAdapter adapter;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,25 +42,16 @@ public class MainActivity extends AppCompatActivity
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
-        //test adapter
-        /*TaskRepository taskRepository = new TaskRepository(this);
-        taskRepository.open();
-        Cursor testdata = taskRepository.getTestData();
-        if (testdata != null) {
-            while (testdata.moveToNext()) {
-                Log.d("id", testdata.getString(0));
-            }
-        }*/
-
-
         //the add button
-        FloatingActionButton addRoute = (FloatingActionButton) findViewById(R.id.add);
-        /*addRoute.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton addRoute = (FloatingActionButton) findViewById(R.id.addRoute);
+        addRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Todo
+                FragmentManager fm = getSupportFragmentManager();
+                AddRouteDialog addRoute = AddRouteDialog.newInstance("Neue Route");
+                addRoute.show(fm,"fragment_add_Route");
             }
-        });*/
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

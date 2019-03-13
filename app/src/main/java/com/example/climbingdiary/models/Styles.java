@@ -1,7 +1,11 @@
 package com.example.climbingdiary.models;
 
 public class Styles {
-    static String[] getStyle(){
-        return new String[]{"os","rp","flash"};
+    public static String[] getStyle(Boolean UpperCase){
+        if(UpperCase){
+            return new String[]{"OS","RP","FLASH"};
+        }else{
+            return new String[]{"os","rp","flash"};
+        }
     }
 }
