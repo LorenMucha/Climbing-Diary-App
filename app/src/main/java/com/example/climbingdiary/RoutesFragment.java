@@ -28,7 +28,7 @@ public class RoutesFragment extends Fragment {
 
         // Initialize contacts
         try {
-            routes = Route.createRouteList(getActivity().getBaseContext());
+            routes = Route.getRouteList(getActivity().getBaseContext());
         } catch (ParseException e) {
             e.printStackTrace();
         }

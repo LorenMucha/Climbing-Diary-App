@@ -108,11 +108,11 @@ public class Route {
         this.date = date;
     }
 
-    public static ArrayList<Route> createRouteList(Context context) throws ParseException {
-        ArrayList<Route> _routes = new ArrayList<Route>();
+    public static ArrayList<Route> getRouteList(Context context) throws ParseException {
+        ArrayList<Route> _routes = new ArrayList<>();
         TaskRepository taskRepository = new TaskRepository(context);
         taskRepository.open();
-        Cursor cursor = taskRepository.getAllRoutes();
+        Cursor cursor = taskRepository.getAllRoutes(null,null);
         if (cursor != null) {
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(0);
@@ -124,9 +124,6 @@ public class Route {
                 String comment = cursor.getString(6);
                 String date = cursor.getString(7);
                 String sector = cursor.getString(8);
-                //Log.d("id", testdata.getString(0));
-                //r.id, r.name,g.name as gebiet,r.level,r.stil,r.rating, r.kommentar, strftime('%d.%m.%Y',r.date) as date, k.name as sektor
-                //Route(int _id, String _name, String _level, String _area, String _sector, String _style, int _rating, String _comment, Date _date)
                 Route route = new Route(id,name,level,area,sector,style,rating,comment,date);
                 _routes.add(route);
             }

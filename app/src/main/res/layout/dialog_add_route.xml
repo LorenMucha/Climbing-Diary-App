@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:padding="20dp"
     android:layout_width="match_parent"
@@ -29,6 +33,7 @@
         android:layout_gravity="center" />
 
     <Spinner
+        android:layout_marginTop="10dp"
         android:id="@+id/input_route_stil"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
@@ -47,6 +52,81 @@
         android:layout_height="wrap_content"
         android:id="@+id/input_route_date"
         />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Gebiet"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_gravity="center" />
+
+    <AutoCompleteTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/input_route_area"
+        />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sektor"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_gravity="center" />
+
+    <AutoCompleteTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/input_route_sektor"
+        />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Schwierigkeit"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_gravity="center" />
+
+    <Spinner
+        android:layout_marginTop="10dp"
+        android:id="@+id/input_route_level"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Rating"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_gravity="center" />
+
+    <Spinner
+        android:id="@+id/input_route_rating"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Kommentar"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_gravity="center" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="2"
+        android:id="@+id/input_route_comment" />
+
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
@@ -75,3 +155,4 @@
     </RelativeLayout>
 
 </LinearLayout>
+</ScrollView>

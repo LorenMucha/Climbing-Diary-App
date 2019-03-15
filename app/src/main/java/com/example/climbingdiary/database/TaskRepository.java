@@ -42,12 +42,56 @@ public class TaskRepository {
         mDbHelper.close();
     }
 
-    public Cursor getAllRoutes()
+    public Cursor getAllRoutes(String _order,String _filter)
     {
+        String order_value =  "r.level";
+        String filter = "";
+        if(_order != null && !_order.isEmpty()){
+            order_value = "r."+_order;
+        }
+        if(_filter != null && !_filter.isEmpty()){
+            filter = "and "+_filter;
+        }
         try
         {
-            String sql ="SELECT r.id, r.name,g.name as gebiet,r.level,r.stil,r.rating, r.kommentar, strftime('%d.%m.%Y',r.date) as date, k.name as sektor FROM routen r, gebiete g, sektoren k where g.id=r.gebiet and k.id=r.sektor group by r.id Order By r.level DESC";
+            String sql ="SELECT r.id, r.name,g.name as gebiet,r.level,r.stil,r.rating, r.kommentar, strftime('%d.%m.%Y',r.date) as date, k.name as sektor FROM routen r, gebiete g, sektoren k where g.id=r.gebiet and k.id=r.sektor "+filter+" group by r.id Order By "+order_value+" DESC";
 
+            Cursor mCur = mDb.rawQuery(sql, null);
+            if (mCur!=null)
+            {
+                mCur.moveToNext();
+            }
+            return mCur;
+        }
+        catch (SQLException mSQLException)
+        {
+            Log.e(TAG, "getAllRoutes >>"+ mSQLException.toString());
+            throw mSQLException;
+        }
+    }
+    public Cursor getAllAreas(){
+        try
+        {
+            String sql ="SELECT * FROM gebiete GROUP BY id";
+
+            Cursor mCur = mDb.rawQuery(sql, null);
+            if (mCur!=null)
+            {
+                mCur.moveToNext();
+            }
+            return mCur;
+        }
+        catch (SQLException mSQLException)
+        {
+            Log.e(TAG, "getAllRoutes >>"+ mSQLException.toString());
+            throw mSQLException;
+        }
+    }
+    public Cursor getSectorByAreaName(String _name){
+        try
+        {
+            String sql ="SELECT s.name,s.koordinaten as koordinaten_sektor,a.koordinaten as koordinaten_area,s.gebiet,s.id FROM sektoren s, gebiete a where a.name Like '"+_name+"%' and s.gebiet=a.id GROUP BY s.id";
+            Log.d("task",sql);
             Cursor mCur = mDb.rawQuery(sql, null);
             if (mCur!=null)
             {
