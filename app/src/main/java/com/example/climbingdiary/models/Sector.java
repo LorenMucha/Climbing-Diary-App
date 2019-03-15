@@ -66,9 +66,10 @@ public class Sector {
         taskRepository.open();
         Cursor cursor = taskRepository.getSectorByAreaName(_area_name);
         if (cursor != null) {
-            while (cursor.moveToNext()) {
+            while (!cursor.isAfterLast()) {
                 String name = cursor.getString(0);
                 _sector_list.add(name);
+                cursor.moveToNext();
             }
         }
         return _sector_list;

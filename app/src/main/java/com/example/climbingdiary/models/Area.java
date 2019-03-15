@@ -87,9 +87,10 @@ public class Area {
         taskRepository.open();
         Cursor cursor = taskRepository.getAllAreas();
         if (cursor != null) {
-            while (cursor.moveToNext()) {
+            while (!cursor.isAfterLast()) {
                 String name = cursor.getString(1);
                 _area_list.add(name);
+                cursor.moveToNext();
             }
         }
         return _area_list;

@@ -113,15 +113,17 @@ public class AddRouteDialog extends DialogFragment{
 
             }
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-            @Override
-            public void afterTextChanged(Editable s) {
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+                Log.d("sector list",TextUtils.join(",",Sector.getSectorList(_context,area.getText().toString().trim())));
                 ArrayAdapter<String> sectorArrayAdapter = new ArrayAdapter<String>(_context,android.R.layout.simple_spinner_item, Sector.getSectorList(_context,area.getText().toString().trim()));
                 //will start working from first character
                 sector.setThreshold(1);
                 sector.setAdapter(sectorArrayAdapter);
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
 

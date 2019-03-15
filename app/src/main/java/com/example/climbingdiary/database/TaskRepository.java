@@ -83,7 +83,7 @@ public class TaskRepository {
         }
         catch (SQLException mSQLException)
         {
-            Log.e(TAG, "getAllRoutes >>"+ mSQLException.toString());
+            Log.e(TAG, "getAllAreas >>"+ mSQLException.toString());
             throw mSQLException;
         }
     }
@@ -101,7 +101,7 @@ public class TaskRepository {
         }
         catch (SQLException mSQLException)
         {
-            Log.e(TAG, "getAllRoutes >>"+ mSQLException.toString());
+            Log.e(TAG, "getSectorByAreaName >>"+ mSQLException.toString());
             throw mSQLException;
         }
     }
