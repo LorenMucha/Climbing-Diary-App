@@ -93,6 +93,7 @@ public class Area {
                 cursor.moveToNext();
             }
         }
+        taskRepository.close();
         return _area_list;
     }
 }

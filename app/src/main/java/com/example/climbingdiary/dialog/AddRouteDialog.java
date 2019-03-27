@@ -21,7 +21,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.climbingdiary.MainActivity;
 import com.example.climbingdiary.R;
+import com.example.climbingdiary.RoutesFragment;
+import com.example.climbingdiary.database.TaskRepository;
 import com.example.climbingdiary.models.Area;
 import com.example.climbingdiary.models.Levels;
 import com.example.climbingdiary.models.Rating;
@@ -29,8 +32,6 @@ import com.example.climbingdiary.models.Route;
 import com.example.climbingdiary.models.Sector;
 import com.example.climbingdiary.models.Styles;
 import com.example.climbingdiary.models.Ui.SetDate;
-
-import java.util.ArrayList;
 
 public class AddRouteDialog extends DialogFragment{
 
@@ -79,14 +80,15 @@ public class AddRouteDialog extends DialogFragment{
 
         //input elements
         Button closeDialog = (Button) view.findViewById(R.id.input_route_close);
-        Spinner stil = (Spinner) view.findViewById(R.id.input_route_stil);
-        Spinner level = (Spinner) view.findViewById(R.id.input_route_level);
-        Spinner rating = (Spinner) view.findViewById(R.id.input_route_rating);
-        EditText date = (EditText) view.findViewById(R.id.input_route_date);
-        EditText name = (EditText) view.findViewById(R.id.input_route_name);
+        Button saveRoute = (Button) view.findViewById(R.id.input_route_save);
+        final Spinner stil = (Spinner) view.findViewById(R.id.input_route_stil);
+        final Spinner level = (Spinner) view.findViewById(R.id.input_route_level);
+        final Spinner rating = (Spinner) view.findViewById(R.id.input_route_rating);
+        final EditText date = (EditText) view.findViewById(R.id.input_route_date);
+        final EditText name = (EditText) view.findViewById(R.id.input_route_name);
         final AutoCompleteTextView area = (AutoCompleteTextView) view.findViewById(R.id.input_route_area);
         final AutoCompleteTextView sector = (AutoCompleteTextView) view.findViewById(R.id.input_route_sektor);
-        EditText comment = (EditText) view.findViewById(R.id.input_route_comment);
+        final EditText comment = (EditText) view.findViewById(R.id.input_route_comment);
 
         // set Spinner for choosing the style
         ArrayAdapter<String> stilArrayAdapter = new ArrayAdapter<String>(_context,android.R.layout.simple_spinner_item, Styles.getStyle(true));
@@ -134,6 +136,30 @@ public class AddRouteDialog extends DialogFragment{
 
         //set date listener
         SetDate setDate = new SetDate(date, _context);
+
+        //save the route
+        saveRoute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String route_name = name.getText().toString();
+                String route_level = level.getSelectedItem().toString();
+                String route_date = date.getText().toString();
+                String route_area = area.getText().toString();
+                String route_sector = sector.getText().toString();
+                String route_comment = comment.getText().toString();
+                int route_rating = rating.getSelectedItemPosition();
+                String route_style = stil.getSelectedItem().toString();
+                Route new_route = new Route(0,route_name,route_level,route_area,route_sector,route_style,route_rating,route_comment,route_date);
+                TaskRepository taskRepository = new TaskRepository(_context);
+                taskRepository.open();
+                taskRepository.inserRoute(new_route);
+                taskRepository.close();
+                //close the dialog
+                getDialog().cancel();
+                //todo maybe not working
+                RoutesFragment.refreshData();
+            }
+        });
 
 
         //close the dialog

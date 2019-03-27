@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Route {
+
     private int id;
     private String style;
     private String level;
@@ -114,7 +115,7 @@ public class Route {
         taskRepository.open();
         Cursor cursor = taskRepository.getAllRoutes(null,null);
         if (cursor != null) {
-            while (cursor.moveToNext()) {
+            while (!cursor.isAfterLast()) {
                 int id = cursor.getInt(0);
                 String name = cursor.getString(1);
                 String area = cursor.getString(2);
@@ -126,8 +127,13 @@ public class Route {
                 String sector = cursor.getString(8);
                 Route route = new Route(id,name,level,area,sector,style,rating,comment,date);
                 _routes.add(route);
+                cursor.moveToNext();
             }
         }
+        taskRepository.close();
         return _routes;
+    }
+    public String toString(){
+        return "Name:"+this.getName()+"||Area:"+this.getArea()+"||Sektor:"+this.getSector()+"||Level:"+this.getLevel()+"||Style:"+this.getStyle()+"||Rating:"+this.getRating()+"||Comment:"+this.getComment()+"||Date:"+this.getDate();
     }
 }

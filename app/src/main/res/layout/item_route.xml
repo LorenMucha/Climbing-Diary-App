@@ -135,20 +135,56 @@
             android:background="#FF909090" />
 
         <TableRow
+            android:id="@+id/route_hidden"
+            android:background="@color/lighgrey"
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="match_parent" >
 
-            <TextView
-                android:visibility="gone"
-                android:textSize="@dimen/route_name"
-                android:textColor="@color/black"
-                android:id="@+id/route_comment"
-                android:layout_width="match_parent"
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_span="4"
-                android:layout_gravity="left"
-                android:layout_margin="5dp"
-                tools:ignore="SpUsage" />
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:textSize="@dimen/route_name"
+                    android:textColor="@color/black"
+                    android:id="@+id/route_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_margin="5dp"
+                    tools:ignore="SpUsage" />
+
+                <View
+                    android:layout_below="@+id/route_comment"
+                    android:layout_height="2dip"
+                    android:background="#FF909090"
+                    android:id="@+id/edit_hr"
+                    android:layout_width="wrap_content" />
+
+                <ImageButton
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/edit_hr"
+                    android:id="@+id/route_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_pen"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@id/route_delete" />
+
+                <ImageButton
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/edit_hr"
+                    android:id="@+id/route_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_trash"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/white" />
+
+            </RelativeLayout>
         </TableRow>
 
     </TableLayout>

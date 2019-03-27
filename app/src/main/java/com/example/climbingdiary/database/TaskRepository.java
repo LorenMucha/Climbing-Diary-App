@@ -1,11 +1,13 @@
 package com.example.climbingdiary.database;
 
-import java.io.IOException;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
+
+import com.example.climbingdiary.models.Route;
 
 public class TaskRepository {
 
@@ -27,7 +29,7 @@ public class TaskRepository {
         {
             mDbHelper.openDataBase();
             mDbHelper.close();
-            mDb = mDbHelper.getReadableDatabase();
+            mDb = mDbHelper.getWritableDatabase();
         }
         catch (SQLException mSQLException)
         {
@@ -83,7 +85,6 @@ public class TaskRepository {
         }
         catch (SQLException mSQLException)
         {
-            Log.e(TAG, "getAllAreas >>"+ mSQLException.toString());
             throw mSQLException;
         }
     }
@@ -104,5 +105,28 @@ public class TaskRepository {
             Log.e(TAG, "getSectorByAreaName >>"+ mSQLException.toString());
             throw mSQLException;
         }
+    }
+    public void inserRoute(Route route){
+        //create the transaction
+        String [] tasks = {
+            "INSERT OR IGNORE INTO gebiete (name) VALUES ('"+route.getArea()+"')",
+            "INSERT OR IGNORE INTO sektoren (name,gebiet) "+
+            "SELECT '"+route.getArea()+"',id FROM gebiete WHERE name='"+route.getArea()+"'",
+            "INSERT OR IGNORE INTO routen (date,name,level,stil,rating,kommentar,gebiet,sektor) "+
+            "SELECT '"+route.getDate()+"','"+route.getName()+"','"+route.getLevel()+"','"+route.getStyle()+"','"+route.getRating()+"','"+route.getComment()+"',a.id,s.id " +
+            "FROM gebiete a, sektoren s " +
+            "WHERE a.name = '"+route.getArea()+"'" +
+            "AND s.name='"+route.getSector()+"'"
+        };
+        mDb.beginTransaction();
+       try {
+           for (String x : tasks) {
+               Log.d("insert",x);
+               mDb.execSQL(x);
+           }
+           mDb.setTransactionSuccessful();
+       }finally {
+           mDb.endTransaction();
+       }
     }
 }

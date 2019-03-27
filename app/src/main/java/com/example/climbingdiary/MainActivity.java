@@ -1,5 +1,6 @@
 package com.example.climbingdiary;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -24,6 +25,13 @@ public class MainActivity extends AppCompatActivity
     private TabAdapter adapter;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private static Context context;
+    private FragmentManager fm;
+
+    public static Context getAppContext() {
+        return MainActivity.context;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +40,15 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        MainActivity.context = getApplicationContext();
+        fm = getSupportFragmentManager();
+
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
         adapter = new TabAdapter(getSupportFragmentManager());
-        adapter.addFragment(new StatisticFragment(), "Statistik");
-        adapter.addFragment(new RoutesFragment(), "Routen");
+        adapter.addFragment(new StatisticFragment(),"statistik");
+        adapter.addFragment(new RoutesFragment(), "routen");
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -47,7 +58,6 @@ public class MainActivity extends AppCompatActivity
         addRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fm = getSupportFragmentManager();
                 AddRouteDialog addRoute = AddRouteDialog.newInstance("Neue Route");
                 addRoute.show(fm,"fragment_add_Route");
             }
@@ -90,7 +100,6 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.

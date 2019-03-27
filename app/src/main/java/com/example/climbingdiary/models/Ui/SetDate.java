@@ -24,10 +24,9 @@ public class SetDate implements View.OnFocusChangeListener, DatePickerDialog.OnD
     }
 
     @Override
-    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)     {
-        // this.editText.setText();
-
-        String myFormat = "dd.MM.YYYY";
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth){
+        //bring String in SQL-Format
+        String myFormat = "YYYY-MM-dd";
         SimpleDateFormat sdformat = new SimpleDateFormat(myFormat, Locale.GERMAN);
         calender.set(Calendar.YEAR, year);
         calender.set(Calendar.MONTH, monthOfYear);

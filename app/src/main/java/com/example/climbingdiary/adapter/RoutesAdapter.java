@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +37,7 @@ public class RoutesAdapter extends
         TextView styleTextView;
         RatingBar ratingView;
         TextView commentTextView;
+        TableRow hiddenView;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -50,6 +53,7 @@ public class RoutesAdapter extends
             styleTextView=(TextView) itemView.findViewById(R.id.route_style);
             ratingView = (RatingBar) itemView.findViewById(R.id.route_rating);
             commentTextView= (TextView) itemView.findViewById(R.id.route_comment);
+            hiddenView = (TableRow) itemView.findViewById(R.id.route_hidden);
         }
     }
 
@@ -95,6 +99,7 @@ public class RoutesAdapter extends
         TextView style = viewHolder.styleTextView;
         TextView area = viewHolder.areaTextView;
         final TextView comment = viewHolder.commentTextView;
+        final TableRow hidden_layout = viewHolder.hiddenView;
 
         RatingBar rating = viewHolder.ratingView;
         routeName.setText(route.getName());
@@ -111,10 +116,10 @@ public class RoutesAdapter extends
             @Override
             public void onClick(View v) {
                 if(click==0){
-                    comment.setVisibility(View.VISIBLE);
+                    hidden_layout.setVisibility(View.VISIBLE);
                     click++;
                 }else{
-                    comment.setVisibility(View.GONE);
+                    hidden_layout.setVisibility(View.GONE);
                     click =0;
                 }
             }
