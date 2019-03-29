@@ -32,7 +32,7 @@ public class RoutesFragment extends Fragment {
 
         // Initialize contacts
         try {
-            routes = Route.getRouteList(getActivity().getBaseContext());
+            routes = Route.getRouteList(getActivity().getApplicationContext());
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -55,7 +55,6 @@ public class RoutesFragment extends Fragment {
         }
 
         adapter = new RoutesAdapter(routes);
-        // Attach the adapter to the recyclerview to populate items
         rvRoutes.setAdapter(adapter);
     }
 

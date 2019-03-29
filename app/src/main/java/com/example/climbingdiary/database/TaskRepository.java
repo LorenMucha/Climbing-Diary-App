@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
@@ -16,6 +17,10 @@ public class TaskRepository {
     private final Context mContext;
     private SQLiteDatabase mDb;
     private DatabaseHelper mDbHelper;
+
+    interface State{
+        boolean getState();
+    }
 
     public TaskRepository (Context context)
     {
@@ -128,5 +133,21 @@ public class TaskRepository {
        }finally {
            mDb.endTransaction();
        }
+    }
+    public boolean deleteRoute(int id){
+        final String sql = "DELETE FROM routen WHERE id="+id;
+        State state = new State() {
+            @Override
+            public boolean getState() {
+                try{
+                    mDb.execSQL(sql);
+                }catch(SQLiteException exception){
+                    return false;
+                }finally {
+                    return true;
+                }
+            }
+        };
+        return state.getState();
     }
 }
