@@ -1,5 +1,6 @@
 package com.example.climbingdiary;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,15 +18,15 @@ import com.example.climbingdiary.models.Route;
 
 public class RoutesFragment extends Fragment {
 
-    ArrayList<Route> routes;
-    View view;
-    static RoutesAdapter adapter;
-    static RecyclerView rvRoutes;
+    private ArrayList<Route> routes;
+    private static RoutesAdapter adapter;
+    @SuppressLint("StaticFieldLeak")
+    private static RecyclerView rvRoutes;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.routes_fragment, container, false);
+        View view = inflater.inflate(R.layout.routes_fragment, container, false);
 
         // Lookup the recyclerview in activity layout
         rvRoutes = (RecyclerView) view.findViewById(R.id.rvRoutes);
@@ -44,6 +45,10 @@ public class RoutesFragment extends Fragment {
         rvRoutes.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
 
         return view;
+    }
+
+    public static RoutesAdapter getAdapter(){
+        return adapter;
     }
 
     public static void refreshData(){

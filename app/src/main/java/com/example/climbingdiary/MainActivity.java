@@ -1,5 +1,6 @@
 package com.example.climbingdiary;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,9 +16,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.SearchView;
 
 import com.example.climbingdiary.adapter.TabAdapter;
 import com.example.climbingdiary.dialog.AddRouteDialog;
+import com.example.climbingdiary.models.RouteSort;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity
     private ViewPager viewPager;
     private static Context context;
     private FragmentManager fm;
+    private SearchView searchView;
 
     public static Context getAppContext() {
         return MainActivity.context;
@@ -87,6 +91,29 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(searchManager
+                .getSearchableInfo(getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+
+        // listening to search query text change
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // filter recycler view when query submitted
+                RoutesFragment.getAdapter().getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                // filter recycler view when text is changed
+                RoutesFragment.getAdapter().getFilter().filter(query);
+                return false;
+            }
+        });
         return true;
     }
 
@@ -96,7 +123,20 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        switch (item.getItemId()) {
+            case R.id.sort_level:
+                RouteSort.setSort("level");
+                RoutesFragment.refreshData();
+                return true;
+            case R.id.sort_area:
+                RouteSort.setSort("gebiet");
+                RoutesFragment.refreshData();
+                return true;
+            case R.id.sort_date:
+                RouteSort.setSort("date");
+                RoutesFragment.refreshData();
+                return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 

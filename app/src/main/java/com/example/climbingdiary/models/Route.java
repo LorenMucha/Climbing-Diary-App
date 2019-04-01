@@ -2,7 +2,9 @@ package com.example.climbingdiary.models;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.view.Menu;
 
+import com.example.climbingdiary.MainActivity;
 import com.example.climbingdiary.database.TaskRepository;
 
 import java.text.DateFormat;
@@ -113,7 +115,8 @@ public class Route {
         ArrayList<Route> _routes = new ArrayList<>();
         TaskRepository taskRepository = new TaskRepository(context);
         taskRepository.open();
-        Cursor cursor = taskRepository.getAllRoutes(null,null);
+        //String Sort = (Menu) getA
+        Cursor cursor = taskRepository.getAllRoutes(RouteSort.getSort(),null);
         if (cursor != null) {
             while (!cursor.isAfterLast()) {
                 int id = cursor.getInt(0);

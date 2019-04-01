@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.TableRow;
@@ -21,14 +23,17 @@ import com.example.climbingdiary.models.Alerts;
 import com.example.climbingdiary.models.Colors;
 import com.example.climbingdiary.models.Route;
 
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class RoutesAdapter extends
-        RecyclerView.Adapter<RoutesAdapter.ViewHolder> {
+        RecyclerView.Adapter<RoutesAdapter.ViewHolder> implements Filterable {
 
     private List<Route> mRoutes;
+    private List<Route> mRoutes_filtered;
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
@@ -68,7 +73,8 @@ public class RoutesAdapter extends
 
     // Pass in the contact array into the constructor
     public RoutesAdapter(List<Route> routes) {
-        mRoutes = routes;
+        this.mRoutes = routes;
+        this.mRoutes_filtered = routes;
     }
 
     // Usually involves inflating a layout from XML and returning the holder
@@ -190,5 +196,43 @@ public class RoutesAdapter extends
     @Override
     public int getItemCount() {
         return mRoutes.size();
+    }
+
+    //filter for search view
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    mRoutes = mRoutes_filtered;
+                } else {
+                    List<Route> filteredList = new ArrayList<>();
+                    for (Route row : mRoutes) {
+                        if (row.getName().toLowerCase().contains(charString.toLowerCase()) ||
+                                row.getLevel().contains(charString) ||
+                                row.getArea().toLowerCase().contains(charString.toLowerCase()) ||
+                                row.getSector().toLowerCase().contains(charString.toLowerCase()) ||
+                                row.getDate().contains(charString)
+                        ) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    mRoutes = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = mRoutes;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                mRoutes = (ArrayList<Route>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 }
