@@ -1,5 +1,6 @@
 package com.example.climbingdiary;
 
+import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity
     private static Context context;
     private FragmentManager fm;
     private SearchView searchView;
+    private FloatingActionButton addRoute;
 
     public static Context getAppContext() {
         return MainActivity.context;
@@ -58,7 +61,7 @@ public class MainActivity extends AppCompatActivity
         tabLayout.setupWithViewPager(viewPager);
 
         //the add button
-        FloatingActionButton addRoute = (FloatingActionButton) findViewById(R.id.addRoute);
+        addRoute = (FloatingActionButton) findViewById(R.id.addRoute);
         addRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,6 +69,31 @@ public class MainActivity extends AppCompatActivity
                 addRoute.show(fm,"fragment_add_Route");
             }
         });
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch(tab.getPosition()) {
+                    case 0:
+                        Log.d("select tab","0");
+                        addRoute.hide();
+                        break;
+                    case 1:
+                        Log.d("select tab","1");
+                        addRoute.show();
+                        break;
+                }
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

@@ -97,7 +97,6 @@ public class TaskRepository {
         try
         {
             String sql ="SELECT s.name,s.koordinaten as koordinaten_sektor,a.koordinaten as koordinaten_area,s.gebiet,s.id FROM sektoren s, gebiete a where a.name Like '"+_name+"%' and s.gebiet=a.id GROUP BY s.id";
-            Log.d("task",sql);
             Cursor mCur = mDb.rawQuery(sql, null);
             if (mCur!=null)
             {
@@ -109,6 +108,23 @@ public class TaskRepository {
         {
             Log.e(TAG, "getSectorByAreaName >>"+ mSQLException.toString());
             throw mSQLException;
+        }
+    }
+    public Cursor getBarChartValues(){
+        try{
+            String sql = "select r.level,sum(r.stil='RP') as rp, sum(r.stil='OS') as os,sum(r.stil='FLASH') as flash from routen r group by r.level";
+            Cursor mCur = mDb.rawQuery(sql, null);
+            if (mCur!=null)
+            {
+                mCur.moveToNext();
+            }
+            return mCur;
+
+
+        }catch(SQLException mSQLExeption)
+        {
+            Log.e(TAG, "getBarChartValues >>"+ mSQLExeption.toString());
+            throw mSQLExeption;
         }
     }
     public void inserRoute(Route route){

@@ -2,6 +2,7 @@ package com.example.climbingdiary;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +21,6 @@ public class RoutesFragment extends Fragment {
 
     private ArrayList<Route> routes;
     private static RoutesAdapter adapter;
-    @SuppressLint("StaticFieldLeak")
     private static RecyclerView rvRoutes;
 
     @Override
