@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.climbingdiary.MainActivity;
 import com.example.climbingdiary.R;
 import com.example.climbingdiary.RoutesFragment;
+import com.example.climbingdiary.StatisticFragment;
 import com.example.climbingdiary.database.TaskRepository;
 import com.example.climbingdiary.models.Alerts;
 import com.example.climbingdiary.models.Colors;
@@ -160,7 +161,8 @@ public class RoutesAdapter extends
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SweetAlertDialog(v.getContext(), SweetAlertDialog.WARNING_TYPE)
+                final View _v = v;
+                new SweetAlertDialog(_v.getContext(), SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("Bist du sicher ?")
                         .setConfirmText("OK")
                         .setCancelText("Abbrechen")
@@ -173,8 +175,12 @@ public class RoutesAdapter extends
                                 boolean taskState = taskRepository.deleteRoute(id);
                                 if(taskState){
                                     RoutesFragment.refreshData();
+                                    StatisticFragment.createBarChart();
                                     taskRepository.close();
-                                    sDialog.cancel();
+                                    sDialog.hide();
+                                    new SweetAlertDialog(_v.getContext(), SweetAlertDialog.SUCCESS_TYPE)
+                                            .setTitleText("Gelöscht")
+                                            .show();
                                 }else{
                                     Alerts.setErrorAlert();
                                 }
@@ -188,6 +194,15 @@ public class RoutesAdapter extends
                             }
                         })
                         .show();
+            }
+        });
+        //edit a route
+        //ToDo
+        edit.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+
             }
         });
     }
