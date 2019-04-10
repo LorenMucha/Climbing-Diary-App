@@ -40,7 +40,7 @@ public class StatisticFragment extends Fragment {
     }
     private void createBarChart(View view){
         List<BarEntry> entriesGroup = new ArrayList<>();
-        ArrayList<String> labels = new ArrayList<>();
+        final ArrayList<String> labels = new ArrayList<>();
         BarChart chart = (BarChart) view.findViewById(R.id.route_bar_chart);
         //get the cjart entries
         TaskRepository taskRepository = new TaskRepository(view.getContext());
@@ -70,7 +70,8 @@ public class StatisticFragment extends Fragment {
         chart.setFitBars(true); // make the x-axis fit exactly all bars
         //set thex axis
         XAxis xAxis = chart.getXAxis();
-        //TODO set X Axis
+        xAxis.setDrawAxisLine(true);
+        xAxis.setDrawGridLines(false);
         chart.invalidate(); // refresh
     }
 }
