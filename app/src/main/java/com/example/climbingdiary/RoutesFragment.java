@@ -61,6 +61,7 @@ public class RoutesFragment extends Fragment {
 
         adapter = new RoutesAdapter(routes);
         rvRoutes.setAdapter(adapter);
+        StatisticFragment.createBarChart();
     }
 
 }

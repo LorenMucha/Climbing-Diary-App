@@ -1,44 +1,47 @@
 package com.example.climbingdiary;
 
+import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.climbingdiary.database.TaskRepository;
 import com.example.climbingdiary.models.Colors;
-import com.example.climbingdiary.models.Levels;
-import com.example.climbingdiary.models.Route;
-import com.example.climbingdiary.models.RouteSort;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.IMarker;
+import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.utils.MPPointF;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class StatisticFragment extends Fragment {
 
+    static View view;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.statistic_fragment, container, false);
+        view = inflater.inflate(R.layout.statistic_fragment, container, false);
         //set the bar chart
-        this.createBarChart(view);
+        this.createBarChart();
         return view;
     }
-    private void createBarChart(View view){
+    public static void createBarChart(){
         List<BarEntry> entriesGroup = new ArrayList<>();
         final ArrayList<String> labels = new ArrayList<>();
         BarChart chart = (BarChart) view.findViewById(R.id.route_bar_chart);
@@ -47,7 +50,7 @@ public class StatisticFragment extends Fragment {
         taskRepository.open();
         //String Sort = (Menu) getA
         Cursor cursor = taskRepository.getBarChartValues();
-        float i =1;
+        int i =0;
         if (cursor != null) {
             while (!cursor.isAfterLast()) {
                 String level = cursor.getString(0);
@@ -63,15 +66,42 @@ public class StatisticFragment extends Fragment {
         taskRepository.close();
         BarDataSet set = new BarDataSet(entriesGroup,"");
         set.setColors(Colors.getStyleColor("flash"),Colors.getStyleColor("rp"),Colors.getStyleColor("os"));
+        set.setDrawValues(false);
         set.setStackLabels(new String[]{"FLASH", "RP", "OS"});
         BarData data = new BarData(set);
-        data.setBarWidth(0.9f); // set custom bar width
         chart.setData(data);
+        chart.getDescription().setEnabled(false);
         chart.setFitBars(true); // make the x-axis fit exactly all bars
         //set thex axis
+        Log.d("labels", TextUtils.join(",",labels));
         XAxis xAxis = chart.getXAxis();
-        xAxis.setDrawAxisLine(true);
+        xAxis.setDrawAxisLine(false);
         xAxis.setDrawGridLines(false);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setGranularity(1);
+        xAxis.setGranularityEnabled(true);
+        xAxis.setValueFormatter(new XAxisValueFormatter(labels));
+        chart.getAxisLeft().setDrawGridLines(false);
+        chart.getAxisLeft().setSpaceBottom(0);
         chart.invalidate(); // refresh
+    }
+    //XAxis Formatter
+    public static class XAxisValueFormatter implements IAxisValueFormatter {
+
+        private ArrayList<String> mValues = new ArrayList<>();
+
+        private XAxisValueFormatter(ArrayList<String> values) {
+            this.mValues = values;
+        }
+
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+            // "value" represents the position of the label on the axis (x or y)
+            try {
+                return mValues.get((int) value);
+            }catch(Exception e){
+                return "";
+            }
+        }
     }
 }
