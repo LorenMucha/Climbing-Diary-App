@@ -33,7 +33,7 @@ public class RoutesFragment extends Fragment {
 
         // Initialize contacts
         try {
-            routes = Route.getRouteList(getActivity().getApplicationContext());
+            routes = Route.getRouteList();
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -54,7 +54,7 @@ public class RoutesFragment extends Fragment {
     public static void refreshData(){
         ArrayList<Route> routes = new ArrayList<Route>();
         try {
-            routes = Route.getRouteList(MainActivity.getAppContext());
+            routes = Route.getRouteList();
         } catch (ParseException e) {
             e.printStackTrace();
         }

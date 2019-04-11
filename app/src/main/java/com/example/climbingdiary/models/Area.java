@@ -65,7 +65,7 @@ public class Area {
     }
     public static ArrayList<Area> getRouteList(Context context){
         ArrayList<Area> _area_list = new ArrayList<>();
-        TaskRepository taskRepository = new TaskRepository(context);
+        TaskRepository taskRepository = new TaskRepository();
         taskRepository.open();
         Cursor cursor = taskRepository.getAllAreas();
         if (cursor != null) {
@@ -83,7 +83,7 @@ public class Area {
     }
     public static ArrayList<String> getRouteNameList(Context context){
         ArrayList<String> _area_list = new ArrayList<>();
-        TaskRepository taskRepository = new TaskRepository(context);
+        TaskRepository taskRepository = new TaskRepository();
         taskRepository.open();
         Cursor cursor = taskRepository.getAllAreas();
         if (cursor != null) {

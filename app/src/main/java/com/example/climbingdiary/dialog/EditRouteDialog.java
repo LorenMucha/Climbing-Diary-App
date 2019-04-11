@@ -22,19 +22,25 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.climbingdiary.R;
+import com.example.climbingdiary.RoutesFragment;
+import com.example.climbingdiary.database.TaskRepository;
 import com.example.climbingdiary.models.Area;
 import com.example.climbingdiary.models.Levels;
 import com.example.climbingdiary.models.Rating;
+import com.example.climbingdiary.models.Route;
 import com.example.climbingdiary.models.Sector;
 import com.example.climbingdiary.models.Styles;
 import com.example.climbingdiary.models.Ui.SetDate;
 
+import java.util.regex.Pattern;
+
 public class EditRouteDialog  extends DialogFragment {
     public EditRouteDialog() {}
-    public static EditRouteDialog newInstance(String title){
+    public static EditRouteDialog newInstance(String title, int _id){
         EditRouteDialog edit = new  EditRouteDialog();
         Bundle args = new Bundle();
         args.putString("title", title);
+        args.putInt("id",_id);
         edit.setArguments(args);
         return edit;
     }
@@ -53,8 +59,11 @@ public class EditRouteDialog  extends DialogFragment {
         final Context _context = view.getContext();
 
         // Fetch arguments from bundle and set title
-
         String title = getArguments().getString("title", "Bearbeiten");
+        //get the route value which will be edit
+        final int route_id = getArguments().getInt("id",0);
+        Route editRoute = Route.getRoute(route_id);
+        Log.d("route set",editRoute.toString());
 
         // Initialize a new foreground color span instance
         ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.BLACK);
@@ -76,6 +85,7 @@ public class EditRouteDialog  extends DialogFragment {
         //input elements
         Button closeDialog = (Button) view.findViewById(R.id.input_route_close);
         Button saveRoute = (Button) view.findViewById(R.id.input_route_save);
+        saveRoute.setText("Update");
         final Spinner stil = (Spinner) view.findViewById(R.id.input_route_stil);
         final Spinner level = (Spinner) view.findViewById(R.id.input_route_level);
         final Spinner rating = (Spinner) view.findViewById(R.id.input_route_rating);
@@ -85,23 +95,28 @@ public class EditRouteDialog  extends DialogFragment {
         final AutoCompleteTextView sector = (AutoCompleteTextView) view.findViewById(R.id.input_route_sektor);
         final EditText comment = (EditText) view.findViewById(R.id.input_route_comment);
 
+        name.setText(editRoute.getName());
+
         // set Spinner for choosing the style
         ArrayAdapter<String> stilArrayAdapter = new ArrayAdapter<String>(_context,android.R.layout.simple_spinner_item, Styles.getStyle(true));
         stilArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
         stil.setAdapter(stilArrayAdapter);
+        stil.setSelection(stilArrayAdapter.getPosition(editRoute.getStyle().toUpperCase()));
 
         // set Spinner for choosing the level
         ArrayAdapter<String> levelArrayAdapter = new ArrayAdapter<String>(_context,android.R.layout.simple_spinner_item, Levels.getLevels());
         levelArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
         level.setAdapter(levelArrayAdapter);
-        //pre select 8a
-        level.setSelection(12);
+        level.setSelection(levelArrayAdapter.getPosition(editRoute.getLevel()));
 
         //get the route List and set autocomplete
         ArrayAdapter<String> areaArrayAdapter = new ArrayAdapter<String>(view.getContext(),android.R.layout.simple_spinner_item, Area.getRouteNameList(_context));
         //will start working from first character
         area.setThreshold(1);
         area.setAdapter(areaArrayAdapter);
+        area.setText(editRoute.getArea());
+        sector.setText(editRoute.getSector());
+        comment.setText(editRoute.getComment());
 
         //get the sector list and set the autocomplete if area is set
         area.addTextChangedListener(new TextWatcher() {
@@ -128,15 +143,38 @@ public class EditRouteDialog  extends DialogFragment {
         ArrayAdapter<String> ratingArrayAdapter = new ArrayAdapter<String>(_context,android.R.layout.simple_spinner_item, Rating.getRating());
         ratingArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
         rating.setAdapter(ratingArrayAdapter);
+        rating.setSelection(editRoute.getRating()-1);
 
         //set date listener
         SetDate setDate = new SetDate(date, _context);
+        StringBuilder sBuilder = new StringBuilder();
+        String[] dateSplit = (editRoute.getDate()).split(Pattern.quote("."));
+        sBuilder.append(dateSplit[2]).append("-").append(dateSplit[1]).append("-").append(dateSplit[0]);
+        date.setText(sBuilder.toString());
 
         //save the route
         saveRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String route_name = name.getText().toString();
+                String route_level = level.getSelectedItem().toString();
+                String route_date = date.getText().toString();
+                String route_area = area.getText().toString();
+                String route_sector = sector.getText().toString();
+                String route_comment = comment.getText().toString();
+                int route_rating = rating.getSelectedItemPosition()+1;
+                String route_style = stil.getSelectedItem().toString();
+                Route new_route = new Route(0,route_name,route_level,route_area,route_sector,route_style,route_rating,route_comment,route_date);
+                TaskRepository taskRepository = new TaskRepository();
+                taskRepository.open();
+                boolean taskState = taskRepository.deleteRoute(route_id);
+                if(taskState) {
+                    taskRepository.inserRoute(new_route);
+                }
+                taskRepository.close();
+                //close the dialog
+                getDialog().cancel();
+                RoutesFragment.refreshData();
             }
         });
 

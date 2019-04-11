@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
+import com.example.climbingdiary.MainActivity;
 import com.example.climbingdiary.models.Route;
 
 public class TaskRepository {
@@ -22,9 +23,9 @@ public class TaskRepository {
         boolean getState();
     }
 
-    public TaskRepository (Context context)
+    public TaskRepository ()
     {
-        this.mContext = context;
+        this.mContext = MainActivity.getAppContext();
         mDbHelper = new DatabaseHelper(mContext);
     }
 
@@ -73,6 +74,23 @@ public class TaskRepository {
         catch (SQLException mSQLException)
         {
             Log.e(TAG, "getAllRoutes >>"+ mSQLException.toString());
+            throw mSQLException;
+        }
+    }
+    public Cursor getRoute(int _id){
+        try
+        {
+            String sql ="SELECT r.id, r.name,g.name as gebiet,r.level,r.stil,r.rating, r.kommentar, strftime('%d.%m.%Y',r.date) as date, k.name as sektor FROM routen r, gebiete g, sektoren k where g.id=r.gebiet and k.id=r.sektor AND r.id="+_id;
+
+            Cursor mCur = mDb.rawQuery(sql, null);
+            if (mCur!=null)
+            {
+                mCur.moveToNext();
+            }
+            return mCur;
+        }
+        catch (SQLException mSQLException)
+        {
             throw mSQLException;
         }
     }

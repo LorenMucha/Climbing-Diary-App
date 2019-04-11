@@ -39,7 +39,7 @@ public class StatisticFragment extends Fragment {
         final ArrayList<String> labels = new ArrayList<>();
         BarChart chart = (BarChart) view.findViewById(R.id.route_bar_chart);
         //get the cjart entries
-        TaskRepository taskRepository = new TaskRepository(view.getContext());
+        TaskRepository taskRepository = new TaskRepository();
         taskRepository.open();
         //String Sort = (Menu) getA
         Cursor cursor = taskRepository.getBarChartValues();
@@ -73,9 +73,10 @@ public class StatisticFragment extends Fragment {
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1);
         xAxis.setGranularityEnabled(true);
+        xAxis.setLabelCount(labels.size());
         xAxis.setValueFormatter(new XAxisValueFormatter(labels));
         chart.getAxisLeft().setDrawGridLines(false);
-        chart.getAxisLeft().setSpaceBottom(0);
+        chart.getAxisLeft().setSpaceBottom(1f);
         chart.invalidate(); // refresh
     }
     //XAxis Formatter
@@ -93,7 +94,7 @@ public class StatisticFragment extends Fragment {
             try {
                 return mValues.get((int) value);
             }catch(Exception e){
-                return "";
+                return "False";
             }
         }
     }

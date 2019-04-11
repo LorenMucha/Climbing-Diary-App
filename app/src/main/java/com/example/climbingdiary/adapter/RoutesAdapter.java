@@ -1,6 +1,9 @@
 package com.example.climbingdiary.adapter;
 
+import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
@@ -20,6 +23,8 @@ import com.example.climbingdiary.R;
 import com.example.climbingdiary.RoutesFragment;
 import com.example.climbingdiary.StatisticFragment;
 import com.example.climbingdiary.database.TaskRepository;
+import com.example.climbingdiary.dialog.DialogManager;
+import com.example.climbingdiary.dialog.EditRouteDialog;
 import com.example.climbingdiary.models.Alerts;
 import com.example.climbingdiary.models.Colors;
 import com.example.climbingdiary.models.Route;
@@ -109,7 +114,7 @@ public class RoutesAdapter extends
         final String commentHtml = "<b>Kommentar</b><br/>"+commentString;
 
         //tasks for deleting and editing
-        final TaskRepository taskRepository = new TaskRepository(MainActivity.getAppContext());
+        final TaskRepository taskRepository = new TaskRepository();
 
         // Set item views
         TextView routeName = viewHolder.nameTextView;
@@ -197,12 +202,10 @@ public class RoutesAdapter extends
             }
         });
         //edit a route
-        //ToDo
         edit.setOnClickListener(new View.OnClickListener(){
-
             @Override
             public void onClick(View view) {
-
+                DialogManager.openEditRouteDialog(view.getContext(),route.getId());
             }
         });
     }

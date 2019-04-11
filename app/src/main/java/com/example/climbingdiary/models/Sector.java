@@ -62,7 +62,7 @@ public class Sector {
 
     public static ArrayList<String> getSectorList(Context context, String _area_name){
         ArrayList<String> _sector_list = new ArrayList<>();
-        TaskRepository taskRepository = new TaskRepository(context);
+        TaskRepository taskRepository = new TaskRepository();
         taskRepository.open();
         Cursor cursor = taskRepository.getSectorByAreaName(_area_name);
         if (cursor != null) {

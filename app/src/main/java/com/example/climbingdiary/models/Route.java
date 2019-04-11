@@ -111,9 +111,32 @@ public class Route {
         this.date = date;
     }
 
-    public static ArrayList<Route> getRouteList(Context context) throws ParseException {
+    public static Route getRoute(int _id){
+        Route _route = null;
+        TaskRepository taskRepository = new TaskRepository();
+        taskRepository.open();
+        //String Sort = (Menu) getA
+        Cursor cursor = taskRepository.getRoute(_id);
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+            String area = cursor.getString(2);
+            String level = cursor.getString(3);
+            String style = cursor.getString(4);
+            int rating = cursor.getInt(5);
+            String comment = cursor.getString(6);
+            String date = cursor.getString(7);
+            String sector = cursor.getString(8);
+            _route = new Route(id,name,level,area,sector,style,rating,comment,date);
+        }
+        taskRepository.close();
+        return _route;
+    }
+
+    public static ArrayList<Route> getRouteList() throws ParseException {
         ArrayList<Route> _routes = new ArrayList<>();
-        TaskRepository taskRepository = new TaskRepository(context);
+        TaskRepository taskRepository = new TaskRepository();
         taskRepository.open();
         //String Sort = (Menu) getA
         Cursor cursor = taskRepository.getAllRoutes(RouteSort.getSort(),null);

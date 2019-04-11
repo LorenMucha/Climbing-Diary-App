@@ -1,15 +1,14 @@
 package com.example.climbingdiary;
 
-import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +20,7 @@ import android.view.View;
 import android.widget.SearchView;
 
 import com.example.climbingdiary.adapter.TabAdapter;
-import com.example.climbingdiary.dialog.AddRouteDialog;
+import com.example.climbingdiary.dialog.DialogManager;
 import com.example.climbingdiary.models.RouteSort;
 
 public class MainActivity extends AppCompatActivity
@@ -38,7 +37,6 @@ public class MainActivity extends AppCompatActivity
     public static Context getAppContext() {
         return MainActivity.context;
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +63,7 @@ public class MainActivity extends AppCompatActivity
         addRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AddRouteDialog addRoute = AddRouteDialog.newInstance("Neue Route");
-                addRoute.show(fm,"fragment_add_Route");
+                DialogManager.openAddRouteDialog(view.getContext());
             }
         });
 
