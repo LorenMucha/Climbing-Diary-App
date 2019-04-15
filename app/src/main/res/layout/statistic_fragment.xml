@@ -4,27 +4,53 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:gravity="center_horizontal"
+        android:id="@+id/control_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Statistik"
+        android:textColor="@color/white"
+        android:background="@color/colorPrimary"
+        android:id="@+id/btn_stat"
+        android:layout_gravity="center_vertical" />
+
+    <Button
+        android:layout_toRightOf="@id/btn_stat"
+        android:layout_marginLeft="2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Verlauf"
+        android:id="@+id/btn_dev"
+        android:textColor="@color/white"
+        android:background="@color/colorPrimary"
+        android:layout_gravity="center_vertical" />
+
+    <Button
+        android:layout_toRightOf="@id/btn_dev"
+        android:layout_marginLeft="2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tabelle"
+        android:id="@+id/btn_table"
+        android:textColor="@color/white"
+        android:background="@color/colorPrimary"
+        android:layout_gravity="center_vertical" />
+
+    </RelativeLayout>
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/route_bar_chart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <TextView
-        android:id="@+id/tvContent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="7dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:text=""
-        android:textSize="12dp"
-        android:textColor="@android:color/white"
-        android:ellipsize="end"
-        android:singleLine="true"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:layout_below="@id/control_btn"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="0dp" />
 
 </RelativeLayout>
 

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.climbingdiary.database.TaskRepository;
 import com.example.climbingdiary.models.Colors;
@@ -36,8 +37,11 @@ public class StatisticFragment extends Fragment {
     }
     public static void createBarChart(){
         List<BarEntry> entriesGroup = new ArrayList<>();
+        Button setChartBtn = (Button) view.findViewById(R.id.btn_stat);
         final ArrayList<String> labels = new ArrayList<>();
         BarChart chart = (BarChart) view.findViewById(R.id.route_bar_chart);
+        //set the button color
+        setChartBtn.setBackgroundColor(Colors.getActiveColor());
         //get the cjart entries
         TaskRepository taskRepository = new TaskRepository();
         taskRepository.open();

@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity
         adapter = new TabAdapter(getSupportFragmentManager());
         adapter.addFragment(new StatisticFragment(),"statistik");
         adapter.addFragment(new RoutesFragment(), "routen");
+        adapter.addFragment(new ProjectFragment(), "projekte");
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity
                         Log.d("select tab","0");
                         addRoute.hide();
                         break;
-                    case 1:
+                    default :
                         Log.d("select tab","1");
                         addRoute.show();
                         break;
