@@ -160,7 +160,7 @@ public class StatisticFragment extends Fragment {
     //XAxis Formatter
     public static class XAxisValueFormatter implements IAxisValueFormatter {
 
-        private ArrayList<String> mValues = new ArrayList<>();
+        private ArrayList<String> mValues;
 
         private XAxisValueFormatter(ArrayList<String> values) {
             this.mValues = values;
