@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 import com.example.climbingdiary.MainActivity;
+import com.example.climbingdiary.interfaces.State;
 import com.example.climbingdiary.models.Route;
 
 public class TaskRepository {
@@ -18,10 +19,6 @@ public class TaskRepository {
     private final Context mContext;
     private SQLiteDatabase mDb;
     private DatabaseHelper mDbHelper;
-
-    interface State{
-        boolean getState();
-    }
 
     public TaskRepository ()
     {
@@ -128,6 +125,29 @@ public class TaskRepository {
             throw mSQLException;
         }
     }
+    public Cursor getLineChartValues(){
+        try{
+            StringBuilder sql = new StringBuilder();
+            sql.append("SELECT SUM(cast(r.level as int)*(25*(INSTR('abc',substr(replace(r.level,'+',''),-1)))")
+                    .append(" +INSTR('+',substr(r.level,-1))")
+                    .append(" +INSTR('rpflashos',r.stil))) as stat,")
+                    .append(" COUNT(cast(r.level as int)) as anzahl,")
+                    .append(" strftime('%Y',r.date) as date")
+                    .append(" FROM routen r")
+                    .append(" GROUP BY strftime('%Y',r.date)");
+            Log.d("query LineChartValues",sql.toString());
+            Cursor mCur = mDb.rawQuery(sql.toString(),null);
+            if (mCur!=null)
+            {
+                mCur.moveToNext();
+            }
+            return mCur;
+
+        }catch(SQLException mSQLExeption){
+            Log.e(TAG, "getBarChartValues >>"+ mSQLExeption.toString());
+            throw mSQLExeption;
+        }
+    }
     public Cursor getBarChartValues(){
         try{
             String sql = "select r.level,sum(r.stil='RP') as rp, sum(r.stil='OS') as os,sum(r.stil='FLASH') as flash from routen r group by r.level";
@@ -175,10 +195,9 @@ public class TaskRepository {
             public boolean getState() {
                 try{
                     mDb.execSQL(sql);
+                    return true;
                 }catch(SQLiteException exception){
                     return false;
-                }finally {
-                    return true;
                 }
             }
         };

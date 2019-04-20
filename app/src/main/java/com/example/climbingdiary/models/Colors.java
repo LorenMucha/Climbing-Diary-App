@@ -5,7 +5,7 @@ import android.util.Log;
 
 public abstract class Colors {
     public static int getMainColor(){
-        return Color.parseColor("#4285F4");
+        return Color.parseColor("#0d47a1");
     }
     public static int getActiveColor(){
         return Color.parseColor("#007E33");

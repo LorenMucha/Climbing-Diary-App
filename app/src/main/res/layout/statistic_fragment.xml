@@ -52,5 +52,13 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="0dp" />
 
+    <com.github.mikephil.charting.charts.LineChart
+        android:visibility="gone"
+        android:id="@+id/route_line_chart"
+        android:layout_width="match_parent"
+        android:layout_below="@id/control_btn"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="0dp" />
+
 </RelativeLayout>
 
