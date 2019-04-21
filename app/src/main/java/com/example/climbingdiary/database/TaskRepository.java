@@ -148,6 +148,22 @@ public class TaskRepository {
             throw mSQLExeption;
         }
     }
+    public Cursor getLineTableValues(){
+        try{
+            StringBuilder sql = new StringBuilder();
+            sql.append("");
+            Cursor mCur = mDb.rawQuery(sql.toString(),null);
+            if (mCur!=null)
+            {
+                mCur.moveToNext();
+            }
+            return mCur;
+
+        }catch(SQLException mSQLExeption){
+            Log.e(TAG, "getTableValues >>"+ mSQLExeption.toString());
+            throw mSQLExeption;
+        }
+    }
     public Cursor getBarChartValues(){
         try{
             String sql = "select r.level,sum(r.stil='RP') as rp, sum(r.stil='OS') as os,sum(r.stil='FLASH') as flash from routen r group by r.level";

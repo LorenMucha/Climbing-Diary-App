@@ -60,5 +60,34 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="0dp" />
 
+    <ScrollView
+        android:layout_below="@id/control_btn"
+        android:visibility="gone"
+        android:id="@+id/TableScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true" >
+
+        <HorizontalScrollView
+            android:id="@+id/HorizontalTableView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="fill_parent"
+                android:orientation="vertical" >
+
+                <TableLayout
+                    android:id="@+id/route_table"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true" >
+                </TableLayout>
+            </RelativeLayout>
+        </HorizontalScrollView>
+    </ScrollView>
+
 </RelativeLayout>
 
