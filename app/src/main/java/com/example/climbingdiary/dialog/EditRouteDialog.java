@@ -23,6 +23,7 @@ import android.widget.Spinner;
 
 import com.example.climbingdiary.R;
 import com.example.climbingdiary.RoutesFragment;
+import com.example.climbingdiary.StatisticFragment;
 import com.example.climbingdiary.database.TaskRepository;
 import com.example.climbingdiary.models.Area;
 import com.example.climbingdiary.models.Levels;
@@ -30,7 +31,7 @@ import com.example.climbingdiary.models.Rating;
 import com.example.climbingdiary.models.Route;
 import com.example.climbingdiary.models.Sector;
 import com.example.climbingdiary.models.Styles;
-import com.example.climbingdiary.models.Ui.SetDate;
+import com.example.climbingdiary.Ui.SetDate;
 
 import java.util.regex.Pattern;
 
@@ -175,6 +176,7 @@ public class EditRouteDialog  extends DialogFragment {
                 //close the dialog
                 getDialog().cancel();
                 RoutesFragment.refreshData();
+                StatisticFragment.refreshData();
             }
         });
 

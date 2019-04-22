@@ -1,12 +1,8 @@
 package com.example.climbingdiary.adapter;
 
-import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,18 +14,15 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.climbingdiary.MainActivity;
 import com.example.climbingdiary.R;
 import com.example.climbingdiary.RoutesFragment;
 import com.example.climbingdiary.StatisticFragment;
 import com.example.climbingdiary.database.TaskRepository;
 import com.example.climbingdiary.dialog.DialogManager;
-import com.example.climbingdiary.dialog.EditRouteDialog;
 import com.example.climbingdiary.models.Alerts;
 import com.example.climbingdiary.models.Colors;
 import com.example.climbingdiary.models.Route;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -180,7 +173,7 @@ public class RoutesAdapter extends
                                 boolean taskState = taskRepository.deleteRoute(id);
                                 if(taskState){
                                     RoutesFragment.refreshData();
-                                    StatisticFragment.createBarChart();
+                                    StatisticFragment.refreshData();
                                     taskRepository.close();
                                     sDialog.hide();
                                     new SweetAlertDialog(_v.getContext(), SweetAlertDialog.SUCCESS_TYPE)

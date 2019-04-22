@@ -1,4 +1,4 @@
-package com.example.climbingdiary.models.Ui;
+package com.example.climbingdiary.Ui;
 
 import android.content.Context;
 import android.graphics.Rect;
@@ -6,7 +6,6 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.animation.LinearInterpolator;
 import android.widget.Scroller;
-import android.widget.TextView;
 
 public class ScrollTextView extends android.support.v7.widget.AppCompatTextView {
 

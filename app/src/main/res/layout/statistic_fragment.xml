@@ -61,6 +61,7 @@
         android:layout_marginBottom="0dp" />
 
     <ScrollView
+        android:layout_marginTop="10dp"
         android:layout_below="@id/control_btn"
         android:visibility="gone"
         android:id="@+id/TableScrollView"
@@ -81,9 +82,10 @@
 
                 <TableLayout
                     android:id="@+id/route_table"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true" >
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp"
+                    android:layout_centerHorizontal="true">
                 </TableLayout>
             </RelativeLayout>
         </HorizontalScrollView>

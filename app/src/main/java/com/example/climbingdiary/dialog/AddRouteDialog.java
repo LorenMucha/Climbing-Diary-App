@@ -21,9 +21,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.example.climbingdiary.MainActivity;
 import com.example.climbingdiary.R;
 import com.example.climbingdiary.RoutesFragment;
+import com.example.climbingdiary.StatisticFragment;
 import com.example.climbingdiary.database.TaskRepository;
 import com.example.climbingdiary.models.Area;
 import com.example.climbingdiary.models.Levels;
@@ -31,7 +31,7 @@ import com.example.climbingdiary.models.Rating;
 import com.example.climbingdiary.models.Route;
 import com.example.climbingdiary.models.Sector;
 import com.example.climbingdiary.models.Styles;
-import com.example.climbingdiary.models.Ui.SetDate;
+import com.example.climbingdiary.Ui.SetDate;
 
 public class AddRouteDialog extends DialogFragment{
 
@@ -156,8 +156,8 @@ public class AddRouteDialog extends DialogFragment{
                 taskRepository.close();
                 //close the dialog
                 getDialog().cancel();
-                //todo maybe not working
                 RoutesFragment.refreshData();
+                StatisticFragment.refreshData();
             }
         });
 

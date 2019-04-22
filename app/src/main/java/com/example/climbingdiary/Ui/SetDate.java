@@ -1,4 +1,4 @@
-package com.example.climbingdiary.models.Ui;
+package com.example.climbingdiary.Ui;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
