@@ -5,6 +5,9 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
+import android.util.ArrayMap;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +20,7 @@ import android.widget.TextView;
 
 import com.example.climbingdiary.database.TaskRepository;
 import com.example.climbingdiary.models.Colors;
+import com.example.climbingdiary.models.Route;
 import com.example.climbingdiary.models.Styles;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -30,8 +34,17 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 public class StatisticFragment extends Fragment {
 
@@ -138,7 +151,6 @@ public class StatisticFragment extends Fragment {
         lineChart.setVisibility(View.VISIBLE);
         TaskRepository taskRepository = new TaskRepository();
         taskRepository.open();
-        taskRepository.getLineChartValues();
         Cursor cursor = taskRepository.getLineChartValues();
         int i =0;
         if (cursor != null) {
@@ -194,8 +206,14 @@ public class StatisticFragment extends Fragment {
         }
     }
     public static void createTableView(){
+        //Variables
         Context context = view.getContext();
         String[] styles = Styles.getStyle(true);
+        TaskRepository taskRepository = new TaskRepository();
+        taskRepository.open();
+        Cursor cursor = taskRepository.getTableValues();
+        //tree et because this sort the values
+        Set<String> mLevels = new TreeSet<>();
         setTableBtn.setBackgroundColor(Colors.getActiveColor());
         tableScrollView.setVisibility(View.VISIBLE);
         TableLayout stk = (TableLayout) view.findViewById(R.id.route_table);
@@ -218,35 +236,45 @@ public class StatisticFragment extends Fragment {
         tv3.setTextColor(Color.BLACK);
         tbrow0.addView(tv3);
         stk.addView(tbrow0);
-        //Todo mocked values replace with origin route data
-        for (int i = 0; i < 25; i++) {
-            TableRow tbrow = new TableRow(context);
-            TextView t1v = new TextView(context);
-            t1v.setText("" + i);
-            t1v.setTextColor(Color.BLACK);
-            t1v.setGravity(Gravity.CENTER);
-            tbrow.addView(t1v);
-            TextView t2v = new TextView(context);
-            t2v.setText("Product " + i);
-            t2v.setTextColor(Color.BLACK);
-            t2v.setGravity(Gravity.CENTER);
-            tbrow.addView(t2v);
-            TextView t3v = new TextView(context);
-            t3v.setText("Rs." + i);
-            t3v.setTextColor(Color.BLACK);
-            t3v.setGravity(Gravity.CENTER);
-            tbrow.addView(t3v);
-            TextView t4v = new TextView(context);
-            t4v.setText("" + i * 15 / 32 * 10);
-            t4v.setTextColor(Color.BLACK);
-            t4v.setGravity(Gravity.CENTER);
-            tbrow.addView(t4v);
-            TextView t5v = new TextView(context);
-            t5v.setText("" + i * 15 / 50 * 10);
-            t5v.setTextColor(Color.BLACK);
-            t5v.setGravity(Gravity.CENTER);
-            tbrow.addView(t5v);
-            stk.addView(tbrow);
+        //variables
+        if (cursor != null) {
+            while (!cursor.isAfterLast()) {
+                //get the values
+                String level = cursor.getString(0);
+                String os = cursor.getString(1);
+                String rp = cursor.getString(2);
+                String flash = cursor.getString(3);
+                String gesamt = cursor.getString(4);
+                //append the text view rows
+                TableRow tbrow = new TableRow(context);
+                TextView t1v = new TextView(context);
+                t1v.setText(level);
+                t1v.setTextColor(Color.BLACK);
+                t1v.setGravity(Gravity.CENTER);
+                tbrow.addView(t1v);
+                TextView t2v = new TextView(context);
+                t2v.setText(os);
+                t2v.setTextColor(Color.BLACK);
+                t2v.setGravity(Gravity.CENTER);
+                tbrow.addView(t2v);
+                TextView t3v = new TextView(context);
+                t3v.setText(rp);
+                t3v.setTextColor(Color.BLACK);
+                t3v.setGravity(Gravity.CENTER);
+                tbrow.addView(t3v);
+                TextView t4v = new TextView(context);
+                t4v.setText(flash);
+                t4v.setTextColor(Color.BLACK);
+                t4v.setGravity(Gravity.CENTER);
+                tbrow.addView(t4v);
+                TextView t5v = new TextView(context);
+                t5v.setText(gesamt);
+                t5v.setTextColor(Color.BLACK);
+                t5v.setGravity(Gravity.CENTER);
+                tbrow.addView(t5v);
+                stk.addView(tbrow);
+                cursor.moveToNext();
+            }
         }
     }
     public static void resetButtonBackground(){
