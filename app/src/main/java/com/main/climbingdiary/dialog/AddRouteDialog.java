@@ -145,7 +145,6 @@ public class AddRouteDialog extends DialogFragment{
                 String route_level = level.getSelectedItem().toString();
                 String route_date = date.getText().toString();
                 String route_area = area.getText().toString();
-                Log.d("sektor",sector.getText().toString());
                 String route_sector = sector.getText().toString();
                 String route_comment = comment.getText().toString();
                 int route_rating = rating.getSelectedItemPosition();

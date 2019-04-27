@@ -22,13 +22,13 @@ public class Route {
 
     public Route(int _id, String _name, String _level, String _area, String _sector, String _style, int _rating, String _comment, String _date){
         id = _id;
-        name = _name;
+        name = _name.replace("'","`");
         level = _level;
-        area = _area;
+        area = _area.replace("'","`");
         sector = _sector;
         style = _style;
         rating = _rating;
-        comment = _comment;
+        comment = _comment.replace("'","`");
         date = _date;
     }
 
