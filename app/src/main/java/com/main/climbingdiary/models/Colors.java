@@ -1,14 +1,23 @@
 package com.main.climbingdiary.models;
 
+import com.main.climbingdiary.R;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.support.v4.content.res.ResourcesCompat;
 
 public abstract class Colors {
+
     public static int getMainColor(){
-        return Color.parseColor("#0d47a1");
+        return R.color.colorPrimary;
     }
     public static int getActiveColor(){
-        return Color.parseColor("#007E33");
+        return R.color.colorAccent;
     }
+
+    public static int getButtonColor(){
+        return R.color.buttonColor;
+    }
+
     public static int getWarningColor(){
         return Color.parseColor("#FF8800");
     }

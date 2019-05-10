@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:text="Statistik"
         android:textColor="@color/white"
-        android:background="@color/colorPrimary"
+        android:background="@color/buttonColor"
         android:id="@+id/btn_stat"
         android:layout_gravity="center_vertical" />
 
@@ -29,7 +29,7 @@
         android:text="Verlauf"
         android:id="@+id/btn_dev"
         android:textColor="@color/white"
-        android:background="@color/colorPrimary"
+        android:background="@color/buttonColor"
         android:layout_gravity="center_vertical" />
 
     <Button
@@ -40,7 +40,7 @@
         android:text="Tabelle"
         android:id="@+id/btn_table"
         android:textColor="@color/white"
-        android:background="@color/colorPrimary"
+        android:background="@color/buttonColor"
         android:layout_gravity="center_vertical" />
 
     </RelativeLayout>

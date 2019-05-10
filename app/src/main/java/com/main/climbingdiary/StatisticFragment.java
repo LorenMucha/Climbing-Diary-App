@@ -1,11 +1,17 @@
 package com.main.climbingdiary;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.content.Context;
 
 import com.main.climbingdiary.Ui.TableView;
 import com.main.climbingdiary.Ui.charts.RouteBarChart;
@@ -69,9 +75,9 @@ public class StatisticFragment extends Fragment {
     }
     //XAxis Formatter
     public static void resetButtonBackground(){
-        setLineChartBtn.setBackgroundColor(Colors.getMainColor());
-        setBarChartBtn.setBackgroundColor(Colors.getMainColor());
-        setTableBtn.setBackgroundColor(Colors.getMainColor());
+        setLineChartBtn.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.buttonColor));
+        setBarChartBtn.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.buttonColor));
+        setTableBtn.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.buttonColor));
     }
     public static void refreshData(){
         final RouteLineChart _routeLineChart = new RouteLineChart(view);
