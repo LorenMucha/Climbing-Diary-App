@@ -147,7 +147,7 @@ public class AddRouteDialog extends DialogFragment{
                 String route_area = area.getText().toString();
                 String route_sector = sector.getText().toString();
                 String route_comment = comment.getText().toString();
-                int route_rating = rating.getSelectedItemPosition();
+                int route_rating = rating.getSelectedItemPosition()+1;
                 String route_style = stil.getSelectedItem().toString();
                 Route new_route = new Route(0,route_name,route_level,route_area,route_sector,route_style,route_rating,route_comment,route_date);
                 TaskRepository taskRepository = new TaskRepository();

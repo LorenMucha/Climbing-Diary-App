@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.view.View;
 
 import com.main.climbingdiary.R;
+import com.main.climbingdiary.abstraction.RouteChart;
 import com.main.climbingdiary.database.TaskRepository;
 import com.main.climbingdiary.models.Colors;
 import com.github.mikephil.charting.charts.LineChart;
@@ -14,7 +15,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
 
-public class RouteLineChart {
+public class RouteLineChart extends RouteChart {
     private LineChart lineChart;
     public RouteLineChart(View view){
         this.lineChart = (LineChart) view.findViewById(R.id.route_line_chart);
@@ -25,7 +26,7 @@ public class RouteLineChart {
     public void hide(){
         this.lineChart.setVisibility(View.GONE);
     }
-    public void createLineChart(){
+    public void createChart(){
         final ArrayList<String> labels = new ArrayList<>();
         ArrayList<Entry> entries = new ArrayList<>();
         TaskRepository taskRepository = new TaskRepository();

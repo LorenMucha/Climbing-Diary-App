@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.main.climbingdiary.R;
 import com.main.climbingdiary.Ui.TableView;
 import com.main.climbingdiary.Ui.charts.RouteBarChart;
 import com.main.climbingdiary.Ui.charts.RouteLineChart;
@@ -39,7 +38,7 @@ public class StatisticFragment extends Fragment {
                 _routeLineChart.show();
                 _routeTable.hide();
                 _routeBarChart.hide();
-                _routeLineChart.createLineChart();
+                _routeLineChart.createChart();
             }
         });
         setBarChartBtn.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +49,7 @@ public class StatisticFragment extends Fragment {
                 _routeTable.hide();
                 _routeLineChart.hide();
                 _routeBarChart.show();
-                _routeBarChart.createBarChart();
+                _routeBarChart.createChart();
             }
         });
         setTableBtn.setOnClickListener(new View.OnClickListener() {
@@ -78,8 +77,8 @@ public class StatisticFragment extends Fragment {
         final RouteLineChart _routeLineChart = new RouteLineChart(view);
         final TableView _routeTable = new TableView(view.getContext(),view);
         final RouteBarChart _routeBarChart = new RouteBarChart(view);
-        _routeBarChart.createBarChart();
-        _routeLineChart.createLineChart();
+        _routeBarChart.createChart();
+        _routeLineChart.createChart();
         _routeTable.createTableView();
     }
 }

@@ -1,4 +1,4 @@
-package com.main.climbingdiary.interfaces;
+package com.main.climbingdiary.abstraction;
 
 public interface State {
     boolean getState();

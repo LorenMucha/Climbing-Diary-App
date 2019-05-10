@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
 import com.main.climbingdiary.MainActivity;
-import com.main.climbingdiary.interfaces.State;
+import com.main.climbingdiary.abstraction.State;
 import com.main.climbingdiary.models.Route;
 
 public class TaskRepository {
@@ -110,7 +110,7 @@ public class TaskRepository {
     public Cursor getSectorByAreaName(String _name){
         try
         {
-            String sql ="SELECT s.name,s.koordinaten as koordinaten_sektor,a.koordinaten as koordinaten_area,s.gebiet,s.id FROM sektoren s, gebiete a where a.name Like '"+_name+"%' and s.gebiet=a.id GROUP BY s.id";
+            String sql ="SELECT s.name, s.gebiet,s.id FROM sektoren s, gebiete a where a.name Like '"+_name+"%' and s.gebiet=a.id GROUP BY s.id";
             Cursor mCur = mDb.rawQuery(sql, null);
             if (mCur!=null)
             {

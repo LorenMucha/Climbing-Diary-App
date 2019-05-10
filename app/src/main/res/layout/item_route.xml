@@ -20,7 +20,7 @@
         android:stretchColumns="*"
         android:shrinkColumns="*">
         <TableRow
-            android:background="@color/colorPrimaryDark"
+            android:id="@+id/route_row"
             android:layout_width="0dp"
             android:layout_height="match_parent" >
 

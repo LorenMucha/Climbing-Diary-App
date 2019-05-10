@@ -49,6 +49,7 @@ public class RoutesAdapter extends
         TableRow hiddenView;
         ImageButton editButton;
         ImageButton removeButton;
+        TableRow routeRow;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -67,6 +68,7 @@ public class RoutesAdapter extends
             hiddenView = (TableRow) itemView.findViewById(R.id.route_hidden);
             editButton = (ImageButton) itemView.findViewById(R.id.route_edit);
             removeButton = (ImageButton) itemView.findViewById(R.id.route_delete);
+            routeRow = (TableRow) itemView.findViewById(R.id.route_row);
         }
     }
 
@@ -108,6 +110,10 @@ public class RoutesAdapter extends
 
         //tasks for deleting and editing
         final TaskRepository taskRepository = new TaskRepository();
+
+        //set the header color for the row
+        TableRow _routeRow = viewHolder.routeRow;
+        _routeRow.setBackgroundColor(Colors.getGradeColor(gradeText));
 
         // Set item views
         TextView routeName = viewHolder.nameTextView;

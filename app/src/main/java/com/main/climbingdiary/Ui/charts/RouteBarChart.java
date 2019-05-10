@@ -1,9 +1,14 @@
 package com.main.climbingdiary.Ui.charts;
 
 import android.database.Cursor;
+import android.util.Log;
 import android.view.View;
 
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.main.climbingdiary.R;
+import com.main.climbingdiary.abstraction.RouteChart;
 import com.main.climbingdiary.database.TaskRepository;
 import com.main.climbingdiary.models.Colors;
 import com.github.mikephil.charting.charts.BarChart;
@@ -15,8 +20,8 @@ import com.github.mikephil.charting.data.BarEntry;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RouteBarChart {
-    public BarChart barChart;
+public class RouteBarChart extends RouteChart {
+    private BarChart barChart;
     public RouteBarChart(View _view){
         this.barChart = (BarChart) _view.findViewById(R.id.route_bar_chart);
     }
@@ -26,7 +31,7 @@ public class RouteBarChart {
     public void hide(){
         this.barChart.setVisibility(View.GONE);
     }
-    public void createBarChart(){
+    public void createChart(){
         List<BarEntry> entriesGroup = new ArrayList<>();
         final ArrayList<String> labels = new ArrayList<>();
         //get the cjart entries
@@ -68,5 +73,23 @@ public class RouteBarChart {
         barChart.getAxisLeft().setDrawGridLines(false);
         barChart.getAxisLeft().setSpaceBottom(1f);
         barChart.invalidate(); // refresh
+
+        //set the on click Listener
+        this.barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                RouteBarChart.onChartClick(e,h);
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
+    }
+    public static void onChartClick(Entry e, Highlight h){
+        float x=e.getX();
+        float y=e.getY();
+        Log.d("Coordinates:"," X:"+x+" Y:"+y);
     }
 }
