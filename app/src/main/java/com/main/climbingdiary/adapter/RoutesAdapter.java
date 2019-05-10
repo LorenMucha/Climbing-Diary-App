@@ -1,14 +1,19 @@
 package com.main.climbingdiary.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -43,7 +48,7 @@ public class RoutesAdapter extends
         TextView dateTextView;
         TextView levelTextView;
         TextView areaTextView;
-        TextView styleTextView;
+        ImageView styleTextView;
         RatingBar ratingView;
         TextView commentTextView;
         TableRow hiddenView;
@@ -61,7 +66,8 @@ public class RoutesAdapter extends
             dateTextView = (TextView) itemView.findViewById(R.id.route_date);
             levelTextView=(TextView) itemView.findViewById(R.id.route_level);
             areaTextView=(TextView) itemView.findViewById(R.id.route_area);
-            styleTextView=(TextView) itemView.findViewById(R.id.route_style);
+            //styleTextView=(TextView) itemView.findViewById(R.id.route_style);
+            styleTextView=(ImageView) itemView.findViewById(R.id.route_style);
             ratingView = (RatingBar) itemView.findViewById(R.id.route_rating);
             commentTextView= (TextView) itemView.findViewById(R.id.route_comment);
             hiddenView = (TableRow) itemView.findViewById(R.id.route_hidden);
@@ -103,7 +109,7 @@ public class RoutesAdapter extends
         String commentString = route.getComment();
 
         //create the hztml string for the route and sector
-        final String routeHtml ="<b>"+areaText+"</b><br/>"+sectorText;
+        final String routeHtml = areaText+" &#9679; "+sectorText;
         final String commentHtml = "<b>Kommentar</b><br/>"+commentString;
 
         //tasks for deleting and editing
@@ -113,7 +119,7 @@ public class RoutesAdapter extends
         TextView routeName = viewHolder.nameTextView;
         TextView date = viewHolder.dateTextView;
         TextView level = viewHolder.levelTextView;
-        TextView style = viewHolder.styleTextView;
+        ImageView style = viewHolder.styleTextView;
         TextView area = viewHolder.areaTextView;
         final TextView comment = viewHolder.commentTextView;
         final TableRow hidden_layout = viewHolder.hiddenView;
@@ -127,8 +133,15 @@ public class RoutesAdapter extends
         date.setText(route.getDate());
         level.setText(gradeText);
         level.setTextColor(Colors.getGradeColor(gradeText));
-        style.setText(styleText);
-        style.setTextColor(Colors.getStyleColor(styleText));
+        //style.setText(styleText);
+        //style.setTextColor(Colors.getStyleColor(styleText));
+        try{
+            Drawable drawable = ContextCompat.getDrawable(viewHolder.itemView.getContext(), getRoutStyleIcon(styleText));
+            style.setImageDrawable(drawable);
+        }catch (Exception e){
+            Log.e("Error drawable loading", styleText);
+        }
+
         area.setText(Html.fromHtml(routeHtml));
         comment.setText(Html.fromHtml(commentHtml));
         rating.setRating(route.getRating());
@@ -245,5 +258,18 @@ public class RoutesAdapter extends
                 notifyDataSetChanged();
             }
         };
+    }
+
+    private int getRoutStyleIcon(String style){
+        style = style.toUpperCase();
+        switch (style) {
+            case "OS":
+                return R.drawable.ic_os;
+            case "RP":
+                return R.drawable.ic_rp;
+            case "FLASH":
+                return R.drawable.ic_flash;
+        }
+        return 0;
     }
 }

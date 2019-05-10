@@ -17,126 +17,99 @@
     <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/backgroundColorDark"
         android:stretchColumns="*"
         android:shrinkColumns="*">
         <TableRow
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/backgroundColorDark"
             android:layout_width="0dp"
             android:layout_height="match_parent" >
 
             <TextView
+                android:text="Routenname"
+                android:textStyle="bold"
                 android:textSize="@dimen/route_name"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:id="@+id/route_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_span="3"
-                android:layout_gravity="left"
-                android:layout_marginLeft="5dp"
+                android:layout_span="6"
+                android:layout_gravity="start"
+                android:layout_marginStart="5dp"
                 tools:ignore="SpUsage" />
             <TextView
-                android:textSize="@dimen/route_date"
-                android:textColor="@color/white"
-                android:id="@+id/route_date"
-                android:layout_width="match_parent"
+                android:text="8a+"
+                android:textStyle="bold"
+                android:textSize="@dimen/route_content"
+                android:textColor="@color/black"
+                android:id="@+id/route_level"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
                 tools:ignore="SpUsage" />
+            <ImageView
+                android:id="@+id/route_style"
+                android:layout_height="25dp"
+                android:layout_width="wrap_content"
+                android:padding="4dp"
+                android:layout_gravity="end"
+                android:paddingEnd="10dp"
+                />
+            <!--TextView
+                android:text="OS"
+                android:textSize="@dimen/route_content"
+                android:textColor="@color/black"
+                android:id="@+id/route_style"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_gravity="end"
+                android:paddingEnd="10dp"
+                tools:ignore="SpUsage" /-->
         </TableRow>
 
-        <TableRow
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingStart="5dp"
-            android:gravity="left"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp">
-            <ImageView
-                android:layout_gravity="left"
-                android:layout_marginStart="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_fa_ruler"
-                 />
-            <ImageView
-                android:layout_gravity="left"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_map_marked"
-                />
-            <ImageView
-                android:layout_gravity="left"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_check_circle"
-                />
-            <ImageView
-                android:layout_gravity="left"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_star_half"
-                />
-        </TableRow>
 
         <View
             android:layout_height="2dip"
-            android:background="#FF909090" />
+            android:background="@color/backgroundColorPrimary" />
 
         <TableRow
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:gravity="center">
+            android:layout_marginBottom="5dp">
+
             <TextView
-                android:textStyle="bold"
-                android:layout_marginStart="20dp"
+                android:text="Gebiet Sektor und noch mehr Sektoren"
+                android:layout_span="7"
                 android:textSize="@dimen/route_content"
-                android:textColor="@color/black"
-                android:id="@+id/route_level"
-                android:layout_height="wrap_content"
-                tools:ignore="SpUsage" />
-            <TextView
-                android:textSize="@dimen/route_content"
-                android:textColor="@color/black"
+                android:textColor="@color/coveredFontColor"
                 android:id="@+id/route_area"
                 android:layout_height="wrap_content"
-                android:maxLines="2"
+                android:layout_width="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="5dp"
+                android:maxLines="1"
                 android:ellipsize="end"
-                android:layout_width="match_parent"
                 tools:ignore="SpUsage" />
+
             <TextView
-                android:textSize="@dimen/route_content"
+                android:id="@+id/route_date"
+                android:layout_span="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="5dp"
+                android:paddingEnd="10dp"
+                android:text="01.04.2019"
                 android:textColor="@color/black"
-                android:id="@+id/route_style"
-                android:layout_height="match_parent"
+                android:textSize="@dimen/route_date"
                 tools:ignore="SpUsage" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent">
-
-                <RatingBar
-                    android:id="@+id/route_rating"
-                    style="@style/Widget.AppCompat.RatingBar.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:numStars="5"
-                    android:stepSize="1" />
-
-
-            </LinearLayout>
 
         </TableRow>
 
-        <View
-            android:layout_height="2dip"
-            android:background="#FF909090" />
-
         <TableRow
             android:id="@+id/route_hidden"
-            android:background="@color/lighgrey"
+            android:background="@color/backgroundColorDark"
             android:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="match_parent" >
@@ -144,45 +117,71 @@
             <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_span="4"
+                android:layout_span="8"
                 android:layout_marginTop="5dp">
+
+                <View
+                    android:layout_height="2dip"
+                    android:id="@+id/edit_hr"
+                    android:layout_width="wrap_content" />
+
+                <RatingBar
+                    android:id="@+id/route_rating"
+                    android:layout_below="@id/edit_hr"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:numStars="5"
+                    android:stepSize="1" />
+
+                <View
+                    android:layout_below="@+id/route_rating"
+                    android:layout_height="2dip"
+                    android:id="@+id/edit_hr1"
+                    android:layout_width="wrap_content" />
 
                 <TextView
                     android:textSize="@dimen/route_name"
+                    android:layout_below="@id/edit_hr1"
                     android:textColor="@color/black"
                     android:id="@+id/route_comment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
+                    android:layout_gravity="start"
                     android:layout_margin="5dp"
                     tools:ignore="SpUsage" />
 
                 <View
                     android:layout_below="@+id/route_comment"
                     android:layout_height="2dip"
-                    android:background="#FF909090"
-                    android:id="@+id/edit_hr"
+                    android:background="@color/backgroundColorPrimary"
+                    android:id="@+id/edit_hr2"
                     android:layout_width="wrap_content" />
 
                 <ImageButton
                     android:layout_marginTop="5dp"
-                    android:layout_below="@+id/edit_hr"
+                    android:layout_below="@+id/edit_hr2"
                     android:id="@+id/route_edit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@color/buttonColor"
                     android:src="@drawable/ic_pen"
-                    android:layout_marginRight="10dp"
+                    android:paddingEnd="30dp"
                     android:layout_toLeftOf="@id/route_delete" />
 
                 <ImageButton
                     android:layout_marginTop="5dp"
-                    android:layout_below="@+id/edit_hr"
+                    android:layout_below="@+id/edit_hr2"
                     android:id="@+id/route_delete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@color/buttonColor"
                     android:src="@drawable/ic_trash"
-                    android:layout_alignParentRight="true"
-                    android:textColor="@color/white" />
+                    android:layout_alignParentRight="true" />
 
             </RelativeLayout>
         </TableRow>
