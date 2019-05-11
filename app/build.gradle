@@ -31,6 +31,7 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'org.jsoup:jsoup:1.11.3'
     //doku: https://jitpack.io/p/Leogiroux/sweet-alert-dialog
     implementation 'com.github.f0ris.sweetalert:library:1.5.1'
     //doku: https://github.com/PhilJay/MPAndroidChart
