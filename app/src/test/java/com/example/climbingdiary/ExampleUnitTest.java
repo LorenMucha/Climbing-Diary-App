@@ -13,7 +13,8 @@ import static org.junit.Assert.*;
  */
 public class ExampleUnitTest {
     @Test
-    public void get8aTitle(){
-
+    public void getTable(){
+        WebScrapper scrapper = new WebScrapper("loren-mucha");
+        scrapper.getRouteList();
     }
 }
