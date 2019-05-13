@@ -5,15 +5,19 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.text.ParseException;
 import java.util.ArrayList;
 
-import com.main.climbingdiary.R;
+import com.main.climbingdiary.Ui.AppBarMenu;
 import com.main.climbingdiary.adapter.RoutesAdapter;
 import com.main.climbingdiary.models.Route;
+import com.main.climbingdiary.models.RouteSort;
 
 public class RoutesFragment extends Fragment {
 
@@ -41,7 +45,7 @@ public class RoutesFragment extends Fragment {
         rvRoutes.setAdapter(adapter);
         // Set layout manager to position the items
         rvRoutes.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-
+        setHasOptionsMenu(true);
         return view;
     }
 
@@ -60,5 +64,33 @@ public class RoutesFragment extends Fragment {
         adapter = new RoutesAdapter(routes);
         rvRoutes.setAdapter(adapter);
     }
-
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Do something that differs the Activity's menu here
+        super.onCreateOptionsMenu(menu, inflater);
+        AppBarMenu appmenu = new AppBarMenu(menu);
+        appmenu.showItem();
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        switch (item.getItemId()) {
+            case R.id.sort_level:
+                RouteSort.setSort("level");
+                RoutesFragment.refreshData();
+                return true;
+            case R.id.sort_area:
+                RouteSort.setSort("gebiet");
+                RoutesFragment.refreshData();
+                return true;
+            case R.id.sort_date:
+                RouteSort.setSort("date");
+                RoutesFragment.refreshData();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

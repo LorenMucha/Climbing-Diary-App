@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.main.climbingdiary.models.Route;
 
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -27,17 +28,20 @@ public class WebScrapper {
         StringBuilder sb = new StringBuilder();
         sb.append(this.url)
                 .append(this.username)
-                .append("/routes/2009/?AscentClass=0&AscentListTimeInterval=0&AscentListViewType=1&GID=dc1dcb3276b8b01b569e128b202fab15");
+                .append("/routes/?AscentClass=0&AscentListTimeInterval=0&AscentListViewType=1&GID=dc1dcb3276b8b01b569e128b202fab15");
 
         try{
-            //todo, solution: https://www.htmlgoodies.com/html5/other/web-page-scraping-with-jsoup.html
-            Document doc = Jsoup.connect(sb.toString()).userAgent("Opera").get();
-            String content = doc.getElementById("div#main").outerHtml();
-            System.out.println(content);
-            /*for(Iterator<Element> ite = table.select("td").iterator(); ite.hasNext();){
-               System.out.println(ite.next().text());
-            }*/
-
+            Connection connection = Jsoup.connect(sb.toString());
+            //set user agent to Google Chrome
+            connection.userAgent("Mozilla/5.0");
+            //set timeout to 50 seconds
+            connection.timeout(50000);
+            Document doc = connection.get();
+            Element element = doc.getElementById("main");
+            Elements td = element.select("tr");
+            for(Element el : td){
+                System.out.println(el.outerHtml());
+            }
 
         }catch(IOException e){
             e.printStackTrace();

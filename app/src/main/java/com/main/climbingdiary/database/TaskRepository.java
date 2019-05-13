@@ -21,7 +21,7 @@ public class TaskRepository {
 
     public TaskRepository ()
     {
-        this.mContext = MainActivity.getAppContext();
+        this.mContext = MainActivity.getMainAppContext();
         mDbHelper = new DatabaseHelper(mContext);
     }
 

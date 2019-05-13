@@ -1,6 +1,6 @@
 package com.main.climbingdiary;
 
-import android.app.SearchManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,7 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
 
-import com.main.climbingdiary.R;
+import com.main.climbingdiary.Ui.AppBarMenu;
 import com.main.climbingdiary.adapter.TabAdapter;
 import com.main.climbingdiary.dialog.DialogManager;
 import com.main.climbingdiary.models.RouteSort;
@@ -30,13 +30,15 @@ public class MainActivity extends AppCompatActivity
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private static Context context;
+    private static ComponentName componentName;
     private FragmentManager fm;
     private SearchView searchView;
     private FloatingActionButton addRoute;
 
-    public static Context getAppContext() {
+    public static Context getMainAppContext() {
         return MainActivity.context;
     }
+    public static ComponentName getMainComponentName(){ return MainActivity.componentName;};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         MainActivity.context = getApplicationContext();
+        MainActivity.componentName = getComponentName();
         fm = getSupportFragmentManager();
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -119,54 +122,9 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        searchView.setSearchableInfo(searchManager
-                .getSearchableInfo(getComponentName()));
-        searchView.setMaxWidth(Integer.MAX_VALUE);
-
-        // listening to search query text change
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                // filter recycler view when query submitted
-                RoutesFragment.getAdapter().getFilter().filter(query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String query) {
-                // filter recycler view when text is changed
-                RoutesFragment.getAdapter().getFilter().filter(query);
-                return false;
-            }
-        });
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        switch (item.getItemId()) {
-            case R.id.sort_level:
-                RouteSort.setSort("level");
-                RoutesFragment.refreshData();
-                return true;
-            case R.id.sort_area:
-                RouteSort.setSort("gebiet");
-                RoutesFragment.refreshData();
-                return true;
-            case R.id.sort_date:
-                RouteSort.setSort("date");
-                RoutesFragment.refreshData();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
     //ToDo
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {

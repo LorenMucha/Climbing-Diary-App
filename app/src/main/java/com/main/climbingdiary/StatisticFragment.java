@@ -1,18 +1,17 @@
 package com.main.climbingdiary;
 
-import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.content.Context;
 
+import com.main.climbingdiary.Ui.AppBarMenu;
 import com.main.climbingdiary.Ui.TableView;
 import com.main.climbingdiary.Ui.charts.RouteBarChart;
 import com.main.climbingdiary.Ui.charts.RouteLineChart;
@@ -71,6 +70,7 @@ public class StatisticFragment extends Fragment {
         });
         //default visualisation
         setBarChartBtn.callOnClick();
+        setHasOptionsMenu(true);
        return view;
     }
     //XAxis Formatter
@@ -86,5 +86,12 @@ public class StatisticFragment extends Fragment {
         _routeBarChart.createChart();
         _routeLineChart.createChart();
         _routeTable.createTableView();
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Do something that differs the Activity's menu here
+        super.onCreateOptionsMenu(menu, inflater);
+        AppBarMenu appmenu = new AppBarMenu(menu);
+        appmenu.hideItem();
     }
 }
