@@ -15,14 +15,13 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.main.climbingdiary.Ui.FragmentPager;
+import com.main.climbingdiary.Ui.NavDrawer;
 import com.main.climbingdiary.dialog.DialogManager;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
 
     private static final int layoutId = R.layout.activity_main;
     private static Context context;
@@ -30,6 +29,8 @@ public class MainActivity extends AppCompatActivity
     private FloatingActionButton addRoute;
     //manager for the tabs
     private FragmentPager fragmentPager;
+    //navigation View
+    private NavDrawer navDrawer;
 
     public static Context getMainAppContext() {
         return MainActivity.context;
@@ -49,7 +50,8 @@ public class MainActivity extends AppCompatActivity
         //add the fragments
         Map<String,Fragment> fm = new HashMap<>();
         fm.put("statistik",new StatisticFragment());
-        fm.put("roputen",new RoutesFragment());
+        fm.put("routen",new RoutesFragment());
+
         fragmentPager = new FragmentPager(this);
         fragmentPager.setFragment(fm);
 
@@ -62,15 +64,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        /* Todo
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);*/
+        navDrawer = new NavDrawer(this);
     }
 
     @Override
@@ -87,31 +81,6 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    //ToDo
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        /*if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);*/
         return true;
     }
 }

@@ -29,7 +29,6 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
 
     public void setFragment(Map<String,Fragment> fm){
         for (Map.Entry<String, Fragment> entry : fm.entrySet()) {
-            System.out.println(entry.getKey() + "/" + entry.getValue());
             adapter.addFragment(entry.getValue(),entry.getKey());
         }
         viewPager.setAdapter(adapter);
