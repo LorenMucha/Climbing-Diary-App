@@ -5,63 +5,53 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.SearchView;
 
-import com.main.climbingdiary.Ui.AppBarMenu;
-import com.main.climbingdiary.adapter.TabAdapter;
+import com.main.climbingdiary.Ui.FragmentPager;
 import com.main.climbingdiary.dialog.DialogManager;
-import com.main.climbingdiary.models.RouteSort;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private TabAdapter adapter;
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
+    private static final int layoutId = R.layout.activity_main;
     private static Context context;
     private static ComponentName componentName;
-    private FragmentManager fm;
-    private SearchView searchView;
     private FloatingActionButton addRoute;
+    //manager for the tabs
+    private FragmentPager fragmentPager;
 
     public static Context getMainAppContext() {
         return MainActivity.context;
     }
-    public static ComponentName getMainComponentName(){ return MainActivity.componentName;};
+    public static ComponentName getMainComponentName(){ return MainActivity.componentName;}
+    public static int getLayoutId(){return layoutId;}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(layoutId);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         MainActivity.context = getApplicationContext();
         MainActivity.componentName = getComponentName();
-        fm = getSupportFragmentManager();
-
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-
-        adapter = new TabAdapter(getSupportFragmentManager());
-        adapter.addFragment(new StatisticFragment(),"statistik");
-        adapter.addFragment(new RoutesFragment(), "routen");
-        /*ToDo
-        adapter.addFragment(new ProjectFragment(), "projekte");*/
-
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
+        //add the fragments
+        Map<String,Fragment> fm = new HashMap<>();
+        fm.put("statistik",new StatisticFragment());
+        fm.put("roputen",new RoutesFragment());
+        fragmentPager = new FragmentPager(this);
+        fragmentPager.setFragment(fm);
 
         //the add button
         addRoute = (FloatingActionButton) findViewById(R.id.addRoute);
@@ -71,31 +61,6 @@ public class MainActivity extends AppCompatActivity
                 DialogManager.openAddRouteDialog(view.getContext());
             }
         });
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                switch(tab.getPosition()) {
-                    case 0:
-                        Log.d("select tab","0");
-                        addRoute.hide();
-                        break;
-                    default :
-                        Log.d("select tab","1");
-                        addRoute.show();
-                        break;
-                }
-            }
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
 
         /* Todo
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
