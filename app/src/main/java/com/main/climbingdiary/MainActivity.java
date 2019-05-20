@@ -4,22 +4,16 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.main.climbingdiary.Ui.FragmentPager;
 import com.main.climbingdiary.Ui.NavDrawer;
 import com.main.climbingdiary.dialog.DialogManager;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,13 +41,9 @@ public class MainActivity extends AppCompatActivity {
 
         MainActivity.context = getApplicationContext();
         MainActivity.componentName = getComponentName();
-        //add the fragments
-        Map<String,Fragment> fm = new HashMap<>();
-        fm.put("statistik",new StatisticFragment());
-        fm.put("routen",new RoutesFragment());
 
         fragmentPager = new FragmentPager(this);
-        fragmentPager.setFragment(fm);
+        fragmentPager.setFragmente();
 
         //the add button
         addRoute = (FloatingActionButton) findViewById(R.id.addRoute);

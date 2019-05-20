@@ -1,8 +1,6 @@
 package com.main.climbingdiary.Ui;
 
-import android.app.Activity;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -10,8 +8,7 @@ import android.util.Log;
 
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.adapter.TabAdapter;
-
-import java.util.Map;
+import com.main.climbingdiary.adapter.Tabs;
 
 public class FragmentPager implements TabLayout.OnTabSelectedListener {
     private static final int view_layout = R.id.viewPager;
@@ -27,10 +24,10 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
         adapter = new TabAdapter(_activity.getSupportFragmentManager());
     }
 
-    public void setFragment(Map<String,Fragment> fm){
-        for (Map.Entry<String, Fragment> entry : fm.entrySet()) {
-            adapter.addFragment(entry.getValue(),entry.getKey());
-        }
+    public void setFragmente(){
+        adapter.addFragment(Tabs.STATISTIK.getFragment(),Tabs.STATISTIK.getTitle());
+        adapter.addFragment(Tabs.ROUTEN.getFragment(),Tabs.ROUTEN.getTitle());
+        adapter.addFragment(Tabs.PROJEKTE.getFragment(),Tabs.PROJEKTE.getTitle());
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
     }

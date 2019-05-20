@@ -9,7 +9,8 @@ import android.view.ViewGroup;
 import com.main.climbingdiary.R;
 
 public class ProjectFragment extends Fragment {
-    static View view;
+
+    private View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

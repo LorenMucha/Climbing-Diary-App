@@ -132,7 +132,7 @@ public class Route {
         TaskRepository taskRepository = new TaskRepository();
         taskRepository.open();
         //String Sort = (Menu) getA
-        Cursor cursor = taskRepository.getAllRoutes(RouteSort.getSort(),null);
+        Cursor cursor = taskRepository.getAllRoutes();
         if (cursor != null) {
             while (!cursor.isAfterLast()) {
                 int id = cursor.getInt(0);

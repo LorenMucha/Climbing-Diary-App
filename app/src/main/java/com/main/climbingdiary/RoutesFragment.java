@@ -84,7 +84,7 @@ public class RoutesFragment extends Fragment {
                 RoutesFragment.refreshData();
                 return true;
             case R.id.sort_area:
-                RouteSort.setSort("gebiet");
+                RouteSort.setSort("area");
                 RoutesFragment.refreshData();
                 return true;
             case R.id.sort_date:

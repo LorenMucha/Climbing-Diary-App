@@ -14,7 +14,6 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void getTable(){
-        WebScrapper scrapper = new WebScrapper("loren-mucha");
-        scrapper.getRouteList();
+
     }
 }

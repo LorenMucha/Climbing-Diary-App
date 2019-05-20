@@ -46,21 +46,12 @@ public class TaskRepository {
         mDbHelper.close();
     }
 
-    public Cursor getAllRoutes(String _order,String _filter)
+    public Cursor getAllRoutes()
     {
-        String order_value =  "r.level";
-        String filter = "";
-        if(_order != null && !_order.isEmpty()){
-            order_value = "r."+_order;
-        }
-        if(_filter != null && !_filter.isEmpty()){
-            filter = "and "+_filter;
-        }
         try
         {
-            String sql ="SELECT r.id, r.name,g.name as gebiet,r.level,r.stil,r.rating, r.kommentar, strftime('%d.%m.%Y',r.date) as date, k.name as sektor FROM routen r, gebiete g, sektoren k where g.id=r.gebiet and k.id=r.sektor "+filter+" group by r.id Order By "+order_value+" DESC";
-
-            Cursor mCur = mDb.rawQuery(sql, null);
+            String sql = RouteOrderSQL.ROUTELIST.getSQL();
+             Cursor mCur = mDb.rawQuery(sql, null);
             if (mCur!=null)
             {
                 mCur.moveToNext();
