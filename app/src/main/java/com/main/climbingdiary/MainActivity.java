@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.main.climbingdiary.Ui.FragmentPager;
 import com.main.climbingdiary.Ui.NavDrawer;
+import com.main.climbingdiary.Ui.button.AddRoute;
 import com.main.climbingdiary.dialog.DialogManager;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,10 +22,6 @@ public class MainActivity extends AppCompatActivity {
     private static Context context;
     private static ComponentName componentName;
     private FloatingActionButton addRoute;
-    //manager for the tabs
-    private FragmentPager fragmentPager;
-    //navigation View
-    private NavDrawer navDrawer;
 
     public static Context getMainAppContext() {
         return MainActivity.context;
@@ -42,24 +39,20 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.context = getApplicationContext();
         MainActivity.componentName = getComponentName();
 
-        fragmentPager = new FragmentPager(this);
+        //manager for the tabs
+        FragmentPager fragmentPager = new FragmentPager(this);
         fragmentPager.setFragmente();
 
         //the add button
-        addRoute = (FloatingActionButton) findViewById(R.id.addRoute);
-        addRoute.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogManager.openAddRouteDialog(view.getContext());
-            }
-        });
+        AddRoute addRoute = new AddRoute(this);
 
-        navDrawer = new NavDrawer(this);
+        //navigation View
+        NavDrawer navDrawer = new NavDrawer(this);
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {

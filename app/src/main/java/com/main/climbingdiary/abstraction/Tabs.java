@@ -1,4 +1,4 @@
-package com.main.climbingdiary.adapter;
+package com.main.climbingdiary.abstraction;
 
 import android.support.v4.app.Fragment;
 

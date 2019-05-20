@@ -16,12 +16,12 @@ public class NavDrawer implements NavigationView.OnNavigationItemSelectedListene
     private ActionBarDrawerToggle toggle;
 
     public NavDrawer(AppCompatActivity _activity){
-        drawer = (DrawerLayout) _activity.findViewById(layoutId);
+        drawer = _activity.findViewById(layoutId);
         toggle = new ActionBarDrawerToggle(
                 _activity, drawer, (Toolbar) _activity.findViewById(R.id.toolbar), R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        NavigationView navigationView = (NavigationView) _activity.findViewById(R.id.nav_view);
+        NavigationView navigationView = _activity.findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 

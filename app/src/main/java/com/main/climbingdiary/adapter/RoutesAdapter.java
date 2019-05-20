@@ -19,6 +19,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.main.climbingdiary.MainActivity;
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.RoutesFragment;
 import com.main.climbingdiary.StatisticFragment;
@@ -162,13 +163,6 @@ public class RoutesAdapter extends
             }
         });
 
-        //set the on Click listener
-        area.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(),Html.fromHtml(routeHtml),Toast.LENGTH_LONG).show();
-            }
-        });
         //delete a route
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,7 +206,7 @@ public class RoutesAdapter extends
         edit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                DialogManager.openEditRouteDialog(view.getContext(),route.getId());
+                DialogManager.openEditRouteDialog(MainActivity.getMainAppContext(),route.getId());
             }
         });
     }

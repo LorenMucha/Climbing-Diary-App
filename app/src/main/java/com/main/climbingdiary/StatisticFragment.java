@@ -14,6 +14,7 @@ import android.widget.Button;
 
 import com.main.climbingdiary.Ui.AppBarMenu;
 import com.main.climbingdiary.Ui.TableView;
+import com.main.climbingdiary.Ui.button.AddRoute;
 import com.main.climbingdiary.Ui.charts.RouteBarChart;
 import com.main.climbingdiary.Ui.charts.RouteLineChart;
 import com.main.climbingdiary.models.Colors;
@@ -72,6 +73,7 @@ public class StatisticFragment extends Fragment {
         //default visualisation
         setBarChartBtn.callOnClick();
         setHasOptionsMenu(true);
+
        return view;
     }
     //XAxis Formatter
