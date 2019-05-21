@@ -3,6 +3,7 @@ package com.main.climbingdiary.adapter;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -206,7 +207,7 @@ public class RoutesAdapter extends
         edit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                DialogManager.openEditRouteDialog(MainActivity.getMainAppContext(),route.getId());
+                DialogManager.openEditRouteDialog(route.getId());
             }
         });
     }

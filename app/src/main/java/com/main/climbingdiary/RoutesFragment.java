@@ -1,9 +1,7 @@
 package com.main.climbingdiary;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,14 +11,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.text.ParseException;
-import java.util.ArrayList;
-
 import com.main.climbingdiary.Ui.AppBarMenu;
-import com.main.climbingdiary.Ui.button.AddRoute;
 import com.main.climbingdiary.adapter.RoutesAdapter;
 import com.main.climbingdiary.models.Route;
 import com.main.climbingdiary.models.RouteSort;
+
+import java.text.ParseException;
+import java.util.ArrayList;
 
 public class RoutesFragment extends Fragment {
 

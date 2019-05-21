@@ -11,7 +11,7 @@ import com.main.climbingdiary.R;
 import com.main.climbingdiary.dialog.DialogManager;
 
 //ToDo
-public class AddRoute extends MainActivity implements View.OnClickListener {
+public class AddRoute implements View.OnClickListener {
 
     public static FloatingActionButton addRoute;
 
@@ -22,7 +22,7 @@ public class AddRoute extends MainActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        DialogManager.openAddRouteDialog(MainActivity.getMainAppContext());
+        DialogManager.openAddRouteDialog();
     }
 
     public static void show(){

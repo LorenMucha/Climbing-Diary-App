@@ -9,12 +9,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.View;
 
 import com.main.climbingdiary.Ui.FragmentPager;
 import com.main.climbingdiary.Ui.NavDrawer;
 import com.main.climbingdiary.Ui.button.AddRoute;
-import com.main.climbingdiary.dialog.DialogManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,12 +20,13 @@ public class MainActivity extends AppCompatActivity {
     private static Context context;
     private static ComponentName componentName;
     private FloatingActionButton addRoute;
+    public static AppCompatActivity mainActivity;
 
     public static Context getMainAppContext() {
         return MainActivity.context;
     }
     public static ComponentName getMainComponentName(){ return MainActivity.componentName;}
-    public static int getLayoutId(){return layoutId;}
+    public static AppCompatActivity getMainActivity(){return MainActivity.mainActivity;};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         MainActivity.context = getApplicationContext();
         MainActivity.componentName = getComponentName();
+        MainActivity.mainActivity = this;
 
         //manager for the tabs
         FragmentPager fragmentPager = new FragmentPager(this);

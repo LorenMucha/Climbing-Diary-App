@@ -1,18 +1,16 @@
 package com.main.climbingdiary.dialog;
 
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 
-//ToDo
+import com.main.climbingdiary.MainActivity;
+
 public class DialogManager {
-    public static void openAddRouteDialog(Context context){
-        AppCompatActivity activity = (AppCompatActivity) context;
+    public static void openAddRouteDialog(){
         AddRouteDialog addRoute = AddRouteDialog.newInstance("Neue Route");
-        addRoute.show(activity.getSupportFragmentManager(),"fragment_add_Route");
+        addRoute.show(MainActivity.getMainActivity().getSupportFragmentManager(),"fragment_add_Route");
     }
-    public static void openEditRouteDialog(Context context,int _id){
-        AppCompatActivity activity = (AppCompatActivity) context;
+    public static void openEditRouteDialog(int _id){
         EditRouteDialog editDialog = EditRouteDialog.newInstance("Route bearbeiten",_id);
-        editDialog.show(activity.getSupportFragmentManager(),"edit");
+        editDialog.show(MainActivity.getMainActivity().getSupportFragmentManager(),"edit");
     }
 }
