@@ -152,7 +152,4 @@ public class Route {
         taskRepository.close();
         return _routes;
     }
-    public String toString(){
-        return "Name:"+this.getName()+"||Area:"+this.getArea()+"||Sektor:"+this.getSector()+"||Level:"+this.getLevel()+"||Style:"+this.getStyle()+"||Rating:"+this.getRating()+"||Comment:"+this.getComment()+"||Date:"+this.getDate();
-    }
 }

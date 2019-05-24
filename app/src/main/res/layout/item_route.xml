@@ -54,16 +54,6 @@
                 android:layout_gravity="end"
                 android:paddingEnd="10dp"
                 />
-            <!--TextView
-                android:text="OS"
-                android:textSize="@dimen/route_content"
-                android:textColor="@color/black"
-                android:id="@+id/route_style"
-                android:layout_height="match_parent"
-                android:layout_width="wrap_content"
-                android:layout_gravity="end"
-                android:paddingEnd="10dp"
-                tools:ignore="SpUsage" /-->
         </TableRow>
 
 
