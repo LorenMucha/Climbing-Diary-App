@@ -17,7 +17,12 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private TabAdapter adapter;
-    private FragmentManager fm;;
+    private FragmentManager fm;
+    private static String tabTitle;
+
+    public static String getTabTitle(){
+        return tabTitle;
+    }
 
     public FragmentPager(AppCompatActivity _activity){
         viewPager = _activity.findViewById(view_layout);
@@ -37,6 +42,7 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
+        tabTitle = tab.getText().toString();
         switch(tab.getPosition()) {
             case 0:
                 AddRoute.hide();

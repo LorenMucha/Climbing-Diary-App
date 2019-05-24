@@ -2,13 +2,12 @@ package com.main.climbingdiary.Ui.button;
 
 import android.app.Activity;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import com.main.climbingdiary.MainActivity;
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.dialog.DialogManager;
+import com.main.climbingdiary.Ui.FragmentPager;
+import com.main.climbingdiary.dialog.DialogFactory;
 
 //ToDo
 public class AddRoute implements View.OnClickListener {
@@ -22,7 +21,7 @@ public class AddRoute implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        DialogManager.openAddRouteDialog();
+        DialogFactory.openAddRouteDialog(FragmentPager.getTabTitle());
     }
 
     public static void show(){

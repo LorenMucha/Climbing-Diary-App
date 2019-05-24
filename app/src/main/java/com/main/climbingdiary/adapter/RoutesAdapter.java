@@ -2,8 +2,6 @@ package com.main.climbingdiary.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -18,14 +16,12 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.main.climbingdiary.MainActivity;
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.RoutesFragment;
 import com.main.climbingdiary.StatisticFragment;
 import com.main.climbingdiary.database.TaskRepository;
-import com.main.climbingdiary.dialog.DialogManager;
+import com.main.climbingdiary.dialog.DialogFactory;
 import com.main.climbingdiary.models.Alerts;
 import com.main.climbingdiary.models.Colors;
 import com.main.climbingdiary.models.Route;
@@ -207,7 +203,7 @@ public class RoutesAdapter extends
         edit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                DialogManager.openEditRouteDialog(route.getId());
+                DialogFactory.openEditRouteDialog("route",route.getId());
             }
         });
     }
