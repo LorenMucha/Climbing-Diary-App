@@ -22,7 +22,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.RoutesFragment;
+import com.main.climbingdiary.RouteDoneFragment;
 import com.main.climbingdiary.StatisticFragment;
 import com.main.climbingdiary.database.TaskRepository;
 import com.main.climbingdiary.models.Area;
@@ -35,7 +35,7 @@ import com.main.climbingdiary.Ui.SetDate;
 
 import java.util.regex.Pattern;
 
-public class EditRouteDialog  extends DialogFragment {
+public class EditRouteDialog extends DialogFragment {
     public EditRouteDialog() {}
     public static EditRouteDialog newInstance(String title, int _id){
         EditRouteDialog edit = new  EditRouteDialog();
@@ -175,7 +175,7 @@ public class EditRouteDialog  extends DialogFragment {
                 taskRepository.close();
                 //close the dialog
                 getDialog().cancel();
-                RoutesFragment.refreshData();
+                RouteDoneFragment.refreshData();
                 StatisticFragment.refreshData();
             }
         });

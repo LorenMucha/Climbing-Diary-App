@@ -1,5 +1,6 @@
 package com.main.climbingdiary.Ui.button;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
@@ -12,7 +13,8 @@ import com.main.climbingdiary.dialog.DialogFactory;
 //ToDo
 public class AddRoute implements View.OnClickListener {
 
-    public static FloatingActionButton addRoute;
+    @SuppressLint("StaticFieldLeak")
+    private static FloatingActionButton addRoute;
 
     public AddRoute(Activity _activity){
         addRoute = _activity.findViewById(R.id.addRoute);
@@ -25,11 +27,9 @@ public class AddRoute implements View.OnClickListener {
     }
 
     public static void show(){
-        Log.d("AddRoute","show");
         addRoute.show();
     }
     public static void hide(){
-        Log.d("AddRoute","hide");
         addRoute.hide();
     }
 }

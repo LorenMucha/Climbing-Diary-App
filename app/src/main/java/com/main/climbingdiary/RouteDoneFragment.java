@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.main.climbingdiary.Ui.AppBarMenu;
+import com.main.climbingdiary.abstraction.RouteFragment;
 import com.main.climbingdiary.adapter.RoutesAdapter;
 import com.main.climbingdiary.models.Route;
 import com.main.climbingdiary.models.RouteSort;
@@ -19,7 +20,7 @@ import com.main.climbingdiary.models.RouteSort;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-public class RoutesFragment extends Fragment {
+public class RouteDoneFragment extends Fragment implements RouteFragment {
 
     private ArrayList<Route> routes;
     private static RoutesAdapter adapter;
@@ -81,15 +82,15 @@ public class RoutesFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.sort_level:
                 RouteSort.setSort("level");
-                RoutesFragment.refreshData();
+                RouteDoneFragment.refreshData();
                 return true;
             case R.id.sort_area:
                 RouteSort.setSort("area");
-                RoutesFragment.refreshData();
+                RouteDoneFragment.refreshData();
                 return true;
             case R.id.sort_date:
                 RouteSort.setSort("date");
-                RoutesFragment.refreshData();
+                RouteDoneFragment.refreshData();
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -18,8 +18,9 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.RoutesFragment;
+import com.main.climbingdiary.RouteDoneFragment;
 import com.main.climbingdiary.StatisticFragment;
+import com.main.climbingdiary.abstraction.Tabs;
 import com.main.climbingdiary.database.TaskRepository;
 import com.main.climbingdiary.dialog.DialogFactory;
 import com.main.climbingdiary.models.Alerts;
@@ -107,7 +108,7 @@ public class RoutesAdapter extends
         String sectorText = route.getSector();
         String commentString = route.getComment();
 
-        //create the hztml string for the route and sector
+        //create the html string for the route and sector
         final String routeHtml = areaText+" &#9679; "+sectorText;
         final String commentHtml = "<b>Kommentar</b><br/>"+commentString;
 
@@ -132,8 +133,7 @@ public class RoutesAdapter extends
         date.setText(route.getDate());
         level.setText(gradeText);
         level.setTextColor(Colors.getGradeColor(gradeText));
-        //style.setText(styleText);
-        //style.setTextColor(Colors.getStyleColor(styleText));
+
         try{
             Drawable drawable = ContextCompat.getDrawable(viewHolder.itemView.getContext(), getRoutStyleIcon(styleText));
             style.setImageDrawable(drawable);
@@ -177,7 +177,7 @@ public class RoutesAdapter extends
                                 taskRepository.open();
                                 boolean taskState = taskRepository.deleteRoute(id);
                                 if(taskState){
-                                    RoutesFragment.refreshData();
+                                    RouteDoneFragment.refreshData();
                                     StatisticFragment.refreshData();
                                     taskRepository.close();
                                     sDialog.hide();
@@ -203,7 +203,7 @@ public class RoutesAdapter extends
         edit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                DialogFactory.openEditRouteDialog("route",route.getId());
+                DialogFactory.openEditRouteDialog(Tabs.ROUTEN.getTitle(),route.getId());
             }
         });
     }

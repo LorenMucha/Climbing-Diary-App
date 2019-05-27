@@ -3,6 +3,7 @@ package com.main.climbingdiary.dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
@@ -22,16 +23,13 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.RoutesFragment;
-import com.main.climbingdiary.StatisticFragment;
-import com.main.climbingdiary.Ui.SetDate;
+import com.main.climbingdiary.RouteProjectFragment;
 import com.main.climbingdiary.database.TaskRepository;
 import com.main.climbingdiary.models.Area;
 import com.main.climbingdiary.models.Levels;
+import com.main.climbingdiary.models.Projekt;
 import com.main.climbingdiary.models.Rating;
-import com.main.climbingdiary.models.Route;
 import com.main.climbingdiary.models.Sector;
-import com.main.climbingdiary.models.Styles;
 
 public class AddProjektDialog extends DialogFragment {
 
@@ -45,13 +43,13 @@ public class AddProjektDialog extends DialogFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.dialog_add_projekt, container);
     }
 
 
     @Override
-    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
 
         super.onViewCreated(view, savedInstanceState);
 
@@ -59,6 +57,7 @@ public class AddProjektDialog extends DialogFragment {
 
         // Fetch arguments from bundle and set title
 
+        if (getArguments() == null) throw new AssertionError();
         String title = getArguments().getString("title", "Neues Projekt");
 
         // Initialize a new foreground color span instance
@@ -132,25 +131,22 @@ public class AddProjektDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 //ToDo
-                /*String route_name = name.getText().toString();
+                String route_name = name.getText().toString();
                 String route_level = level.getSelectedItem().toString();
                 String route_area = area.getText().toString();
                 String route_sector = sector.getText().toString();
                 String route_comment = comment.getText().toString();
                 int route_rating = rating.getSelectedItemPosition()+1;
-                Route new_route = new Route(0,route_name,route_level,route_area,route_sector,route_style,route_rating,route_comment,route_date);
+                Projekt new_projekt = new Projekt(0,route_name,route_level,route_area,route_sector,route_rating,route_comment);
                 TaskRepository taskRepository = new TaskRepository();
                 taskRepository.open();
-                taskRepository.inserRoute(new_route);
+                taskRepository.inserProjekt(new_projekt);
                 taskRepository.close();
                 //close the dialog
                 getDialog().cancel();
-                RoutesFragment.refreshData();
-                StatisticFragment.refreshData();*/
+                RouteProjectFragment.refreshData();
             }
         });
-
-
         //close the dialog
         closeDialog.setOnClickListener(new View.OnClickListener() {
             @Override

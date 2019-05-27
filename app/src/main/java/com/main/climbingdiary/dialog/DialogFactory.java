@@ -14,7 +14,8 @@ public class DialogFactory {
     }
     public static void openEditRouteDialog(String _type, int _id){
         if(_type.equals(Tabs.PROJEKTE.getTitle())){
-            //ToDo
+            EditProjektDialog editDialog = EditProjektDialog.newInstance("Projekt bearbeiten", _id);
+            editDialog.show(MainActivity.getMainActivity().getSupportFragmentManager(), "edit");
         }else {
             EditRouteDialog editDialog = EditRouteDialog.newInstance("Route bearbeiten", _id);
             editDialog.show(MainActivity.getMainActivity().getSupportFragmentManager(), "edit");

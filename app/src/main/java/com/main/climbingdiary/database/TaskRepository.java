@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.main.climbingdiary.MainActivity;
 import com.main.climbingdiary.abstraction.State;
+import com.main.climbingdiary.models.Projekt;
 import com.main.climbingdiary.models.Route;
 
 public class TaskRepository {
@@ -65,10 +66,46 @@ public class TaskRepository {
         }
     }
 
+    public Cursor getAllProjekts()
+    {
+        try
+        {
+            String sql = RouteOrderSQL.PROJEKTLIST.getSQL();
+            Cursor mCur = mDb.rawQuery(sql, null);
+            if (mCur!=null)
+            {
+                mCur.moveToNext();
+            }
+            return mCur;
+        }
+        catch (SQLException mSQLException)
+        {
+            Log.e(TAG, "getAllProjekts >>"+ mSQLException.toString());
+            throw mSQLException;
+        }
+    }
+
     public Cursor getRoute(int _id){
         try
         {
             String sql ="SELECT r.id, r.name,g.name as gebiet,r.level,r.stil,r.rating, r.kommentar, strftime('%d.%m.%Y',r.date) as date, k.name as sektor FROM routen r, gebiete g, sektoren k where g.id=r.gebiet and k.id=r.sektor AND r.id="+_id;
+
+            Cursor mCur = mDb.rawQuery(sql, null);
+            if (mCur!=null)
+            {
+                mCur.moveToNext();
+            }
+            return mCur;
+        }
+        catch (SQLException mSQLException)
+        {
+            throw mSQLException;
+        }
+    }
+    public Cursor getProjekt(int _id){
+        try
+        {
+            String sql ="SELECT r.id, r.name,g.name as gebiet,r.level,r.rating, r.kommentar, k.name as sektor FROM projekte r, gebiete g, sektoren k where g.id=r.gebiet and k.id=r.sektor AND r.id="+_id;
 
             Cursor mCur = mDb.rawQuery(sql, null);
             if (mCur!=null)
@@ -200,8 +237,47 @@ public class TaskRepository {
            mDb.endTransaction();
        }
     }
+    public void inserProjekt(Projekt projekt){
+        //create the transaction
+        String [] tasks = {
+                "INSERT OR IGNORE INTO gebiete (name) VALUES ('"+projekt.getArea()+"')",
+                "INSERT OR IGNORE INTO sektoren (name,gebiet) "+
+                        "SELECT '"+projekt.getSector()+"',id FROM gebiete WHERE name='"+projekt.getArea()+"'",
+                "INSERT OR IGNORE INTO projekte (name,level,rating,kommentar,gebiet,sektor) "+
+                        "SELECT '"+projekt.getName()+"','"+projekt.getLevel()+"','"+projekt.getRating()+"','"+projekt.getComment()+"',a.id,s.id " +
+                        "FROM gebiete a, sektoren s " +
+                        "WHERE a.name = '"+projekt.getArea()+"'" +
+                        "AND s.name='"+projekt.getSector()+"'"
+        };
+        mDb.beginTransaction();
+        try {
+            for (String x : tasks) {
+                Log.d("insert",x);
+                mDb.execSQL(x);
+            }
+            mDb.setTransactionSuccessful();
+        }finally {
+            mDb.endTransaction();
+        }
+    }
     public boolean deleteRoute(int id){
         final String sql = "DELETE FROM routen WHERE id="+id;
+        State state = new State() {
+            @Override
+            public boolean getState() {
+                try{
+                    mDb.execSQL(sql);
+                    return true;
+                }catch(SQLiteException exception){
+                    return false;
+                }
+            }
+        };
+        return state.getState();
+    }
+    public boolean deleteProjekt(int id){
+        Log.d("DELETE Projekt",Integer.toString(id));
+        final String sql = "DELETE FROM projekte WHERE id="+id;
         State state = new State() {
             @Override
             public boolean getState() {

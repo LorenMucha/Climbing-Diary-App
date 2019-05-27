@@ -8,7 +8,7 @@ import android.widget.SearchView;
 
 import com.main.climbingdiary.MainActivity;
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.RoutesFragment;
+import com.main.climbingdiary.RouteDoneFragment;
 
 public class AppBarMenu implements SearchView.OnQueryTextListener{
     private final int searchId = R.id.action_search;
@@ -32,14 +32,14 @@ public class AppBarMenu implements SearchView.OnQueryTextListener{
     public boolean onQueryTextSubmit(String query) {
         Log.d("Query",query);
         // filter recycler view when query submitted
-        RoutesFragment.getAdapter().getFilter().filter(query);
+        RouteDoneFragment.getAdapter().getFilter().filter(query);
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String query) {
         // filter recycler view when text is changed
-        RoutesFragment.getAdapter().getFilter().filter(query);
+        RouteDoneFragment.getAdapter().getFilter().filter(query);
         return false;
     }
 

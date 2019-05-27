@@ -2,8 +2,8 @@ package com.main.climbingdiary.abstraction;
 
 import android.support.v4.app.Fragment;
 
-import com.main.climbingdiary.ProjectFragment;
-import com.main.climbingdiary.RoutesFragment;
+import com.main.climbingdiary.RouteProjectFragment;
+import com.main.climbingdiary.RouteDoneFragment;
 import com.main.climbingdiary.StatisticFragment;
 
 public enum Tabs {
@@ -30,10 +30,10 @@ public enum Tabs {
                 fm = new StatisticFragment();
                 break;
             case PROJEKTE:
-                fm = new ProjectFragment();
+                fm = new RouteProjectFragment();
                 break;
             default:
-                fm = new RoutesFragment();
+                fm = new RouteDoneFragment();
                 break;
         }
         return fm;
