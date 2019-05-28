@@ -20,7 +20,34 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main" />
+    <include layout="@layout/content_main"/>
+
+    <LinearLayout
+        android:layout_gravity="bottom|end"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:tint="@android:color/background_dark"
+            android:id="@+id/showTimeSlider"
+            android:layout_gravity="bottom|center"
+            android:background="@color/white"
+            app:srcCompat="@android:drawable/arrow_up_float"
+            android:scaleType="fitXY"
+            android:layout_width="30dp"
+            android:layout_height="20dp"
+            />
+
+        <include
+            layout="@layout/range_bar"
+            android:visibility="gone"
+            android:layout_gravity="bottom|end"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+    </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addRoute"

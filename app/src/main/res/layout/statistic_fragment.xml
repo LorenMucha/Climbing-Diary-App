@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginBottom="50dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -50,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_below="@id/control_btn"
         android:layout_height="match_parent"
-        android:layout_marginBottom="0dp" />
+        android:layout_marginBottom="@dimen/chart_margin_bottom" />
 
     <com.github.mikephil.charting.charts.LineChart
         android:visibility="gone"
@@ -58,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_below="@id/control_btn"
         android:layout_height="match_parent"
-        android:layout_marginBottom="0dp" />
+        android:layout_marginBottom="@dimen/chart_margin_bottom" />
 
     <ScrollView
         android:layout_marginTop="10dp"
