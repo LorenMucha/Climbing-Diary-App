@@ -175,42 +175,38 @@ public class EditRouteDialog extends DialogFragment {
         }
 
         //save the route
-        saveRoute.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(FragmentPager.getTabTitle().equals(Tabs.PROJEKTE.getTitle())){
-                    FragmentPager.setPosition(1);
-                    Projekt projekt = Projekt.getProjekt();
-                    projekt.deleteProjekt(projekt.getId());
-                    RouteProjectFragment.refreshData();
-                }
-                String route_name = name.getText().toString();
-                String route_level = level.getSelectedItem().toString();
-                String route_date = date.getText().toString();
-                String route_area = area.getText().toString();
-                String route_sector = sector.getText().toString();
-                String route_comment = comment.getText().toString();
-                int route_rating = rating.getSelectedItemPosition()+1;
-                String route_style = stil.getSelectedItem().toString();
-                Route new_route = new Route(0,route_name,route_level,route_area,route_sector,route_style,route_rating,route_comment,route_date);
-                boolean taskState = new_route.deleteRoute(route_id);
-                if(taskState) {
-                    new_route.insertRoute();
-                }
-                //close the dialog
-                getDialog().cancel();
-                RouteDoneFragment.refreshData();
-                StatisticFragment.refreshData();
+        saveRoute.setOnClickListener(v -> {
+            if(FragmentPager.getTabTitle().equals(Tabs.PROJEKTE.getTitle())){
+                FragmentPager.setPosition(1);
+                Projekt projekt = Projekt.getProjekt();
+                projekt.deleteProjekt(projekt.getId());
+                RouteProjectFragment.refreshData();
             }
+            String route_name = name.getText().toString();
+            String route_level = level.getSelectedItem().toString();
+            String route_date = date.getText().toString();
+            String route_area = area.getText().toString();
+            String route_sector = sector.getText().toString();
+            String route_comment = comment.getText().toString();
+            int route_rating = rating.getSelectedItemPosition()+1;
+            String route_style = stil.getSelectedItem().toString();
+            Route new_route = new Route(0,route_name,route_level,route_area,route_sector,route_style,route_rating,route_comment,route_date);
+            boolean taskState = new_route.deleteRoute(route_id);
+            if(taskState) {
+                new_route.insertRoute();
+            }
+            //close the dialog
+            getDialog().cancel();
+            RouteDoneFragment.refreshData();
+            StatisticFragment.refreshData();
         });
 
         //close the dialog
-        closeDialog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getDialog().cancel();
+        closeDialog.setOnClickListener(v ->{
+            if(FragmentPager.getTabTitle().equals(Tabs.PROJEKTE.getTitle())){
+                RouteProjectFragment.refreshData();
             }
+                getDialog().cancel();
         });
-
     }
 }
