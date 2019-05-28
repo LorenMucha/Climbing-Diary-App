@@ -23,6 +23,21 @@ public enum Tabs {
         }
         return title;
     }
+    public int getPostion(){
+        int pos;
+        switch (this){
+            case STATISTIK:
+                pos = 0;
+                break;
+            case PROJEKTE:
+                pos = 1;
+                break;
+            default:
+                pos = 2;
+                break;
+        }
+        return pos;
+    }
     public Fragment getFragment(){
         Fragment fm;
         switch (this){

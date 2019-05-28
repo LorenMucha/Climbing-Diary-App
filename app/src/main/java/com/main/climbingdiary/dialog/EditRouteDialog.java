@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.text.SpannableStringBuilder;
@@ -23,26 +24,40 @@ import android.widget.Spinner;
 
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.RouteDoneFragment;
+import com.main.climbingdiary.RouteProjectFragment;
 import com.main.climbingdiary.StatisticFragment;
-import com.main.climbingdiary.database.TaskRepository;
+import com.main.climbingdiary.Ui.FragmentPager;
+import com.main.climbingdiary.Ui.SetDate;
+import com.main.climbingdiary.abstraction.Tabs;
+import com.main.climbingdiary.adapter.TabAdapter;
 import com.main.climbingdiary.models.Area;
 import com.main.climbingdiary.models.Levels;
+import com.main.climbingdiary.models.Projekt;
 import com.main.climbingdiary.models.Rating;
 import com.main.climbingdiary.models.Route;
 import com.main.climbingdiary.models.Sector;
 import com.main.climbingdiary.models.Styles;
-import com.main.climbingdiary.Ui.SetDate;
 
 import java.util.regex.Pattern;
 
 public class EditRouteDialog extends DialogFragment {
+    private static Route route = null;
+    private static int route_id;
+    private static String title = null;
     public EditRouteDialog() {}
-    public static EditRouteDialog newInstance(String title, int _id){
+
+    public static EditRouteDialog newInstance(String _title, int _id){
+        EditRouteDialog edit = new  EditRouteDialog();
+        route_id = _id;
+        title = _title;
+        return edit;
+    }
+
+    public static EditRouteDialog newInstance(String _title, Route _route){
         EditRouteDialog edit = new  EditRouteDialog();
         Bundle args = new Bundle();
-        args.putString("title", title);
-        args.putInt("id",_id);
-        edit.setArguments(args);
+        route = _route;
+        title = _title;
         return edit;
     }
 
@@ -58,13 +73,14 @@ public class EditRouteDialog extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
 
         final Context _context = view.getContext();
+        Route editRoute;
 
-        // Fetch arguments from bundle and set title
-        String title = getArguments().getString("title", "Bearbeiten");
         //get the route value which will be edit
-        final int route_id = getArguments().getInt("id",0);
-        Route editRoute = Route.getRoute(route_id);
-        Log.d("route set",editRoute.toString());
+        if(route != null){
+            editRoute = route;
+        }else{
+            editRoute = Route.getRoute(route_id);
+        }
 
         // Initialize a new foreground color span instance
         ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.BLACK);
@@ -147,16 +163,27 @@ public class EditRouteDialog extends DialogFragment {
         rating.setSelection(editRoute.getRating()-1);
 
         //set date listener
-        SetDate setDate = new SetDate(date, _context);
-        StringBuilder sBuilder = new StringBuilder();
-        String[] dateSplit = (editRoute.getDate()).split(Pattern.quote("."));
-        sBuilder.append(dateSplit[2]).append("-").append(dateSplit[1]).append("-").append(dateSplit[0]);
-        date.setText(sBuilder.toString());
+        try {
+            SetDate setDate = new SetDate(date, _context);
+            StringBuilder sBuilder = new StringBuilder();
+            String[] dateSplit = (editRoute.getDate()).split(Pattern.quote("."));
+            sBuilder.append(dateSplit[2]).append("-").append(dateSplit[1]).append("-").append(dateSplit[0]);
+            date.setText(sBuilder.toString());
+        }catch(Exception e){
+            Log.e("Error",e.toString());
+            date.setText(route.getDate());
+        }
 
         //save the route
         saveRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(FragmentPager.getTabTitle().equals(Tabs.PROJEKTE.getTitle())){
+                    FragmentPager.setPosition(1);
+                    Projekt projekt = Projekt.getProjekt();
+                    projekt.deleteProjekt(projekt.getId());
+                    RouteProjectFragment.refreshData();
+                }
                 String route_name = name.getText().toString();
                 String route_level = level.getSelectedItem().toString();
                 String route_date = date.getText().toString();
@@ -166,13 +193,10 @@ public class EditRouteDialog extends DialogFragment {
                 int route_rating = rating.getSelectedItemPosition()+1;
                 String route_style = stil.getSelectedItem().toString();
                 Route new_route = new Route(0,route_name,route_level,route_area,route_sector,route_style,route_rating,route_comment,route_date);
-                TaskRepository taskRepository = new TaskRepository();
-                taskRepository.open();
-                boolean taskState = taskRepository.deleteRoute(route_id);
+                boolean taskState = new_route.deleteRoute(route_id);
                 if(taskState) {
-                    taskRepository.inserRoute(new_route);
+                    new_route.insertRoute();
                 }
-                taskRepository.close();
                 //close the dialog
                 getDialog().cancel();
                 RouteDoneFragment.refreshData();

@@ -214,7 +214,7 @@ public class TaskRepository {
             throw mSQLExeption;
         }
     }
-    public void inserRoute(Route route){
+    public boolean inserRoute(Route route){
         //create the transaction
         String [] tasks = {
             "INSERT OR IGNORE INTO gebiete (name) VALUES ('"+route.getArea()+"')",
@@ -226,18 +226,22 @@ public class TaskRepository {
             "WHERE a.name = '"+route.getArea()+"'" +
             "AND s.name='"+route.getSector()+"'"
         };
+        boolean state;
         mDb.beginTransaction();
        try {
            for (String x : tasks) {
-               Log.d("insert",x);
                mDb.execSQL(x);
            }
            mDb.setTransactionSuccessful();
+           state = true;
+       }catch(SQLiteException exception){
+               state = false;
        }finally {
            mDb.endTransaction();
        }
+       return state;
     }
-    public void inserProjekt(Projekt projekt){
+    public boolean inserProjekt(Projekt projekt){
         //create the transaction
         String [] tasks = {
                 "INSERT OR IGNORE INTO gebiete (name) VALUES ('"+projekt.getArea()+"')",
@@ -249,6 +253,7 @@ public class TaskRepository {
                         "WHERE a.name = '"+projekt.getArea()+"'" +
                         "AND s.name='"+projekt.getSector()+"'"
         };
+        boolean state;
         mDb.beginTransaction();
         try {
             for (String x : tasks) {
@@ -256,9 +261,13 @@ public class TaskRepository {
                 mDb.execSQL(x);
             }
             mDb.setTransactionSuccessful();
+            state = true;
+        }catch(SQLiteException exception){
+            state = false;
         }finally {
             mDb.endTransaction();
         }
+        return state;
     }
     public boolean deleteRoute(int id){
         final String sql = "DELETE FROM routen WHERE id="+id;

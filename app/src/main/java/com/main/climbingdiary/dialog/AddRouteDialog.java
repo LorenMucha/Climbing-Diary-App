@@ -24,14 +24,14 @@ import android.widget.Spinner;
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.RouteDoneFragment;
 import com.main.climbingdiary.StatisticFragment;
-import com.main.climbingdiary.database.TaskRepository;
+import com.main.climbingdiary.Ui.SetDate;
+import com.main.climbingdiary.models.Alerts;
 import com.main.climbingdiary.models.Area;
 import com.main.climbingdiary.models.Levels;
 import com.main.climbingdiary.models.Rating;
 import com.main.climbingdiary.models.Route;
 import com.main.climbingdiary.models.Sector;
 import com.main.climbingdiary.models.Styles;
-import com.main.climbingdiary.Ui.SetDate;
 
 public class AddRouteDialog extends DialogFragment{
 
@@ -138,37 +138,29 @@ public class AddRouteDialog extends DialogFragment{
         SetDate setDate = new SetDate(date, _context);
 
         //save the route
-        saveRoute.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String route_name = name.getText().toString();
-                String route_level = level.getSelectedItem().toString();
-                String route_date = date.getText().toString();
-                String route_area = area.getText().toString();
-                String route_sector = sector.getText().toString();
-                String route_comment = comment.getText().toString();
-                int route_rating = rating.getSelectedItemPosition()+1;
-                String route_style = stil.getSelectedItem().toString();
-                Route new_route = new Route(0,route_name,route_level,route_area,route_sector,route_style,route_rating,route_comment,route_date);
-                TaskRepository taskRepository = new TaskRepository();
-                taskRepository.open();
-                taskRepository.inserRoute(new_route);
-                taskRepository.close();
-                //close the dialog
-                getDialog().cancel();
+        saveRoute.setOnClickListener(v -> {
+            String route_name = name.getText().toString();
+            String route_level = level.getSelectedItem().toString();
+            String route_date = date.getText().toString();
+            String route_area = area.getText().toString();
+            String route_sector = sector.getText().toString();
+            String route_comment = comment.getText().toString();
+            int route_rating = rating.getSelectedItemPosition()+1;
+            String route_style = stil.getSelectedItem().toString();
+            Route new_route = new Route(0,route_name,route_level,route_area,route_sector,route_style,route_rating,route_comment,route_date);
+            boolean taskState = new_route.insertRoute();
+            if(taskState){
                 RouteDoneFragment.refreshData();
                 StatisticFragment.refreshData();
+            }else{
+                Alerts.setErrorAlert();
             }
+            //close the dialog
+            getDialog().cancel();
         });
-
 
         //close the dialog
-        closeDialog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getDialog().cancel();
-            }
-        });
+        closeDialog.setOnClickListener(v -> getDialog().cancel());
 
     }
 }

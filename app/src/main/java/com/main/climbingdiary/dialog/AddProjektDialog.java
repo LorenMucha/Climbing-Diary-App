@@ -24,7 +24,7 @@ import android.widget.Spinner;
 
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.RouteProjectFragment;
-import com.main.climbingdiary.database.TaskRepository;
+import com.main.climbingdiary.models.Alerts;
 import com.main.climbingdiary.models.Area;
 import com.main.climbingdiary.models.Levels;
 import com.main.climbingdiary.models.Projekt;
@@ -138,13 +138,14 @@ public class AddProjektDialog extends DialogFragment {
                 String route_comment = comment.getText().toString();
                 int route_rating = rating.getSelectedItemPosition()+1;
                 Projekt new_projekt = new Projekt(0,route_name,route_level,route_area,route_sector,route_rating,route_comment);
-                TaskRepository taskRepository = new TaskRepository();
-                taskRepository.open();
-                taskRepository.inserProjekt(new_projekt);
-                taskRepository.close();
+                boolean taskState = new_projekt.insertProjekt();
+                if(taskState){
+                    RouteProjectFragment.refreshData();
+                }else{
+                    Alerts.setErrorAlert();
+                }
                 //close the dialog
                 getDialog().cancel();
-                RouteProjectFragment.refreshData();
             }
         });
         //close the dialog

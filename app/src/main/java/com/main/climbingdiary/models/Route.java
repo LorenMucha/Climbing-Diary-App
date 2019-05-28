@@ -18,7 +18,7 @@ public class Route {
     private int rating;
     private String comment;
     private String date;
-    private ArrayList<Route> routes;
+    private static TaskRepository taskRepository = new TaskRepository();
 
     public Route(int _id, String _name, String _level, String _area, String _sector, String _style, int _rating, String _comment, String _date){
         id = _id;
@@ -106,7 +106,6 @@ public class Route {
 
     public static Route getRoute(int _id){
         Route _route = null;
-        TaskRepository taskRepository = new TaskRepository();
         taskRepository.open();
         //String Sort = (Menu) getA
         Cursor cursor = taskRepository.getRoute(_id);
@@ -129,9 +128,7 @@ public class Route {
 
     public static ArrayList<Route> getRouteList() throws ParseException {
         ArrayList<Route> _routes = new ArrayList<>();
-        TaskRepository taskRepository = new TaskRepository();
         taskRepository.open();
-        //String Sort = (Menu) getA
         Cursor cursor = taskRepository.getAllRoutes();
         if (cursor != null) {
             while (!cursor.isAfterLast()) {
@@ -151,5 +148,22 @@ public class Route {
         }
         taskRepository.close();
         return _routes;
+    }
+
+    public boolean deleteRoute(int id){
+        taskRepository.open();
+        boolean state = taskRepository.deleteRoute(id);
+        taskRepository.close();
+        return state;
+    }
+    public boolean insertRoute(){
+        taskRepository.open();
+        boolean state = taskRepository.inserRoute(this);
+        taskRepository.close();
+        return state;
+    }
+
+    public String toString(){
+        return "Name:"+this.getName()+"||Area:"+this.getArea()+"||Sektor:"+this.getSector()+"||Level:"+this.getLevel()+"||Style:"+this.getStyle()+"||Rating:"+this.getRating()+"||Comment:"+this.getComment()+"||Date:"+this.getDate();
     }
 }

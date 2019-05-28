@@ -174,12 +174,10 @@ public class RoutesAdapter extends
                             public void onClick(SweetAlertDialog sDialog) {
                                 //delete the route by id
                                 int id = route.getId();
-                                taskRepository.open();
-                                boolean taskState = taskRepository.deleteRoute(id);
+                                boolean taskState = route.deleteRoute(id);
                                 if(taskState){
                                     RouteDoneFragment.refreshData();
                                     StatisticFragment.refreshData();
-                                    taskRepository.close();
                                     sDialog.hide();
                                     new SweetAlertDialog(_v.getContext(), SweetAlertDialog.SUCCESS_TYPE)
                                             .setTitleText("Gelöscht")

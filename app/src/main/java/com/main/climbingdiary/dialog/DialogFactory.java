@@ -1,6 +1,7 @@
 package com.main.climbingdiary.dialog;
 import com.main.climbingdiary.MainActivity;
 import com.main.climbingdiary.abstraction.Tabs;
+import com.main.climbingdiary.models.Route;
 
 public class DialogFactory {
     public static void openAddRouteDialog(String _type){
@@ -20,5 +21,9 @@ public class DialogFactory {
             EditRouteDialog editDialog = EditRouteDialog.newInstance("Route bearbeiten", _id);
             editDialog.show(MainActivity.getMainActivity().getSupportFragmentManager(), "edit");
         }
+    }
+    public static void openEditRouteDialog(Route _route){
+            EditRouteDialog editDialog = EditRouteDialog.newInstance("Route bearbeiten", _route);
+            editDialog.show(MainActivity.getMainActivity().getSupportFragmentManager(), "edit");
     }
 }

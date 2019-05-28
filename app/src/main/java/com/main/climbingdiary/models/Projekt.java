@@ -16,6 +16,8 @@ public class Projekt {
     private int rating;
     private String comment;
     private ArrayList<Projekt> projekts;
+    private static TaskRepository taskRepository = new TaskRepository();
+    public static Projekt _projekt;
 
     public Projekt(int _id, String _name, String _level, String _area, String _sector, int _rating, String _comment){
         id = _id;
@@ -25,6 +27,7 @@ public class Projekt {
         sector = _sector;
         rating = _rating;
         comment = _comment.replace("'","`");
+        _projekt = this;
     }
 
     public int getId() {
@@ -83,9 +86,12 @@ public class Projekt {
         this.comment = comment;
     }
 
+    public static Projekt getProjekt(){
+        return _projekt;
+    }
+
     public static Projekt getProjekt(int _id){
         Projekt _projekt = null;
-        TaskRepository taskRepository = new TaskRepository();
         taskRepository.open();
         //String Sort = (Menu) getA
         Cursor cursor = taskRepository.getProjekt(_id);
@@ -106,7 +112,6 @@ public class Projekt {
 
     public static ArrayList<Projekt> getProjektList() throws ParseException {
         ArrayList<Projekt> _projekte = new ArrayList<>();
-        TaskRepository taskRepository = new TaskRepository();
         taskRepository.open();
         //String Sort = (Menu) getA
         Cursor cursor = taskRepository.getAllProjekts();
@@ -128,4 +133,20 @@ public class Projekt {
         return _projekte;
     }
 
+    public boolean deleteProjekt(int id){
+        taskRepository.open();
+        boolean state = taskRepository.deleteProjekt(id);
+        taskRepository.close();
+        return state;
+    }
+    public boolean insertProjekt(){
+        taskRepository.open();
+        boolean state = taskRepository.inserProjekt(this);
+        taskRepository.close();
+        return state;
+    }
+
+    public String toString(){
+        return "Name:"+this.getName()+"||Area:"+this.getArea()+"||Sektor:"+this.getSector()+"||Level:"+this.getLevel()+"||Rating:"+this.getRating()+"||Comment:"+this.getComment();
+    }
 }

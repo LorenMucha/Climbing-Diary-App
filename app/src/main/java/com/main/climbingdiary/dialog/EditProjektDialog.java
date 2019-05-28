@@ -21,9 +21,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.main.climbingdiary.RouteProjectFragment;
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.database.TaskRepository;
+import com.main.climbingdiary.RouteProjectFragment;
 import com.main.climbingdiary.models.Area;
 import com.main.climbingdiary.models.Levels;
 import com.main.climbingdiary.models.Projekt;
@@ -143,13 +142,10 @@ public class EditProjektDialog extends DialogFragment {
                 String route_comment = comment.getText().toString();
                 int route_rating = rating.getSelectedItemPosition()+1;
                 Projekt new_projekt = new Projekt(0,route_name,route_level,route_area,route_sector,route_rating,route_comment);
-                TaskRepository taskRepository = new TaskRepository();
-                taskRepository.open();
-                boolean taskState = taskRepository.deleteProjekt(route_id);
+                boolean taskState = new_projekt.deleteProjekt(route_id);
                 if(taskState) {
-                    taskRepository.inserProjekt(new_projekt);
+                    new_projekt.insertProjekt();
                 }
-                taskRepository.close();
                 //close the dialog
                 getDialog().cancel();
                 RouteProjectFragment.refreshData();

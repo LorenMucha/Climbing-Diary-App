@@ -27,8 +27,12 @@ import com.main.climbingdiary.models.Colors;
 import com.main.climbingdiary.models.Projekt;
 import com.main.climbingdiary.models.Route;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -108,9 +112,6 @@ public class ProjektAdapter extends
         final String routeHtml = areaText+" &#9679; "+sectorText;
         final String commentHtml = "<b>Kommentar</b><br/>"+commentString;
 
-        //tasks for deleting and editing
-        final TaskRepository taskRepository = new TaskRepository();
-
         // Set item views
         TextView routeName = viewHolder.nameTextView;
         TextView level = viewHolder.levelTextView;
@@ -159,11 +160,9 @@ public class ProjektAdapter extends
                         public void onClick(SweetAlertDialog sDialog) {
                             //delete the route by id
                             int id = projekt.getId();
-                            taskRepository.open();
-                            boolean taskState = taskRepository.deleteProjekt(id);
+                            boolean taskState = projekt.deleteProjekt(id);
                             if(taskState){
                                 RouteProjectFragment.refreshData();
-                                taskRepository.close();
                                 sDialog.hide();
                                 new SweetAlertDialog(_v.getContext(), SweetAlertDialog.SUCCESS_TYPE)
                                         .setTitleText("Gelöscht")
@@ -189,8 +188,18 @@ public class ProjektAdapter extends
         routeTick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //ToDo
-                Route _route = new Route();
+                SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd", Locale.GERMAN);
+                int id = 0;
+                String name = projekt.getName();
+                String area = projekt.getArea();
+                String level = projekt.getLevel();
+                String style = "RP";
+                int rating = projekt.getRating();
+                String comment = projekt.getComment();
+                String date = sdf.format(new Date());
+                String sector = projekt.getSector();
+                Route route = new Route(id,name,level,area,sector,style,rating,comment,date);
+                DialogFactory.openEditRouteDialog(route);
             }
         });
     }

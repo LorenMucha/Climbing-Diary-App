@@ -15,7 +15,7 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
     private static final int view_layout = R.id.viewPager;
     private static final int tab_layout = R.id.tabLayout;
     private ViewPager viewPager;
-    private TabLayout tabLayout;
+    private static TabLayout tabLayout;
     private TabAdapter adapter;
     private FragmentManager fm;
     private static String tabTitle;
@@ -51,6 +51,11 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
                 AddRoute.show();
                 break;
         }
+    }
+
+    public static void setPosition(int pos){
+        TabLayout.Tab tab = tabLayout.getTabAt(pos);
+        tab.select();
     }
 
     @Override
