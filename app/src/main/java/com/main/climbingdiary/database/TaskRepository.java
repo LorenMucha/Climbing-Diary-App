@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.main.climbingdiary.MainActivity;
 import com.main.climbingdiary.abstraction.State;
+import com.main.climbingdiary.models.Filter;
 import com.main.climbingdiary.models.Projekt;
 import com.main.climbingdiary.models.Route;
 
@@ -49,9 +50,14 @@ public class TaskRepository {
 
     public Cursor getAllRoutes()
     {
+        String filter_set = "";
+        if(Filter.getFilter()!=null){
+            filter_set = " where "+Filter.getFilter();
+        }
         try
         {
-            String sql = RouteOrderSQL.ROUTELIST.getSQL();
+            String sql = RouteOrderSQL.ROUTELIST.getSQL(filter_set);
+            Log.d("SQL RouteList",sql);
              Cursor mCur = mDb.rawQuery(sql, null);
             if (mCur!=null)
             {
@@ -70,7 +76,7 @@ public class TaskRepository {
     {
         try
         {
-            String sql = RouteOrderSQL.PROJEKTLIST.getSQL();
+            String sql = RouteOrderSQL.PROJEKTLIST.getSQL("");
             Cursor mCur = mDb.rawQuery(sql, null);
             if (mCur!=null)
             {
@@ -154,6 +160,10 @@ public class TaskRepository {
         }
     }
     public Cursor getLineChartValues(){
+        String filter_set = "";
+        if(Filter.getFilter()!=null){
+            filter_set = " where "+Filter.getFilter();
+        }
         try{
             StringBuilder sql = new StringBuilder();
             sql.append("SELECT SUM(cast(r.level as int)*(25*(INSTR('abc',substr(replace(r.level,'+',''),-1)))")
@@ -162,6 +172,7 @@ public class TaskRepository {
                     .append(" COUNT(cast(r.level as int)) as anzahl,")
                     .append(" strftime('%Y',r.date) as date")
                     .append(" FROM routen r")
+                    .append(filter_set)
                     .append(" GROUP BY strftime('%Y',r.date)");
             Log.d("query LineChartValues",sql.toString());
             Cursor mCur = mDb.rawQuery(sql.toString(),null);
@@ -176,14 +187,37 @@ public class TaskRepository {
             throw mSQLExeption;
         }
     }
+    public Cursor getYears(){
+        try
+        {
+            String sql ="select DISTINCT(strftime('%Y',date)) as year from routen order by date DESC";
+            Cursor mCur = mDb.rawQuery(sql, null);
+            if (mCur!=null)
+            {
+                mCur.moveToNext();
+            }
+            return mCur;
+        }
+        catch (SQLException mSQLException)
+        {
+            Log.e(TAG, "getYears >>"+ mSQLException.toString());
+            throw mSQLException;
+        }
+    }
     public Cursor getTableValues(){
+        String filter_set = "";
+        if(Filter.getFilter()!=null){
+            filter_set = " where "+Filter.getFilter();
+        }
         try{
             StringBuilder sql = new StringBuilder();
-            sql.append("SELECT g.level,")
-                .append("(Select count(*) as OS from routen o where g.level=o.level and o.stil='OS') as OS,")
-                .append("(Select count(*) as RP from routen r where r.level=g.level and r.stil='RP') as RP,")
-                .append("(Select count(*) as FLASH from routen f where g.level=f.level and f.stil='FLASH') as FLASH,")
-                .append("count(*) as Gesamt from routen g group by g.level order by g.level DESC");
+            sql.append("SELECT r.level,")
+                .append("(Select count(*) as OS from routen o where r.level=o.level and o.stil='OS') as OS,")
+                .append("(Select count(*) as RP from routen x where x.level=r.level and x.stil='RP') as RP,")
+                .append("(Select count(*) as FLASH from routen f where r.level=f.level and f.stil='FLASH') as FLASH,")
+                 .append("count(*) as Gesamt from routen r")
+                 .append(filter_set)
+                .append(" group by r.level order by r.level DESC");
             Log.d("SQL Table",sql.toString());
             Cursor mCur = mDb.rawQuery(sql.toString(),null);
             if (mCur!=null)
@@ -198,8 +232,13 @@ public class TaskRepository {
         }
     }
     public Cursor getBarChartValues(){
+        String filter_set = "";
+        if(Filter.getFilter()!=null){
+            filter_set = " where "+Filter.getFilter();
+        }
         try{
-            String sql = "select r.level,sum(r.stil='RP') as rp, sum(r.stil='OS') as os,sum(r.stil='FLASH') as flash from routen r group by r.level";
+            String sql = "select r.level,sum(r.stil='RP') as rp, sum(r.stil='OS') as os,sum(r.stil='FLASH') as flash from routen r "+filter_set+" group by r.level";
+            Log.d("SQL getBarChartValues",sql);
             Cursor mCur = mDb.rawQuery(sql, null);
             if (mCur!=null)
             {

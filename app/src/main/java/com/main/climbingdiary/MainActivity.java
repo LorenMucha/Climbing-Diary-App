@@ -12,7 +12,9 @@ import android.view.Menu;
 
 import com.main.climbingdiary.Ui.FragmentPager;
 import com.main.climbingdiary.Ui.NavDrawer;
+import com.main.climbingdiary.Ui.TimeSlider;
 import com.main.climbingdiary.Ui.button.AddRoute;
+import com.main.climbingdiary.Ui.button.ShowTimeSlider;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,8 +45,12 @@ public class MainActivity extends AppCompatActivity {
         FragmentPager fragmentPager = new FragmentPager(this);
         fragmentPager.setFragmente();
 
-        //the add button
+        //the add buttons
         AddRoute addRoute = new AddRoute(this);
+        ShowTimeSlider showTimeSlider = new ShowTimeSlider(this);
+
+        //the slider
+        TimeSlider timeSlider = new TimeSlider(this);
 
         //navigation View
         NavDrawer navDrawer = new NavDrawer(this);

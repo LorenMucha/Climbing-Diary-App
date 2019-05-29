@@ -23,9 +23,9 @@
     <include layout="@layout/content_main"/>
 
     <LinearLayout
+        android:id="@+id/sliderLayout"
         android:layout_gravity="bottom|end"
         android:orientation="vertical"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -41,11 +41,12 @@
             />
 
         <include
+            android:id="@+id/showTimeLayout"
             layout="@layout/range_bar"
             android:visibility="gone"
             android:layout_gravity="bottom|end"
             android:layout_width="match_parent"
-            android:layout_height="30dp" />
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
