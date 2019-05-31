@@ -50,13 +50,9 @@ public class TaskRepository {
 
     public Cursor getAllRoutes()
     {
-        String filter_set = "";
-        if(Filter.getFilter()!=null){
-            filter_set = " where "+Filter.getFilter();
-        }
         try
         {
-            String sql = RouteOrderSQL.ROUTELIST.getSQL(filter_set);
+            String sql = RouteSQL.ROUTELIST.getSQL();
             Log.d("SQL RouteList",sql);
              Cursor mCur = mDb.rawQuery(sql, null);
             if (mCur!=null)
@@ -76,7 +72,7 @@ public class TaskRepository {
     {
         try
         {
-            String sql = RouteOrderSQL.PROJEKTLIST.getSQL("");
+            String sql = RouteSQL.PROJEKTLIST.getSQL();
             Cursor mCur = mDb.rawQuery(sql, null);
             if (mCur!=null)
             {

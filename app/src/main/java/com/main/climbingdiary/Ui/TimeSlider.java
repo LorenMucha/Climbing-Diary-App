@@ -12,6 +12,7 @@ import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListen
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.main.climbingdiary.MainActivity;
 import com.main.climbingdiary.R;
+import com.main.climbingdiary.RouteDoneFragment;
 import com.main.climbingdiary.StatisticFragment;
 import com.main.climbingdiary.abstraction.RouteFragment;
 import com.main.climbingdiary.database.TaskRepository;
@@ -72,7 +73,7 @@ public class TimeSlider implements OnRangeSeekbarChangeListener, OnRangeSeekbarF
         String min = String.valueOf(minValue);
         String max = String.valueOf(maxValue);
         if(!minValue.equals(maxValue)){
-            String filter = "CAST(strftime('%Y',r.date) as int)<="+min+" or CAST(strftime('%Y',r.date) as int) >="+max;
+            String filter = "CAST(strftime('%Y',r.date) as int)>="+min+" and CAST(strftime('%Y',r.date) as int) <="+max;
             Filter.setFilter(filter);
         }else{
             String filter = "CAST(strftime('%Y',r.date) as int)=="+max;
@@ -80,7 +81,7 @@ public class TimeSlider implements OnRangeSeekbarChangeListener, OnRangeSeekbarF
         }
         minText.setText(min);
         maxText.setText(max);
-        RouteFragment.refreshData();
+        RouteDoneFragment.refreshData();
         StatisticFragment.refreshData();
     }
 

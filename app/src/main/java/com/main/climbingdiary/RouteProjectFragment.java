@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.main.climbingdiary.Ui.TimeSlider;
 import com.main.climbingdiary.Ui.button.AddRoute;
+import com.main.climbingdiary.Ui.button.ShowTimeSlider;
 import com.main.climbingdiary.abstraction.RouteFragment;
 import com.main.climbingdiary.adapter.ProjektAdapter;
 import com.main.climbingdiary.models.Projekt;
@@ -42,6 +44,7 @@ public class RouteProjectFragment extends Fragment implements RouteFragment {
         rvProjekte.setAdapter(adapter);
         // Set layout manager to position the items
         rvProjekte.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        ShowTimeSlider.hide();
         setHasOptionsMenu(true);
         return view;
     }

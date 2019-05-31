@@ -30,14 +30,13 @@
         android:layout_height="wrap_content">
 
         <ImageButton
-            android:tint="@android:color/background_dark"
+            android:tint="@color/white"
             android:id="@+id/showTimeSlider"
             android:layout_gravity="bottom|center"
-            android:background="@color/white"
+            android:background="@drawable/round_corners"
             app:srcCompat="@android:drawable/arrow_up_float"
-            android:scaleType="fitXY"
-            android:layout_width="30dp"
-            android:layout_height="20dp"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
             />
 
         <include

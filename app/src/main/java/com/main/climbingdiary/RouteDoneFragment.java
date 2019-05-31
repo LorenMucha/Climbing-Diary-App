@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.main.climbingdiary.Ui.AppBarMenu;
+import com.main.climbingdiary.Ui.button.ShowTimeSlider;
 import com.main.climbingdiary.abstraction.RouteFragment;
 import com.main.climbingdiary.adapter.RoutesAdapter;
 import com.main.climbingdiary.models.Route;
@@ -47,7 +48,7 @@ public class RouteDoneFragment extends Fragment implements RouteFragment {
         // Set layout manager to position the items
         rvRoutes.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         setHasOptionsMenu(true);
-
+        ShowTimeSlider.show();
         return view;
     }
 
