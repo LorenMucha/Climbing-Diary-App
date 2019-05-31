@@ -44,7 +44,7 @@ public class RouteProjectFragment extends Fragment implements RouteFragment {
         rvProjekte.setAdapter(adapter);
         // Set layout manager to position the items
         rvProjekte.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-        ShowTimeSlider.hide();
+
         setHasOptionsMenu(true);
         return view;
     }

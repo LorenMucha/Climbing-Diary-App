@@ -74,7 +74,7 @@ public class StatisticFragment extends Fragment {
         //default visualisation
         setBarChartBtn.callOnClick();
         setHasOptionsMenu(true);
-        ShowTimeSlider.show();
+
        return view;
     }
     //XAxis Formatter

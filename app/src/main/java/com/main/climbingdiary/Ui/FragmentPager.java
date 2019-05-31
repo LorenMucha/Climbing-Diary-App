@@ -8,8 +8,11 @@ import android.util.Log;
 
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.Ui.button.AddRoute;
+import com.main.climbingdiary.Ui.button.ShowTimeSlider;
 import com.main.climbingdiary.adapter.TabAdapter;
 import com.main.climbingdiary.abstraction.Tabs;
+
+import java.util.Objects;
 
 public class FragmentPager implements TabLayout.OnTabSelectedListener {
     private static final int view_layout = R.id.viewPager;
@@ -44,10 +47,23 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
     public void onTabSelected(TabLayout.Tab tab) {
         tabTitle = tab.getText().toString();
         switch(tab.getPosition()) {
+            //statistic
             case 0:
+                ShowTimeSlider.show();
                 AddRoute.hide();
                 break;
+                //routes
+            case 1:
+                AddRoute.show();
+                ShowTimeSlider.show();
+                break;
+                //projects
+            case 3:
+                ShowTimeSlider.hide();
+                AddRoute.show();
+                break;
             default :
+                ShowTimeSlider.hide();
                 AddRoute.show();
                 break;
         }
@@ -55,7 +71,7 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
 
     public static void setPosition(int pos){
         TabLayout.Tab tab = tabLayout.getTabAt(pos);
-        tab.select();
+        Objects.requireNonNull(tab).select();
     }
 
     @Override

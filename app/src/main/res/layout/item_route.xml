@@ -115,6 +115,7 @@
                     android:layout_width="wrap_content" />
 
                 <RatingBar
+                    android:theme="@style/RatingBar"
                     android:id="@+id/route_rating"
                     android:layout_below="@id/edit_hr"
                     style="@style/Widget.AppCompat.RatingBar.Small"

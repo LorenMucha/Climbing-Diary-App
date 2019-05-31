@@ -48,7 +48,7 @@ public class RouteDoneFragment extends Fragment implements RouteFragment {
         // Set layout manager to position the items
         rvRoutes.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         setHasOptionsMenu(true);
-        ShowTimeSlider.show();
+
         return view;
     }
 
