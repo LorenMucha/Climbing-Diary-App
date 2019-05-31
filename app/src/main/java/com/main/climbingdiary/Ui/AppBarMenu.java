@@ -9,10 +9,13 @@ import android.widget.SearchView;
 import com.main.climbingdiary.MainActivity;
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.RouteDoneFragment;
+import com.main.climbingdiary.RouteProjectFragment;
+import com.main.climbingdiary.abstraction.Tabs;
 
 public class AppBarMenu implements SearchView.OnQueryTextListener{
     private final int searchId = R.id.action_search;
     private final int sortId = R.id.action_sort;
+    private final int dateId = R.id.sort_date;
     private Menu menu;
     private SearchView searchview;
     private Context context;
@@ -32,19 +35,31 @@ public class AppBarMenu implements SearchView.OnQueryTextListener{
     public boolean onQueryTextSubmit(String query) {
         Log.d("Query",query);
         // filter recycler view when query submitted
-        RouteDoneFragment.getAdapter().getFilter().filter(query);
+        if(FragmentPager.getTabTitle().equals(Tabs.ROUTEN.getTitle())){
+            RouteDoneFragment.getAdapter().getFilter().filter(query);
+        }else{
+            RouteProjectFragment.getAdapter().getFilter().filter(query);
+        }
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String query) {
+        Log.d("Query",query);
         // filter recycler view when text is changed
-        RouteDoneFragment.getAdapter().getFilter().filter(query);
+        if(FragmentPager.getTabTitle().equals(Tabs.ROUTEN.getTitle())){
+            RouteDoneFragment.getAdapter().getFilter().filter(query);
+        }else{
+            RouteProjectFragment.getAdapter().getFilter().filter(query);
+        }
         return false;
     }
 
     public void hideItem(String item){
         switch(item){
+            case "date":
+                menu.findItem(dateId).setVisible(false);
+                break;
             case "search":
                 menu.findItem(searchId).setVisible(false);
                 break;

@@ -35,7 +35,7 @@ public class RouteDoneFragment extends Fragment implements RouteFragment {
         // Lookup the recyclerview in activity layout
         rvRoutes = (RecyclerView) view.findViewById(R.id.rvRoutes);
 
-        // Initialize contacts
+        // Initialize routes
         try {
             routes = Route.getRouteList();
         } catch (ParseException e) {
