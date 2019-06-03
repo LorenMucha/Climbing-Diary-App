@@ -19,6 +19,7 @@ import com.main.climbingdiary.R;
 import com.main.climbingdiary.RouteDoneFragment;
 import com.main.climbingdiary.RouteProjectFragment;
 import com.main.climbingdiary.StatisticFragment;
+import com.main.climbingdiary.Ui.button.AddRoute;
 import com.main.climbingdiary.abstraction.Tabs;
 import com.main.climbingdiary.database.TaskRepository;
 import com.main.climbingdiary.dialog.DialogFactory;
@@ -139,9 +140,17 @@ public class ProjektAdapter extends
             @Override
             public void onClick(View v) {
                 if(click==0){
+                    //if last element hide add Button
+                    if(mProjekts.indexOf(projekt)==(mProjekts.size()-1)){
+                        AddRoute.hide();
+                    }
                     hidden_layout.setVisibility(View.VISIBLE);
                     click++;
                 }else{
+                    //if last element show add Button
+                    if(mProjekts.indexOf(projekt)==(mProjekts.size()-1)){
+                        AddRoute.show();
+                    }
                     hidden_layout.setVisibility(View.GONE);
                     click =0;
                 }
