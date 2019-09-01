@@ -12,10 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.main.climbingdiary.Ui.AppBarMenu;
-import com.main.climbingdiary.Ui.button.ShowTimeSlider;
 import com.main.climbingdiary.abstraction.RouteFragment;
 import com.main.climbingdiary.adapter.RoutesAdapter;
-import com.main.climbingdiary.models.Route;
+import com.main.climbingdiary.models.data.Route;
 import com.main.climbingdiary.models.RouteSort;
 
 import java.text.ParseException;

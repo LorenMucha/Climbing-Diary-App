@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.text.SpannableStringBuilder;
@@ -29,13 +28,12 @@ import com.main.climbingdiary.StatisticFragment;
 import com.main.climbingdiary.Ui.FragmentPager;
 import com.main.climbingdiary.Ui.SetDate;
 import com.main.climbingdiary.abstraction.Tabs;
-import com.main.climbingdiary.adapter.TabAdapter;
-import com.main.climbingdiary.models.Area;
+import com.main.climbingdiary.models.data.Area;
 import com.main.climbingdiary.models.Levels;
-import com.main.climbingdiary.models.Projekt;
+import com.main.climbingdiary.models.data.Projekt;
 import com.main.climbingdiary.models.Rating;
-import com.main.climbingdiary.models.Route;
-import com.main.climbingdiary.models.Sector;
+import com.main.climbingdiary.models.data.Route;
+import com.main.climbingdiary.models.data.Sector;
 import com.main.climbingdiary.models.Styles;
 
 import java.util.regex.Pattern;
@@ -55,7 +53,6 @@ public class EditRouteDialog extends DialogFragment {
 
     public static EditRouteDialog newInstance(String _title, Route _route){
         EditRouteDialog edit = new  EditRouteDialog();
-        Bundle args = new Bundle();
         route = _route;
         title = _title;
         return edit;
@@ -81,6 +78,8 @@ public class EditRouteDialog extends DialogFragment {
         }else{
             editRoute = Route.getRoute(route_id);
         }
+
+        Log.d("edit tick route",editRoute.toString());
 
         // Initialize a new foreground color span instance
         ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.BLACK);
@@ -118,7 +117,11 @@ public class EditRouteDialog extends DialogFragment {
         ArrayAdapter<String> stilArrayAdapter = new ArrayAdapter<String>(_context,android.R.layout.simple_spinner_item, Styles.getStyle(true));
         stilArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
         stil.setAdapter(stilArrayAdapter);
-        stil.setSelection(stilArrayAdapter.getPosition(editRoute.getStyle().toUpperCase()));
+        try {
+            stil.setSelection(stilArrayAdapter.getPosition(editRoute.getStyle().toUpperCase()));
+        }catch(Exception ex){
+            Log.e("Style was unset",ex.getLocalizedMessage());
+        }
 
         // set Spinner for choosing the level
         ArrayAdapter<String> levelArrayAdapter = new ArrayAdapter<String>(_context,android.R.layout.simple_spinner_item, Levels.getLevels());
@@ -178,22 +181,25 @@ public class EditRouteDialog extends DialogFragment {
         saveRoute.setOnClickListener(v -> {
             if(FragmentPager.getTabTitle().equals(Tabs.PROJEKTE.getTitle())){
                 FragmentPager.setPosition(1);
-                Projekt projekt = Projekt.getProjekt();
-                projekt.deleteProjekt(projekt.getId());
+                Projekt projekt = new Projekt();
+                projekt.deleteProjekt(editRoute.getId());
+                Log.d("delete Projekt with ID:",Integer.toString(editRoute.getId()));
                 RouteProjectFragment.refreshData();
             }
-            String route_name = name.getText().toString();
-            String route_level = level.getSelectedItem().toString();
-            String route_date = date.getText().toString();
-            String route_area = area.getText().toString();
-            String route_sector = sector.getText().toString();
-            String route_comment = comment.getText().toString();
-            int route_rating = rating.getSelectedItemPosition()+1;
-            String route_style = stil.getSelectedItem().toString();
-            Route new_route = new Route(0,route_name,route_level,route_area,route_sector,route_style,route_rating,route_comment,route_date);
-            boolean taskState = new_route.deleteRoute(route_id);
+            Route newRoute = new Route();
+            newRoute.setId(0);
+            newRoute.setName(name.getText().toString());
+            newRoute.setLevel(level.getSelectedItem().toString());
+            newRoute.setDate(date.getText().toString());
+            newRoute.setArea(area.getText().toString());
+            newRoute.setSector(sector.getText().toString());
+            newRoute.setComment(comment.getText().toString());
+            newRoute.setRating(rating.getSelectedItemPosition()+1);
+            newRoute.setStyle(stil.getSelectedItem().toString());
+            Log.d("delete Route with ID", Integer.toString(editRoute.getId()));
+            boolean taskState = newRoute.deleteRoute(editRoute.getId());
             if(taskState) {
-                new_route.insertRoute();
+                newRoute.insertRoute();
             }
             //close the dialog
             getDialog().cancel();

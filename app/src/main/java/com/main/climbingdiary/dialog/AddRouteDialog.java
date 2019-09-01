@@ -26,11 +26,11 @@ import com.main.climbingdiary.RouteDoneFragment;
 import com.main.climbingdiary.StatisticFragment;
 import com.main.climbingdiary.Ui.SetDate;
 import com.main.climbingdiary.models.Alerts;
-import com.main.climbingdiary.models.Area;
+import com.main.climbingdiary.models.data.Area;
 import com.main.climbingdiary.models.Levels;
 import com.main.climbingdiary.models.Rating;
-import com.main.climbingdiary.models.Route;
-import com.main.climbingdiary.models.Sector;
+import com.main.climbingdiary.models.data.Route;
+import com.main.climbingdiary.models.data.Sector;
 import com.main.climbingdiary.models.Styles;
 
 public class AddRouteDialog extends DialogFragment{
@@ -139,16 +139,16 @@ public class AddRouteDialog extends DialogFragment{
 
         //save the route
         saveRoute.setOnClickListener(v -> {
-            String route_name = name.getText().toString();
-            String route_level = level.getSelectedItem().toString();
-            String route_date = date.getText().toString();
-            String route_area = area.getText().toString();
-            String route_sector = sector.getText().toString();
-            String route_comment = comment.getText().toString();
-            int route_rating = rating.getSelectedItemPosition()+1;
-            String route_style = stil.getSelectedItem().toString();
-            Route new_route = new Route(0,route_name,route_level,route_area,route_sector,route_style,route_rating,route_comment,route_date);
-            boolean taskState = new_route.insertRoute();
+            Route newRoute = new Route();
+            newRoute.setName(name.getText().toString());
+            newRoute.setLevel(level.getSelectedItem().toString());
+            newRoute.setDate(date.getText().toString());
+            newRoute.setArea(area.getText().toString());
+            newRoute.setSector(sector.getText().toString());
+            newRoute.setComment(comment.getText().toString());
+            newRoute.setRating(rating.getSelectedItemPosition()+1);
+            newRoute.setStyle(stil.getSelectedItem().toString());
+            boolean taskState = newRoute.insertRoute();
             if(taskState){
                 RouteDoneFragment.refreshData();
                 StatisticFragment.refreshData();

@@ -16,20 +16,16 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.RouteDoneFragment;
 import com.main.climbingdiary.RouteProjectFragment;
-import com.main.climbingdiary.StatisticFragment;
 import com.main.climbingdiary.Ui.button.AddRoute;
 import com.main.climbingdiary.abstraction.Tabs;
-import com.main.climbingdiary.database.TaskRepository;
 import com.main.climbingdiary.dialog.DialogFactory;
 import com.main.climbingdiary.models.Alerts;
 import com.main.climbingdiary.models.Colors;
-import com.main.climbingdiary.models.Projekt;
-import com.main.climbingdiary.models.Route;
+import com.main.climbingdiary.models.data.Projekt;
+import com.main.climbingdiary.models.data.Route;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,41 +38,6 @@ public class ProjektAdapter extends
 
     private List<Projekt> mProjekts;
     private List<Projekt> mProjekts_filtered;
-
-    // Provide a direct reference to each of the views within a data item
-    // Used to cache the views within the item layout for fast access
-    class ViewHolder extends RecyclerView.ViewHolder {
-        // Your holder should contain a member variable
-        // for any view that will be set as you render a row
-        TextView nameTextView;
-        TextView levelTextView;
-        TextView areaTextView;
-        RatingBar ratingView;
-        TextView commentTextView;
-        TableRow hiddenView;
-        ImageButton editButton;
-        ImageButton removeButton;
-        CheckBox checkProject;
-
-        // We also create a constructor that accepts the entire item row
-        // and does the view lookups to find each subview
-        private ViewHolder(View itemView) {
-            // Stores the itemView in a public final member variable that can be used
-            // to access the context from any ViewHolder instance.
-            super(itemView);
-
-            nameTextView = itemView.findViewById(R.id.route_name);
-            levelTextView=itemView.findViewById(R.id.route_level);
-            areaTextView=itemView.findViewById(R.id.route_area);
-            //styleTextView=(TextView) itemView.findViewById(R.id.route_style);
-            ratingView = itemView.findViewById(R.id.route_rating);
-            commentTextView=itemView.findViewById(R.id.route_comment);
-            hiddenView =itemView.findViewById(R.id.route_hidden);
-            editButton =itemView.findViewById(R.id.route_edit);
-            removeButton =itemView.findViewById(R.id.route_delete);
-            checkProject = itemView.findViewById(R.id.tick_project);
-        }
-    }
 
     // Pass in the contact array into the constructor
     public ProjektAdapter(List<Projekt> projekts) {
@@ -110,8 +71,8 @@ public class ProjektAdapter extends
         String commentString = projekt.getComment();
 
         //create the html string for the route and sector
-        final String routeHtml = areaText+" &#9679; "+sectorText;
-        final String commentHtml = "<b>Kommentar</b><br/>"+commentString;
+        final String routeHtml = areaText + " &#9679; " + sectorText;
+        final String commentHtml = "<b>Kommentar</b><br/>" + commentString;
 
         // Set item views
         TextView routeName = viewHolder.nameTextView;
@@ -137,22 +98,23 @@ public class ProjektAdapter extends
         //show comment on holder click
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             int click = 0;
+
             @Override
             public void onClick(View v) {
-                if(click==0){
+                if (click == 0) {
                     //if last element hide add Button
-                    if(mProjekts.indexOf(projekt)==(mProjekts.size()-1)){
+                    if (mProjekts.indexOf(projekt) == (mProjekts.size() - 1)) {
                         AddRoute.hide();
                     }
                     hidden_layout.setVisibility(View.VISIBLE);
                     click++;
-                }else{
+                } else {
                     //if last element show add Button
-                    if(mProjekts.indexOf(projekt)==(mProjekts.size()-1)){
+                    if (mProjekts.indexOf(projekt) == (mProjekts.size() - 1)) {
                         AddRoute.show();
                     }
                     hidden_layout.setVisibility(View.GONE);
-                    click =0;
+                    click = 0;
                 }
             }
         });
@@ -164,52 +126,42 @@ public class ProjektAdapter extends
                     .setTitleText("Bist du sicher ?")
                     .setConfirmText("OK")
                     .setCancelText("Abbrechen")
-                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                        @Override
-                        public void onClick(SweetAlertDialog sDialog) {
-                            //delete the route by id
-                            int id = projekt.getId();
-                            boolean taskState = projekt.deleteProjekt(id);
-                            if(taskState){
-                                RouteProjectFragment.refreshData();
-                                sDialog.hide();
-                                new SweetAlertDialog(_v.getContext(), SweetAlertDialog.SUCCESS_TYPE)
-                                        .setTitleText("Gelöscht")
-                                        .show();
-                            }else{
-                                Alerts.setErrorAlert();
-                            }
+                    .setConfirmClickListener(sDialog -> {
+                        //delete the route by id
+                        int id = projekt.getId();
+                        boolean taskState = projekt.deleteProjekt(id);
+                        if (taskState) {
+                            RouteProjectFragment.refreshData();
+                            sDialog.hide();
+                            new SweetAlertDialog(_v.getContext(), SweetAlertDialog.SUCCESS_TYPE)
+                                    .setTitleText("Gelöscht")
+                                    .show();
+                        } else {
+                            Alerts.setErrorAlert();
+                        }
 
-                        }
                     })
-                    .setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
-                        @Override
-                        public void onClick(SweetAlertDialog sDialog) {
-                            sDialog.cancel();
-                        }
-                    })
+                    .setCancelButton("Cancel", sDialog -> sDialog.cancel())
                     .show();
         });
         //edit a route
-        edit.setOnClickListener(view -> DialogFactory.openEditRouteDialog(Tabs.PROJEKTE.getTitle(),projekt.getId()));
+        edit.setOnClickListener(view -> DialogFactory.openEditRouteDialog(Tabs.PROJEKTE.getTitle(), projekt.getId()));
 
         //tick projekt
-        routeTick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd", Locale.GERMAN);
-                int id = 0;
-                String name = projekt.getName();
-                String area = projekt.getArea();
-                String level = projekt.getLevel();
-                String style = "RP";
-                int rating = projekt.getRating();
-                String comment = projekt.getComment();
-                String date = sdf.format(new Date());
-                String sector = projekt.getSector();
-                Route route = new Route(id,name,level,area,sector,style,rating,comment,date);
-                DialogFactory.openEditRouteDialog(route);
-            }
+        routeTick.setOnClickListener(view -> {
+            SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd", Locale.GERMAN);
+            Route route = new Route();
+            route.setId(projekt.getId());
+            route.setName(projekt.getName());
+            route.setArea(projekt.getArea());
+            route.setLevel(projekt.getLevel());
+            route.setSector(projekt.getSector());
+            route.setDate(sdf.format(new Date()));
+            route.setRating(projekt.getRating());
+            route.setComment(projekt.getComment());
+            route.setStyle("rp");
+            Log.d("Tick projekt: ",projekt.toString());
+            DialogFactory.openEditRouteDialog(route);
         });
     }
 
@@ -254,5 +206,40 @@ public class ProjektAdapter extends
                 notifyDataSetChanged();
             }
         };
+    }
+
+    // Provide a direct reference to each of the views within a data item
+    // Used to cache the views within the item layout for fast access
+    class ViewHolder extends RecyclerView.ViewHolder {
+        // Your holder should contain a member variable
+        // for any view that will be set as you render a row
+        TextView nameTextView;
+        TextView levelTextView;
+        TextView areaTextView;
+        RatingBar ratingView;
+        TextView commentTextView;
+        TableRow hiddenView;
+        ImageButton editButton;
+        ImageButton removeButton;
+        CheckBox checkProject;
+
+        // We also create a constructor that accepts the entire item row
+        // and does the view lookups to find each subview
+        private ViewHolder(View itemView) {
+            // Stores the itemView in a public final member variable that can be used
+            // to access the context from any ViewHolder instance.
+            super(itemView);
+
+            nameTextView = itemView.findViewById(R.id.route_name);
+            levelTextView = itemView.findViewById(R.id.route_level);
+            areaTextView = itemView.findViewById(R.id.route_area);
+            //styleTextView=(TextView) itemView.findViewById(R.id.route_style);
+            ratingView = itemView.findViewById(R.id.route_rating);
+            commentTextView = itemView.findViewById(R.id.route_comment);
+            hiddenView = itemView.findViewById(R.id.route_hidden);
+            editButton = itemView.findViewById(R.id.route_edit);
+            removeButton = itemView.findViewById(R.id.route_delete);
+            checkProject = itemView.findViewById(R.id.tick_project);
+        }
     }
 }

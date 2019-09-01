@@ -26,7 +26,7 @@ import com.main.climbingdiary.database.TaskRepository;
 import com.main.climbingdiary.dialog.DialogFactory;
 import com.main.climbingdiary.models.Alerts;
 import com.main.climbingdiary.models.Colors;
-import com.main.climbingdiary.models.Route;
+import com.main.climbingdiary.models.data.Route;
 
 import java.util.ArrayList;
 import java.util.List;

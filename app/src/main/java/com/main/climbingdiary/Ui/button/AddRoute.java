@@ -10,7 +10,6 @@ import com.main.climbingdiary.R;
 import com.main.climbingdiary.Ui.FragmentPager;
 import com.main.climbingdiary.dialog.DialogFactory;
 
-//ToDo
 public class AddRoute implements View.OnClickListener {
 
     @SuppressLint("StaticFieldLeak")

@@ -1,4 +1,4 @@
-package com.main.climbingdiary.models;
+package com.main.climbingdiary.models.data;
 
 import android.content.Context;
 import android.database.Cursor;

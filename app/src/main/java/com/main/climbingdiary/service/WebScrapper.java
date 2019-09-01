@@ -1,9 +1,5 @@
 package com.main.climbingdiary.service;
 
-import android.util.Log;
-
-import com.main.climbingdiary.models.Route;
-
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,10 +7,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 public class WebScrapper {
     private String username;

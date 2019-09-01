@@ -25,11 +25,11 @@ import android.widget.Spinner;
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.RouteProjectFragment;
 import com.main.climbingdiary.models.Alerts;
-import com.main.climbingdiary.models.Area;
+import com.main.climbingdiary.models.data.Area;
 import com.main.climbingdiary.models.Levels;
-import com.main.climbingdiary.models.Projekt;
+import com.main.climbingdiary.models.data.Projekt;
 import com.main.climbingdiary.models.Rating;
-import com.main.climbingdiary.models.Sector;
+import com.main.climbingdiary.models.data.Sector;
 
 public class AddProjektDialog extends DialogFragment {
 
@@ -127,34 +127,26 @@ public class AddProjektDialog extends DialogFragment {
         rating.setAdapter(ratingArrayAdapter);
 
         //save the route
-        saveRoute.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //ToDo
-                String route_name = name.getText().toString();
-                String route_level = level.getSelectedItem().toString();
-                String route_area = area.getText().toString();
-                String route_sector = sector.getText().toString();
-                String route_comment = comment.getText().toString();
-                int route_rating = rating.getSelectedItemPosition()+1;
-                Projekt new_projekt = new Projekt(0,route_name,route_level,route_area,route_sector,route_rating,route_comment);
-                boolean taskState = new_projekt.insertProjekt();
-                if(taskState){
-                    RouteProjectFragment.refreshData();
-                }else{
-                    Alerts.setErrorAlert();
-                }
-                //close the dialog
-                getDialog().cancel();
+        saveRoute.setOnClickListener(v -> {
+            Projekt newProjekt = new Projekt();
+            newProjekt.setId(0);
+            newProjekt.setName(name.getText().toString());
+            newProjekt.setLevel(level.getSelectedItem().toString());
+            newProjekt.setArea(area.getText().toString());
+            newProjekt.setSector(sector.getText().toString());
+            newProjekt.setComment(comment.getText().toString());
+            newProjekt.setRating(rating.getSelectedItemPosition()+1);
+            boolean taskState = newProjekt.insertProjekt();
+            if(taskState){
+                RouteProjectFragment.refreshData();
+            }else{
+                Alerts.setErrorAlert();
             }
+            //close the dialog
+            getDialog().cancel();
         });
         //close the dialog
-        closeDialog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getDialog().cancel();
-            }
-        });
+        closeDialog.setOnClickListener(v -> getDialog().cancel());
 
     }
 }
