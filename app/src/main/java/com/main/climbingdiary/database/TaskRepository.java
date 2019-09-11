@@ -171,19 +171,21 @@ public class TaskRepository {
 
     public Cursor getTableValues() {
         String filter_set = "";
+        String replacement = "r.date";
         if (Filter.getFilter() != null) {
-            filter_set = " where " + Filter.getFilter();
+            filter_set = " and " + Filter.getFilter();
         }
         try {
             StringBuilder sql = new StringBuilder();
             sql.append("SELECT r.level,")
-                    .append("(Select count(*) as OS from routen o where r.level=o.level and o.stil='OS') as OS,")
-                    .append("(Select count(*) as RP from routen x where x.level=r.level and x.stil='RP') as RP,")
-                    .append("(Select count(*) as FLASH from routen f where r.level=f.level and f.stil='FLASH') as FLASH,")
-                    .append("count(*) as Gesamt from routen r")
-                    .append(filter_set)
+                    .append(String.format("(Select count(*) as OS from routen o where r.level=o.level and o.stil='OS' %s) as OS,",filter_set.replace(replacement,"o.date")))
+                    .append(String.format("(Select count(*) as RP from routen x where x.level=r.level and x.stil='RP' %s) as RP,",filter_set.replace(replacement,"x.date")))
+                    .append(String.format("(Select count(*) as FLASH from routen f where r.level=f.level and f.stil='FLASH' %s) as FLASH,",filter_set.replace(replacement,"f.date")))
+                    .append(String.format("(Select count(*) as GESAMT from routen g where r.level=g.level %s) as GESAMT",filter_set.replace(replacement,"g.date")))
+                    .append(" from routen r")
+                    .append(" where os >0 or rp >0 or flash > 0")
                     .append(" group by r.level order by r.level DESC");
-            Log.d("SQL Table", sql.toString());
+            Log.d("SQL Table: ", sql.toString());
             Cursor mCur = mDb.rawQuery(sql.toString(), null);
             if (mCur != null) {
                 mCur.moveToNext();

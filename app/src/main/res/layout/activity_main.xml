@@ -20,7 +20,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/colorPrimaryDark"
-        android:maxWidth="100dp"
+        android:maxWidth="200dp"
         app:itemTextColor="@color/white"
         app:menu="@menu/activity_main_drawer"/>
 
