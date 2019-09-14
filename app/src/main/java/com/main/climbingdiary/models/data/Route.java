@@ -1,6 +1,7 @@
 package com.main.climbingdiary.models.data;
 
 import android.database.Cursor;
+import android.util.Log;
 
 import com.main.climbingdiary.database.TaskRepository;
 
@@ -27,7 +28,7 @@ public class Route {
     private static TaskRepository taskRepository = new TaskRepository();
 
     public static Route getRoute(int _id){
-        Route _route = null;
+        Route _route = new Route();
         taskRepository.open();
         //String Sort = (Menu) getA
         Cursor cursor = taskRepository.getRoute(_id);

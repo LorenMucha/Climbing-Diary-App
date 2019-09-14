@@ -72,45 +72,33 @@ public class TaskRepository {
     }
 
     public Cursor getRoute(int _id) {
-        try {
-            String sql = "SELECT r.id, r.name,g.name as gebiet,r.level,r.stil,r.rating, r.kommentar, strftime('%d.%m.%Y',r.date) as date, k.name as sektor FROM routen r, gebiete g, sektoren k where g.id=r.gebiet and k.id=r.sektor AND r.id=" + _id;
-
-            Cursor mCur = mDb.rawQuery(sql, null);
-            if (mCur != null) {
-                mCur.moveToNext();
-            }
-            return mCur;
-        } catch (SQLException mSQLException) {
-            throw mSQLException;
+        String sql = "SELECT r.id, r.name,g.name as gebiet,r.level,r.stil,r.rating, r.kommentar, strftime('%d.%m.%Y',r.date) as date, k.name as sektor FROM routen r, gebiete g, sektoren k where g.id=r.gebiet and k.id=r.sektor AND r.id=" + _id;
+        Log.d("Get Route",sql);
+        Cursor mCur = mDb.rawQuery(sql, null);
+        if (mCur != null) {
+            mCur.moveToNext();
         }
+        return mCur;
     }
 
     public Cursor getProjekt(int _id) {
-        try {
-            String sql = "SELECT r.id, r.name,g.name as gebiet,r.level,r.rating, r.kommentar, k.name as sektor FROM projekte r, gebiete g, sektoren k where g.id=r.gebiet and k.id=r.sektor AND r.id=" + _id;
+        String sql = "SELECT r.id, r.name,g.name as gebiet,r.level,r.rating, r.kommentar, k.name as sektor FROM projekte r, gebiete g, sektoren k where g.id=r.gebiet and k.id=r.sektor AND r.id=" + _id;
 
-            Cursor mCur = mDb.rawQuery(sql, null);
-            if (mCur != null) {
-                mCur.moveToNext();
-            }
-            return mCur;
-        } catch (SQLException mSQLException) {
-            throw mSQLException;
+        Cursor mCur = mDb.rawQuery(sql, null);
+        if (mCur != null) {
+            mCur.moveToNext();
         }
+        return mCur;
     }
 
     public Cursor getAllAreas() {
-        try {
-            String sql = "SELECT * FROM gebiete GROUP BY id";
+        String sql = "SELECT * FROM gebiete GROUP BY id";
 
-            Cursor mCur = mDb.rawQuery(sql, null);
-            if (mCur != null) {
-                mCur.moveToNext();
-            }
-            return mCur;
-        } catch (SQLException mSQLException) {
-            throw mSQLException;
+        Cursor mCur = mDb.rawQuery(sql, null);
+        if (mCur != null) {
+            mCur.moveToNext();
         }
+        return mCur;
     }
 
     public Cursor getSectorByAreaName(String _name) {

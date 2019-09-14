@@ -45,6 +45,7 @@ public class EditRouteDialog extends DialogFragment {
     public EditRouteDialog() {}
 
     public static EditRouteDialog newInstance(String _title, int _id){
+        Log.d("instanziate for id",Integer.toString(_id));
         EditRouteDialog edit = new  EditRouteDialog();
         route_id = _id;
         title = _title;

@@ -170,48 +170,34 @@ public class RoutesAdapter extends
         });
 
         //delete a route
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final View _v = v;
-                new SweetAlertDialog(_v.getContext(), SweetAlertDialog.WARNING_TYPE)
-                        .setTitleText("Bist du sicher ?")
-                        .setConfirmText("OK")
-                        .setCancelText("Abbrechen")
-                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                            @Override
-                            public void onClick(SweetAlertDialog sDialog) {
-                                //delete the route by id
-                                int id = route.getId();
-                                boolean taskState = route.deleteRoute(id);
-                                if(taskState){
-                                    RouteDoneFragment.refreshData();
-                                    StatisticFragment.refreshData();
-                                    sDialog.hide();
-                                    new SweetAlertDialog(_v.getContext(), SweetAlertDialog.SUCCESS_TYPE)
-                                            .setTitleText("Gelöscht")
-                                            .show();
-                                }else{
-                                    Alerts.setErrorAlert();
-                                }
+        delete.setOnClickListener(v -> {
+            final View _v = v;
+            new SweetAlertDialog(_v.getContext(), SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("Bist du sicher ?")
+                    .setConfirmText("OK")
+                    .setCancelText("Abbrechen")
+                    .setConfirmClickListener(sDialog -> {
+                        //delete the route by id
+                        int id = route.getId();
+                        boolean taskState = route.deleteRoute(id);
+                        if(taskState){
+                            RouteDoneFragment.refreshData();
+                            StatisticFragment.refreshData();
+                            sDialog.hide();
+                            new SweetAlertDialog(_v.getContext(), SweetAlertDialog.SUCCESS_TYPE)
+                                    .setTitleText("Gelöscht")
+                                    .show();
+                        }else{
+                            Alerts.setErrorAlert();
+                        }
 
-                            }
-                        })
-                        .setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
-                            @Override
-                            public void onClick(SweetAlertDialog sDialog) {
-                                sDialog.cancel();
-                            }
-                        })
-                        .show();
-            }
+                    })
+                    .setCancelButton("Cancel", sDialog -> sDialog.cancel())
+                    .show();
         });
         //edit a route
-        edit.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                DialogFactory.openEditRouteDialog(Tabs.ROUTEN.getTitle(),route.getId());
-            }
+        edit.setOnClickListener(view -> {
+            DialogFactory.openEditRouteDialog(Tabs.ROUTEN.getTitle(),route.getId());
         });
     }
 
