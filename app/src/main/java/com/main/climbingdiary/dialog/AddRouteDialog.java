@@ -153,7 +153,7 @@ public class AddRouteDialog extends DialogFragment{
                 RouteDoneFragment.refreshData();
                 StatisticFragment.refreshData();
             }else{
-                Alerts.setErrorAlert();
+                Alerts.setErrorAlert(view.getContext());
             }
             //close the dialog
             getDialog().cancel();

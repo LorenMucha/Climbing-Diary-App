@@ -115,19 +115,20 @@ public class TaskRepository {
         }
     }
 
-    public Cursor getLineChartValues() {
+    public Cursor getLineChartValues(int year) {
         String filter_set = "";
+        final int scaleFactor = 10;
         if (Filter.getFilter() != null) {
             filter_set = " where " + Filter.getFilter();
         }
         try {
             StringBuilder sql = new StringBuilder();
-            sql.append("SELECT SUM(cast(r.level as int)*(25*(INSTR('abc',substr(replace(r.level,'+',''),-1)))")
+            sql.append("SELECT SUM(cast(r.level as int)*("+scaleFactor+"*(INSTR('abc',substr(replace(r.level,'+',''),-1)))")
                     .append(" +INSTR('+',substr(r.level,-1))")
                     .append(" +INSTR('rpflashos',r.stil))) as stat,")
                     .append(" COUNT(cast(r.level as int)) as anzahl,")
                     .append(" strftime('%Y',r.date) as date")
-                    .append(" FROM routen r")
+                    .append(" FROM (select * from routen where strftime('%Y',date)='"+year+"' order by level DESC Limit 10)as r")
                     .append(filter_set)
                     .append(" GROUP BY strftime('%Y',r.date)");
             Log.d("query LineChartValues", sql.toString());

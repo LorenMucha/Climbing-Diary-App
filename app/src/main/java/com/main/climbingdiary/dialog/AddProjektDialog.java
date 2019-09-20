@@ -140,7 +140,7 @@ public class AddProjektDialog extends DialogFragment {
             if(taskState){
                 RouteProjectFragment.refreshData();
             }else{
-                Alerts.setErrorAlert();
+                Alerts.setErrorAlert(view.getContext());
             }
             //close the dialog
             getDialog().cancel();

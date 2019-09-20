@@ -188,7 +188,7 @@ public class RoutesAdapter extends
                                     .setTitleText("Gelöscht")
                                     .show();
                         }else{
-                            Alerts.setErrorAlert();
+                            Alerts.setErrorAlert(v.getContext());
                         }
 
                     })
