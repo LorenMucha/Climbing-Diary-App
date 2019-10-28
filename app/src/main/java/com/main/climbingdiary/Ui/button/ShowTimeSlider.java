@@ -52,4 +52,6 @@ public class ShowTimeSlider implements View.OnClickListener{
     public static void hide(){
         container.setVisibility(View.GONE);
     }
+    public static void hideButton(){imageButton.setVisibility(View.GONE);}
+    public static void showButton(){imageButton.setVisibility(View.VISIBLE);}
 }

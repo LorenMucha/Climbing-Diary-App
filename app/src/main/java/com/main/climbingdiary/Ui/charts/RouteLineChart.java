@@ -2,6 +2,9 @@ package com.main.climbingdiary.Ui.charts;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 
@@ -70,9 +73,22 @@ public class RouteLineChart extends RouteChart {
             dataSet.setColor(R.color.main_blue_color);
             dataSet.setCircleHoleColor(Colors.getActiveColor());
             dataSet.setCircleColor(Colors.getMainColor());
+            dataSet.setHighLightColor(Color.RED);
             dataSet.setLineWidth(5);
             dataSet.setCircleRadius(15);
             dataSet.setValueTextSize(15);
+            dataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+            //to enable the cubic density : if 1 then it will be sharp curve
+            dataSet.setCubicIntensity(0.2f);
+            //to fill the below of smooth line in graph
+            dataSet.setDrawFilled(true);
+            dataSet.setFillColor(Color.BLACK);
+            //set the transparency
+            dataSet.setFillAlpha(80);
+
+            //set the gradiant then the above draw fill color will be replace
+            Drawable drawable = ContextCompat.getDrawable(MainActivity.getMainAppContext(), R.drawable.radiant_linechart);
+            dataSet.setFillDrawable(drawable);
             // Setting Data
             LineData data = new LineData(dataSet);
             lineChart.setData(data);
@@ -87,7 +103,8 @@ public class RouteLineChart extends RouteChart {
             xAxis.setValueFormatter(new XAxisValueFormatter(labels));
             YAxis yAxis = lineChart.getAxisLeft();
             yAxis.setDrawGridLines(false);
-            yAxis.setSpaceBottom(1f);
+            yAxis.setSpaceBottom(5f);
+            yAxis.setSpaceTop(5f);
             //refresh
             lineChart.invalidate();
         }catch(Exception ex){

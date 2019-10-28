@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layoutId);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         MainActivity.context = getApplicationContext();
@@ -46,14 +46,15 @@ public class MainActivity extends AppCompatActivity {
         fragmentPager.setFragmente();
 
         //the add buttons
-        AddRoute addRoute = new AddRoute(this);
-        ShowTimeSlider showTimeSlider = new ShowTimeSlider(this);
+        new AddRoute(this);
+        new ShowTimeSlider(this);
 
         //the slider
-        TimeSlider timeSlider = new TimeSlider(this);
+        new TimeSlider(this);
+
 
         //navigation View
-        NavDrawer navDrawer = new NavDrawer(this);
+        new NavDrawer(this);
     }
 
     @Override

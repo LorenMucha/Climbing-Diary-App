@@ -1,9 +1,7 @@
 package com.main.climbingdiary;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,8 +12,6 @@ import android.widget.Button;
 
 import com.main.climbingdiary.Ui.AppBarMenu;
 import com.main.climbingdiary.Ui.TableView;
-import com.main.climbingdiary.Ui.button.AddRoute;
-import com.main.climbingdiary.Ui.button.ShowTimeSlider;
 import com.main.climbingdiary.Ui.charts.RouteBarChart;
 import com.main.climbingdiary.Ui.charts.RouteLineChart;
 import com.main.climbingdiary.models.Colors;
@@ -38,38 +34,29 @@ public class StatisticFragment extends Fragment {
         final TableView _routeTable = new TableView(view.getContext(),view);
         final RouteBarChart _routeBarChart = new RouteBarChart(view);
         //the Button Click Listener
-        setLineChartBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                StatisticFragment.resetButtonBackground();
-                setLineChartBtn.setBackgroundColor(Colors.getActiveColor());
-                _routeLineChart.show();
-                _routeTable.hide();
-                _routeBarChart.hide();
-                _routeLineChart.createChart();
-            }
+        setLineChartBtn.setOnClickListener(v -> {
+            StatisticFragment.resetButtonBackground();
+            setLineChartBtn.setBackgroundColor(Colors.getActiveColor());
+            _routeLineChart.show();
+            _routeTable.hide();
+            _routeBarChart.hide();
+            _routeLineChart.createChart();
         });
-        setBarChartBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                StatisticFragment.resetButtonBackground();
-                setBarChartBtn.setBackgroundColor(Colors.getActiveColor());
-                _routeTable.hide();
-                _routeLineChart.hide();
-                _routeBarChart.show();
-                _routeBarChart.createChart();
-            }
+        setBarChartBtn.setOnClickListener(v -> {
+            StatisticFragment.resetButtonBackground();
+            setBarChartBtn.setBackgroundColor(Colors.getActiveColor());
+            _routeTable.hide();
+            _routeLineChart.hide();
+            _routeBarChart.show();
+            _routeBarChart.createChart();
         });
-        setTableBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                StatisticFragment.resetButtonBackground();
-                setTableBtn.setBackgroundColor(Colors.getActiveColor());
-                _routeBarChart.hide();
-                _routeLineChart.hide();
-                _routeTable.show();
-                _routeTable.createTableView();
-            }
+        setTableBtn.setOnClickListener(v -> {
+            StatisticFragment.resetButtonBackground();
+            setTableBtn.setBackgroundColor(Colors.getActiveColor());
+            _routeBarChart.hide();
+            _routeLineChart.hide();
+            _routeTable.show();
+            _routeTable.createTableView();
         });
         //default visualisation
         setBarChartBtn.callOnClick();

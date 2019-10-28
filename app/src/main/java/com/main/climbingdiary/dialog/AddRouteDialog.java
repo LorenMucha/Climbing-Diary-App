@@ -21,10 +21,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.main.climbingdiary.MainActivity;
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.RouteDoneFragment;
 import com.main.climbingdiary.StatisticFragment;
 import com.main.climbingdiary.Ui.SetDate;
+import com.main.climbingdiary.Ui.TimeSlider;
 import com.main.climbingdiary.models.Alerts;
 import com.main.climbingdiary.models.data.Area;
 import com.main.climbingdiary.models.Levels;
@@ -135,7 +137,7 @@ public class AddRouteDialog extends DialogFragment{
         rating.setAdapter(ratingArrayAdapter);
 
         //set date listener
-        SetDate setDate = new SetDate(date, _context);
+        new SetDate(date, _context);
 
         //save the route
         saveRoute.setOnClickListener(v -> {
@@ -155,6 +157,7 @@ public class AddRouteDialog extends DialogFragment{
             }else{
                 Alerts.setErrorAlert(view.getContext());
             }
+            new TimeSlider(MainActivity.getMainActivity());
             //close the dialog
             getDialog().cancel();
         });
