@@ -13,16 +13,18 @@
         app:showAsAction="ifRoom"
         android:title="Sortieren">
         <menu>
-            <item
-                android:id="@+id/sort_level"
-                android:title="Schwierigkeit" />
-            <item
-                android:id="@+id/sort_area"
-                android:title="Gebiet" />
-            <item
-                android:id="@+id/sort_date"
-                android:checked="true"
-                android:title="Datum" />
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/sort_level"
+                    android:title="Schwierigkeit" />
+                <item
+                    android:id="@+id/sort_area"
+                    android:title="Gebiet" />
+                <item
+                    android:id="@+id/sort_date"
+                    android:checked="true"
+                    android:title="Datum" />
+            </group>
         </menu>
     </item>
 </menu>
