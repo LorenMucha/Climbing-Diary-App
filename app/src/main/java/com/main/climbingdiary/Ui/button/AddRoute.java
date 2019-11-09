@@ -3,12 +3,11 @@ package com.main.climbingdiary.Ui.button;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.support.design.widget.FloatingActionButton;
-import android.util.Log;
 import android.view.View;
 
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.Ui.FragmentPager;
-import com.main.climbingdiary.dialog.DialogFactory;
+import com.main.climbingdiary.Ui.dialog.DialogFactory;
 
 public class AddRoute implements View.OnClickListener {
 

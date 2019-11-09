@@ -1,4 +1,4 @@
-package com.main.climbingdiary.dialog;
+package com.main.climbingdiary.Ui.dialog;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -23,11 +23,12 @@ import android.widget.Spinner;
 
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.RouteProjectFragment;
-import com.main.climbingdiary.models.data.Area;
+import com.main.climbingdiary.database.entities.AreaRepository;
+import com.main.climbingdiary.database.entities.Projekt;
+import com.main.climbingdiary.database.entities.ProjektRepository;
+import com.main.climbingdiary.database.entities.SectorRepository;
 import com.main.climbingdiary.models.Levels;
-import com.main.climbingdiary.models.data.Projekt;
 import com.main.climbingdiary.models.Rating;
-import com.main.climbingdiary.models.data.Sector;
 
 public class EditProjektDialog extends DialogFragment {
     public EditProjektDialog() {}
@@ -57,7 +58,7 @@ public class EditProjektDialog extends DialogFragment {
         String title = getArguments().getString("title", "Bearbeiten");
         //get the route value which will be edit
         int route_id = getArguments().getInt("id",0);
-        Projekt editRoute = Projekt.getProjekt(route_id);
+        Projekt editRoute = ProjektRepository.getProjekt(route_id);
 
         // Initialize a new foreground color span instance
         ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.BLACK);
@@ -96,7 +97,7 @@ public class EditProjektDialog extends DialogFragment {
         level.setSelection(levelArrayAdapter.getPosition(editRoute.getLevel()));
 
         //get the route List and set autocomplete
-        ArrayAdapter<String> areaArrayAdapter = new ArrayAdapter<String>(view.getContext(),android.R.layout.simple_spinner_item, Area.getRouteNameList(_context));
+        ArrayAdapter<String> areaArrayAdapter = new ArrayAdapter<String>(view.getContext(),android.R.layout.simple_spinner_item, AreaRepository.getAreaNameList());
         //will start working from first character
         area.setThreshold(1);
         area.setAdapter(areaArrayAdapter);
@@ -113,8 +114,8 @@ public class EditProjektDialog extends DialogFragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
-                Log.d("sector list", TextUtils.join(",", Sector.getSectorList(_context,area.getText().toString().trim())));
-                ArrayAdapter<String> sectorArrayAdapter = new ArrayAdapter<String>(_context,android.R.layout.simple_spinner_item, Sector.getSectorList(_context,area.getText().toString().trim()));
+                Log.d("sector list", TextUtils.join(",", SectorRepository.getSectorList(_context,area.getText().toString().trim())));
+                ArrayAdapter<String> sectorArrayAdapter = new ArrayAdapter<String>(_context,android.R.layout.simple_spinner_item, SectorRepository.getSectorList(_context,area.getText().toString().trim()));
                 //will start working from first character
                 sector.setThreshold(1);
                 sector.setAdapter(sectorArrayAdapter);
@@ -141,9 +142,9 @@ public class EditProjektDialog extends DialogFragment {
             newProjekt.setSector(sector.getText().toString());
             newProjekt.setComment(comment.getText().toString());
             newProjekt.setRating(rating.getSelectedItemPosition()+1);
-            boolean taskState = newProjekt.deleteProjekt(route_id);
+            boolean taskState = ProjektRepository.deleteProjekt(route_id);
             if(taskState) {
-                newProjekt.insertProjekt();
+                ProjektRepository.insertProjekt(newProjekt);
             }
             //close the dialog
             getDialog().cancel();

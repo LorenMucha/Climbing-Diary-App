@@ -1,11 +1,5 @@
-package com.main.climbingdiary.models.data;
+package com.main.climbingdiary.database.entities;
 
-import android.content.Context;
-import android.database.Cursor;
-
-import com.main.climbingdiary.database.TaskRepository;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Sector {
@@ -57,20 +51,5 @@ public class Sector {
         public Sector build(){
             return new Sector(this);
         }
-    }
-
-    public static ArrayList<String> getSectorList(Context context, String _area_name){
-        ArrayList<String> _sector_list = new ArrayList<>();
-        TaskRepository taskRepository = new TaskRepository();
-        taskRepository.open();
-        Cursor cursor = taskRepository.getSectorByAreaName(_area_name);
-        if (cursor != null) {
-            while (!cursor.isAfterLast()) {
-                String name = cursor.getString(0);
-                _sector_list.add(name);
-                cursor.moveToNext();
-            }
-        }
-        return _sector_list;
     }
 }

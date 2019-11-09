@@ -1,4 +1,4 @@
-package com.main.climbingdiary.abstraction;
+package com.main.climbingdiary.Ui.charts;
 
 public abstract class RouteChart {
 

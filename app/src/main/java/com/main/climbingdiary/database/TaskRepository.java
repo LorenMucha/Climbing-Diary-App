@@ -8,11 +8,11 @@ import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
 import com.main.climbingdiary.MainActivity;
-import com.main.climbingdiary.abstraction.State;
 import com.main.climbingdiary.models.Filter;
-import com.main.climbingdiary.models.data.Projekt;
-import com.main.climbingdiary.models.data.Route;
+import com.main.climbingdiary.database.entities.Projekt;
+import com.main.climbingdiary.database.entities.Route;
 
+//FIXME: tabellen spalten in konstanten speichern !!
 public class TaskRepository {
 
     protected static final String TAG = "DataAdapter";
@@ -44,7 +44,7 @@ public class TaskRepository {
 
     public Cursor getAllRoutes() {
         try {
-            String sql = RouteLists.ROUTELIST.getSQL();
+            String sql = RouteSQL.ROUTELIST.getSQL();
             Log.d("SQL RouteList", sql);
             Cursor mCur = mDb.rawQuery(sql, null);
             if (mCur != null) {
@@ -59,7 +59,7 @@ public class TaskRepository {
 
     public Cursor getAllProjekts() {
         try {
-            String sql = RouteLists.PROJEKTLIST.getSQL();
+            String sql = RouteSQL.PROJEKTLIST.getSQL();
             Cursor mCur = mDb.rawQuery(sql, null);
             if (mCur != null) {
                 mCur.moveToNext();
@@ -92,7 +92,7 @@ public class TaskRepository {
     }
 
     public Cursor getAllAreas() {
-        String sql = "SELECT * FROM gebiete GROUP BY id";
+        String sql = "SELECT * FROM gebiete Order By Name";
 
         Cursor mCur = mDb.rawQuery(sql, null);
         if (mCur != null) {
@@ -116,9 +116,9 @@ public class TaskRepository {
     }
 
     public Cursor getLineChartValues(int year) {
-        String filter_set = "";
+        String filter_set = Filter.getFilter(true);
         final int scaleFactor = 10;
-        if (Filter.getFilter() != null) {
+        if (!filter_set.isEmpty()) {
             filter_set = " where " + Filter.getFilter();
         }
         try {
@@ -129,6 +129,7 @@ public class TaskRepository {
                     .append(" COUNT(cast(r.level as int)) as anzahl,")
                     .append(" strftime('%Y',r.date) as date")
                     .append(" FROM (select * from routen where strftime('%Y',date)='"+year+"' order by level DESC Limit 10)as r")
+                    .append(" join gebiete g on g.id=r.gebiet")
                     .append(filter_set)
                     .append(" GROUP BY strftime('%Y',r.date)");
             Log.d("query LineChartValues", sql.toString());
@@ -159,18 +160,18 @@ public class TaskRepository {
     }
 
     public Cursor getTableValues() {
-        String filter_set = "";
-        String replacement = "r.date";
-        if (Filter.getFilter() != null) {
-            filter_set = " and " + Filter.getFilter();
+        String filter = Filter.getFilter(true);
+        String replacement_sort = "r.date";
+        if (!filter.isEmpty()) {
+            filter = "and " + Filter.getFilter();
         }
         try {
             StringBuilder sql = new StringBuilder();
             sql.append("SELECT r.level,")
-                    .append(String.format("(Select count(*) as OS from routen o where r.level=o.level and o.stil='OS' %s) as OS,",filter_set.replace(replacement,"o.date")))
-                    .append(String.format("(Select count(*) as RP from routen x where x.level=r.level and x.stil='RP' %s) as RP,",filter_set.replace(replacement,"x.date")))
-                    .append(String.format("(Select count(*) as FLASH from routen f where r.level=f.level and f.stil='FLASH' %s) as FLASH,",filter_set.replace(replacement,"f.date")))
-                    .append(String.format("(Select count(*) as GESAMT from routen g where r.level=g.level %s) as GESAMT",filter_set.replace(replacement,"g.date")))
+                    .append(String.format("(Select count(*) as OS from routen o join gebiete g on g.id=o.gebiet where r.level=o.level and o.stil='OS' %s) as OS,",filter.replace(replacement_sort,"o.date")))
+                    .append(String.format("(Select count(*) as RP from routen x join gebiete g on g.id=x.gebiet where x.level=r.level and x.stil='RP' %s) as RP,",filter.replace(replacement_sort,"x.date")))
+                    .append(String.format("(Select count(*) as FLASH from routen f join gebiete g on g.id=f.gebiet where r.level=f.level and f.stil='FLASH' %s) as FLASH,",filter.replace(replacement_sort,"f.date")))
+                    .append(String.format("(Select count(*) as GESAMT from routen z join gebiete g on g.id=z.gebiet where r.level=z.level %s) as GESAMT",filter.replace(replacement_sort,"z.date")))
                     .append(" from routen r")
                     .append(" where os >0 or rp >0 or flash > 0")
                     .append(" group by r.level order by r.level DESC");
@@ -188,12 +189,12 @@ public class TaskRepository {
     }
 
     public Cursor getBarChartValues() {
-        String filter_set = "";
-        if (Filter.getFilter() != null) {
+        String filter_set = Filter.getFilter(true);
+        if (!filter_set.isEmpty()) {
             filter_set = " where " + Filter.getFilter();
         }
         try {
-            String sql = "select r.level,sum(r.stil='RP') as rp, sum(r.stil='OS') as os,sum(r.stil='FLASH') as flash from routen r " + filter_set + " group by r.level";
+            String sql = String.format("select r.level,sum(r.stil='RP') as rp, sum(r.stil='OS') as os,sum(r.stil='FLASH') as flash from routen r join gebiete g on g.id=r.gebiet %s group by r.level",filter_set);
             Log.d("SQL getBarChartValues", sql);
             Cursor mCur = mDb.rawQuery(sql, null);
             if (mCur != null) {

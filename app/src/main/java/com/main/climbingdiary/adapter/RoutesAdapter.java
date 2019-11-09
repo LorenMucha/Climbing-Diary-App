@@ -21,12 +21,13 @@ import com.main.climbingdiary.R;
 import com.main.climbingdiary.RouteDoneFragment;
 import com.main.climbingdiary.StatisticFragment;
 import com.main.climbingdiary.Ui.button.AddRoute;
-import com.main.climbingdiary.abstraction.Tabs;
+import com.main.climbingdiary.Ui.Tabs;
 import com.main.climbingdiary.database.TaskRepository;
-import com.main.climbingdiary.dialog.DialogFactory;
+import com.main.climbingdiary.database.entities.RouteRepository;
+import com.main.climbingdiary.Ui.dialog.DialogFactory;
 import com.main.climbingdiary.models.Alerts;
 import com.main.climbingdiary.models.Colors;
-import com.main.climbingdiary.models.data.Route;
+import com.main.climbingdiary.database.entities.Route;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -179,7 +180,7 @@ public class RoutesAdapter extends
                     .setConfirmClickListener(sDialog -> {
                         //delete the route by id
                         int id = route.getId();
-                        boolean taskState = route.deleteRoute(id);
+                        boolean taskState = RouteRepository.deleteRoute(id);
                         if(taskState){
                             RouteDoneFragment.refreshData();
                             StatisticFragment.refreshData();

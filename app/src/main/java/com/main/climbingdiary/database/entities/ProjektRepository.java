@@ -1,4 +1,4 @@
-package com.main.climbingdiary.models.data;
+package com.main.climbingdiary.database.entities;
 
 import android.database.Cursor;
 import android.util.Log;
@@ -8,29 +8,10 @@ import com.main.climbingdiary.database.TaskRepository;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@NoArgsConstructor
-public class Projekt {
-    private int id;
-    private String level;
-    private String name;
-    private String sector;
-    private String area;
-    private int rating;
-    private String comment;
-    private ArrayList<Projekt> projekts;
-    private static TaskRepository taskRepository = new TaskRepository();
-    public static Projekt _projekt;
-
-    public static Projekt getProjekt(){
-        return _projekt;
-    }
-
-    public static Projekt getProjekt(int _id){
-        _projekt = new Projekt();
+public interface ProjektRepository {
+    static Projekt getProjekt(int _id){
+        Projekt _projekt = new Projekt();
+        TaskRepository taskRepository = new TaskRepository();
         taskRepository.open();
         //String Sort = (Menu) getA
         Cursor cursor = taskRepository.getProjekt(_id);
@@ -46,12 +27,12 @@ public class Projekt {
 
         }
         taskRepository.close();
-        System.out.println("-------------------------"+_projekt.toString());
         return _projekt;
     }
 
-    public static ArrayList<Projekt> getProjektList() throws ParseException {
+    static ArrayList<Projekt> getProjektList() throws ParseException {
         ArrayList<Projekt> _projekte = new ArrayList<>();
+        TaskRepository taskRepository = new TaskRepository();
         taskRepository.open();
         //String Sort = (Menu) getA
         Cursor cursor = taskRepository.getAllProjekts();
@@ -73,16 +54,18 @@ public class Projekt {
         return _projekte;
     }
 
-    public boolean deleteProjekt(int id){
+    static boolean deleteProjekt(int id){
         Log.d("delete Projekt",Integer.toString(id));
+        TaskRepository taskRepository = new TaskRepository();
         taskRepository.open();
         boolean state = taskRepository.deleteProjekt(id);
         taskRepository.close();
         return state;
     }
-    public boolean insertProjekt(){
+    static boolean insertProjekt(Projekt projekt){
+        TaskRepository taskRepository = new TaskRepository();
         taskRepository.open();
-        boolean state = taskRepository.inserProjekt(this);
+        boolean state = taskRepository.inserProjekt(projekt);
         taskRepository.close();
         return state;
     }

@@ -8,6 +8,22 @@
         app:showAsAction="ifRoom|withText"
         app:actionViewClass="android.widget.SearchView"/>
     <item
+        android:id="@+id/action_filter"
+        android:title="Filter"
+        android:icon="@drawable/ic_filter"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item android:id="@+id/filter_area"
+                  android:title="Gebiete">
+                <menu></menu>
+            </item>
+            <!--<item android:id="@+id/filter_level"
+                  android:title="Schwierigkeit">
+                 <menu></menu>
+            </item>-->
+         </menu>
+    </item>
+    <item
         android:id="@+id/action_sort"
         android:icon="@drawable/ic_sort"
         app:showAsAction="ifRoom"

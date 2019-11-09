@@ -1,6 +1,7 @@
-package com.main.climbingdiary.abstraction;
+package com.main.climbingdiary.Ui;
 
 import android.support.v4.app.Fragment;
+import android.view.View;
 
 import com.main.climbingdiary.RouteProjectFragment;
 import com.main.climbingdiary.RouteDoneFragment;

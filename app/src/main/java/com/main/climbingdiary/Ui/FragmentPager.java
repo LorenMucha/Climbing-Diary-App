@@ -4,13 +4,17 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.widget.Toast;
 
+import com.main.climbingdiary.MainActivity;
 import com.main.climbingdiary.R;
+import com.main.climbingdiary.RouteDoneFragment;
+import com.main.climbingdiary.RouteProjectFragment;
+import com.main.climbingdiary.StatisticFragment;
 import com.main.climbingdiary.Ui.button.AddRoute;
 import com.main.climbingdiary.Ui.button.ShowTimeSlider;
 import com.main.climbingdiary.adapter.TabAdapter;
-import com.main.climbingdiary.abstraction.Tabs;
+import com.main.climbingdiary.models.Filter;
 
 import java.util.Objects;
 
@@ -45,20 +49,23 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        tabTitle = tab.getText().toString();
+        tabTitle = Objects.requireNonNull(tab.getText()).toString();
         switch(tab.getPosition()) {
             //statistic
             case 0:
+                StatisticFragment.setFilterMenu();
                 ShowTimeSlider.show();
                 AddRoute.hide();
                 break;
                 //routes
             case 1:
+                RouteDoneFragment.setFilterMenu();
                 AddRoute.show();
                 ShowTimeSlider.show();
                 break;
                 //projects
             case 3:
+                RouteProjectFragment.setFilterMenu();
                 ShowTimeSlider.hide();
                 AddRoute.show();
                 break;
@@ -72,6 +79,11 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
     public static void setPosition(int pos){
         TabLayout.Tab tab = tabLayout.getTabAt(pos);
         Objects.requireNonNull(tab).select();
+    }
+    public static void refreshAllFragments(){
+        RouteProjectFragment.refreshData();
+        RouteDoneFragment.refreshData();
+        StatisticFragment.refreshData();
     }
 
     @Override

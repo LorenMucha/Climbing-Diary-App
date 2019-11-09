@@ -1,5 +1,6 @@
 package com.main.climbingdiary;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,34 +12,46 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.main.climbingdiary.Ui.AppBarMenu;
+import com.main.climbingdiary.Ui.header.FilterHeader;
+import com.main.climbingdiary.Ui.menu.AppBarMenu;
 import com.main.climbingdiary.Ui.button.AddRoute;
-import com.main.climbingdiary.abstraction.RouteFragment;
+import com.main.climbingdiary.Ui.menu.MenuValues;
 import com.main.climbingdiary.adapter.ProjektAdapter;
-import com.main.climbingdiary.models.data.Projekt;
+import com.main.climbingdiary.database.entities.Projekt;
+import com.main.climbingdiary.database.entities.ProjektRepository;
 import com.main.climbingdiary.models.RouteSort;
 
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class RouteProjectFragment extends Fragment implements RouteFragment {
 
     private ArrayList<Projekt> projekts;
     private static ProjektAdapter adapter;
     private static RecyclerView rvProjekte;
+    @SuppressLint("StaticFieldLeak")
+    private static FilterHeader filterHeader;
+    @Getter
+    @Setter
+    private static boolean filter_checked = false;
+    @SuppressLint("StaticFieldLeak")
+    private static View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         AddRoute.show();
-        View view = inflater.inflate(R.layout.project_fragment, container, false);
+        view = inflater.inflate(R.layout.project_fragment, container, false);
 
         // Lookup the recyclerview in activity layout
         rvProjekte = (RecyclerView) view.findViewById(R.id.rvProjekte);
 
         // Initialize projects
         try {
-            projekts = Projekt.getProjektList();
+            projekts = ProjektRepository.getProjektList();
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -49,6 +62,7 @@ public class RouteProjectFragment extends Fragment implements RouteFragment {
         // Set layout manager to position the items
         rvProjekte.setLayoutManager(new LinearLayoutManager(Objects.requireNonNull(getActivity()).getApplicationContext()));
         setHasOptionsMenu(true);
+        setFilterMenu();
         return view;
     }
 
@@ -57,15 +71,13 @@ public class RouteProjectFragment extends Fragment implements RouteFragment {
     }
 
     public static void refreshData(){
-        ArrayList<Projekt> projekts = new ArrayList<Projekt>();
+        ArrayList<Projekt> projekts;
         try {
-            projekts = Projekt.getProjektList();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+            projekts = ProjektRepository.getProjektList();
+            adapter = new ProjektAdapter(projekts);
+            rvProjekte.setAdapter(adapter);
+        } catch (Exception e) {}
 
-        adapter = new ProjektAdapter(projekts);
-        rvProjekte.setAdapter(adapter);
     }
 
     @Override
@@ -73,25 +85,35 @@ public class RouteProjectFragment extends Fragment implements RouteFragment {
         // Do something that differs the Activity's menu here
         super.onCreateOptionsMenu(menu, inflater);
         AppBarMenu appmenu = new AppBarMenu(menu);
-        appmenu.showItem();
-        appmenu.hideItem("date");
+        appmenu.setItemVisebility(MenuValues.SORT_DATE,false);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        item.setChecked(true);
         int id = item.getItemId();
-        switch (item.getItemId()) {
-            case R.id.sort_level:
-                RouteSort.setSort("level");
-                RouteProjectFragment.refreshData();
-                return true;
-            case R.id.sort_area:
-                RouteSort.setSort("area");
-                RouteProjectFragment.refreshData();
-                return true;
+        if(id==R.id.sort_level){
+            RouteSort.setSort("level");
+            refreshData();
+            return true;
+        }
+        else if(id==R.id.sort_area){
+            RouteSort.setSort("area");
+            refreshData();
+            return true;
+        }
+        else if(id==R.id.sort_date) {
+            RouteSort.setSort("date");
+            refreshData();
+            return true;
+        }
+        else if(item.getGroupId()==R.id.filter_area+1){
+            //Filter magic here ;-)
+            filterHeader.show(item.getTitle().toString());
+            return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    public static void setFilterMenu(){
+        filterHeader = new FilterHeader(view);
     }
 }

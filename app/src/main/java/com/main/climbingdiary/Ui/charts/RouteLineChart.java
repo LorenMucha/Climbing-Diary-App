@@ -11,7 +11,6 @@ import android.view.View;
 import com.github.mikephil.charting.components.YAxis;
 import com.main.climbingdiary.MainActivity;
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.abstraction.RouteChart;
 import com.main.climbingdiary.database.TaskRepository;
 import com.main.climbingdiary.models.Alerts;
 import com.main.climbingdiary.models.Colors;
@@ -22,14 +21,13 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 public class RouteLineChart extends RouteChart {
     private LineChart lineChart;
     private Context context;
     public RouteLineChart(View view){
-        this.lineChart = (LineChart) view.findViewById(R.id.route_line_chart);
+        this.lineChart = view.findViewById(R.id.route_line_chart);
         this.context = view.getContext();
     }
     public void show(){
@@ -105,6 +103,7 @@ public class RouteLineChart extends RouteChart {
             yAxis.setDrawGridLines(false);
             yAxis.setSpaceBottom(5f);
             yAxis.setSpaceTop(5f);
+            yAxis.setAxisMaximum(data.getYMax()+200);
             //refresh
             lineChart.invalidate();
         }catch(Exception ex){

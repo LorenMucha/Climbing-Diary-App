@@ -1,9 +1,8 @@
-package com.main.climbingdiary.dialog;
-import android.util.Log;
+package com.main.climbingdiary.Ui.dialog;
 
 import com.main.climbingdiary.MainActivity;
-import com.main.climbingdiary.abstraction.Tabs;
-import com.main.climbingdiary.models.data.Route;
+import com.main.climbingdiary.Ui.Tabs;
+import com.main.climbingdiary.database.entities.Route;
 
 public class DialogFactory {
     public static void openAddRouteDialog(String _type){

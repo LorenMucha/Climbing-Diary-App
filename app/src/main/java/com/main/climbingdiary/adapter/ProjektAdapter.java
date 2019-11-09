@@ -18,12 +18,13 @@ import android.widget.TextView;
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.RouteProjectFragment;
 import com.main.climbingdiary.Ui.button.AddRoute;
-import com.main.climbingdiary.abstraction.Tabs;
-import com.main.climbingdiary.dialog.DialogFactory;
+import com.main.climbingdiary.Ui.Tabs;
+import com.main.climbingdiary.database.entities.ProjektRepository;
+import com.main.climbingdiary.Ui.dialog.DialogFactory;
 import com.main.climbingdiary.models.Alerts;
 import com.main.climbingdiary.models.Colors;
-import com.main.climbingdiary.models.data.Projekt;
-import com.main.climbingdiary.models.data.Route;
+import com.main.climbingdiary.database.entities.Projekt;
+import com.main.climbingdiary.database.entities.Route;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -129,7 +130,7 @@ public class ProjektAdapter extends
                     .setConfirmClickListener(sDialog -> {
                         //delete the route by id
                         int id = projekt.getId();
-                        boolean taskState = projekt.deleteProjekt(id);
+                        boolean taskState = ProjektRepository.deleteProjekt(id);
                         if (taskState) {
                             RouteProjectFragment.refreshData();
                             sDialog.hide();

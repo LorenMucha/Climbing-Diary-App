@@ -1,34 +1,15 @@
-package com.main.climbingdiary.models.data;
+package com.main.climbingdiary.database.entities;
 
 import android.database.Cursor;
-import android.util.Log;
 
 import com.main.climbingdiary.database.TaskRepository;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@NoArgsConstructor
-public class Route {
-
-    private int id;
-    private String style;
-    private String level;
-    private String name;
-    private String sector;
-    private String area;
-    private int rating;
-    private String comment;
-    private String date;
-    private static TaskRepository taskRepository = new TaskRepository();
-
-    public static Route getRoute(int _id){
+public interface RouteRepository {
+    static Route getRoute(int _id){
         Route _route = new Route();
+        TaskRepository taskRepository = new TaskRepository();
         taskRepository.open();
         //String Sort = (Menu) getA
         Cursor cursor = taskRepository.getRoute(_id);
@@ -47,9 +28,9 @@ public class Route {
         taskRepository.close();
         return _route;
     }
-
-    public static ArrayList<Route> getRouteList() throws ParseException {
+    static ArrayList<Route> getRouteList() {
         ArrayList<Route> _routes = new ArrayList<>();
+        TaskRepository taskRepository = new TaskRepository();
         taskRepository.open();
         Cursor cursor = taskRepository.getAllRoutes();
         if (cursor != null) {
@@ -72,15 +53,17 @@ public class Route {
         return _routes;
     }
 
-    public boolean deleteRoute(int id){
+    static boolean deleteRoute(int id){
+        TaskRepository taskRepository = new TaskRepository();
         taskRepository.open();
         boolean state = taskRepository.deleteRoute(id);
         taskRepository.close();
         return state;
     }
-    public boolean insertRoute(){
+    static boolean insertRoute(Route route){
+        TaskRepository taskRepository = new TaskRepository();
         taskRepository.open();
-        boolean state = taskRepository.inserRoute(this);
+        boolean state = taskRepository.inserRoute(route);
         taskRepository.close();
         return state;
     }
