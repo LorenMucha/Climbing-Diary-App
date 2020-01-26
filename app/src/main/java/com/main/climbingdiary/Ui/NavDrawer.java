@@ -1,14 +1,17 @@
 package com.main.climbingdiary.Ui;
 
-import android.support.annotation.NonNull;
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.main.climbingdiary.MainActivity;
 import com.main.climbingdiary.R;
+import com.main.climbingdiary.SettingsActivity;
 
 public class NavDrawer implements NavigationView.OnNavigationItemSelectedListener {
     private final int layoutId = R.id.drawer_layout;
@@ -30,22 +33,15 @@ public class NavDrawer implements NavigationView.OnNavigationItemSelectedListene
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        /*if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        switch (id){
+            case R.id.navdrawer_item_settings:
+                Intent intent = new Intent(MainActivity.getMainAppContext(), SettingsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                MainActivity.getMainActivity().startActivity(intent);
+                return true;
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);*/
+        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 }

@@ -1,31 +1,28 @@
 package com.main.climbingdiary;
 
+import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.main.climbingdiary.Ui.FragmentPager;
 import com.main.climbingdiary.Ui.NavDrawer;
 import com.main.climbingdiary.Ui.TimeSlider;
 import com.main.climbingdiary.Ui.button.AddRoute;
 import com.main.climbingdiary.Ui.button.ShowTimeSlider;
-import com.main.climbingdiary.Ui.header.FilterHeader;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int layoutId = R.layout.activity_main;
+    @SuppressLint("StaticFieldLeak")
     private static Context context;
     private static ComponentName componentName;
+    @SuppressLint("StaticFieldLeak")
     public static AppCompatActivity mainActivity;
 
     public static Context getMainAppContext() {
@@ -55,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
 
         //the slider
         new TimeSlider(this);
-
 
         //navigation View
         new NavDrawer(this);

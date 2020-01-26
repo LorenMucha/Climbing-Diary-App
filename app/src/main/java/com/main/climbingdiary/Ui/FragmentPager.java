@@ -1,12 +1,10 @@
 package com.main.climbingdiary.Ui;
 
+import android.annotation.SuppressLint;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
-import com.main.climbingdiary.MainActivity;
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.RouteDoneFragment;
 import com.main.climbingdiary.RouteProjectFragment;
@@ -14,7 +12,6 @@ import com.main.climbingdiary.StatisticFragment;
 import com.main.climbingdiary.Ui.button.AddRoute;
 import com.main.climbingdiary.Ui.button.ShowTimeSlider;
 import com.main.climbingdiary.adapter.TabAdapter;
-import com.main.climbingdiary.models.Filter;
 
 import java.util.Objects;
 
@@ -22,9 +19,9 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
     private static final int view_layout = R.id.viewPager;
     private static final int tab_layout = R.id.tabLayout;
     private ViewPager viewPager;
+    @SuppressLint("StaticFieldLeak")
     private static TabLayout tabLayout;
     private TabAdapter adapter;
-    private FragmentManager fm;
     private static String tabTitle;
 
     public static String getTabTitle(){

@@ -27,7 +27,7 @@ public class WebScrapper {
             //set user agent to Google Chrome
             connection.userAgent("Mozilla/5.0");
             //set timeout to 50 seconds
-            connection.timeout(50000);
+            connection.timeout(500000);
             Document doc = connection.get();
             Element element = doc.getElementById("main");
             Elements td = element.select("tr");

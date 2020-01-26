@@ -8,4 +8,6 @@
     <string name="action_settings">Settings</string>
     <string name="search_hint">Suche</string>
     <string name="star">\u2605</string>
+    <!--Settings-->
+    <string name="export">Export</string>
 </resources>
