@@ -9,5 +9,6 @@
     <string name="search_hint">Suche</string>
     <string name="star">\u2605</string>
     <!--Settings-->
-    <string name="export">Export</string>
+    <string name="export_pref_header">Export</string>
+    <string name="safty_copy_pref_header">Sicherungskopie</string>
 </resources>

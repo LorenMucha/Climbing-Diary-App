@@ -12,17 +12,15 @@ import com.main.climbingdiary.models.Filter;
 import com.main.climbingdiary.database.entities.Projekt;
 import com.main.climbingdiary.database.entities.Route;
 
-//FIXME: tabellen spalten in konstanten speichern !!
 public class TaskRepository {
 
-    protected static final String TAG = "DataAdapter";
+    private static final String TAG = "DataAdapter";
 
-    private final Context mContext;
     private SQLiteDatabase mDb;
     private DatabaseHelper mDbHelper;
 
     public TaskRepository() {
-        this.mContext = MainActivity.getMainAppContext();
+        Context mContext = MainActivity.getMainAppContext();
         mDbHelper = new DatabaseHelper(mContext);
     }
 

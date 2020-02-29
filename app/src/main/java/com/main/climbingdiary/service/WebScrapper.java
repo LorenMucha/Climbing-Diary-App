@@ -20,7 +20,7 @@ public class WebScrapper {
         StringBuilder sb = new StringBuilder();
         sb.append(this.url)
                 .append(this.username)
-                .append("/routes/?AscentClass=0&AscentListTimeInterval=0&AscentListViewType=1&GID=dc1dcb3276b8b01b569e128b202fab15");
+                .append("/routes/?AscentClass=0&AscentListTimeInterval=1&AscentListViewType=1&GID=dc1dcb3276b8b01b569e128b202fab15");
 
         try{
             Connection connection = Jsoup.connect(sb.toString());
