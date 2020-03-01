@@ -5,6 +5,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.main.climbingdiary.common.EnvironmentParamter;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -12,7 +14,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static String DB_NAME = "touren.db";
+    private static String DB_NAME = EnvironmentParamter.DB_NAME;
     private static String DB_PATH = "";
     private static final int DB_VERSION = 1;
 

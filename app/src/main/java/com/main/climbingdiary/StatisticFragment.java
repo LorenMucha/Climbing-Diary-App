@@ -35,9 +35,9 @@ public class StatisticFragment extends Fragment {
 
         view = inflater.inflate(R.layout.statistic_fragment, container, false);
         //set the bar barChart as Standard
-        setBarChartBtn = (Button) view.findViewById(R.id.btn_stat);
-        setLineChartBtn  = (Button) view.findViewById(R.id.btn_dev);
-        setTableBtn =(Button) view.findViewById(R.id.btn_table);
+        setBarChartBtn = view.findViewById(R.id.btn_stat);
+        setLineChartBtn  = view.findViewById(R.id.btn_dev);
+        setTableBtn = view.findViewById(R.id.btn_table);
         //set the views
         final RouteLineChart _routeLineChart = new RouteLineChart(view);
         final TableView _routeTable = new TableView(view.getContext(),view);

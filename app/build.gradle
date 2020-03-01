@@ -48,6 +48,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    compileOnly "org.projectlombok:lombok:1.18.8"
-    annotationProcessor "org.projectlombok:lombok:1.18.8"
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+    // For developers using the Android Support Library
+    implementation 'pub.devrel:easypermissions:2.0.1'
 }

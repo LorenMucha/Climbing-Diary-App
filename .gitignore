@@ -1,3 +1,7 @@
+# sqlite
+
+app/src/main/assets/*.db
+
 # Built application files
 *.apk
 *.ap_
@@ -74,3 +78,6 @@ lint/tmp/
 .idea/encodings.xml
 build.gradle
 gradle/wrapper/gradle-wrapper.properties
+*.db
+*.db
+*.db

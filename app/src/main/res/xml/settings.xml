@@ -11,7 +11,7 @@
             android:key="@string/safty_copy"
             android:selectable="true"
             android:title="Sicherungskopie"
-            android:summary="Erzeugt ein Backup der Datenbank und der Einstellungen"
+            android:summary="Erzeugt ein Backup der Datenbank"
             />
     </PreferenceCategory>
 </PreferenceScreen>

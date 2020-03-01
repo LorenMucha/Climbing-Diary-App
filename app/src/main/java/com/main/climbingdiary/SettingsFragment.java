@@ -6,15 +6,21 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 
-import com.main.climbingdiary.environment.EnvironmentManager;
-import com.main.climbingdiary.environment.preferences.AppPreferenceManager;
-import com.main.climbingdiary.environment.preferences.PreferenceKeys;
+import com.main.climbingdiary.common.AppFileProvider;
+import com.main.climbingdiary.common.EnvironmentParamter;
+import com.main.climbingdiary.common.preferences.AppPreferenceManager;
+import com.main.climbingdiary.common.preferences.PreferenceKeys;
 
 import java.io.File;
+import java.io.IOException;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import static android.app.Activity.RESULT_OK;
+import static com.main.climbingdiary.common.EnvironmentParamter.dbExportName;
 
 public class SettingsFragment extends PreferenceFragment{
 
@@ -36,7 +42,7 @@ public class SettingsFragment extends PreferenceFragment{
             return true;
         });
         shareDb.setOnPreferenceClickListener(preference -> {
-            this.shareDb();
+            this.exportDb();
             return true;
         });
         this.initPrefs();
@@ -47,8 +53,9 @@ public class SettingsFragment extends PreferenceFragment{
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == FILE_CHOOOSER_REQUEST && resultCode == RESULT_OK) {
             Uri selectedfile = data.getData();
-            AppPreferenceManager.setOutputPath(selectedfile.getPath());
-            dbOutputPath.setSummary(selectedfile.toString());
+            assert selectedfile != null;
+            AppPreferenceManager.setOutputPath(selectedfile.toString());
+            dbOutputPath.setSummary(AppPreferenceManager.getOutputPath());
         }
     }
 
@@ -63,22 +70,33 @@ public class SettingsFragment extends PreferenceFragment{
         i.addCategory(Intent.CATEGORY_DEFAULT);
         startActivityForResult(Intent.createChooser(i, "Output-Pfad"), FILE_CHOOOSER_REQUEST);
     }
-    //Fixme
-    private void shareDb(){
-        String path = EnvironmentManager.getDbPath();
-        Log.d("SHARE PREFERENCE+++++",path);
-        Intent intentShareFile = new Intent(Intent.ACTION_SEND);
-        File fileWithinMyDir = new File(path);
 
-        if(fileWithinMyDir.exists()) {
-            intentShareFile.setType("application/pdf");
-            intentShareFile.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://"+path));
+    private void exportDb(){
+        try {
+             new AppFileProvider().exportDBtoPreferencePath();
+             new SweetAlertDialog(this.getContext(),SweetAlertDialog.SUCCESS_TYPE)
+                    .setTitleText("Die Datenbank wurde exportiert !")
+                    .setContentText("Sie liegt im Verzeichnis: ")
+                     .setNeutralButton("Teilen", sweetAlertDialog -> {
+                         Intent intent = new Intent(Intent.ACTION_SEND);
+                         intent.setType("application/octet-stream");
+                         File dbToShare = new File(AppPreferenceManager.getOutputPath(), dbExportName);
+                         String packageName = EnvironmentParamter.PACKAGE_NAME;
+                         Uri uri = FileProvider.getUriForFile(MainActivity.getMainAppContext(),
+                                 "com.main.climbingdiary.StatisticFragment",
+                                 dbToShare);
 
-            intentShareFile.putExtra(Intent.EXTRA_SUBJECT,
-                    "Sharing File...");
-            intentShareFile.putExtra(Intent.EXTRA_TEXT, "Sharing File...");
+                         intent.putExtra(Intent.EXTRA_STREAM, uri);
 
-            startActivity(Intent.createChooser(intentShareFile, "Share File"));
+                         startActivity(Intent.createChooser(intent, "Backup via:"));
+                         sweetAlertDialog.cancel();
+                     })
+                    .show();
+        } catch (IOException e) {
+            Log.e("exportDb",e.getLocalizedMessage());
+            new SweetAlertDialog(this.getContext(),SweetAlertDialog.ERROR_TYPE)
+                    .setTitleText(String.format("Der Export ist Schiefgelaufen %s","\ud83d\ude13"))
+                    .show();
         }
     }
 }

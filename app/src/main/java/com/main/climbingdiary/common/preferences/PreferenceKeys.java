@@ -1,4 +1,4 @@
-package com.main.climbingdiary.environment.preferences;
+package com.main.climbingdiary.common.preferences;
 
 import com.main.climbingdiary.MainActivity;
 import com.main.climbingdiary.R;

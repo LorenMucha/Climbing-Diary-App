@@ -45,7 +45,7 @@ public class RouteLineChart extends RouteChart {
         //transform the cursor to an array list
         ArrayList<Integer> yearList = new ArrayList<Integer>();
         try {
-            int i = 1;
+            int i = 0;
             if (yearCursor != null) {
                 while (!yearCursor.isAfterLast()) {
                     yearList.add(yearCursor.getInt(0));
@@ -97,6 +97,7 @@ public class RouteLineChart extends RouteChart {
             //xAxis.setLabelCount(yearList.size(),true);
             xAxis.setDrawAxisLine(false);
             xAxis.setDrawGridLines(false);
+            xAxis.setLabelCount(labels.size(),true);
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
             xAxis.setValueFormatter(new XAxisValueFormatter(labels));
             YAxis yAxis = lineChart.getAxisLeft();

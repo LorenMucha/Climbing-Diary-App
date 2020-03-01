@@ -16,6 +16,8 @@ import com.main.climbingdiary.Ui.TimeSlider;
 import com.main.climbingdiary.Ui.button.AddRoute;
 import com.main.climbingdiary.Ui.button.ShowTimeSlider;
 
+import pub.devrel.easypermissions.EasyPermissions;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final int layoutId = R.layout.activity_main;
@@ -73,5 +75,13 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 }

@@ -1,9 +1,12 @@
-package com.main.climbingdiary.environment.preferences;
+package com.main.climbingdiary.common.preferences;
 
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 
 import com.main.climbingdiary.MainActivity;
+import com.main.climbingdiary.common.FileUtil;
+import com.main.climbingdiary.common.preferences.PreferenceKeys;
 
 public class AppPreferenceManager {
 
@@ -12,11 +15,17 @@ public class AppPreferenceManager {
 
 
     public static void setOutputPath(String path){
+        Uri treeUri = Uri.parse(path);
+        String pathSet = FileUtil.getFullPathFromTreeUri(treeUri,MainActivity.getMainAppContext());
         EDITOR = PREFS.edit();
-        EDITOR.putString(PreferenceKeys.DB_OUTPUT_PATH,path);
+        EDITOR.putString(PreferenceKeys.DB_OUTPUT_PATH,pathSet);
         EDITOR.apply();
     }
     public static String getOutputPath(){
         return PREFS.getString(PreferenceKeys.DB_OUTPUT_PATH,"not set");
+    }
+
+    public static void setOutputDbPath(String db){
+
     }
 }
