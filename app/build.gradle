@@ -52,4 +52,5 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
     // For developers using the Android Support Library
     implementation 'pub.devrel:easypermissions:2.0.1'
+    implementation 'com.jakewharton:process-phoenix:2.0.0'
 }

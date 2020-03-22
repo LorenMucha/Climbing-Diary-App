@@ -3,4 +3,5 @@
     <string name="db_output_path">db_output_path</string>
     <string name="safty_copy">safty_copy</string>
     <string name="share_copy">safty_copy</string>
+    <string name="safty_restore">safty_restore</string>
 </resources>

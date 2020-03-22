@@ -113,23 +113,13 @@ public class TaskRepository {
         }
     }
 
-    public Cursor getLineChartValues(int year) {
-        String filter_set = Filter.getFilter(true);
-        final int scaleFactor = 10;
-        if (!filter_set.isEmpty()) {
-            filter_set = " where " + Filter.getFilter();
-        }
+    public Cursor getTopTenRoutes(int year) {
         try {
             StringBuilder sql = new StringBuilder();
-            sql.append("SELECT SUM(cast(r.level as int)*("+scaleFactor+"*(INSTR('abc',substr(replace(r.level,'+',''),-1)))")
-                    .append(" +INSTR('+',substr(r.level,-1))")
-                    .append(" +INSTR('rpflashos',r.stil))) as stat,")
-                    .append(" COUNT(cast(r.level as int)) as anzahl,")
-                    .append(" strftime('%Y',r.date) as date")
-                    .append(" FROM (select * from routen where strftime('%Y',date)='"+year+"' order by level DESC Limit 10)as r")
-                    .append(" join gebiete g on g.id=r.gebiet")
-                    .append(filter_set)
-                    .append(" GROUP BY strftime('%Y',r.date)");
+            sql.append("Select r.level, r.stil, r.name, r.gebiet FROM routen r")
+                    .append(" where CAST(strftime('%Y',r.date) as int)==")
+                    .append(year)
+                    .append(" Order By r.level desc, r.stil asc Limit 10");
             Log.d("query LineChartValues", sql.toString());
             Cursor mCur = mDb.rawQuery(sql.toString(), null);
             if (mCur != null) {
