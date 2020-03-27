@@ -22,11 +22,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.RouteProjectFragment;
 import com.main.climbingdiary.database.entities.AreaRepository;
 import com.main.climbingdiary.database.entities.Projekt;
 import com.main.climbingdiary.database.entities.ProjektRepository;
 import com.main.climbingdiary.database.entities.SectorRepository;
+import com.main.climbingdiary.fragments.RouteProjectFragment;
 import com.main.climbingdiary.models.Levels;
 import com.main.climbingdiary.models.Rating;
 

@@ -2,8 +2,6 @@ package com.main.climbingdiary.models;
 
 import android.content.Context;
 
-import com.main.climbingdiary.MainActivity;
-
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class Alerts {

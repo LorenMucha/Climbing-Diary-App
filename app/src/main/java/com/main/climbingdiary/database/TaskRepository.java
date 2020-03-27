@@ -7,10 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
-import com.main.climbingdiary.MainActivity;
-import com.main.climbingdiary.models.Filter;
+import com.main.climbingdiary.activities.MainActivity;
 import com.main.climbingdiary.database.entities.Projekt;
 import com.main.climbingdiary.database.entities.Route;
+import com.main.climbingdiary.models.Filter;
 
 public class TaskRepository {
 

@@ -1,4 +1,4 @@
-package com.main.climbingdiary;
+package com.main.climbingdiary.fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -12,11 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.main.climbingdiary.Ui.header.FilterHeader;
-import com.main.climbingdiary.Ui.menu.AppBarMenu;
+import com.main.climbingdiary.R;
 import com.main.climbingdiary.Ui.TableView;
 import com.main.climbingdiary.Ui.charts.RouteBarChart;
 import com.main.climbingdiary.Ui.charts.RouteLineChart;
+import com.main.climbingdiary.Ui.header.FilterHeader;
+import com.main.climbingdiary.Ui.menu.AppBarMenu;
 import com.main.climbingdiary.Ui.menu.MenuValues;
 import com.main.climbingdiary.models.Colors;
 

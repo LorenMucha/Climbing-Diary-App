@@ -2,19 +2,12 @@ package com.main.climbingdiary.Ui.button;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.database.Cursor;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.database.TaskRepository;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 
 public class ShowTimeSlider implements View.OnClickListener{
 

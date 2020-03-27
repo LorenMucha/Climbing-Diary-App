@@ -1,4 +1,4 @@
-package com.main.climbingdiary;
+package com.main.climbingdiary.fragments;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -9,10 +9,10 @@ import android.preference.PreferenceManager;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 
+import com.main.climbingdiary.R;
+import com.main.climbingdiary.activities.MainActivity;
 import com.main.climbingdiary.common.AppFileProvider;
-import com.main.climbingdiary.common.EnvironmentManager;
 import com.main.climbingdiary.common.EnvironmentParamter;
-import com.main.climbingdiary.common.FileUtil;
 import com.main.climbingdiary.common.preferences.AppPreferenceManager;
 import com.main.climbingdiary.common.preferences.PreferenceKeys;
 
@@ -100,7 +100,7 @@ public class SettingsFragment extends PreferenceFragment{
                          File dbToShare = new File(AppPreferenceManager.getOutputPath(), dbExportName);
                          String packageName = EnvironmentParamter.PACKAGE_NAME;
                          Uri uri = FileProvider.getUriForFile(MainActivity.getMainAppContext(),
-                                 "com.main.climbingdiary.StatisticFragment",
+                                 "com.main.climbingdiary.fragments.StatisticFragment",
                                  dbToShare);
 
                          intent.putExtra(Intent.EXTRA_STREAM, uri);

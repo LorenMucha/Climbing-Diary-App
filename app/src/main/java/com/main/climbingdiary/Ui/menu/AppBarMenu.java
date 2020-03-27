@@ -4,16 +4,17 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.SearchView;
 
-import com.main.climbingdiary.MainActivity;
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.RouteDoneFragment;
-import com.main.climbingdiary.RouteProjectFragment;
 import com.main.climbingdiary.Ui.FragmentPager;
 import com.main.climbingdiary.Ui.Tabs;
-import com.main.climbingdiary.database.entities.Area;
+import com.main.climbingdiary.activities.MainActivity;
 import com.main.climbingdiary.database.entities.AreaRepository;
+import com.main.climbingdiary.fragments.RouteDoneFragment;
+import com.main.climbingdiary.fragments.RouteProjectFragment;
+import com.main.climbingdiary.models.RouteSort;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,23 +22,20 @@ import java.util.List;
 public class AppBarMenu implements SearchView.OnQueryTextListener{
     private final int searchId = R.id.action_search;
     private final int sortId = R.id.action_sort;
-    private final int dateId = R.id.sort_date;
     private final int filterId = R.id.action_filter;
     private final SearchManager searchManager;
     private final List<Integer> idList = new ArrayList<>();
     private Menu menu;
-    private SearchView searchview;
-    private Context context;
 
     public AppBarMenu(Menu _menu){
         this.menu = _menu;
-        context = MainActivity.getMainAppContext();
+        Context context = MainActivity.getMainAppContext();
         searchManager = (SearchManager) context.getSystemService(Context.SEARCH_SERVICE);
         this.init();
     }
 
     private void init(){
-        searchview = (SearchView) menu.findItem(searchId).getActionView();
+        SearchView searchview = (SearchView) menu.findItem(searchId).getActionView();
         searchview.setSearchableInfo(searchManager
                 .getSearchableInfo(MainActivity.getMainComponentName()));
         searchview.setMaxWidth(Integer.MAX_VALUE);
@@ -78,6 +76,7 @@ public class AppBarMenu implements SearchView.OnQueryTextListener{
     }
 
     public void setItemVisebility(MenuValues item, boolean state){
+        int dateId = R.id.sort_date;
         switch(item.toString()){
             case "date":
                 menu.findItem(dateId).setVisible(state);

@@ -3,7 +3,6 @@ package com.main.climbingdiary.Ui.charts;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -12,24 +11,23 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.main.climbingdiary.MainActivity;
-import com.main.climbingdiary.R;
-import com.main.climbingdiary.database.TaskRepository;
-import com.main.climbingdiary.models.Alerts;
-import com.main.climbingdiary.models.Colors;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.main.climbingdiary.R;
+import com.main.climbingdiary.activities.MainActivity;
+import com.main.climbingdiary.database.TaskRepository;
+import com.main.climbingdiary.models.Alerts;
+import com.main.climbingdiary.models.Colors;
 import com.main.climbingdiary.models.Levels;
 import com.main.climbingdiary.models.Styles;
 
@@ -207,7 +205,7 @@ public class RouteLineChart extends RouteChart {
     }
 
     @Data
-    private class InfoObject{
+    private static class InfoObject{
         private String route_level;
         private String routeName;
         private String routeStil;

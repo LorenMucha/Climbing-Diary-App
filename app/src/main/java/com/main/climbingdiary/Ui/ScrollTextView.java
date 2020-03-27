@@ -139,16 +139,4 @@ public class ScrollTextView extends android.support.v7.widget.AppCompatTextView 
             this.startScroll();
         }
     }
-
-    public int getRndDuration() {
-        return mRndDuration;
-    }
-
-    public void setRndDuration(int duration) {
-        this.mRndDuration = duration;
-    }
-
-    public boolean isPaused() {
-        return mPaused;
-    }
 }

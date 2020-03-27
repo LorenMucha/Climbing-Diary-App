@@ -4,9 +4,8 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 
-import com.main.climbingdiary.MainActivity;
+import com.main.climbingdiary.activities.MainActivity;
 import com.main.climbingdiary.common.FileUtil;
-import com.main.climbingdiary.common.preferences.PreferenceKeys;
 
 public class AppPreferenceManager {
 

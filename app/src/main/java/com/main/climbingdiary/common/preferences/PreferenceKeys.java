@@ -1,7 +1,7 @@
 package com.main.climbingdiary.common.preferences;
 
-import com.main.climbingdiary.MainActivity;
 import com.main.climbingdiary.R;
+import com.main.climbingdiary.activities.MainActivity;
 
 public class PreferenceKeys {
     public static String DB_OUTPUT_PATH = MainActivity.getMainActivity().getString(R.string.db_output_path);

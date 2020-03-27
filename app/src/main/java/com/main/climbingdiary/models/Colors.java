@@ -1,9 +1,8 @@
 package com.main.climbingdiary.models;
 
-import com.main.climbingdiary.R;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.support.v4.content.res.ResourcesCompat;
+
+import com.main.climbingdiary.R;
 
 public abstract class Colors {
 

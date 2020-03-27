@@ -1,4 +1,4 @@
-package com.main.climbingdiary;
+package com.main.climbingdiary.fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -12,27 +12,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.main.climbingdiary.R;
 import com.main.climbingdiary.Ui.header.FilterHeader;
 import com.main.climbingdiary.Ui.menu.AppBarMenu;
-import com.main.climbingdiary.Ui.button.AddRoute;
-import com.main.climbingdiary.Ui.menu.MenuValues;
-import com.main.climbingdiary.adapter.ProjektAdapter;
-import com.main.climbingdiary.database.entities.Projekt;
-import com.main.climbingdiary.database.entities.ProjektRepository;
+import com.main.climbingdiary.adapter.RoutesAdapter;
+import com.main.climbingdiary.database.entities.Route;
+import com.main.climbingdiary.database.entities.RouteRepository;
 import com.main.climbingdiary.models.RouteSort;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Objects;
 
 import lombok.Getter;
 import lombok.Setter;
 
-public class RouteProjectFragment extends Fragment implements RouteFragment {
+public class RouteDoneFragment extends Fragment implements RouteFragment {
 
-    private ArrayList<Projekt> projekts;
-    private static ProjektAdapter adapter;
-    private static RecyclerView rvProjekte;
+    private ArrayList<Route> routes;
+    private static RoutesAdapter adapter;
+    @SuppressLint("StaticFieldLeak")
+    private static RecyclerView rvRoutes;
     @SuppressLint("StaticFieldLeak")
     private static FilterHeader filterHeader;
     @Getter
@@ -43,49 +42,43 @@ public class RouteProjectFragment extends Fragment implements RouteFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        AddRoute.show();
-        view = inflater.inflate(R.layout.project_fragment, container, false);
+
+        view = inflater.inflate(R.layout.routes_fragment, container, false);
 
         // Lookup the recyclerview in activity layout
-        rvProjekte = (RecyclerView) view.findViewById(R.id.rvProjekte);
+        rvRoutes = (RecyclerView) view.findViewById(R.id.rvRoutes);
 
-        // Initialize projects
-        try {
-            projekts = ProjektRepository.getProjektList();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        // Initialize routes
+        routes = RouteRepository.getRouteList();
         // Create adapter passing in the sample user data
-        adapter = new ProjektAdapter(projekts);
+        adapter = new RoutesAdapter(routes);
         // Attach the adapter to the recyclerview to populate items
-        rvProjekte.setAdapter(adapter);
+        rvRoutes.setAdapter(adapter);
         // Set layout manager to position the items
-        rvProjekte.setLayoutManager(new LinearLayoutManager(Objects.requireNonNull(getActivity()).getApplicationContext()));
+        rvRoutes.setLayoutManager(new LinearLayoutManager(Objects.requireNonNull(getActivity()).getApplicationContext()));
         setHasOptionsMenu(true);
         setFilterMenu();
         return view;
     }
 
-    public static ProjektAdapter getAdapter(){
+    public static RoutesAdapter getAdapter(){
         return adapter;
     }
 
     public static void refreshData(){
-        ArrayList<Projekt> projekts;
+        ArrayList<Route> routes;
         try {
-            projekts = ProjektRepository.getProjektList();
-            adapter = new ProjektAdapter(projekts);
-            rvProjekte.setAdapter(adapter);
-        } catch (Exception e) {}
-
+            routes = RouteRepository.getRouteList();
+            adapter = new RoutesAdapter(routes);
+            rvRoutes.setAdapter(adapter);
+        }catch(Exception ex){}
     }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Do something that differs the Activity's menu here
         super.onCreateOptionsMenu(menu, inflater);
         AppBarMenu appmenu = new AppBarMenu(menu);
-        appmenu.setItemVisebility(MenuValues.SORT_DATE,false);
+        appmenu.setItemVisebility(true);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -113,7 +106,9 @@ public class RouteProjectFragment extends Fragment implements RouteFragment {
         }
         return super.onOptionsItemSelected(item);
     }
+
     public static void setFilterMenu(){
         filterHeader = new FilterHeader(view);
     }
+
 }

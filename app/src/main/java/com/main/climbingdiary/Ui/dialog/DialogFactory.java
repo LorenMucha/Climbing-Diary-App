@@ -1,7 +1,7 @@
 package com.main.climbingdiary.Ui.dialog;
 
-import com.main.climbingdiary.MainActivity;
 import com.main.climbingdiary.Ui.Tabs;
+import com.main.climbingdiary.activities.MainActivity;
 import com.main.climbingdiary.database.entities.Route;
 
 public class DialogFactory {

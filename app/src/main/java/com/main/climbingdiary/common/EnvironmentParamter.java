@@ -1,6 +1,6 @@
 package com.main.climbingdiary.common;
 
-import com.main.climbingdiary.MainActivity;
+import com.main.climbingdiary.activities.MainActivity;
 
 import java.time.LocalDate;
 

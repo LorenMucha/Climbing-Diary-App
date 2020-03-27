@@ -1,17 +1,20 @@
-package com.main.climbingdiary;
+package com.main.climbingdiary.activities;
 
 import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 
+import com.main.climbingdiary.R;
 import com.main.climbingdiary.Ui.FragmentPager;
-import com.main.climbingdiary.Ui.NavDrawer;
 import com.main.climbingdiary.Ui.TimeSlider;
 import com.main.climbingdiary.Ui.button.AddRoute;
 import com.main.climbingdiary.Ui.button.ShowTimeSlider;
@@ -56,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         new TimeSlider(this);
 
         //navigation View
-        new NavDrawer(this);
+        //new NavDrawer(this);
 
     }
 
@@ -83,5 +86,15 @@ public class MainActivity extends AppCompatActivity {
 
         // Forward results to EasyPermissions
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==R.id.app_settings){
+            Intent intent = new Intent(MainActivity.getMainAppContext(), SettingsActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            MainActivity.getMainActivity().startActivity(intent);
+        }
+        return false;
     }
 }

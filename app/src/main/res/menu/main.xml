@@ -4,43 +4,43 @@
 
     <item
         android:id="@+id/action_search"
-        android:title="Suche"
+        android:title="@string/menu_suche"
         app:showAsAction="ifRoom|withText"
         app:actionViewClass="android.widget.SearchView"/>
     <item
         android:id="@+id/action_filter"
-        android:title="Filter"
+        android:title="@string/menu_filter"
         android:icon="@drawable/ic_filter"
         app:showAsAction="ifRoom">
         <menu>
             <item android:id="@+id/filter_area"
-                  android:title="Gebiete">
-                <menu></menu>
+                  android:title="@string/menu_gebiete">
+                <menu />
             </item>
-            <!--<item android:id="@+id/filter_level"
-                  android:title="Schwierigkeit">
-                 <menu></menu>
-            </item>-->
          </menu>
     </item>
     <item
         android:id="@+id/action_sort"
         android:icon="@drawable/ic_sort"
         app:showAsAction="ifRoom"
-        android:title="Sortieren">
+        android:title="@string/menu_sortieren">
         <menu>
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/sort_level"
-                    android:title="Schwierigkeit" />
+                    android:title="@string/menu_schwierigkeit" />
                 <item
                     android:id="@+id/sort_area"
-                    android:title="Gebiet" />
+                    android:title="@string/menu_gebiet" />
                 <item
                     android:id="@+id/sort_date"
                     android:checked="true"
-                    android:title="Datum" />
+                    android:title="@string/menu_datum" />
             </group>
         </menu>
+    </item>
+    <item
+        android:title="Settings"
+        android:id="@+id/app_settings">
     </item>
 </menu>

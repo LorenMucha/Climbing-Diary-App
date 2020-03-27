@@ -4,7 +4,7 @@ import android.Manifest;
 import android.net.Uri;
 import android.os.Environment;
 
-import com.main.climbingdiary.MainActivity;
+import com.main.climbingdiary.activities.MainActivity;
 import com.main.climbingdiary.common.preferences.AppPreferenceManager;
 
 import java.io.File;

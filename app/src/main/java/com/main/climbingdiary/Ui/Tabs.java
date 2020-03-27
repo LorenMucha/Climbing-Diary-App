@@ -1,11 +1,10 @@
 package com.main.climbingdiary.Ui;
 
 import android.support.v4.app.Fragment;
-import android.view.View;
 
-import com.main.climbingdiary.RouteProjectFragment;
-import com.main.climbingdiary.RouteDoneFragment;
-import com.main.climbingdiary.StatisticFragment;
+import com.main.climbingdiary.fragments.RouteDoneFragment;
+import com.main.climbingdiary.fragments.RouteProjectFragment;
+import com.main.climbingdiary.fragments.StatisticFragment;
 
 public enum Tabs {
     STATISTIK,ROUTEN,PROJEKTE;
