@@ -1,5 +1,6 @@
 <img src="info/logo.svg" width="200" style="margin-left:30%;">
 <hr/>
+
 Repsository für die Entwicklung der **Android-App** der gleichnamigen [Desktop-App](https://github.com/LorenMucha/Climbing-Diary). 
 Die Anwendung befindet sich noch in der Entwicklungsphase und soll dem Nutzer alle Funktionen der Desktop Anwendung mit Synchronisierung bieten.
 #### Funktionen
