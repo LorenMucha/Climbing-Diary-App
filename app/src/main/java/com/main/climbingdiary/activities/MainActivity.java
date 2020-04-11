@@ -9,15 +9,14 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.Ui.FragmentPager;
-import com.main.climbingdiary.Ui.TimeSlider;
-import com.main.climbingdiary.Ui.button.AddRoute;
-import com.main.climbingdiary.Ui.button.ShowTimeSlider;
+import com.main.climbingdiary.view.FragmentPager;
+import com.main.climbingdiary.view.TimeSlider;
+import com.main.climbingdiary.view.button.AddRoute;
+import com.main.climbingdiary.view.button.ShowTimeSlider;
 
 import pub.devrel.easypermissions.EasyPermissions;
 

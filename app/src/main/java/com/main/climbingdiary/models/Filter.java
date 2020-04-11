@@ -1,6 +1,6 @@
 package com.main.climbingdiary.models;
 
-import com.main.climbingdiary.Ui.menu.MenuValues;
+import com.main.climbingdiary.view.menu.MenuValues;
 
 public class Filter {
     private static String filter = null;

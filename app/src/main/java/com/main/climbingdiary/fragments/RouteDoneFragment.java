@@ -13,8 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.Ui.header.FilterHeader;
-import com.main.climbingdiary.Ui.menu.AppBarMenu;
+import com.main.climbingdiary.view.header.FilterHeader;
+import com.main.climbingdiary.view.menu.AppBarMenu;
 import com.main.climbingdiary.adapter.RoutesAdapter;
 import com.main.climbingdiary.database.entities.Route;
 import com.main.climbingdiary.database.entities.RouteRepository;

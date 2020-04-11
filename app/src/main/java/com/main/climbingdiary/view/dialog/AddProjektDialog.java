@@ -1,4 +1,4 @@
-package com.main.climbingdiary.Ui.dialog;
+package com.main.climbingdiary.view.dialog;
 
 import android.content.Context;
 import android.graphics.Color;

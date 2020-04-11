@@ -13,10 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.Ui.button.AddRoute;
-import com.main.climbingdiary.Ui.header.FilterHeader;
-import com.main.climbingdiary.Ui.menu.AppBarMenu;
-import com.main.climbingdiary.Ui.menu.MenuValues;
+import com.main.climbingdiary.view.button.AddRoute;
+import com.main.climbingdiary.view.header.FilterHeader;
+import com.main.climbingdiary.view.menu.AppBarMenu;
+import com.main.climbingdiary.view.menu.MenuValues;
 import com.main.climbingdiary.adapter.ProjektAdapter;
 import com.main.climbingdiary.database.entities.Projekt;
 import com.main.climbingdiary.database.entities.ProjektRepository;

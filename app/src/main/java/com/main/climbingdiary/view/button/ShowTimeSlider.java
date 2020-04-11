@@ -1,4 +1,4 @@
-package com.main.climbingdiary.Ui.button;
+package com.main.climbingdiary.view.button;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

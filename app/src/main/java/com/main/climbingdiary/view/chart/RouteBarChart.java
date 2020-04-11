@@ -1,4 +1,4 @@
-package com.main.climbingdiary.Ui.charts;
+package com.main.climbingdiary.view.chart;
 
 import android.content.Context;
 import android.database.Cursor;

@@ -1,6 +1,5 @@
-package com.main.climbingdiary.Ui;
+package com.main.climbingdiary.view;
 
-import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -10,8 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.activities.MainActivity;
-import com.main.climbingdiary.activities.SettingsActivity;
 
 public class NavDrawer implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;

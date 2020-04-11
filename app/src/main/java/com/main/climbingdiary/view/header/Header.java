@@ -1,4 +1,4 @@
-package com.main.climbingdiary.Ui.header;
+package com.main.climbingdiary.view.header;
 
 import android.view.View;
 import android.widget.LinearLayout;

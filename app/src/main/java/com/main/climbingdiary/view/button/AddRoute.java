@@ -1,4 +1,4 @@
-package com.main.climbingdiary.Ui.button;
+package com.main.climbingdiary.view.button;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -6,8 +6,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.Ui.FragmentPager;
-import com.main.climbingdiary.Ui.dialog.DialogFactory;
+import com.main.climbingdiary.view.FragmentPager;
+import com.main.climbingdiary.view.dialog.DialogFactory;
 
 public class AddRoute implements View.OnClickListener {
 

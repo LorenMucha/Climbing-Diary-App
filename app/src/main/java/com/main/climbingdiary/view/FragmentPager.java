@@ -1,4 +1,4 @@
-package com.main.climbingdiary.Ui;
+package com.main.climbingdiary.view;
 
 import android.annotation.SuppressLint;
 import android.support.design.widget.TabLayout;
@@ -6,8 +6,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.Ui.button.AddRoute;
-import com.main.climbingdiary.Ui.button.ShowTimeSlider;
+import com.main.climbingdiary.view.button.AddRoute;
+import com.main.climbingdiary.view.button.ShowTimeSlider;
 import com.main.climbingdiary.adapter.TabAdapter;
 import com.main.climbingdiary.fragments.RouteDoneFragment;
 import com.main.climbingdiary.fragments.RouteProjectFragment;

@@ -18,9 +18,9 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.Ui.Tabs;
-import com.main.climbingdiary.Ui.button.AddRoute;
-import com.main.climbingdiary.Ui.dialog.DialogFactory;
+import com.main.climbingdiary.view.Tabs;
+import com.main.climbingdiary.view.button.AddRoute;
+import com.main.climbingdiary.view.dialog.DialogFactory;
 import com.main.climbingdiary.database.TaskRepository;
 import com.main.climbingdiary.database.entities.Route;
 import com.main.climbingdiary.database.entities.RouteRepository;

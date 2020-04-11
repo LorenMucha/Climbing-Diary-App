@@ -1,20 +1,18 @@
-package com.main.climbingdiary.Ui.menu;
+package com.main.climbingdiary.view.menu;
 
 import android.app.SearchManager;
 import android.content.Context;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.SearchView;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.Ui.FragmentPager;
-import com.main.climbingdiary.Ui.Tabs;
+import com.main.climbingdiary.view.FragmentPager;
+import com.main.climbingdiary.view.Tabs;
 import com.main.climbingdiary.activities.MainActivity;
 import com.main.climbingdiary.database.entities.AreaRepository;
 import com.main.climbingdiary.fragments.RouteDoneFragment;
 import com.main.climbingdiary.fragments.RouteProjectFragment;
-import com.main.climbingdiary.models.RouteSort;
 
 import java.util.ArrayList;
 import java.util.List;

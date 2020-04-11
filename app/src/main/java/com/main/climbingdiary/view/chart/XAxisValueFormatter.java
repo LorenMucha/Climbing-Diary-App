@@ -1,4 +1,4 @@
-package com.main.climbingdiary.Ui.charts;
+package com.main.climbingdiary.view.chart;
 
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
@@ -9,7 +9,7 @@ public class XAxisValueFormatter implements IAxisValueFormatter {
 
     private ArrayList<String> mValues;
 
-    public XAxisValueFormatter(ArrayList<String> values) {
+    XAxisValueFormatter(ArrayList<String> values) {
         this.mValues = values;
     }
 
