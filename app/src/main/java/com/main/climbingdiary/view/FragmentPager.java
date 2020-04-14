@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.fragments.MapFragment;
-import com.main.climbingdiary.view.button.AppFloatingButton;
+import com.main.climbingdiary.view.button.AddButton;
 import com.main.climbingdiary.view.button.ShowLocationButton;
 import com.main.climbingdiary.view.button.ShowTimeSlider;
 import com.main.climbingdiary.adapter.TabAdapter;
@@ -60,7 +60,7 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
             case RouteDoneFragment.TITLE:
                 RouteDoneFragment.setFilterMenu();
                 ShowTimeSlider.show();
-                new AppFloatingButton();
+                new AddButton();
                 break;
             case MapFragment.TITLE:
                 new ShowLocationButton();
@@ -70,7 +70,7 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
             case RouteProjectFragment.TITLE:
                 RouteProjectFragment.setFilterMenu();
                 ShowTimeSlider.hide();
-                new AppFloatingButton();
+                new AddButton();
                 break;
             default :
                 ShowTimeSlider.hide();

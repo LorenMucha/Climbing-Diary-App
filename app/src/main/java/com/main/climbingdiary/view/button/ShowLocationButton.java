@@ -7,7 +7,7 @@ import com.main.climbingdiary.R;
 import com.main.climbingdiary.activities.MainActivity;
 import com.main.climbingdiary.fragments.MapFragment;
 
-public class ShowLocationButton implements View.OnClickListener{
+public class ShowLocationButton implements View.OnClickListener {
 
     private static FloatingActionButton floatingActionButton;
 

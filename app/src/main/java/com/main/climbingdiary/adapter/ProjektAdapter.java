@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.view.Tabs;
+import com.main.climbingdiary.view.button.AddButton;
 import com.main.climbingdiary.view.dialog.DialogFactory;
 import com.main.climbingdiary.database.entities.Projekt;
 import com.main.climbingdiary.database.entities.ProjektRepository;
@@ -104,14 +105,14 @@ public class ProjektAdapter extends
                 if (click == 0) {
                     //if last element hide add Button
                     if (mProjekts.indexOf(projekt) == (mProjekts.size() - 1)) {
-                        //AddRouteButton.hide();
+                        AddButton.hide();
                     }
                     hidden_layout.setVisibility(View.VISIBLE);
                     click++;
                 } else {
                     //if last element show add Button
                     if (mProjekts.indexOf(projekt) == (mProjekts.size() - 1)) {
-                        //AddRouteButton.show();
+                        AddButton.show();
                     }
                     hidden_layout.setVisibility(View.GONE);
                     click = 0;

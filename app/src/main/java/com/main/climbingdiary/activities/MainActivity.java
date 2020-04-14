@@ -16,7 +16,6 @@ import com.main.climbingdiary.R;
 import com.main.climbingdiary.common.AppPermissions;
 import com.main.climbingdiary.view.FragmentPager;
 import com.main.climbingdiary.view.TimeSlider;
-import com.main.climbingdiary.view.button.AppFloatingButton;
 import com.main.climbingdiary.view.button.ShowTimeSlider;
 
 import pub.devrel.easypermissions.EasyPermissions;
