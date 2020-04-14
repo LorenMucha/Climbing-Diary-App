@@ -41,8 +41,7 @@ public class RouteBarChart extends RouteChart {
             List<BarEntry> entriesGroup = new ArrayList<>();
             final ArrayList<String> labels = new ArrayList<>();
             //get the cjart entries
-            TaskRepository taskRepository = new TaskRepository();
-            taskRepository.open();
+            TaskRepository taskRepository = TaskRepository.getInstance();
             //String Sort = (Menu) getA
             Cursor cursor = taskRepository.getBarChartValues();
             int i = 0;
@@ -58,7 +57,6 @@ public class RouteBarChart extends RouteChart {
                     i++;
                 }
             }
-            taskRepository.close();
             BarDataSet set = new BarDataSet(entriesGroup, "");
             set.setColors(Colors.getStyleColor("flash"), Colors.getStyleColor("rp"), Colors.getStyleColor("os"));
             set.setDrawValues(false);

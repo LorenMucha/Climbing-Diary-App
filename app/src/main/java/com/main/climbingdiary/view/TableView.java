@@ -37,8 +37,7 @@ public class TableView {
     public void createTableView(){
         //Variables
         String[] styles = Styles.getStyle(true);
-        TaskRepository taskRepository = new TaskRepository();
-        taskRepository.open();
+        TaskRepository taskRepository =TaskRepository.getInstance();
         Cursor cursor = taskRepository.getTableValues();
         //tree et because this sort the values
         Set<String> mLevels = new TreeSet<>();

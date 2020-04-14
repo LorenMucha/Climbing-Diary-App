@@ -9,8 +9,7 @@ import java.util.ArrayList;
 public interface AreaRepository {
     static ArrayList<Area> getAreaList(){
         ArrayList<Area> _area_list = new ArrayList<>();
-        TaskRepository taskRepository = new TaskRepository();
-        taskRepository.open();
+        TaskRepository taskRepository = TaskRepository.getInstance();
         Cursor cursor = taskRepository.getAllAreas();
         if (cursor != null) {
             while (cursor.moveToNext()) {
@@ -23,13 +22,11 @@ public interface AreaRepository {
                 _area_list.add(area);
             }
         }
-        taskRepository.close();
         return _area_list;
     }
     static ArrayList<String> getAreaNameList(){
         ArrayList<String> _area_list = new ArrayList<>();
-        TaskRepository taskRepository = new TaskRepository();
-        taskRepository.open();
+        TaskRepository taskRepository = TaskRepository.getInstance();
         Cursor cursor = taskRepository.getAllAreas();
         if (cursor != null) {
             while (!cursor.isAfterLast()) {
@@ -38,7 +35,6 @@ public interface AreaRepository {
                 cursor.moveToNext();
             }
         }
-        taskRepository.close();
         return _area_list;
     }
 }

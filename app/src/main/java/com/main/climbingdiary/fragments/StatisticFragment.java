@@ -21,7 +21,6 @@ import com.main.climbingdiary.view.menu.AppBarMenu;
 import com.main.climbingdiary.view.menu.MenuValues;
 import com.main.climbingdiary.models.Colors;
 
-
 public class StatisticFragment extends Fragment {
 
     @SuppressLint("StaticFieldLeak")
@@ -30,6 +29,18 @@ public class StatisticFragment extends Fragment {
     private static View view;
     @SuppressLint("StaticFieldLeak")
     private static FilterHeader filterHeader;
+
+    public static final String TITLE = "Statistik";
+
+    public static StatisticFragment INSTANCE;
+
+
+    public static StatisticFragment getInstance(){
+        if(INSTANCE == null){
+            INSTANCE = new StatisticFragment();
+        }
+        return INSTANCE;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,8 +81,6 @@ public class StatisticFragment extends Fragment {
         });
         //default visualisation
         setBarChartBtn.callOnClick();
-        setHasOptionsMenu(true);
-        setFilterMenu();
         return view;
     }
     //XAxis Formatter
@@ -107,6 +116,7 @@ public class StatisticFragment extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
+
     public static void setFilterMenu(){
         filterHeader = new FilterHeader(view);
     }

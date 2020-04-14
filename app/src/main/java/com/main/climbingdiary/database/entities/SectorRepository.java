@@ -10,8 +10,7 @@ import java.util.ArrayList;
 public interface SectorRepository {
     static ArrayList<String> getSectorList(Context context, String _area_name){
         ArrayList<String> _sector_list = new ArrayList<>();
-        TaskRepository taskRepository = new TaskRepository();
-        taskRepository.open();
+        TaskRepository taskRepository = TaskRepository.getInstance();
         Cursor cursor = taskRepository.getSectorByAreaName(_area_name);
         if (cursor != null) {
             while (!cursor.isAfterLast()) {

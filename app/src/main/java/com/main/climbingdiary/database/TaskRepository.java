@@ -18,26 +18,25 @@ public class TaskRepository {
 
     private SQLiteDatabase mDb;
     private DatabaseHelper mDbHelper;
+    private static TaskRepository INSTANCE;
 
-    public TaskRepository() {
+    private TaskRepository() {
         Context mContext = MainActivity.getMainAppContext();
         mDbHelper = new DatabaseHelper(mContext);
-    }
-
-    public TaskRepository open() throws SQLException {
         try {
             mDbHelper.openDataBase();
-            mDbHelper.close();
             mDb = mDbHelper.getWritableDatabase();
         } catch (SQLException mSQLException) {
             Log.e(TAG, "open >>" + mSQLException.toString());
             throw mSQLException;
         }
-        return this;
     }
 
-    public void close() {
-        mDbHelper.close();
+    public static TaskRepository getInstance() {
+        if(INSTANCE == null){
+            INSTANCE = new TaskRepository();
+        }
+        return INSTANCE;
     }
 
     public Cursor getAllRoutes() {

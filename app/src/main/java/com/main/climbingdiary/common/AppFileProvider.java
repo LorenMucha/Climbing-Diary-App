@@ -1,6 +1,5 @@
 package com.main.climbingdiary.common;
 
-import android.Manifest;
 import android.net.Uri;
 import android.os.Environment;
 
@@ -19,12 +18,12 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 import pub.devrel.easypermissions.PermissionRequest;
 
+import static com.main.climbingdiary.common.AppPermissions.PERMS;
+import static com.main.climbingdiary.common.AppPermissions.RC_READ_AND_WRITE;
 import static com.main.climbingdiary.common.EnvironmentParamter.dbExportName;
 
 public class AppFileProvider {
 
-    private static final int RC_READ_AND_WRITE = 123;
-    private static String[] PERMS = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
 
     @AfterPermissionGranted(RC_READ_AND_WRITE)
     public void exportDBtoPreferencePath() throws IOException {

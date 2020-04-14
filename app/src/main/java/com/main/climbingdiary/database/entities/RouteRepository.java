@@ -9,8 +9,7 @@ import java.util.ArrayList;
 public interface RouteRepository {
     static Route getRoute(int _id){
         Route _route = new Route();
-        TaskRepository taskRepository = new TaskRepository();
-        taskRepository.open();
+        TaskRepository taskRepository = TaskRepository.getInstance();
         //String Sort = (Menu) getA
         Cursor cursor = taskRepository.getRoute(_id);
         if(cursor.getCount() > 0) {
@@ -25,13 +24,11 @@ public interface RouteRepository {
             _route.setDate(cursor.getString(7));
             _route.setSector(cursor.getString(8));
         }
-        taskRepository.close();
         return _route;
     }
     static ArrayList<Route> getRouteList() {
         ArrayList<Route> _routes = new ArrayList<>();
-        TaskRepository taskRepository = new TaskRepository();
-        taskRepository.open();
+        TaskRepository taskRepository = TaskRepository.getInstance();
         Cursor cursor = taskRepository.getAllRoutes();
         if (cursor != null) {
             while (!cursor.isAfterLast()) {
@@ -49,22 +46,15 @@ public interface RouteRepository {
                 cursor.moveToNext();
             }
         }
-        taskRepository.close();
         return _routes;
     }
 
     static boolean deleteRoute(int id){
-        TaskRepository taskRepository = new TaskRepository();
-        taskRepository.open();
-        boolean state = taskRepository.deleteRoute(id);
-        taskRepository.close();
-        return state;
+        TaskRepository taskRepository = TaskRepository.getInstance();
+        return taskRepository.deleteRoute(id);
     }
     static boolean insertRoute(Route route){
-        TaskRepository taskRepository = new TaskRepository();
-        taskRepository.open();
-        boolean state = taskRepository.inserRoute(route);
-        taskRepository.close();
-        return state;
+        TaskRepository taskRepository = TaskRepository.getInstance();
+        return taskRepository.inserRoute(route);
     }
 }

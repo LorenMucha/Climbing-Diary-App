@@ -24,11 +24,12 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@NoArgsConstructor
 public class RouteDoneFragment extends Fragment implements RouteFragment {
 
-    private ArrayList<Route> routes;
     private static RoutesAdapter adapter;
     @SuppressLint("StaticFieldLeak")
     private static RecyclerView rvRoutes;
@@ -40,6 +41,17 @@ public class RouteDoneFragment extends Fragment implements RouteFragment {
     @SuppressLint("StaticFieldLeak")
     private static View view;
 
+    public static final String TITLE = "Routen";
+    @SuppressLint("StaticFieldLeak")
+    private static RouteDoneFragment INSTANCE;
+
+    public static RouteDoneFragment getInstance(){
+        if(INSTANCE==null){
+            INSTANCE = new RouteDoneFragment();
+        }
+        return INSTANCE;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -49,7 +61,7 @@ public class RouteDoneFragment extends Fragment implements RouteFragment {
         rvRoutes = (RecyclerView) view.findViewById(R.id.rvRoutes);
 
         // Initialize routes
-        routes = RouteRepository.getRouteList();
+        ArrayList<Route> routes = RouteRepository.getRouteList();
         // Create adapter passing in the sample user data
         adapter = new RoutesAdapter(routes);
         // Attach the adapter to the recyclerview to populate items
@@ -57,7 +69,6 @@ public class RouteDoneFragment extends Fragment implements RouteFragment {
         // Set layout manager to position the items
         rvRoutes.setLayoutManager(new LinearLayoutManager(Objects.requireNonNull(getActivity()).getApplicationContext()));
         setHasOptionsMenu(true);
-        setFilterMenu();
         return view;
     }
 

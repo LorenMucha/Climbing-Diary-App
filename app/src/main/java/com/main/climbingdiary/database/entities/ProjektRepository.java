@@ -11,8 +11,7 @@ import java.util.ArrayList;
 public interface ProjektRepository {
     static Projekt getProjekt(int _id){
         Projekt _projekt = new Projekt();
-        TaskRepository taskRepository = new TaskRepository();
-        taskRepository.open();
+        TaskRepository taskRepository = TaskRepository.getInstance();
         //String Sort = (Menu) getA
         Cursor cursor = taskRepository.getProjekt(_id);
         if(cursor.getCount() > 0) {
@@ -26,14 +25,12 @@ public interface ProjektRepository {
             _projekt.setSector(cursor.getString(6));
 
         }
-        taskRepository.close();
         return _projekt;
     }
 
     static ArrayList<Projekt> getProjektList() throws ParseException {
         ArrayList<Projekt> _projekte = new ArrayList<>();
-        TaskRepository taskRepository = new TaskRepository();
-        taskRepository.open();
+        TaskRepository taskRepository = TaskRepository.getInstance();
         //String Sort = (Menu) getA
         Cursor cursor = taskRepository.getAllProjekts();
         if (cursor != null) {
@@ -50,23 +47,16 @@ public interface ProjektRepository {
                 cursor.moveToNext();
             }
         }
-        taskRepository.close();
         return _projekte;
     }
 
     static boolean deleteProjekt(int id){
         Log.d("delete Projekt",Integer.toString(id));
-        TaskRepository taskRepository = new TaskRepository();
-        taskRepository.open();
-        boolean state = taskRepository.deleteProjekt(id);
-        taskRepository.close();
-        return state;
+        TaskRepository taskRepository =TaskRepository.getInstance();
+        return taskRepository.deleteProjekt(id);
     }
     static boolean insertProjekt(Projekt projekt){
-        TaskRepository taskRepository = new TaskRepository();
-        taskRepository.open();
-        boolean state = taskRepository.inserProjekt(projekt);
-        taskRepository.close();
-        return state;
+        TaskRepository taskRepository = TaskRepository.getInstance();
+        return taskRepository.inserProjekt(projekt);
     }
 }

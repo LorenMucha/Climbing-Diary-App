@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.main.climbingdiary.R;
+import com.main.climbingdiary.activities.MainActivity;
 
 public class ShowTimeSlider implements View.OnClickListener{
 
@@ -19,11 +20,12 @@ public class ShowTimeSlider implements View.OnClickListener{
     private static LinearLayout container;
     private int clickSet =0;
 
-    public ShowTimeSlider(Activity _activity){
-        imageButton = _activity.findViewById(R.id.showTimeSlider);
+    public ShowTimeSlider(){
+        Activity activity = MainActivity.getMainActivity();
+        imageButton = activity.findViewById(R.id.showTimeSlider);
         imageButton.setOnClickListener(this);
-        layout = _activity.findViewById(R.id.showTimeLayout);
-        container = _activity.findViewById(R.id.sliderLayout);
+        layout = activity.findViewById(R.id.showTimeLayout);
+        container = activity.findViewById(R.id.sliderLayout);
     }
 
     @Override

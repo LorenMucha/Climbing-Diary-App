@@ -2,6 +2,7 @@ package com.main.climbingdiary.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -19,7 +20,6 @@ import android.widget.TextView;
 
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.view.Tabs;
-import com.main.climbingdiary.view.button.AddRoute;
 import com.main.climbingdiary.view.dialog.DialogFactory;
 import com.main.climbingdiary.database.TaskRepository;
 import com.main.climbingdiary.database.entities.Route;
@@ -42,7 +42,7 @@ public class RoutesAdapter extends
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         TextView nameTextView;
@@ -85,6 +85,7 @@ public class RoutesAdapter extends
     }
 
     // Usually involves inflating a layout from XML and returning the holder
+    @NonNull
     @Override
     public RoutesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
@@ -115,7 +116,7 @@ public class RoutesAdapter extends
         final String commentHtml = "<b>Kommentar</b><br/>"+commentString;
 
         //tasks for deleting and editing
-        final TaskRepository taskRepository = new TaskRepository();
+        final TaskRepository taskRepository =TaskRepository.getInstance();
 
         // Set item views
         TextView routeName = viewHolder.nameTextView;
@@ -155,14 +156,14 @@ public class RoutesAdapter extends
                 if(click==0){
                     //if last element hide add Button
                     if(mRoutes.indexOf(route)==(mRoutes.size()-1)){
-                        AddRoute.hide();
+                        //AddRouteButton.hide();
                     }
                     hidden_layout.setVisibility(View.VISIBLE);
                     click++;
                 }else{
                     //if last element show add Button
                     if(mRoutes.indexOf(route)==(mRoutes.size()-1)){
-                        AddRoute.show();
+                        //AddRouteButton.show();
                     }
                     hidden_layout.setVisibility(View.GONE);
                     click =0;

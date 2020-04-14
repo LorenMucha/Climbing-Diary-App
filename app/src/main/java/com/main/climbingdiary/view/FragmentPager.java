@@ -6,7 +6,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.view.button.AddRoute;
+import com.main.climbingdiary.fragments.MapFragment;
+import com.main.climbingdiary.view.button.AppFloatingButton;
+import com.main.climbingdiary.view.button.ShowLocationButton;
 import com.main.climbingdiary.view.button.ShowTimeSlider;
 import com.main.climbingdiary.adapter.TabAdapter;
 import com.main.climbingdiary.fragments.RouteDoneFragment;
@@ -39,6 +41,7 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
         adapter.addFragment(Tabs.STATISTIK.getFragment(),Tabs.STATISTIK.getTitle());
         adapter.addFragment(Tabs.ROUTEN.getFragment(),Tabs.ROUTEN.getTitle());
         adapter.addFragment(Tabs.PROJEKTE.getFragment(),Tabs.PROJEKTE.getTitle());
+        adapter.addFragment(Tabs.MAP.getFragment(),Tabs.MAP.getTitle());
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.addOnTabSelectedListener(this);
@@ -47,30 +50,41 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         tabTitle = Objects.requireNonNull(tab.getText()).toString();
-        switch(tab.getPosition()) {
+        switch(tabTitle) {
             //statistic
-            case 0:
+            case StatisticFragment.TITLE:
                 StatisticFragment.setFilterMenu();
                 ShowTimeSlider.show();
-                AddRoute.hide();
                 break;
-                //routes
-            case 1:
+            //routes
+            case RouteDoneFragment.TITLE:
                 RouteDoneFragment.setFilterMenu();
-                AddRoute.show();
                 ShowTimeSlider.show();
+                new AppFloatingButton();
                 break;
-                //projects
-            case 3:
+            case MapFragment.TITLE:
+                new ShowLocationButton();
+                ShowTimeSlider.hide();
+                break;
+            //projects
+            case RouteProjectFragment.TITLE:
                 RouteProjectFragment.setFilterMenu();
                 ShowTimeSlider.hide();
-                AddRoute.show();
+                new AppFloatingButton();
                 break;
             default :
                 ShowTimeSlider.hide();
-                AddRoute.show();
                 break;
         }
+    }
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
     }
 
     public static void setPosition(int pos){
@@ -81,15 +95,5 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
         RouteProjectFragment.refreshData();
         RouteDoneFragment.refreshData();
         StatisticFragment.refreshData();
-    }
-
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
-
-    }
-
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {
-
     }
 }

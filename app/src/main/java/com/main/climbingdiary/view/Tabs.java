@@ -2,53 +2,46 @@ package com.main.climbingdiary.view;
 
 import android.support.v4.app.Fragment;
 
+import com.main.climbingdiary.fragments.MapFragment;
 import com.main.climbingdiary.fragments.RouteDoneFragment;
 import com.main.climbingdiary.fragments.RouteProjectFragment;
 import com.main.climbingdiary.fragments.StatisticFragment;
 
 public enum Tabs {
-    STATISTIK,ROUTEN,PROJEKTE;
+    STATISTIK,ROUTEN,PROJEKTE, MAP;
     public String getTitle(){
         String title;
         switch (this){
             case STATISTIK:
-                title = "Statistik";
+                title = StatisticFragment.TITLE;
                 break;
             case PROJEKTE:
-                title =  "Projekte";
+                title = RouteProjectFragment.TITLE;
+                break;
+            case MAP:
+                title = MapFragment.TITLE;
                 break;
             default:
-                title="Routen";
+                title= RouteDoneFragment.TITLE;
                 break;
         }
         return title;
     }
-    public int getPostion(){
-        int pos;
-        switch (this){
-            case STATISTIK:
-                pos = 0;
-                break;
-            case PROJEKTE:
-                pos = 1;
-                break;
-            default:
-                pos = 2;
-                break;
-        }
-        return pos;
-    }
+
     public Fragment getFragment(){
         Fragment fm;
         switch (this){
             case STATISTIK:
-                fm = new StatisticFragment();
+                fm = StatisticFragment.getInstance();
                 break;
             case PROJEKTE:
-                fm = new RouteProjectFragment();
+                fm = RouteProjectFragment.getInstance();
+                break;
+            case MAP:
+                fm = MapFragment.getInstance();
                 break;
             default:
-                fm = new RouteDoneFragment();
+                fm = RouteDoneFragment.getInstance();
                 break;
         }
         return fm;

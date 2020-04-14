@@ -23,7 +23,7 @@ public class TimeSlider implements OnRangeSeekbarChangeListener, OnRangeSeekbarF
     private static CrystalRangeSeekbar rangeSeekbar;
     private static TextView minText;
     private static TextView maxText;
-    private final static TaskRepository taskRepository = new TaskRepository();
+    private final static TaskRepository taskRepository = TaskRepository.getInstance();
 
     public TimeSlider(Activity _activity){
         rangeSeekbar = _activity.findViewById(R.id.timerange);
@@ -35,10 +35,9 @@ public class TimeSlider implements OnRangeSeekbarChangeListener, OnRangeSeekbarF
     }
 
     @SuppressLint("SetTextI18n")
-    public static void setTimes(){
+    private static void setTimes(){
         try {
             ArrayList<Integer> years = new ArrayList<>();
-            taskRepository.open();
             Cursor cursor = taskRepository.getYears();
             if (cursor != null) {
                 while (!cursor.isAfterLast()) {
@@ -46,7 +45,6 @@ public class TimeSlider implements OnRangeSeekbarChangeListener, OnRangeSeekbarF
                     cursor.moveToNext();
                 }
             }
-            taskRepository.close();
             Log.d("Years set", TextUtils.join(",", years));
             int minYear = Collections.min(years);
             int maxYear = Collections.max(years);

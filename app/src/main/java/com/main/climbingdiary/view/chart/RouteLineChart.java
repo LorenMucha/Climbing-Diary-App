@@ -57,8 +57,7 @@ public class RouteLineChart extends RouteChart {
     public void createChart(){
         final ArrayList<String> labels = new ArrayList<>();
         ArrayList<Entry> entries = new ArrayList<>();
-        TaskRepository taskRepository = new TaskRepository();
-        taskRepository.open();
+        TaskRepository taskRepository = TaskRepository.getInstance();
         Cursor yearCursor = taskRepository.getYears();
         //transform the cursor to an array list
         ArrayList<Integer> yearList = new ArrayList<Integer>();
@@ -97,7 +96,6 @@ public class RouteLineChart extends RouteChart {
                 i++;
             }
             Collections.sort(labels);
-            taskRepository.close();
             LineDataSet dataSet = new LineDataSet(entries, "");
             dataSet.setColor(R.color.main_blue_color);
             dataSet.setCircleHoleColor(Colors.getActiveColor());

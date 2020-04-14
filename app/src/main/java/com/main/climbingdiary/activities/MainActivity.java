@@ -13,9 +13,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.main.climbingdiary.R;
+import com.main.climbingdiary.common.AppPermissions;
 import com.main.climbingdiary.view.FragmentPager;
 import com.main.climbingdiary.view.TimeSlider;
-import com.main.climbingdiary.view.button.AddRoute;
+import com.main.climbingdiary.view.button.AppFloatingButton;
 import com.main.climbingdiary.view.button.ShowTimeSlider;
 
 import pub.devrel.easypermissions.EasyPermissions;
@@ -51,15 +52,14 @@ public class MainActivity extends AppCompatActivity {
         fragmentPager.setFragmente();
 
         //the add buttons
-        new AddRoute(this);
-        new ShowTimeSlider(this);
+        new ShowTimeSlider();
 
         //the slider
         new TimeSlider(this);
 
         //navigation View
         //new NavDrawer(this);
-
+        AppPermissions.checkPermissions();
     }
 
     @Override

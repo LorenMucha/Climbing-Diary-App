@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.view.button.AddRoute;
 import com.main.climbingdiary.view.header.FilterHeader;
 import com.main.climbingdiary.view.menu.AppBarMenu;
 import com.main.climbingdiary.view.menu.MenuValues;
@@ -27,12 +26,15 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@NoArgsConstructor
 public class RouteProjectFragment extends Fragment implements RouteFragment {
 
     private ArrayList<Projekt> projekts;
     private static ProjektAdapter adapter;
+    @SuppressLint("StaticFieldLeak")
     private static RecyclerView rvProjekte;
     @SuppressLint("StaticFieldLeak")
     private static FilterHeader filterHeader;
@@ -42,9 +44,19 @@ public class RouteProjectFragment extends Fragment implements RouteFragment {
     @SuppressLint("StaticFieldLeak")
     private static View view;
 
+    public static final String TITLE = "Projekte";
+    @SuppressLint("StaticFieldLeak")
+    private static RouteProjectFragment INSTACE;
+
+    public static RouteProjectFragment getInstance(){
+        if(INSTACE==null){
+            INSTACE = new RouteProjectFragment();
+        }
+        return INSTACE;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        AddRoute.show();
         view = inflater.inflate(R.layout.project_fragment, container, false);
 
         // Lookup the recyclerview in activity layout
@@ -63,7 +75,6 @@ public class RouteProjectFragment extends Fragment implements RouteFragment {
         // Set layout manager to position the items
         rvProjekte.setLayoutManager(new LinearLayoutManager(Objects.requireNonNull(getActivity()).getApplicationContext()));
         setHasOptionsMenu(true);
-        setFilterMenu();
         return view;
     }
 
@@ -114,6 +125,7 @@ public class RouteProjectFragment extends Fragment implements RouteFragment {
         }
         return super.onOptionsItemSelected(item);
     }
+
     public static void setFilterMenu(){
         filterHeader = new FilterHeader(view);
     }
