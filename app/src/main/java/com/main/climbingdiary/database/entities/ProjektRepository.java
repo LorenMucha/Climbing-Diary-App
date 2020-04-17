@@ -57,6 +57,6 @@ public interface ProjektRepository {
     }
     static boolean insertProjekt(Projekt projekt){
         TaskRepository taskRepository = TaskRepository.getInstance();
-        return taskRepository.inserProjekt(projekt);
+        return taskRepository.insertProjekt(projekt);
     }
 }

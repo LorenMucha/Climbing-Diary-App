@@ -1,6 +1,7 @@
 package com.main.climbingdiary.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,8 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.view.header.FilterHeader;
-import com.main.climbingdiary.view.menu.AppBarMenu;
+import com.main.climbingdiary.controller.header.FilterHeader;
+import com.main.climbingdiary.controller.menu.AppBarMenu;
 import com.main.climbingdiary.adapter.RoutesAdapter;
 import com.main.climbingdiary.database.entities.Route;
 import com.main.climbingdiary.database.entities.RouteRepository;
@@ -35,11 +36,8 @@ public class RouteDoneFragment extends Fragment implements RouteFragment {
     private static RecyclerView rvRoutes;
     @SuppressLint("StaticFieldLeak")
     private static FilterHeader filterHeader;
-    @Getter
-    @Setter
-    private static boolean filter_checked = false;
     @SuppressLint("StaticFieldLeak")
-    private static View view;
+    public static View view;
 
     public static final String TITLE = "Routen";
     @SuppressLint("StaticFieldLeak")
@@ -56,7 +54,6 @@ public class RouteDoneFragment extends Fragment implements RouteFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.routes_fragment, container, false);
-
         // Lookup the recyclerview in activity layout
         rvRoutes = (RecyclerView) view.findViewById(R.id.rvRoutes);
 

@@ -13,9 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.view.header.FilterHeader;
-import com.main.climbingdiary.view.menu.AppBarMenu;
-import com.main.climbingdiary.view.menu.MenuValues;
+import com.main.climbingdiary.controller.header.FilterHeader;
+import com.main.climbingdiary.controller.menu.AppBarMenu;
+import com.main.climbingdiary.controller.menu.MenuValues;
 import com.main.climbingdiary.adapter.ProjektAdapter;
 import com.main.climbingdiary.database.entities.Projekt;
 import com.main.climbingdiary.database.entities.ProjektRepository;
@@ -97,7 +97,7 @@ public class RouteProjectFragment extends Fragment implements RouteFragment {
         // Do something that differs the Activity's menu here
         super.onCreateOptionsMenu(menu, inflater);
         AppBarMenu appmenu = new AppBarMenu(menu);
-        appmenu.setItemVisebility(MenuValues.SORT_DATE,false);
+        appmenu.setItemVisebility(true);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

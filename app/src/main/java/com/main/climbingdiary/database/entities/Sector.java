@@ -1,27 +1,24 @@
 package com.main.climbingdiary.database.entities;
 
-import java.util.HashMap;
+import lombok.Getter;
 
-public class Sector {
+class Sector {
+    @Getter
     private String area_name;
+    @Getter
     private String name;
+    @Getter
     private int id;
-    //hashmap because null values are possible
-    private HashMap<String, String> coordinates;
-    public String getName() {
-        return name;
-    }
-    public HashMap<String, String> getCoordinates() {
-        return coordinates;
-    }
-    public String getAreaName() {
-        return area_name;
-    }
+    @Getter
+    private double lat;
+    @Getter
+    private double lng;
 
-    public Sector(Sector.Builder builder){
+    private Sector(Sector.Builder builder){
         this.id = builder.id;
         this.name = builder.name;
-        this.coordinates = builder.coordinates;
+        this.lat = builder.lat;
+        this.lng = builder.lng;
         this.area_name = builder.area_name;
     }
 
@@ -29,7 +26,8 @@ public class Sector {
     public static class Builder{
         private int id;
         private String name;
-        private HashMap<String, String> coordinates;
+        private double lat;
+        private double lng;
         private String area_name ;
 
         public Sector.Builder name(String _name){
@@ -40,12 +38,12 @@ public class Sector {
             this.id = _id;
             return this;
         }
-        public Sector.Builder coordinates(HashMap<String, String> _coordinates){
-            this.coordinates = _coordinates;
+        public Sector.Builder lat(double _lat){
+            this.lat = _lat;
             return this;
         }
-        public Sector.Builder area_name(String _area_name){
-            this.area_name = _area_name;
+        public Sector.Builder lng(double _lng){
+            this.lng = _lng;
             return this;
         }
         public Sector build(){

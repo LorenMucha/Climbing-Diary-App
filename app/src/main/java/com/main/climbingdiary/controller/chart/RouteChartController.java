@@ -1,6 +1,6 @@
-package com.main.climbingdiary.view.chart;
+package com.main.climbingdiary.controller.chart;
 
-public abstract class RouteChart {
+public abstract class RouteChartController {
 
     public abstract void show();
     public abstract void hide();

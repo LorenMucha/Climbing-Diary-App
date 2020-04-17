@@ -1,4 +1,4 @@
-package com.main.climbingdiary.view.header;
+package com.main.climbingdiary.controller.header;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -6,8 +6,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.view.FragmentPager;
-import com.main.climbingdiary.view.menu.MenuValues;
+import com.main.climbingdiary.controller.FragmentPager;
+import com.main.climbingdiary.controller.menu.MenuValues;
 import com.main.climbingdiary.models.Filter;
 
 public class FilterHeader implements Header {

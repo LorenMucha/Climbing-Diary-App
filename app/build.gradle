@@ -55,4 +55,6 @@ dependencies {
     implementation 'com.jakewharton:process-phoenix:2.0.0'
     //osmdroid: https://github.com/osmdroid/osmdroid
     implementation 'org.osmdroid:osmdroid-android:6.1.6'
+    //wiki: https://github.com/MKergall/osmbonuspack/wiki/
+    implementation 'com.github.MKergall:osmbonuspack:6.6.0'
 }

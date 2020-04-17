@@ -1,4 +1,4 @@
-package com.main.climbingdiary.view;
+package com.main.climbingdiary.controller;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -11,8 +11,8 @@ import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.view.button.ShowTimeSlider;
-import com.main.climbingdiary.view.menu.MenuValues;
+import com.main.climbingdiary.controller.button.ShowTimeSlider;
+import com.main.climbingdiary.controller.menu.MenuValues;
 import com.main.climbingdiary.database.TaskRepository;
 import com.main.climbingdiary.models.Filter;
 

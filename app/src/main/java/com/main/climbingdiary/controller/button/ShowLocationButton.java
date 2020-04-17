@@ -1,11 +1,11 @@
-package com.main.climbingdiary.view.button;
+package com.main.climbingdiary.controller.button;
 
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.activities.MainActivity;
-import com.main.climbingdiary.fragments.MapFragment;
+import com.main.climbingdiary.controller.MapController;
 
 public class ShowLocationButton implements View.OnClickListener {
 
@@ -20,7 +20,7 @@ public class ShowLocationButton implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        MapFragment.setUserPosition();
+        MapController.setUserPosition();
     }
 
     public static void show() {

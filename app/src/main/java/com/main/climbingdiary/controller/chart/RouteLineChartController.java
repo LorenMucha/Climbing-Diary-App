@@ -1,4 +1,4 @@
-package com.main.climbingdiary.view.chart;
+package com.main.climbingdiary.controller.chart;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -40,11 +40,11 @@ import java.util.Objects;
 
 import lombok.Data;
 
-public class RouteLineChart extends RouteChart {
+public class RouteLineChartController extends RouteChartController {
     private LineChart lineChart;
     private Context context;
     private Map<Integer, List<InfoObject>> routeResults = new LinkedHashMap<>();
-    public RouteLineChart(View view){
+    public RouteLineChartController(View view){
         this.lineChart = view.findViewById(R.id.route_line_chart);
         this.context = view.getContext();
     }

@@ -15,10 +15,16 @@ public interface AreaRepository {
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(0);
                 String name = cursor.getString(1);
-                String koordinaten = cursor.getString(2);
-                String land = cursor.getString(3);
-
-                Area area = new Area.Builder().name(name).id(id).build();
+                double lat = cursor.getDouble(2);
+                double lng = cursor.getDouble(3);
+                String country = cursor.getString(4);
+                Area area = new Area.Builder()
+                        .name(name)
+                        .id(id)
+                        .lat(lat)
+                        .lng(lng)
+                        .country(country)
+                        .build();
                 _area_list.add(area);
             }
         }

@@ -3,11 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:visible="false"
         android:id="@+id/action_search"
         android:title="@string/menu_suche"
         app:showAsAction="ifRoom|withText"
         app:actionViewClass="android.widget.SearchView"/>
     <item
+        android:visible="false"
         android:id="@+id/action_filter"
         android:title="@string/menu_filter"
         android:icon="@drawable/ic_filter"
@@ -20,6 +22,7 @@
          </menu>
     </item>
     <item
+        android:visible="false"
         android:id="@+id/action_sort"
         android:icon="@drawable/ic_sort"
         app:showAsAction="ifRoom"

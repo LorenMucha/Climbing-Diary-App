@@ -14,9 +14,9 @@ import android.view.MenuItem;
 
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.common.AppPermissions;
-import com.main.climbingdiary.view.FragmentPager;
-import com.main.climbingdiary.view.TimeSlider;
-import com.main.climbingdiary.view.button.ShowTimeSlider;
+import com.main.climbingdiary.controller.FragmentPager;
+import com.main.climbingdiary.controller.TimeSlider;
+import com.main.climbingdiary.controller.button.ShowTimeSlider;
 
 import pub.devrel.easypermissions.EasyPermissions;
 

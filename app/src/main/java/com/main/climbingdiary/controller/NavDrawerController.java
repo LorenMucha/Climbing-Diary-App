@@ -1,4 +1,4 @@
-package com.main.climbingdiary.view;
+package com.main.climbingdiary.controller;
 
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,10 +10,10 @@ import android.view.MenuItem;
 
 import com.main.climbingdiary.R;
 
-public class NavDrawer implements NavigationView.OnNavigationItemSelectedListener {
+public class NavDrawerController implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
 
-    public NavDrawer(AppCompatActivity _activity){
+    public NavDrawerController(AppCompatActivity _activity){
         int layoutId = R.id.drawer_layout;
         drawer = _activity.findViewById(layoutId);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

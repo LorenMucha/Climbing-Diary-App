@@ -13,12 +13,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.view.TableView;
-import com.main.climbingdiary.view.chart.RouteBarChart;
-import com.main.climbingdiary.view.chart.RouteLineChart;
-import com.main.climbingdiary.view.header.FilterHeader;
-import com.main.climbingdiary.view.menu.AppBarMenu;
-import com.main.climbingdiary.view.menu.MenuValues;
+import com.main.climbingdiary.controller.TableView;
+import com.main.climbingdiary.controller.chart.RouteBarChartControllerController;
+import com.main.climbingdiary.controller.chart.RouteLineChartController;
+import com.main.climbingdiary.controller.header.FilterHeader;
+import com.main.climbingdiary.controller.menu.AppBarMenu;
+import com.main.climbingdiary.controller.menu.MenuValues;
 import com.main.climbingdiary.models.Colors;
 
 public class StatisticFragment extends Fragment {
@@ -51,16 +51,16 @@ public class StatisticFragment extends Fragment {
         setLineChartBtn  = view.findViewById(R.id.btn_dev);
         setTableBtn = view.findViewById(R.id.btn_table);
         //set the views
-        final RouteLineChart _routeLineChart = new RouteLineChart(view);
+        final RouteLineChartController _routeLineChart = new RouteLineChartController(view);
         final TableView _routeTable = new TableView(view.getContext(),view);
-        final RouteBarChart _routeBarChart = new RouteBarChart(view);
+        final RouteBarChartControllerController _routeBarChartController = new RouteBarChartControllerController(view);
         //the Button Click Listener
         setLineChartBtn.setOnClickListener(v -> {
             StatisticFragment.resetButtonBackground();
             setLineChartBtn.setBackgroundColor(Colors.getActiveColor());
             _routeLineChart.show();
             _routeTable.hide();
-            _routeBarChart.hide();
+            _routeBarChartController.hide();
             _routeLineChart.createChart();
         });
         setBarChartBtn.setOnClickListener(v -> {
@@ -68,19 +68,20 @@ public class StatisticFragment extends Fragment {
             setBarChartBtn.setBackgroundColor(Colors.getActiveColor());
             _routeTable.hide();
             _routeLineChart.hide();
-            _routeBarChart.show();
-            _routeBarChart.createChart();
+            _routeBarChartController.show();
+            _routeBarChartController.createChart();
         });
         setTableBtn.setOnClickListener(v -> {
             StatisticFragment.resetButtonBackground();
             setTableBtn.setBackgroundColor(Colors.getActiveColor());
-            _routeBarChart.hide();
+            _routeBarChartController.hide();
             _routeLineChart.hide();
             _routeTable.show();
             _routeTable.createTableView();
         });
         //default visualisation
         setBarChartBtn.callOnClick();
+        new FilterHeader(view).hide();
         return view;
     }
     //XAxis Formatter
@@ -91,10 +92,10 @@ public class StatisticFragment extends Fragment {
     }
     public static void refreshData(){
         try {
-            final RouteLineChart _routeLineChart = new RouteLineChart(view);
+            final RouteLineChartController _routeLineChart = new RouteLineChartController(view);
             final TableView _routeTable = new TableView(view.getContext(), view);
-            final RouteBarChart _routeBarChart = new RouteBarChart(view);
-            _routeBarChart.createChart();
+            final RouteBarChartControllerController _routeBarChartController = new RouteBarChartControllerController(view);
+            _routeBarChartController.createChart();
             _routeLineChart.createChart();
             _routeTable.createTableView();
         }catch(Exception ex){}
@@ -104,8 +105,8 @@ public class StatisticFragment extends Fragment {
         // Do something that differs the Activity's menu here
         super.onCreateOptionsMenu(menu, inflater);
         AppBarMenu appmenu = new AppBarMenu(menu);
-        appmenu.setItemVisebility(false);
         appmenu.setItemVisebility(MenuValues.FILTER,true);
+        appmenu.setItemVisebility(MenuValues.SEARCH,false);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

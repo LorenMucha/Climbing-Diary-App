@@ -1,6 +1,6 @@
-package com.main.climbingdiary.view.dialog;
+package com.main.climbingdiary.controller.dialog;
 
-import com.main.climbingdiary.view.Tabs;
+import com.main.climbingdiary.controller.Tabs;
 import com.main.climbingdiary.activities.MainActivity;
 import com.main.climbingdiary.database.entities.Route;
 

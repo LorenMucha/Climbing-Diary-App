@@ -1,4 +1,4 @@
-package com.main.climbingdiary.view.chart;
+package com.main.climbingdiary.controller.chart;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -23,10 +23,10 @@ import com.main.climbingdiary.models.Colors;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RouteBarChart extends RouteChart {
+public class RouteBarChartControllerController extends RouteChartController {
     private BarChart barChart;
     private static Context context;
-    public RouteBarChart(View _view){
+    public RouteBarChartControllerController(View _view){
         this.barChart = _view.findViewById(R.id.route_bar_chart);
         context = _view.getContext();
     }

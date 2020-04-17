@@ -1,4 +1,4 @@
-package com.main.climbingdiary.view.dialog;
+package com.main.climbingdiary.controller.dialog;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -22,8 +22,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.view.SetDate;
-import com.main.climbingdiary.view.TimeSlider;
+import com.main.climbingdiary.controller.SetDate;
+import com.main.climbingdiary.controller.TimeSlider;
 import com.main.climbingdiary.activities.MainActivity;
 import com.main.climbingdiary.database.entities.AreaRepository;
 import com.main.climbingdiary.database.entities.Route;

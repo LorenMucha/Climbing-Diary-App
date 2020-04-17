@@ -1,4 +1,4 @@
-package com.main.climbingdiary.view.menu;
+package com.main.climbingdiary.controller.menu;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -7,8 +7,8 @@ import android.view.Menu;
 import android.widget.SearchView;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.view.FragmentPager;
-import com.main.climbingdiary.view.Tabs;
+import com.main.climbingdiary.controller.FragmentPager;
+import com.main.climbingdiary.controller.Tabs;
 import com.main.climbingdiary.activities.MainActivity;
 import com.main.climbingdiary.database.entities.AreaRepository;
 import com.main.climbingdiary.fragments.RouteDoneFragment;

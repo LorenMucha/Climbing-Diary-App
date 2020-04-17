@@ -1,12 +1,12 @@
-package com.main.climbingdiary.view.button;
+package com.main.climbingdiary.controller.button;
 
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.activities.MainActivity;
-import com.main.climbingdiary.view.FragmentPager;
-import com.main.climbingdiary.view.dialog.DialogFactory;
+import com.main.climbingdiary.controller.FragmentPager;
+import com.main.climbingdiary.controller.dialog.DialogFactory;
 
 
 public class AddButton implements View.OnClickListener {

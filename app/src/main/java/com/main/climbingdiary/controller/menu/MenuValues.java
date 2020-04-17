@@ -1,4 +1,4 @@
-package com.main.climbingdiary.view.menu;
+package com.main.climbingdiary.controller.menu;
 
 public enum MenuValues {
     SEARCH,FILTER,SORT,SORT_DATE,SETTINGS;

@@ -1,4 +1,4 @@
-package com.main.climbingdiary.view.dialog;
+package com.main.climbingdiary.controller.dialog;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -22,48 +22,28 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.view.FragmentPager;
-import com.main.climbingdiary.view.SetDate;
-import com.main.climbingdiary.view.Tabs;
 import com.main.climbingdiary.database.entities.AreaRepository;
 import com.main.climbingdiary.database.entities.Projekt;
 import com.main.climbingdiary.database.entities.ProjektRepository;
-import com.main.climbingdiary.database.entities.Route;
-import com.main.climbingdiary.database.entities.RouteRepository;
 import com.main.climbingdiary.database.entities.SectorRepository;
-import com.main.climbingdiary.fragments.RouteDoneFragment;
 import com.main.climbingdiary.fragments.RouteProjectFragment;
-import com.main.climbingdiary.fragments.StatisticFragment;
 import com.main.climbingdiary.models.Levels;
 import com.main.climbingdiary.models.Rating;
-import com.main.climbingdiary.models.Styles;
 
-import java.util.regex.Pattern;
-
-public class EditRouteDialog extends DialogFragment {
-    private static Route route = null;
-    private static int route_id;
-    private static String title = null;
-    public EditRouteDialog() {}
-
-    public static EditRouteDialog newInstance(String _title, int _id){
-        Log.d("instanziate for id",Integer.toString(_id));
-        EditRouteDialog edit = new  EditRouteDialog();
-        route_id = _id;
-        title = _title;
-        return edit;
-    }
-
-    public static EditRouteDialog newInstance(String _title, Route _route){
-        EditRouteDialog edit = new  EditRouteDialog();
-        route = _route;
-        title = _title;
+public class EditProjektDialog extends DialogFragment {
+    public EditProjektDialog() {}
+    public static EditProjektDialog newInstance(String title, int _id){
+        EditProjektDialog edit = new  EditProjektDialog();
+        Bundle args = new Bundle();
+        args.putString("title", title);
+        args.putInt("id",_id);
+        edit.setArguments(args);
         return edit;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.dialog_add_route, container);
+        return inflater.inflate(R.layout.dialog_add_projekt, container);
     }
 
 
@@ -73,16 +53,12 @@ public class EditRouteDialog extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
 
         final Context _context = view.getContext();
-        Route editRoute;
 
+        // Fetch arguments from bundle and set title
+        String title = getArguments().getString("title", "Bearbeiten");
         //get the route value which will be edit
-        if(route != null){
-            editRoute = route;
-        }else{
-            editRoute = RouteRepository.getRoute(route_id);
-        }
-
-        Log.d("edit tick route",editRoute.toString());
+        int route_id = getArguments().getInt("id",0);
+        Projekt editRoute = ProjektRepository.getProjekt(route_id);
 
         // Initialize a new foreground color span instance
         ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.BLACK);
@@ -102,29 +78,17 @@ public class EditRouteDialog extends DialogFragment {
             titleDivider.setBackgroundColor(getResources().getColor(android.R.color.black));
 
         //input elements
-        Button closeDialog = (Button) view.findViewById(R.id.input_route_close);
-        Button saveRoute = (Button) view.findViewById(R.id.input_route_save);
+        Button closeDialog = view.findViewById(R.id.input_route_close);
+        Button saveRoute = view.findViewById(R.id.input_route_save);
         saveRoute.setText("Update");
-        final Spinner stil = (Spinner) view.findViewById(R.id.input_route_stil);
-        final Spinner level = (Spinner) view.findViewById(R.id.input_route_level);
-        final Spinner rating = (Spinner) view.findViewById(R.id.input_route_rating);
-        final EditText date = (EditText) view.findViewById(R.id.input_route_date);
-        final EditText name = (EditText) view.findViewById(R.id.input_route_name);
-        final AutoCompleteTextView area = (AutoCompleteTextView) view.findViewById(R.id.input_route_area);
-        final AutoCompleteTextView sector = (AutoCompleteTextView) view.findViewById(R.id.input_route_sektor);
-        final EditText comment = (EditText) view.findViewById(R.id.input_route_comment);
+        final Spinner level = view.findViewById(R.id.input_route_level);
+        final Spinner rating = view.findViewById(R.id.input_route_rating);
+        final EditText name = view.findViewById(R.id.input_route_name);
+        final AutoCompleteTextView area = view.findViewById(R.id.input_route_area);
+        final AutoCompleteTextView sector = view.findViewById(R.id.input_route_sektor);
+        final EditText comment = view.findViewById(R.id.input_route_comment);
 
         name.setText(editRoute.getName());
-
-        // set Spinner for choosing the style
-        ArrayAdapter<String> stilArrayAdapter = new ArrayAdapter<String>(_context,android.R.layout.simple_spinner_item, Styles.getStyle(true));
-        stilArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
-        stil.setAdapter(stilArrayAdapter);
-        try {
-            stil.setSelection(stilArrayAdapter.getPosition(editRoute.getStyle().toUpperCase()));
-        }catch(Exception ex){
-            Log.e("Style was unset",ex.getLocalizedMessage());
-        }
 
         // set Spinner for choosing the level
         ArrayAdapter<String> levelArrayAdapter = new ArrayAdapter<String>(_context,android.R.layout.simple_spinner_item, Levels.getLevels());
@@ -168,54 +132,28 @@ public class EditRouteDialog extends DialogFragment {
         rating.setAdapter(ratingArrayAdapter);
         rating.setSelection(editRoute.getRating()-1);
 
-        //set date listener
-        try {
-            SetDate setDate = new SetDate(date, _context);
-            StringBuilder sBuilder = new StringBuilder();
-            String[] dateSplit = (editRoute.getDate()).split(Pattern.quote("."));
-            sBuilder.append(dateSplit[2]).append("-").append(dateSplit[1]).append("-").append(dateSplit[0]);
-            date.setText(sBuilder.toString());
-        }catch(Exception e){
-            Log.e("Error",e.toString());
-            date.setText(route.getDate());
-        }
-
         //save the route
         saveRoute.setOnClickListener(v -> {
-            if(FragmentPager.getTabTitle().equals(Tabs.PROJEKTE.getTitle())){
-                FragmentPager.setPosition(1);
-                Projekt projekt = new Projekt();
-                ProjektRepository.deleteProjekt(editRoute.getId());
-                Log.d("delete Projekt with ID:",Integer.toString(editRoute.getId()));
-                RouteProjectFragment.refreshData();
-            }
-            Route newRoute = new Route();
-            newRoute.setId(0);
-            newRoute.setName(name.getText().toString());
-            newRoute.setLevel(level.getSelectedItem().toString());
-            newRoute.setDate(date.getText().toString());
-            newRoute.setArea(area.getText().toString());
-            newRoute.setSector(sector.getText().toString());
-            newRoute.setComment(comment.getText().toString());
-            newRoute.setRating(rating.getSelectedItemPosition()+1);
-            newRoute.setStyle(stil.getSelectedItem().toString());
-            Log.d("delete Route with ID", Integer.toString(editRoute.getId()));
-            boolean taskState = RouteRepository.deleteRoute(editRoute.getId());
+            Projekt newProjekt = new Projekt();
+            newProjekt.setId(0);
+            newProjekt.setName(name.getText().toString());
+            newProjekt.setLevel(level.getSelectedItem().toString());
+            newProjekt.setArea(area.getText().toString());
+            newProjekt.setSector(sector.getText().toString());
+            newProjekt.setComment(comment.getText().toString());
+            newProjekt.setRating(rating.getSelectedItemPosition()+1);
+            boolean taskState = ProjektRepository.deleteProjekt(route_id);
             if(taskState) {
-                RouteRepository.insertRoute(newRoute);
+                ProjektRepository.insertProjekt(newProjekt);
             }
             //close the dialog
             getDialog().cancel();
-            RouteDoneFragment.refreshData();
-            StatisticFragment.refreshData();
+            RouteProjectFragment.refreshData();
         });
 
         //close the dialog
-        closeDialog.setOnClickListener(v ->{
-            if(FragmentPager.getTabTitle().equals(Tabs.PROJEKTE.getTitle())){
-                RouteProjectFragment.refreshData();
-            }
-                getDialog().cancel();
-        });
+        closeDialog.setOnClickListener(v -> getDialog().cancel());
+
     }
 }
+

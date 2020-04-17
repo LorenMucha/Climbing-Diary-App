@@ -196,7 +196,7 @@ public class TaskRepository {
         }
     }
 
-    public boolean inserRoute(Route route) {
+    public boolean insertRoute(Route route) {
         //create the transaction
         String[] tasks = {
                 "INSERT OR IGNORE INTO gebiete (name) VALUES ('" + route.getArea() + "')",
@@ -224,7 +224,7 @@ public class TaskRepository {
         return state;
     }
 
-    public boolean inserProjekt(Projekt projekt) {
+    public boolean insertProjekt(Projekt projekt) {
         //create the transaction
         String[] tasks = {
                 "INSERT OR IGNORE INTO gebiete (name) VALUES ('" + projekt.getArea() + "')",

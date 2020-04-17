@@ -1,6 +1,6 @@
 package com.main.climbingdiary.database;
 
-import com.main.climbingdiary.view.menu.MenuValues;
+import com.main.climbingdiary.controller.menu.MenuValues;
 import com.main.climbingdiary.models.Filter;
 import com.main.climbingdiary.models.RouteSort;
 

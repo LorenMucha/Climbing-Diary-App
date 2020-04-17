@@ -2,7 +2,9 @@ package com.main.climbingdiary.database.entities;
 
 import android.database.Cursor;
 
+import com.main.climbingdiary.controller.menu.MenuValues;
 import com.main.climbingdiary.database.TaskRepository;
+import com.main.climbingdiary.models.Filter;
 
 import java.util.ArrayList;
 
@@ -49,12 +51,19 @@ public interface RouteRepository {
         return _routes;
     }
 
+    static ArrayList<Route> getRouteListByArea(int areaId){
+        Filter.setFilter(String.format("g.id = %s",areaId), MenuValues.FILTER);
+        ArrayList<Route> _routes = getRouteList();
+        Filter.removeFilter();
+        return _routes;
+    }
+
     static boolean deleteRoute(int id){
         TaskRepository taskRepository = TaskRepository.getInstance();
         return taskRepository.deleteRoute(id);
     }
     static boolean insertRoute(Route route){
         TaskRepository taskRepository = TaskRepository.getInstance();
-        return taskRepository.inserRoute(route);
+        return taskRepository.insertRoute(route);
     }
 }

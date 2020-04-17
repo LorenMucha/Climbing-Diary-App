@@ -1,39 +1,34 @@
 package com.main.climbingdiary.database.entities;
 
-import java.util.HashMap;
+import lombok.Getter;
+import lombok.ToString;
 
+@ToString
 public class Area {
+    @Getter
     private String country;
+    @Getter
     private String name;
+    @Getter
     private int id;
-    //hashmap because null values are possible
-    private HashMap<String, String> coordinates;
+    @Getter
+    private double lat;
+    @Getter
+    private double lng;
 
-    public String getName() {
-        return name;
-    }
-
-    public HashMap<String, String> getCoordinates() {
-        return coordinates;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-
-    public Area(Builder builder){
+    private Area(Builder builder){
         this.id = builder.id;
         this.name = builder.name;
-        this.coordinates = builder.coordinates;
+        this.lat = builder.lat;
+        this.lng = builder.lng;
         this.country = builder.country;
     }
 
-    //builder pattern for optional paramters
     public static class Builder{
         private int id;
         private String name;
-        private HashMap<String, String> coordinates;
+        private double lat;
+        private double lng;
         private String country;
 
         public Builder name(String _name){
@@ -44,8 +39,12 @@ public class Area {
             this.id = _id;
             return this;
         }
-        public Builder coordinates(HashMap<String, String> _coordinates){
-            this.coordinates = _coordinates;
+        public Builder lat(double _lat){
+            this.lat = _lat;
+            return this;
+        }
+        public Builder lng(double _lng){
+            this.lng = _lng;
             return this;
         }
         public Builder country(String _country){

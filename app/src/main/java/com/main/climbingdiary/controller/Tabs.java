@@ -1,4 +1,4 @@
-package com.main.climbingdiary.view;
+package com.main.climbingdiary.controller;
 
 import android.support.v4.app.Fragment;
 
