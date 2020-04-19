@@ -6,9 +6,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.main.climbingdiary.R;
+import com.main.climbingdiary.controller.button.AppFloatingActionButton;
 import com.main.climbingdiary.fragments.MapFragment;
-import com.main.climbingdiary.controller.button.AddButton;
-import com.main.climbingdiary.controller.button.ShowLocationButton;
 import com.main.climbingdiary.controller.button.ShowTimeSlider;
 import com.main.climbingdiary.adapter.TabAdapter;
 import com.main.climbingdiary.fragments.RouteDoneFragment;
@@ -41,7 +40,7 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
         adapter.addFragment(Tabs.STATISTIK.getFragment(),Tabs.STATISTIK.getTitle());
         adapter.addFragment(Tabs.ROUTEN.getFragment(),Tabs.ROUTEN.getTitle());
         adapter.addFragment(Tabs.PROJEKTE.getFragment(),Tabs.PROJEKTE.getTitle());
-        adapter.addFragment(Tabs.MAP.getFragment(),Tabs.MAP.getTitle());
+        //adapter.addFragment(Tabs.MAP.getFragment(),Tabs.MAP.getTitle());
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.addOnTabSelectedListener(this);
@@ -55,22 +54,23 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
             case StatisticFragment.TITLE:
                 StatisticFragment.setFilterMenu();
                 ShowTimeSlider.show();
+                AppFloatingActionButton.hide();
                 break;
             //routes
             case RouteDoneFragment.TITLE:
                 RouteDoneFragment.setFilterMenu();
                 ShowTimeSlider.show();
-                new AddButton();
+                AppFloatingActionButton.show();
                 break;
             case MapFragment.TITLE:
-                new ShowLocationButton();
+                AppFloatingActionButton.show();
                 ShowTimeSlider.hide();
                 break;
             //projects
             case RouteProjectFragment.TITLE:
                 RouteProjectFragment.setFilterMenu();
                 ShowTimeSlider.hide();
-                new AddButton();
+                AppFloatingActionButton.show();
                 break;
             default :
                 ShowTimeSlider.hide();

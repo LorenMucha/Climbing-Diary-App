@@ -50,12 +50,23 @@
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floating_action_btn"
+        android:id="@+id/floating_action_btn_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_plus"
+        android:tint="@android:color/white"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floating_action_btn_locate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_locate"
         android:tint="@android:color/white"/>
 
 </android.support.design.widget.CoordinatorLayout>

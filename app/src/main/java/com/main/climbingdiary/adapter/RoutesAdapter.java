@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.controller.Tabs;
-import com.main.climbingdiary.controller.button.AddButton;
+import com.main.climbingdiary.controller.button.AppFloatingActionButton;
 import com.main.climbingdiary.controller.dialog.DialogFactory;
 import com.main.climbingdiary.database.TaskRepository;
 import com.main.climbingdiary.database.entities.Route;
@@ -157,14 +157,14 @@ public class RoutesAdapter extends
                 if(click==0){
                     //if last element hide add Button
                     if(mRoutes.indexOf(route)==(mRoutes.size()-1)){
-                        AddButton.hide();
+                        AppFloatingActionButton.hide();
                     }
                     hidden_layout.setVisibility(View.VISIBLE);
                     click++;
                 }else{
                     //if last element show add Button
                     if(mRoutes.indexOf(route)==(mRoutes.size()-1)){
-                        AddButton.show();
+                        AppFloatingActionButton.show();
                     }
                     hidden_layout.setVisibility(View.GONE);
                     click =0;
