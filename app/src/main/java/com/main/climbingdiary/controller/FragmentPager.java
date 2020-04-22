@@ -41,7 +41,7 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
         adapter.addFragment(Tabs.STATISTIK.getFragment(),Tabs.STATISTIK.getTitle());
         adapter.addFragment(Tabs.ROUTEN.getFragment(),Tabs.ROUTEN.getTitle());
         adapter.addFragment(Tabs.PROJEKTE.getFragment(),Tabs.PROJEKTE.getTitle());
-        adapter.addFragment(Tabs.MAP.getFragment(),Tabs.MAP.getTitle());
+        //adapter.addFragment(Tabs.MAP.getFragment(),Tabs.MAP.getTitle());
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.addOnTabSelectedListener(this);
@@ -58,6 +58,7 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
                 break;
             //routes
             case RouteDoneFragment.TITLE:
+                new FilterHeader(RouteDoneFragment.getInstance().getView());
                 ShowTimeSlider.show();
                 AppFloatingActionButton.show();
                 break;
@@ -67,6 +68,7 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
                 break;
             //projects
             case RouteProjectFragment.TITLE:
+                new FilterHeader(RouteProjectFragment.getInstance().getView());
                 ShowTimeSlider.hide();
                 AppFloatingActionButton.show();
                 break;

@@ -58,7 +58,6 @@ public class RouteProjectFragment extends Fragment implements RouteFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.project_fragment, container, false);
-
         // Lookup the recyclerview in activity layout
         rvProjekte = (RecyclerView) view.findViewById(R.id.rvProjekte);
 

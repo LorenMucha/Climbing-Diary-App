@@ -109,7 +109,6 @@ public class RouteDoneFragment extends Fragment implements RouteFragment {
             return true;
         }
         else if(item.getGroupId()==R.id.filter_area+1){
-            //Filter magic here ;-)
             FilterHeader.show(item.getTitle().toString());
             return true;
         }

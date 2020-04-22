@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         //the add buttons
         new ShowTimeSlider();
         new AppFloatingActionButton();
-        new FilterHeader(findViewById(android.R.id.content).getRootView());
         //the slider
         new TimeSlider();
 
