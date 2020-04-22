@@ -29,9 +29,8 @@ public class StatisticFragment extends Fragment {
     private static View view;
     @SuppressLint("StaticFieldLeak")
     private static FilterHeader filterHeader;
-
     public static final String TITLE = "Statistik";
-
+    @SuppressLint("StaticFieldLeak")
     public static StatisticFragment INSTANCE;
 
 
@@ -81,7 +80,6 @@ public class StatisticFragment extends Fragment {
         });
         //default visualisation
         setBarChartBtn.callOnClick();
-        new FilterHeader(view).hide();
         return view;
     }
     //XAxis Formatter
@@ -98,7 +96,7 @@ public class StatisticFragment extends Fragment {
             _routeBarChartController.createChart();
             _routeLineChart.createChart();
             _routeTable.createTableView();
-        }catch(Exception ex){}
+        }catch(Exception ignored){}
     }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -112,13 +110,9 @@ public class StatisticFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         item.setChecked(true);
         if(item.getGroupId()==R.id.filter_area+1){
-            filterHeader.show(item.getTitle().toString());
+            FilterHeader.show(item.getTitle().toString());
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public static void setFilterMenu(){
-        filterHeader = new FilterHeader(view);
     }
 }

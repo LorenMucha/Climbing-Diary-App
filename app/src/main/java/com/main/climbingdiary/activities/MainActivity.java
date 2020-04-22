@@ -18,6 +18,8 @@ import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.controller.TimeSlider;
 import com.main.climbingdiary.controller.button.AppFloatingActionButton;
 import com.main.climbingdiary.controller.button.ShowTimeSlider;
+import com.main.climbingdiary.controller.header.FilterHeader;
+import com.main.climbingdiary.fragments.StatisticFragment;
 
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -53,9 +55,10 @@ public class MainActivity extends AppCompatActivity {
 
         //the add buttons
         new ShowTimeSlider();
-
+        new AppFloatingActionButton();
+        new FilterHeader(findViewById(android.R.id.content).getRootView());
         //the slider
-        new TimeSlider(this);
+        new TimeSlider();
 
         //navigation View
         //new NavDrawer(this);

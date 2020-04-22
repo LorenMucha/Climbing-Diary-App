@@ -158,7 +158,7 @@ public class AddRouteDialog extends DialogFragment{
             }else{
                 Alerts.setErrorAlert(view.getContext());
             }
-            new TimeSlider(MainActivity.getMainActivity());
+            new TimeSlider();
             //close the dialog
             getDialog().cancel();
         });

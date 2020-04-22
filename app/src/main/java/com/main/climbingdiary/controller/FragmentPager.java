@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.controller.button.AppFloatingActionButton;
+import com.main.climbingdiary.controller.header.FilterHeader;
 import com.main.climbingdiary.fragments.MapFragment;
 import com.main.climbingdiary.controller.button.ShowTimeSlider;
 import com.main.climbingdiary.adapter.TabAdapter;
@@ -40,7 +41,7 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
         adapter.addFragment(Tabs.STATISTIK.getFragment(),Tabs.STATISTIK.getTitle());
         adapter.addFragment(Tabs.ROUTEN.getFragment(),Tabs.ROUTEN.getTitle());
         adapter.addFragment(Tabs.PROJEKTE.getFragment(),Tabs.PROJEKTE.getTitle());
-        //adapter.addFragment(Tabs.MAP.getFragment(),Tabs.MAP.getTitle());
+        adapter.addFragment(Tabs.MAP.getFragment(),Tabs.MAP.getTitle());
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.addOnTabSelectedListener(this);
@@ -52,13 +53,11 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
         switch(tabTitle) {
             //statistic
             case StatisticFragment.TITLE:
-                StatisticFragment.setFilterMenu();
                 ShowTimeSlider.show();
                 AppFloatingActionButton.hide();
                 break;
             //routes
             case RouteDoneFragment.TITLE:
-                RouteDoneFragment.setFilterMenu();
                 ShowTimeSlider.show();
                 AppFloatingActionButton.show();
                 break;
@@ -68,7 +67,6 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
                 break;
             //projects
             case RouteProjectFragment.TITLE:
-                RouteProjectFragment.setFilterMenu();
                 ShowTimeSlider.hide();
                 AppFloatingActionButton.show();
                 break;

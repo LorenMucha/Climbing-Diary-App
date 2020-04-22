@@ -54,6 +54,7 @@ public class RouteDoneFragment extends Fragment implements RouteFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.routes_fragment, container, false);
+        //new FilterHeader(view);
         // Lookup the recyclerview in activity layout
         rvRoutes = (RecyclerView) view.findViewById(R.id.rvRoutes);
 
@@ -79,7 +80,7 @@ public class RouteDoneFragment extends Fragment implements RouteFragment {
             routes = RouteRepository.getRouteList();
             adapter = new RoutesAdapter(routes);
             rvRoutes.setAdapter(adapter);
-        }catch(Exception ex){}
+        }catch(Exception ignored){}
     }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -109,14 +110,9 @@ public class RouteDoneFragment extends Fragment implements RouteFragment {
         }
         else if(item.getGroupId()==R.id.filter_area+1){
             //Filter magic here ;-)
-            filterHeader.show(item.getTitle().toString());
+            FilterHeader.show(item.getTitle().toString());
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
-    public static void setFilterMenu(){
-        filterHeader = new FilterHeader(view);
-    }
-
 }

@@ -119,7 +119,7 @@ public class MapController {
                     FragmentPager.setPosition(1);
                     Filter.setFilter(String.format("g.id = %s",area.getId()), MenuValues.FILTER);
                     RouteDoneFragment.refreshData();
-                    new FilterHeader(RouteDoneFragment.view).show(area.getName());
+                    FilterHeader.show(area.getName());
                 }
             });
 

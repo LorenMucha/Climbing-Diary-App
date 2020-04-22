@@ -120,13 +120,9 @@ public class RouteProjectFragment extends Fragment implements RouteFragment {
         }
         else if(item.getGroupId()==R.id.filter_area+1){
             //Filter magic here ;-)
-            filterHeader.show(item.getTitle().toString());
+            FilterHeader.show(item.getTitle().toString());
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public static void setFilterMenu(){
-        filterHeader = new FilterHeader(view);
     }
 }
