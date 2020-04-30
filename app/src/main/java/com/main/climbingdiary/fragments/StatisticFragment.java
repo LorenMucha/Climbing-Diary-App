@@ -16,19 +16,16 @@ import com.main.climbingdiary.R;
 import com.main.climbingdiary.controller.TableView;
 import com.main.climbingdiary.controller.chart.RouteBarChartControllerController;
 import com.main.climbingdiary.controller.chart.RouteLineChartController;
-import com.main.climbingdiary.controller.header.FilterHeader;
 import com.main.climbingdiary.controller.menu.AppBarMenu;
 import com.main.climbingdiary.controller.menu.MenuValues;
 import com.main.climbingdiary.models.Colors;
 
-public class StatisticFragment extends Fragment {
+public class StatisticFragment extends Fragment implements RouteFragment{
 
     @SuppressLint("StaticFieldLeak")
     private static Button setLineChartBtn, setBarChartBtn, setTableBtn;
     @SuppressLint("StaticFieldLeak")
     private static View view;
-    @SuppressLint("StaticFieldLeak")
-    private static FilterHeader filterHeader;
     public static final String TITLE = "Statistik";
     @SuppressLint("StaticFieldLeak")
     public static StatisticFragment INSTANCE;
@@ -39,6 +36,11 @@ public class StatisticFragment extends Fragment {
             INSTANCE = new StatisticFragment();
         }
         return INSTANCE;
+    }
+
+    @Override
+    public View getView(){
+        return view;
     }
 
     @Override
@@ -88,7 +90,9 @@ public class StatisticFragment extends Fragment {
         setBarChartBtn.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.buttonColor));
         setTableBtn.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.buttonColor));
     }
-    public static void refreshData(){
+
+    @Override
+    public void refreshData(){
         try {
             final RouteLineChartController _routeLineChart = new RouteLineChartController(view);
             final TableView _routeTable = new TableView(view.getContext(), view);
@@ -110,7 +114,6 @@ public class StatisticFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         item.setChecked(true);
         if(item.getGroupId()==R.id.filter_area+1){
-            FilterHeader.show(item.getTitle().toString());
             return true;
         }
         return super.onOptionsItemSelected(item);

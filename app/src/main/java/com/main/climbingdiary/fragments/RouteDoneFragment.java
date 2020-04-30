@@ -1,7 +1,6 @@
 package com.main.climbingdiary.fragments;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.controller.header.FilterHeader;
+import com.main.climbingdiary.controller.FilterHeader;
 import com.main.climbingdiary.controller.menu.AppBarMenu;
 import com.main.climbingdiary.adapter.RoutesAdapter;
 import com.main.climbingdiary.database.entities.Route;
@@ -26,7 +25,6 @@ import java.util.Objects;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @NoArgsConstructor
 public class RouteDoneFragment extends Fragment implements RouteFragment {
@@ -35,10 +33,9 @@ public class RouteDoneFragment extends Fragment implements RouteFragment {
     @SuppressLint("StaticFieldLeak")
     private static RecyclerView rvRoutes;
     @SuppressLint("StaticFieldLeak")
-    private static FilterHeader filterHeader;
-    @SuppressLint("StaticFieldLeak")
     public static View view;
-
+    @SuppressLint("StaticFieldLeak")
+    private static FilterHeader header;
     public static final String TITLE = "Routen";
     @SuppressLint("StaticFieldLeak")
     private static RouteDoneFragment INSTANCE;
@@ -51,13 +48,17 @@ public class RouteDoneFragment extends Fragment implements RouteFragment {
     }
 
     @Override
+    public View getView(){
+        return view;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.routes_fragment, container, false);
         //new FilterHeader(view);
         // Lookup the recyclerview in activity layout
-        rvRoutes = (RecyclerView) view.findViewById(R.id.rvRoutes);
-
+        rvRoutes = view.findViewById(R.id.rvRoutes);
         // Initialize routes
         ArrayList<Route> routes = RouteRepository.getRouteList();
         // Create adapter passing in the sample user data
@@ -67,6 +68,7 @@ public class RouteDoneFragment extends Fragment implements RouteFragment {
         // Set layout manager to position the items
         rvRoutes.setLayoutManager(new LinearLayoutManager(Objects.requireNonNull(getActivity()).getApplicationContext()));
         setHasOptionsMenu(true);
+        header = new FilterHeader(this);
         return view;
     }
 
@@ -74,7 +76,8 @@ public class RouteDoneFragment extends Fragment implements RouteFragment {
         return adapter;
     }
 
-    public static void refreshData(){
+    @Override
+    public void refreshData(){
         ArrayList<Route> routes;
         try {
             routes = RouteRepository.getRouteList();
@@ -82,6 +85,7 @@ public class RouteDoneFragment extends Fragment implements RouteFragment {
             rvRoutes.setAdapter(adapter);
         }catch(Exception ignored){}
     }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Do something that differs the Activity's menu here
@@ -109,7 +113,7 @@ public class RouteDoneFragment extends Fragment implements RouteFragment {
             return true;
         }
         else if(item.getGroupId()==R.id.filter_area+1){
-            FilterHeader.show(item.getTitle().toString());
+            header.show(item.getTitle().toString());
             return true;
         }
         return super.onOptionsItemSelected(item);

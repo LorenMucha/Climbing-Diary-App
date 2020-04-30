@@ -19,6 +19,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.main.climbingdiary.R;
+import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.controller.Tabs;
 import com.main.climbingdiary.controller.button.AppFloatingActionButton;
 import com.main.climbingdiary.controller.dialog.DialogFactory;
@@ -184,8 +185,7 @@ public class RoutesAdapter extends
                         int id = route.getId();
                         boolean taskState = RouteRepository.deleteRoute(id);
                         if(taskState){
-                            RouteDoneFragment.refreshData();
-                            StatisticFragment.refreshData();
+                            FragmentPager.refreshAllFragments();
                             sDialog.hide();
                             new SweetAlertDialog(_v.getContext(), SweetAlertDialog.SUCCESS_TYPE)
                                     .setTitleText("Gelöscht")
@@ -195,7 +195,7 @@ public class RoutesAdapter extends
                         }
 
                     })
-                    .setCancelButton("Cancel", sDialog -> sDialog.cancel())
+                    .setCancelButton("Cancel", SweetAlertDialog::cancel)
                     .show();
         });
         //edit a route

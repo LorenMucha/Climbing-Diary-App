@@ -18,8 +18,6 @@ import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.controller.TimeSlider;
 import com.main.climbingdiary.controller.button.AppFloatingActionButton;
 import com.main.climbingdiary.controller.button.ShowTimeSlider;
-import com.main.climbingdiary.controller.header.FilterHeader;
-import com.main.climbingdiary.fragments.StatisticFragment;
 
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -50,8 +48,7 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.mainActivity = this;
 
         //manager for the tabs
-        FragmentPager fragmentPager = new FragmentPager(this);
-        fragmentPager.setFragmente();
+        new FragmentPager(this);
 
         //the add buttons
         new ShowTimeSlider();

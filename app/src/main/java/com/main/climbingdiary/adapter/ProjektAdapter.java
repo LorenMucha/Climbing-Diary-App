@@ -16,6 +16,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.main.climbingdiary.R;
+import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.controller.Tabs;
 import com.main.climbingdiary.controller.button.AppFloatingActionButton;
 import com.main.climbingdiary.controller.dialog.DialogFactory;
@@ -132,7 +133,7 @@ public class ProjektAdapter extends
                         int id = projekt.getId();
                         boolean taskState = ProjektRepository.deleteProjekt(id);
                         if (taskState) {
-                            RouteProjectFragment.refreshData();
+                            FragmentPager.refreshActualFragment();
                             sDialog.hide();
                             new SweetAlertDialog(_v.getContext(), SweetAlertDialog.SUCCESS_TYPE)
                                     .setTitleText("Gelöscht")

@@ -2,45 +2,49 @@ package com.main.climbingdiary.controller;
 
 import android.annotation.SuppressLint;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.controller.button.AppFloatingActionButton;
-import com.main.climbingdiary.controller.header.FilterHeader;
-import com.main.climbingdiary.fragments.MapFragment;
-import com.main.climbingdiary.controller.button.ShowTimeSlider;
 import com.main.climbingdiary.adapter.TabAdapter;
+import com.main.climbingdiary.controller.button.AppFloatingActionButton;
+import com.main.climbingdiary.controller.button.ShowTimeSlider;
+import com.main.climbingdiary.fragments.MapFragment;
 import com.main.climbingdiary.fragments.RouteDoneFragment;
+import com.main.climbingdiary.fragments.RouteFragment;
 import com.main.climbingdiary.fragments.RouteProjectFragment;
 import com.main.climbingdiary.fragments.StatisticFragment;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class FragmentPager implements TabLayout.OnTabSelectedListener {
     private static final int view_layout = R.id.viewPager;
     private static final int tab_layout = R.id.tabLayout;
-    private ViewPager viewPager;
     @SuppressLint("StaticFieldLeak")
     private static TabLayout tabLayout;
-    private TabAdapter adapter;
     private static String tabTitle;
-
     public static String getTabTitle(){
         return tabTitle;
     }
+    private static List<Tabs> fragmentMap = new ArrayList<>();
 
-    public FragmentPager(AppCompatActivity _activity){
-        viewPager = _activity.findViewById(view_layout);
-        tabLayout = _activity.findViewById(tab_layout);
-        adapter = new TabAdapter(_activity.getSupportFragmentManager());
+    static {
+        fragmentMap.add(Tabs.STATISTIK);
+        fragmentMap.add(Tabs.ROUTEN);
+        fragmentMap.add(Tabs.PROJEKTE);
+        fragmentMap.add(Tabs.MAP);
     }
 
-    public void setFragmente(){
-        //create the necessary Fragments
-        adapter.addFragment(Tabs.STATISTIK.getFragment(),Tabs.STATISTIK.getTitle());
-        adapter.addFragment(Tabs.ROUTEN.getFragment(),Tabs.ROUTEN.getTitle());
-        adapter.addFragment(Tabs.PROJEKTE.getFragment(),Tabs.PROJEKTE.getTitle());
+    public FragmentPager(AppCompatActivity _activity){
+        ViewPager viewPager = _activity.findViewById(view_layout);
+        tabLayout = _activity.findViewById(tab_layout);
+        TabAdapter adapter = new TabAdapter(_activity.getSupportFragmentManager());
+        for(Tabs tab:fragmentMap){
+            adapter.addFragment((Fragment) tab.getFragment(),tab.getTitle());
+        }
         //adapter.addFragment(Tabs.MAP.getFragment(),Tabs.MAP.getTitle());
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -58,7 +62,6 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
                 break;
             //routes
             case RouteDoneFragment.TITLE:
-                new FilterHeader(RouteDoneFragment.getInstance().getView());
                 ShowTimeSlider.show();
                 AppFloatingActionButton.show();
                 break;
@@ -68,7 +71,6 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
                 break;
             //projects
             case RouteProjectFragment.TITLE:
-                new FilterHeader(RouteProjectFragment.getInstance().getView());
                 ShowTimeSlider.hide();
                 AppFloatingActionButton.show();
                 break;
@@ -88,12 +90,18 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
     }
 
     public static void setPosition(int pos){
-        TabLayout.Tab tab = tabLayout.getTabAt(pos);
-        Objects.requireNonNull(tab).select();
+        Objects.requireNonNull(tabLayout.getTabAt(pos)).select();
     }
+
+    public static void refreshActualFragment(){
+        int tabPosition = tabLayout.getSelectedTabPosition();
+        RouteFragment fragment = fragmentMap.get(tabPosition).getFragment();
+        fragment.refreshData();
+    }
+
     public static void refreshAllFragments(){
-        RouteProjectFragment.refreshData();
-        RouteDoneFragment.refreshData();
-        StatisticFragment.refreshData();
+        for(Tabs tab: fragmentMap){
+            tab.getFragment().refreshData();
+        }
     }
 }

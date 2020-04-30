@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 
 import com.main.climbingdiary.fragments.MapFragment;
 import com.main.climbingdiary.fragments.RouteDoneFragment;
+import com.main.climbingdiary.fragments.RouteFragment;
 import com.main.climbingdiary.fragments.RouteProjectFragment;
 import com.main.climbingdiary.fragments.StatisticFragment;
 
@@ -28,8 +29,8 @@ public enum Tabs {
         return title;
     }
 
-    public Fragment getFragment(){
-        Fragment fm;
+    public RouteFragment getFragment(){
+        RouteFragment fm;
         switch (this){
             case STATISTIK:
                 fm = StatisticFragment.getInstance();

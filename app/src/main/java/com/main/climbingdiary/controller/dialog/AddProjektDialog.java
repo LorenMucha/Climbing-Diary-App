@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.main.climbingdiary.R;
+import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.database.entities.AreaRepository;
 import com.main.climbingdiary.database.entities.Projekt;
 import com.main.climbingdiary.database.entities.ProjektRepository;
@@ -139,7 +140,7 @@ public class AddProjektDialog extends DialogFragment {
             newProjekt.setRating(rating.getSelectedItemPosition()+1);
             boolean taskState = ProjektRepository.insertProjekt(newProjekt);
             if(taskState){
-                RouteProjectFragment.refreshData();
+                FragmentPager.refreshAllFragments();
             }else{
                 Alerts.setErrorAlert(view.getContext());
             }

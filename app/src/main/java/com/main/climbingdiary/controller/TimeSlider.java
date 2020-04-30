@@ -90,6 +90,6 @@ public class TimeSlider implements OnRangeSeekbarChangeListener, OnRangeSeekbarF
         Log.d("Filter set",Filter.getFilter());
         minText.setText(min);
         maxText.setText(max);
-        FragmentPager.refreshAllFragments();
+        FragmentPager.refreshActualFragment();
     }
 }

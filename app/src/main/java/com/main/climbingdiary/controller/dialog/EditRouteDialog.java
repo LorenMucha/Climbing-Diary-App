@@ -187,7 +187,7 @@ public class EditRouteDialog extends DialogFragment {
                 Projekt projekt = new Projekt();
                 ProjektRepository.deleteProjekt(editRoute.getId());
                 Log.d("delete Projekt with ID:",Integer.toString(editRoute.getId()));
-                RouteProjectFragment.refreshData();
+                FragmentPager.refreshActualFragment();
             }
             Route newRoute = new Route();
             newRoute.setId(0);
@@ -206,14 +206,13 @@ public class EditRouteDialog extends DialogFragment {
             }
             //close the dialog
             getDialog().cancel();
-            RouteDoneFragment.refreshData();
-            StatisticFragment.refreshData();
+            FragmentPager.refreshAllFragments();
         });
 
         //close the dialog
         closeDialog.setOnClickListener(v ->{
             if(FragmentPager.getTabTitle().equals(Tabs.PROJEKTE.getTitle())){
-                RouteProjectFragment.refreshData();
+                FragmentPager.refreshActualFragment();
             }
                 getDialog().cancel();
         });

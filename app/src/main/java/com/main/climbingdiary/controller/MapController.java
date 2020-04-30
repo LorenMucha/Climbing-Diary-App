@@ -1,20 +1,21 @@
 package com.main.climbingdiary.controller;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.location.LocationManager;
 import android.view.View;
-import android.widget.Button;
+import android.widget.TextView;
 
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.activities.MainActivity;
-import com.main.climbingdiary.controller.header.FilterHeader;
 import com.main.climbingdiary.controller.menu.MenuValues;
 import com.main.climbingdiary.database.entities.Area;
 import com.main.climbingdiary.database.entities.AreaRepository;
 import com.main.climbingdiary.database.entities.RouteRepository;
-import com.main.climbingdiary.fragments.RouteDoneFragment;
+import com.main.climbingdiary.models.Colors;
 import com.main.climbingdiary.models.Filter;
 
 import org.osmdroid.api.IMapController;
@@ -40,6 +41,8 @@ public class MapController {
     private static IMapController mapController;
     private static GeoPoint startPoint = new GeoPoint(49.58, 11.01);
     private static LocationManager locationManager = (LocationManager) MainActivity.getMainActivity().getSystemService(LOCATION_SERVICE);
+    @SuppressLint("StaticFieldLeak")
+    private static FilterHeader header;
 
 
     public void setUpMap() {
@@ -51,7 +54,7 @@ public class MapController {
 
     }
 
-    public static void setUserPosition() {
+    public void setUserPosition() {
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             GpsMyLocationProvider prov = new GpsMyLocationProvider(map.getContext());
             prov.addLocationSource(LocationManager.GPS_PROVIDER);
@@ -69,11 +72,11 @@ public class MapController {
             locationOverlay.setOptionsMenuEnabled(true);
             map.getOverlays().add(locationOverlay);
         } else {
-            showGPSDisabledAlertToUser();
+            this.showGPSDisabledAlertToUser();
         }
     }
 
-    private static void showGPSDisabledAlertToUser() {
+    private void showGPSDisabledAlertToUser() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(map.getContext());
         alertDialogBuilder.setMessage("GPS ist auf deinem Gerät nicht aktiviert. Möchtest du es aktivieren ?")
                 .setCancelable(false)
@@ -87,6 +90,11 @@ public class MapController {
                 (dialog, id) -> dialog.cancel());
         AlertDialog alert = alertDialogBuilder.create();
         alert.show();
+    }
+
+    public void refreshMap(){
+        map.getOverlayManager().clear();
+        this.setMarker();
     }
 
     private void setMarker() {
@@ -110,24 +118,24 @@ public class MapController {
 
     static class CustomInfoWindow extends MarkerInfoWindow {
         private Area area;
-        Button btn = (mView.findViewById(org.osmdroid.bonuspack.R.id.bubble_moreinfo));
+        TextView btn = (mView.findViewById(org.osmdroid.bonuspack.R.id.bubble_title));
         CustomInfoWindow(MapView mapView, Area _area) {
             super(org.osmdroid.bonuspack.R.layout.bonuspack_bubble, mapView);
             this.area = _area;
-            btn.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
-                    FragmentPager.setPosition(1);
-                    Filter.setFilter(String.format("g.id = %s",area.getId()), MenuValues.FILTER);
-                    RouteDoneFragment.refreshData();
-                    FilterHeader.show(area.getName());
-                }
+            btn.setOnClickListener(view -> {
+                FragmentPager.setPosition(1);
+                Filter.setFilter(String.format("g.id = %s",area.getId()), MenuValues.FILTER);
+                FragmentPager.refreshActualFragment();
             });
 
         }
         @Override public void onOpen(Object item){
             super.onOpen(item);
-            mView.findViewById(org.osmdroid.bonuspack.R.id.bubble_moreinfo).setVisibility(View.VISIBLE);
-
+            TextView header = mView.findViewById(org.osmdroid.bonuspack.R.id.bubble_title);
+            header.setVisibility(View.VISIBLE);
+            header.setTextColor(Colors.getMainColor());
+            header.setTextSize(15);
+            header.setPaintFlags(header.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
         }
     }
 }

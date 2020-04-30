@@ -15,11 +15,11 @@ import org.osmdroid.config.Configuration;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class MapFragment extends Fragment {
-    private View view;
+public class MapFragment extends Fragment implements RouteFragment{
 
     public static final String TITLE = "Map";
     private static MapFragment INSTACE;
+    private MapController mapController;
 
     public static MapFragment getInstance(){
         if(INSTACE==null){
@@ -30,10 +30,15 @@ public class MapFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.map_fragment, container, false);
+        View view = inflater.inflate(R.layout.map_fragment, container, false);
         Configuration.getInstance().setUserAgentValue(BuildConfig.APPLICATION_ID);
-        MapController mapController = new MapController(view);
+        mapController = new MapController(view);
         mapController.setUpMap();
         return view;
+    }
+
+    @Override
+    public void refreshData() {
+        mapController.refreshMap();
     }
 }

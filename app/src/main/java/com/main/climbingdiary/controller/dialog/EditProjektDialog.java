@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.main.climbingdiary.R;
+import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.database.entities.AreaRepository;
 import com.main.climbingdiary.database.entities.Projekt;
 import com.main.climbingdiary.database.entities.ProjektRepository;
@@ -148,7 +149,7 @@ public class EditProjektDialog extends DialogFragment {
             }
             //close the dialog
             getDialog().cancel();
-            RouteProjectFragment.refreshData();
+            FragmentPager.refreshActualFragment();
         });
 
         //close the dialog

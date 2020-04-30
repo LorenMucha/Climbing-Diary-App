@@ -28,7 +28,7 @@ public interface ProjektRepository {
         return _projekt;
     }
 
-    static ArrayList<Projekt> getProjektList() throws ParseException {
+    static ArrayList<Projekt> getProjektList() {
         ArrayList<Projekt> _projekte = new ArrayList<>();
         TaskRepository taskRepository = TaskRepository.getInstance();
         //String Sort = (Menu) getA

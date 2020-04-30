@@ -21,4 +21,8 @@ public class Filter {
         if(isString && filter==null){ return "";}
         else{return filter;}
     }
+    public static void cleanFilter(){
+        setter = null;
+        filter = null;
+    }
 }

@@ -13,15 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.controller.header.FilterHeader;
+import com.main.climbingdiary.controller.FilterHeader;
 import com.main.climbingdiary.controller.menu.AppBarMenu;
-import com.main.climbingdiary.controller.menu.MenuValues;
 import com.main.climbingdiary.adapter.ProjektAdapter;
 import com.main.climbingdiary.database.entities.Projekt;
 import com.main.climbingdiary.database.entities.ProjektRepository;
+import com.main.climbingdiary.models.Filter;
 import com.main.climbingdiary.models.RouteSort;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -36,37 +35,38 @@ public class RouteProjectFragment extends Fragment implements RouteFragment {
     private static ProjektAdapter adapter;
     @SuppressLint("StaticFieldLeak")
     private static RecyclerView rvProjekte;
-    @SuppressLint("StaticFieldLeak")
-    private static FilterHeader filterHeader;
     @Getter
     @Setter
     private static boolean filter_checked = false;
     @SuppressLint("StaticFieldLeak")
-    private static View view;
+    public static View view;
 
     public static final String TITLE = "Projekte";
     @SuppressLint("StaticFieldLeak")
-    private static RouteProjectFragment INSTACE;
+    private static RouteProjectFragment INSTANCE;
+    @SuppressLint("StaticFieldLeak")
+    private static FilterHeader header;
 
     public static RouteProjectFragment getInstance(){
-        if(INSTACE==null){
-            INSTACE = new RouteProjectFragment();
+        if(INSTANCE ==null){
+            INSTANCE = new RouteProjectFragment();
         }
-        return INSTACE;
+        return INSTANCE;
+    }
+
+    @Override
+    public View getView(){
+        return view;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.project_fragment, container, false);
         // Lookup the recyclerview in activity layout
-        rvProjekte = (RecyclerView) view.findViewById(R.id.rvProjekte);
-
+        rvProjekte = view.findViewById(R.id.rvProjekte);
+        Filter.cleanFilter();
         // Initialize projects
-        try {
-            projekts = ProjektRepository.getProjektList();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        projekts = ProjektRepository.getProjektList();
         // Create adapter passing in the sample user data
         adapter = new ProjektAdapter(projekts);
         // Attach the adapter to the recyclerview to populate items
@@ -74,6 +74,7 @@ public class RouteProjectFragment extends Fragment implements RouteFragment {
         // Set layout manager to position the items
         rvProjekte.setLayoutManager(new LinearLayoutManager(Objects.requireNonNull(getActivity()).getApplicationContext()));
         setHasOptionsMenu(true);
+        header = new FilterHeader(this);
         return view;
     }
 
@@ -81,13 +82,14 @@ public class RouteProjectFragment extends Fragment implements RouteFragment {
         return adapter;
     }
 
-    public static void refreshData(){
+    @Override
+    public void refreshData(){
         ArrayList<Projekt> projekts;
         try {
             projekts = ProjektRepository.getProjektList();
             adapter = new ProjektAdapter(projekts);
             rvProjekte.setAdapter(adapter);
-        } catch (Exception e) {}
+        } catch (Exception ignored) {}
 
     }
 
@@ -119,7 +121,7 @@ public class RouteProjectFragment extends Fragment implements RouteFragment {
         }
         else if(item.getGroupId()==R.id.filter_area+1){
             //Filter magic here ;-)
-            FilterHeader.show(item.getTitle().toString());
+            header.show(item.getTitle().toString());
             return true;
         }
         return super.onOptionsItemSelected(item);

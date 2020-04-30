@@ -1,5 +1,8 @@
 package com.main.climbingdiary.fragments;
 
+import android.view.View;
+
 public interface RouteFragment {
-    static void refreshData(){}
+    void refreshData();
+    View getView();
 }
