@@ -3,6 +3,7 @@ package com.main.climbingdiary.activities;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.main.climbingdiary.common.AppPermissions;
 import com.main.climbingdiary.fragments.SettingsFragment;
 
 import java.util.Objects;
@@ -15,6 +16,6 @@ public class SettingsActivity extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        AppPermissions.checkPermissions();
     }
 }

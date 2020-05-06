@@ -1,14 +1,18 @@
 package com.main.climbingdiary.common;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
+import android.support.v4.app.ActivityCompat;
 
 import com.main.climbingdiary.activities.MainActivity;
 
+import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 import pub.devrel.easypermissions.PermissionRequest;
 
 public class AppPermissions {
-    public static final int RC_READ_AND_WRITE = 123;
+    public static final int RC_READ_AND_WRITE = 122;
     public static String[] PERMS = {Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -17,9 +21,13 @@ public class AppPermissions {
             Manifest.permission.ACCESS_NETWORK_STATE};
 
     public static void checkPermissions(){
-        if (!EasyPermissions.hasPermissions(MainActivity.getMainAppContext(), PERMS)) {
-            EasyPermissions.requestPermissions(
-                    new PermissionRequest.Builder(MainActivity.getMainActivity(), RC_READ_AND_WRITE, PERMS).build());
+        Context context = MainActivity.getMainAppContext();
+        for(String perm: PERMS){
+            if (!EasyPermissions.hasPermissions(context, perm)) {
+                // Request one permission
+                EasyPermissions.requestPermissions(
+                        new PermissionRequest.Builder(MainActivity.getMainActivity(), RC_READ_AND_WRITE, perm).build());
+            }
         }
     }
 }

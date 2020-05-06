@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.activities.MainActivity;
+import com.main.climbingdiary.common.AppPermissions;
 import com.main.climbingdiary.controller.menu.MenuValues;
 import com.main.climbingdiary.database.entities.Area;
 import com.main.climbingdiary.database.entities.AreaRepository;
@@ -29,11 +30,8 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import java.util.List;
 
-import lombok.RequiredArgsConstructor;
-
 import static android.content.Context.LOCATION_SERVICE;
 
-@RequiredArgsConstructor
 public class MapController {
 
     private final View view;
@@ -44,6 +42,10 @@ public class MapController {
     @SuppressLint("StaticFieldLeak")
     private static FilterHeader header;
 
+    public MapController(View _view){
+        view = _view;
+        AppPermissions.checkPermissions();
+    }
 
     public void setUpMap() {
         map = view.findViewById(R.id.map);
@@ -54,7 +56,7 @@ public class MapController {
 
     }
 
-    public void setUserPosition() {
+    public static void setUserPosition() {
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             GpsMyLocationProvider prov = new GpsMyLocationProvider(map.getContext());
             prov.addLocationSource(LocationManager.GPS_PROVIDER);
@@ -72,11 +74,11 @@ public class MapController {
             locationOverlay.setOptionsMenuEnabled(true);
             map.getOverlays().add(locationOverlay);
         } else {
-            this.showGPSDisabledAlertToUser();
+            showGPSDisabledAlertToUser();
         }
     }
 
-    private void showGPSDisabledAlertToUser() {
+    private static void showGPSDisabledAlertToUser() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(map.getContext());
         alertDialogBuilder.setMessage("GPS ist auf deinem Gerät nicht aktiviert. Möchtest du es aktivieren ?")
                 .setCancelable(false)

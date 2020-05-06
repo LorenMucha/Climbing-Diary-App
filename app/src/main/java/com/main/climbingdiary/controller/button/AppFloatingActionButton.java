@@ -19,13 +19,10 @@ public class AppFloatingActionButton implements View.OnClickListener{
     private static FloatingActionButton floatingActionButtonLocate;
 
     public AppFloatingActionButton(){
-        floatingActionButtonAdd.setOnClickListener(this);
-        floatingActionButtonLocate.setOnClickListener(this);
-    }
-
-    static {
         floatingActionButtonAdd = MainActivity.getMainActivity().findViewById(R.id.floating_action_btn_add);
         floatingActionButtonLocate = MainActivity.getMainActivity().findViewById(R.id.floating_action_btn_locate);
+        floatingActionButtonAdd.setOnClickListener(this);
+        floatingActionButtonLocate.setOnClickListener(this);
     }
 
     @Override

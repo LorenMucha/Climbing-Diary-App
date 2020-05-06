@@ -73,7 +73,7 @@ public class SettingsFragment extends PreferenceFragment{
     private void initPrefs(){
         try {
             dbOutputPath.setSummary(AppPreferenceManager.getOutputPath());
-        }catch(NullPointerException ex){}
+        }catch(NullPointerException ignored){}
     }
 
     private void openFolderChooser(){

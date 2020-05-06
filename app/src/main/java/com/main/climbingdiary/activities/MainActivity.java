@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -13,15 +14,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.common.AppPermissions;
+import com.main.climbingdiary.common.AppFileProvider;
 import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.controller.TimeSlider;
 import com.main.climbingdiary.controller.button.AppFloatingActionButton;
 import com.main.climbingdiary.controller.button.ShowTimeSlider;
 
-import pub.devrel.easypermissions.EasyPermissions;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     private static final int layoutId = R.layout.activity_main;
     @SuppressLint("StaticFieldLeak")
@@ -52,13 +52,12 @@ public class MainActivity extends AppCompatActivity {
 
         //the add buttons
         new ShowTimeSlider();
-        new AppFloatingActionButton();
+        //new AppFloatingActionButton();
         //the slider
         new TimeSlider();
-
+        new AppFloatingActionButton();
         //navigation View
         //new NavDrawer(this);
-        AppPermissions.checkPermissions();
     }
 
     @Override
@@ -76,14 +75,6 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        // Forward results to EasyPermissions
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
     @Override
