@@ -41,7 +41,7 @@ dependencies {
     implementation 'com.android.support:cardview-v7:28.0.0'
     //doku: https://github.com/syedowaisali/crystal-range-seekbar
     implementation 'com.crystal:crystalrangeseekbar:1.1.3'
-    //doku: https://jitpack.io/p/Leogiroux/sweet-alert-dialog
+    //doku: https://github.com/pedant/sweet-alert-dialog
     implementation 'com.github.f0ris.sweetalert:library:1.6.2'
     //doku: https://github.com/PhilJay/MPAndroidChart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
@@ -49,8 +49,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     compileOnly 'org.projectlombok:lombok:1.18.12'
-    //easypermission: https://github.com/googlesamples/easypermissions
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
+    //easypermission: https://github.com/googlesamples/easypermissions
     implementation 'pub.devrel:easypermissions:2.0.1'
     implementation 'com.jakewharton:process-phoenix:2.0.0'
     //osmdroid: https://github.com/osmdroid/osmdroid

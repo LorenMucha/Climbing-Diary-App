@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 
+import com.jakewharton.processphoenix.ProcessPhoenix;
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.activities.MainActivity;
 import com.main.climbingdiary.common.AppFileProvider;
@@ -93,21 +94,6 @@ public class SettingsFragment extends PreferenceFragment{
              new AppFileProvider().exportDBtoPreferencePath();
              new SweetAlertDialog(this.getContext(),SweetAlertDialog.SUCCESS_TYPE)
                     .setTitleText("Die Datenbank wurde exportiert !")
-                    .setContentText("Sie liegt im Verzeichnis: ")
-                     .setNeutralButton("Teilen", sweetAlertDialog -> {
-                         Intent intent = new Intent(Intent.ACTION_SEND);
-                         intent.setType("application/octet-stream");
-                         File dbToShare = new File(AppPreferenceManager.getOutputPath(), dbExportName);
-                         String packageName = EnvironmentParamter.PACKAGE_NAME;
-                         Uri uri = FileProvider.getUriForFile(MainActivity.getMainAppContext(),
-                                 "com.main.climbingdiary.fragments.StatisticFragment",
-                                 dbToShare);
-
-                         intent.putExtra(Intent.EXTRA_STREAM, uri);
-
-                         startActivity(Intent.createChooser(intent, "Backup via:"));
-                         sweetAlertDialog.cancel();
-                     })
                     .show();
         } catch (IOException e) {
             Log.e("exportDb",e.getLocalizedMessage());
@@ -122,6 +108,8 @@ public class SettingsFragment extends PreferenceFragment{
             if(new AppFileProvider().restoreDBfromPreferencePath(path)){
                 new SweetAlertDialog(this.getContext(),SweetAlertDialog.SUCCESS_TYPE)
                         .setTitleText("Die Datenbank wurde wiederhergestellt !")
+                        .setContentText("Die Anwendung wird neu gestartet.")
+                        .setConfirmClickListener(sDialog -> ProcessPhoenix.triggerRebirth(MainActivity.getMainAppContext()))
                         .show();
             }
         }catch(IOException e){

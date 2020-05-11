@@ -35,7 +35,7 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
         fragmentMap.add(Tabs.STATISTIK);
         fragmentMap.add(Tabs.ROUTEN);
         fragmentMap.add(Tabs.PROJEKTE);
-        fragmentMap.add(Tabs.MAP);
+        //fragmentMap.add(Tabs.MAP);
     }
 
     public FragmentPager(AppCompatActivity _activity){

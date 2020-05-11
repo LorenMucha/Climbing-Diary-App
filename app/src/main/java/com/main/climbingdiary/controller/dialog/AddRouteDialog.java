@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.main.climbingdiary.R;
+import com.main.climbingdiary.common.StringUtil;
 import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.controller.SetDate;
 import com.main.climbingdiary.controller.TimeSlider;
@@ -144,7 +145,7 @@ public class AddRouteDialog extends DialogFragment{
         //save the route
         saveRoute.setOnClickListener(v -> {
             Route newRoute = new Route();
-            newRoute.setName(name.getText().toString());
+            newRoute.setName(StringUtil.cleanDbString(name.getText().toString()));
             newRoute.setLevel(level.getSelectedItem().toString());
             newRoute.setDate(date.getText().toString());
             newRoute.setArea(area.getText().toString());
