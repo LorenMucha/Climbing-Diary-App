@@ -14,8 +14,8 @@ import android.widget.Button;
 
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.controller.TableView;
-import com.main.climbingdiary.controller.chart.RouteBarChartControllerController;
-import com.main.climbingdiary.controller.chart.RouteLineChartController;
+import com.main.climbingdiary.chart.RouteBarChartControllerController;
+import com.main.climbingdiary.chart.RouteLineChartController;
 import com.main.climbingdiary.controller.menu.AppBarMenu;
 import com.main.climbingdiary.controller.menu.MenuValues;
 import com.main.climbingdiary.models.Colors;

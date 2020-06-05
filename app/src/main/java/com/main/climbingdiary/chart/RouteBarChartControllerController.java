@@ -1,4 +1,4 @@
-package com.main.climbingdiary.controller.chart;
+package com.main.climbingdiary.chart;
 
 import android.content.Context;
 import android.database.Cursor;

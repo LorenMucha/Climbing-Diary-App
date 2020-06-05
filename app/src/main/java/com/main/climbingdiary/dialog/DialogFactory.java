@@ -1,10 +1,11 @@
-package com.main.climbingdiary.controller.dialog;
+package com.main.climbingdiary.dialog;
 
 import com.main.climbingdiary.controller.Tabs;
 import com.main.climbingdiary.activities.MainActivity;
 import com.main.climbingdiary.database.entities.Route;
 
 public class DialogFactory {
+
     public static void openAddRouteDialog(String _type){
         if(_type.equals(Tabs.PROJEKTE.getTitle())){
             AddProjektDialog addProjekt = AddProjektDialog.newInstance("Neues Projekt");
@@ -14,6 +15,7 @@ public class DialogFactory {
             addRoute.show(MainActivity.getMainActivity().getSupportFragmentManager(), "fragment_add_Route");
         }
     }
+
     public static void openEditRouteDialog(String _type, int _id){
         if(_type.equals(Tabs.PROJEKTE.getTitle())){
             EditProjektDialog editDialog = EditProjektDialog.newInstance("Projekt bearbeiten", _id);

@@ -22,12 +22,10 @@ import com.main.climbingdiary.R;
 import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.controller.Tabs;
 import com.main.climbingdiary.controller.button.AppFloatingActionButton;
-import com.main.climbingdiary.controller.dialog.DialogFactory;
+import com.main.climbingdiary.dialog.DialogFactory;
 import com.main.climbingdiary.database.TaskRepository;
 import com.main.climbingdiary.database.entities.Route;
 import com.main.climbingdiary.database.entities.RouteRepository;
-import com.main.climbingdiary.fragments.RouteDoneFragment;
-import com.main.climbingdiary.fragments.StatisticFragment;
 import com.main.climbingdiary.models.Alerts;
 import com.main.climbingdiary.models.Colors;
 

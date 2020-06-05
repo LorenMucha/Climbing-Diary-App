@@ -1,4 +1,4 @@
-package com.main.climbingdiary.controller.chart;
+package com.main.climbingdiary.chart;
 
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;

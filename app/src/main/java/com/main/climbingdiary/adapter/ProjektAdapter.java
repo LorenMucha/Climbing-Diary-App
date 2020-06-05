@@ -19,11 +19,10 @@ import com.main.climbingdiary.R;
 import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.controller.Tabs;
 import com.main.climbingdiary.controller.button.AppFloatingActionButton;
-import com.main.climbingdiary.controller.dialog.DialogFactory;
+import com.main.climbingdiary.dialog.DialogFactory;
 import com.main.climbingdiary.database.entities.Projekt;
 import com.main.climbingdiary.database.entities.ProjektRepository;
 import com.main.climbingdiary.database.entities.Route;
-import com.main.climbingdiary.fragments.RouteProjectFragment;
 import com.main.climbingdiary.models.Alerts;
 import com.main.climbingdiary.models.Colors;
 

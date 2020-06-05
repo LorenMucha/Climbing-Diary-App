@@ -50,10 +50,9 @@
 
     <LinearLayout
         android:layout_marginTop="20dp"
-        android:layout_below="@id/control_btn"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_marginBottom="@dimen/chart_margin_bottom"
+        android:layout_margin="30dp"
         android:layout_height="match_parent">
 
         <com.github.mikephil.charting.charts.BarChart

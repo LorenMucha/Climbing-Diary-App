@@ -1,8 +1,9 @@
-package com.main.climbingdiary.controller.dialog;
+package com.main.climbingdiary.dialog;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
@@ -20,29 +21,24 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.common.StringUtil;
+import com.main.climbingdiary.common.GradeConverter;
 import com.main.climbingdiary.controller.FragmentPager;
-import com.main.climbingdiary.controller.SetDate;
-import com.main.climbingdiary.controller.TimeSlider;
-import com.main.climbingdiary.activities.MainActivity;
 import com.main.climbingdiary.database.entities.AreaRepository;
-import com.main.climbingdiary.database.entities.Route;
-import com.main.climbingdiary.database.entities.RouteRepository;
+import com.main.climbingdiary.database.entities.Projekt;
+import com.main.climbingdiary.database.entities.ProjektRepository;
 import com.main.climbingdiary.database.entities.SectorRepository;
-import com.main.climbingdiary.fragments.RouteDoneFragment;
-import com.main.climbingdiary.fragments.StatisticFragment;
 import com.main.climbingdiary.models.Alerts;
 import com.main.climbingdiary.models.Levels;
 import com.main.climbingdiary.models.Rating;
-import com.main.climbingdiary.models.Styles;
 
-public class AddRouteDialog extends DialogFragment{
+public class AddProjektDialog extends DialogFragment {
 
-    public AddRouteDialog() {}
-    public static AddRouteDialog newInstance(String title){
-        AddRouteDialog add = new  AddRouteDialog();
+    public AddProjektDialog() {}
+    public static AddProjektDialog newInstance(String title){
+        AddProjektDialog add = new AddProjektDialog();
         Bundle args = new Bundle();
         args.putString("title", title);
         add.setArguments(args);
@@ -50,13 +46,13 @@ public class AddRouteDialog extends DialogFragment{
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.dialog_add_route, container);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.dialog_add_projekt, container);
     }
 
 
     @Override
-    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
 
         super.onViewCreated(view, savedInstanceState);
 
@@ -64,7 +60,8 @@ public class AddRouteDialog extends DialogFragment{
 
         // Fetch arguments from bundle and set title
 
-        String title = getArguments().getString("title", "Neue Kletterroute");
+        if (getArguments() == null) throw new AssertionError();
+        String title = getArguments().getString("title", "Neues Projekt");
 
         // Initialize a new foreground color span instance
         ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.BLACK);
@@ -73,7 +70,7 @@ public class AddRouteDialog extends DialogFragment{
         SpannableStringBuilder ssBuilder = new SpannableStringBuilder(title);
 
         // Apply the text color span
-        ssBuilder.setSpan(foregroundColorSpan,0,title.length(),Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ssBuilder.setSpan(foregroundColorSpan,0,title.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         getDialog().setTitle(ssBuilder);
 
@@ -86,24 +83,19 @@ public class AddRouteDialog extends DialogFragment{
         //input elements
         Button closeDialog = (Button) view.findViewById(R.id.input_route_close);
         Button saveRoute = (Button) view.findViewById(R.id.input_route_save);
-        final Spinner stil = (Spinner) view.findViewById(R.id.input_route_stil);
         final Spinner level = (Spinner) view.findViewById(R.id.input_route_level);
+        final Switch gradeSwitcher = view.findViewById(R.id.grade_system_switcher);
         final Spinner rating = (Spinner) view.findViewById(R.id.input_route_rating);
-        final EditText date = (EditText) view.findViewById(R.id.input_route_date);
         final EditText name = (EditText) view.findViewById(R.id.input_route_name);
         final AutoCompleteTextView area = (AutoCompleteTextView) view.findViewById(R.id.input_route_area);
         final AutoCompleteTextView sector = (AutoCompleteTextView) view.findViewById(R.id.input_route_sektor);
         final EditText comment = (EditText) view.findViewById(R.id.input_route_comment);
 
-        // set Spinner for choosing the style
-        ArrayAdapter<String> stilArrayAdapter = new ArrayAdapter<String>(_context,android.R.layout.simple_spinner_item, Styles.getStyle(true));
-        stilArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
-        stil.setAdapter(stilArrayAdapter);
-
         // set Spinner for choosing the level
-        ArrayAdapter<String> levelArrayAdapter = new ArrayAdapter<String>(_context,android.R.layout.simple_spinner_item, Levels.getLevels());
-        levelArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
-        level.setAdapter(levelArrayAdapter);
+        ArrayAdapter<String> levelArrayAdapterFrench = new ArrayAdapter<String>(_context,android.R.layout.simple_spinner_item, Levels.getLevelsFrench());
+        ArrayAdapter<String> levelArrayAdapterUiaa = new ArrayAdapter<String>(_context,android.R.layout.simple_spinner_item, Levels.getLevelsUiaa());
+        levelArrayAdapterFrench.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
+        level.setAdapter(levelArrayAdapterFrench);
         //pre select 8a
         level.setSelection(12);
 
@@ -122,7 +114,7 @@ public class AddRouteDialog extends DialogFragment{
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
-                Log.d("sector list",TextUtils.join(",", SectorRepository.getSectorList(_context,area.getText().toString().trim())));
+                Log.d("sector list", TextUtils.join(",", SectorRepository.getSectorList(_context,area.getText().toString().trim())));
                 ArrayAdapter<String> sectorArrayAdapter = new ArrayAdapter<String>(_context,android.R.layout.simple_spinner_item, SectorRepository.getSectorList(_context,area.getText().toString().trim()));
                 //will start working from first character
                 sector.setThreshold(1);
@@ -139,31 +131,36 @@ public class AddRouteDialog extends DialogFragment{
         ratingArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
         rating.setAdapter(ratingArrayAdapter);
 
-        //set date listener
-        new SetDate(date, _context);
+        //set switch callback
+        gradeSwitcher.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                level.setAdapter(levelArrayAdapterFrench);
+            } else {
+                level.setAdapter(levelArrayAdapterUiaa);
+            }
+        });
 
         //save the route
         saveRoute.setOnClickListener(v -> {
-            Route newRoute = new Route();
-            newRoute.setName(StringUtil.cleanDbString(name.getText().toString()));
-            newRoute.setLevel(level.getSelectedItem().toString());
-            newRoute.setDate(date.getText().toString());
-            newRoute.setArea(area.getText().toString());
-            newRoute.setSector(sector.getText().toString());
-            newRoute.setComment(comment.getText().toString());
-            newRoute.setRating(rating.getSelectedItemPosition()+1);
-            newRoute.setStyle(stil.getSelectedItem().toString());
-            boolean taskState = RouteRepository.insertRoute(newRoute);
+            Projekt newProjekt = new Projekt();
+            String level_text = level.getSelectedItem().toString();
+            level_text = gradeSwitcher.isChecked() ?  level_text : GradeConverter.convertUiaaToFrech(level_text);
+            newProjekt.setId(0);
+            newProjekt.setName(name.getText().toString());
+            newProjekt.setLevel(level_text);
+            newProjekt.setArea(area.getText().toString());
+            newProjekt.setSector(sector.getText().toString());
+            newProjekt.setComment(comment.getText().toString());
+            newProjekt.setRating(rating.getSelectedItemPosition()+1);
+            boolean taskState = ProjektRepository.insertProjekt(newProjekt);
             if(taskState){
                 FragmentPager.refreshAllFragments();
             }else{
                 Alerts.setErrorAlert(view.getContext());
             }
-            new TimeSlider();
             //close the dialog
             getDialog().cancel();
         });
-
         //close the dialog
         closeDialog.setOnClickListener(v -> getDialog().cancel());
 

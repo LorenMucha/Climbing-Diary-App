@@ -8,7 +8,7 @@ import com.main.climbingdiary.R;
 import com.main.climbingdiary.activities.MainActivity;
 import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.controller.MapController;
-import com.main.climbingdiary.controller.dialog.DialogFactory;
+import com.main.climbingdiary.dialog.DialogFactory;
 import com.main.climbingdiary.fragments.MapFragment;
 
 public class AppFloatingActionButton implements View.OnClickListener{
