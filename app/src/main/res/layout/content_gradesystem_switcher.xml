@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="horizontal"
-    android:visibility="gone"
     android:id="@+id/grade_switcher_layout"
     android:layout_height="wrap_content">
     <TextView

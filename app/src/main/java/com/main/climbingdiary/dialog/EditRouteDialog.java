@@ -1,5 +1,6 @@
 package com.main.climbingdiary.dialog;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,26 +22,21 @@ import com.main.climbingdiary.database.entities.RouteRepository;
 Fixme: switcher level noch anpassen
  */
 
+@SuppressLint("ValidFragment")
 public class EditRouteDialog extends DialogFragment {
 
-    private static Route route;
-    private static int route_id;
-    private static String title;
-    public EditRouteDialog() {}
+    private Route route;
+    private int route_id;
+    private String title;
 
-    public static EditRouteDialog newInstance(String _title, int _id){
-        Log.d("instanziate for id",Integer.toString(_id));
-        EditRouteDialog edit = new  EditRouteDialog();
-        route_id = _id;
-        title = _title;
-        return edit;
+    public EditRouteDialog(String _title, int _id){
+            route_id = _id;
+            title = _title;
     }
 
-    public static EditRouteDialog newInstance(String _title, Route _route){
-        EditRouteDialog edit = new  EditRouteDialog();
-        route = _route;
-        title = _title;
-        return edit;
+    public EditRouteDialog(String _title, Route _route){
+            route = _route;
+            title = _title;
     }
 
     @Override
@@ -64,7 +60,7 @@ public class EditRouteDialog extends DialogFragment {
             editRoute = RouteRepository.getRoute(route_id);
         }
 
-        EditRouteCreator creator = new EditRouteCreator(view,_context,this);
+        RouteDialogCreator creator = new RouteDialogCreator(view,_context,this);
         creator.setForeGroundSpan(title);
         creator.setUiElements(editRoute);
 

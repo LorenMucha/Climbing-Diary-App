@@ -22,36 +22,41 @@
         android:layout_height="wrap_content"
         android:id="@+id/input_route_name"
         />
-
-    <TextView
-        android:layout_marginTop="10dp"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Stil"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:layout_gravity="center" />
+        android:id="@+id/route_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Stil"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_gravity="center" />
 
-    <Spinner
-        android:layout_marginTop="10dp"
-        android:id="@+id/input_route_stil"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        <Spinner
+            android:layout_marginTop="10dp"
+            android:id="@+id/input_route_stil"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
 
-    <TextView
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Datum"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:layout_gravity="center" />
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Datum"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_gravity="center" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/input_route_date"
-        />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/input_route_date"
+            />
+    </LinearLayout>
 
     <TextView
         android:layout_marginTop="10dp"
@@ -100,9 +105,11 @@
                 android:textStyle="bold" />
 
             <include
+                android:layout_marginTop="7dp"
                 layout="@layout/content_gradesystem_switcher"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginRight="15dp"
                 android:layout_alignParentRight="true" />
         </RelativeLayout>
 

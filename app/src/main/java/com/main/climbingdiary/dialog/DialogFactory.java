@@ -18,15 +18,15 @@ public class DialogFactory {
 
     public static void openEditRouteDialog(String _type, int _id){
         if(_type.equals(Tabs.PROJEKTE.getTitle())){
-            EditProjektDialog editDialog = EditProjektDialog.newInstance("Projekt bearbeiten", _id);
+            EditProjektDialog editDialog = new EditProjektDialog("Projekt bearbeiten", _id);
             editDialog.show(MainActivity.getMainActivity().getSupportFragmentManager(), "edit");
         }else {
-            EditRouteDialog editDialog = EditRouteDialog.newInstance("Route bearbeiten", _id);
+            EditRouteDialog editDialog = new EditRouteDialog("Route bearbeiten", _id);
             editDialog.show(MainActivity.getMainActivity().getSupportFragmentManager(), "edit");
         }
     }
     public static void openEditRouteDialog(Route _route){
-            EditRouteDialog editDialog = EditRouteDialog.newInstance("Route bearbeiten", _route);
+            EditRouteDialog editDialog = new EditRouteDialog("Route bearbeiten", _route);
             editDialog.show(MainActivity.getMainActivity().getSupportFragmentManager(), "edit");
     }
 }

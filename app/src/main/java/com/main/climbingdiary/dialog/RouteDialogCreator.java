@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 
@@ -23,6 +24,7 @@ import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.controller.SetDate;
 import com.main.climbingdiary.controller.Tabs;
 import com.main.climbingdiary.database.entities.AreaRepository;
+import com.main.climbingdiary.database.entities.Projekt;
 import com.main.climbingdiary.database.entities.Route;
 import com.main.climbingdiary.database.entities.SectorRepository;
 import com.main.climbingdiary.models.Levels;
@@ -33,7 +35,7 @@ import java.util.regex.Pattern;
 
 import lombok.Getter;
 
-public class EditRouteCreator {
+public class RouteDialogCreator {
 
     @Getter
     Button closeDialog;
@@ -60,8 +62,11 @@ public class EditRouteCreator {
     private final View view;
     private final Switch gradeSwitcher;
     private final DialogFragment fragment;
+    private final LinearLayout routeContent;
+    private final LinearLayout gradeSwitcherLayout;
 
-    public EditRouteCreator(View _view, Context context, DialogFragment _fragment){
+
+    public RouteDialogCreator(View _view, Context context, DialogFragment _fragment){
         view = _view;
         closeDialog = view.findViewById(R.id.input_route_close);
         saveRoute = view.findViewById(R.id.input_route_save);
@@ -74,9 +79,32 @@ public class EditRouteCreator {
         sector = view.findViewById(R.id.input_route_sektor);
         comment = view.findViewById(R.id.input_route_comment);
         gradeSwitcher = view.findViewById(R.id.grade_system_switcher);
+        routeContent =view.findViewById(R.id.route_content);
+        gradeSwitcherLayout =  view.findViewById(R.id.grade_switcher_layout);
         fragment = _fragment;
         _context =  context;
         setOnCloseButton();
+    }
+
+    public void setUiElements(Projekt projekt){
+        saveRoute.setText("Update");
+        name.setText(projekt.getName());
+
+        // set Spinner for choosing the level
+        this.setLevelSpinner(projekt.getLevel(), Levels.getLevelsFrench());
+
+        //get the route List and set autocomplete
+        this.setAreaSectorAutoComplete();
+        area.setText(projekt.getArea());
+        sector.setText(projekt.getSector());
+        comment.setText(projekt.getComment());
+        // set the Spinner
+        this.setRatingSpinner(projekt.getRating()-1);
+        new SetDate(date, _context);
+        routeContent.setVisibility(View.GONE);
+
+        gradeSwitcherLayout.setVisibility(View.GONE);
+
     }
 
     public void setUiElements(Route route){
@@ -97,9 +125,11 @@ public class EditRouteCreator {
         this.setRatingSpinner(route.getRating()-1);
         new SetDate(date, _context);
 
+        gradeSwitcherLayout.setVisibility(View.GONE);
+
         //set date listener
         try {
-            SetDate setDate = new SetDate(date, _context);
+            new SetDate(date, _context);
             StringBuilder sBuilder = new StringBuilder();
             String[] dateSplit = (route.getDate()).split(Pattern.quote("."));
             sBuilder.append(dateSplit[2]).append("-").append(dateSplit[1]).append("-").append(dateSplit[0]);
@@ -110,13 +140,15 @@ public class EditRouteCreator {
         }
     }
 
-    public void setUiElements(){
+    public void setUiElements(boolean projekt){
+        if(projekt){routeContent.setVisibility(View.GONE);}
         this.setStilSpinner("RP");
         this.setLevelSpinner("8a", Levels.getLevelsFrench());
         this.setAreaSectorAutoComplete();
         this.setRatingSpinner(1);
         this.setGradeSwitcher();
-        SetDate setDate = new SetDate(date, _context);
+        new SetDate(date, _context);
+        gradeSwitcherLayout.setVisibility(View.VISIBLE);
     }
 
     public void setForeGroundSpan(String title){
@@ -139,12 +171,12 @@ public class EditRouteCreator {
     }
 
     private void setGradeSwitcher(){
-        view.findViewById(R.id.grade_switcher_layout).setVisibility(View.VISIBLE);
+        gradeSwitcherLayout.setVisibility(View.VISIBLE);
         gradeSwitcher.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(isChecked){
                 this.setLevelSpinner("8a",Levels.getLevelsFrench());
             }else{
-                this.setLevelSpinner("8a",Levels.getLevelsUiaa());
+                this.setLevelSpinner("IX+/X-",Levels.getLevelsUiaa());
             }
         });
     }
@@ -225,5 +257,20 @@ public class EditRouteCreator {
         newRoute.setRating(this.getRating().getSelectedItemPosition()+1);
         newRoute.setStyle(this.getStil().getSelectedItem().toString());
         return newRoute;
+    }
+    public Projekt getProjekt(boolean id){
+        Projekt projekt = new Projekt();
+        if(id){projekt.setId(0);}
+        String level = this.getLevel().getSelectedItem().toString();
+        try{
+            level = gradeSwitcher.isChecked() ?  level : GradeConverter.convertUiaaToFrech(level);
+        }catch (Exception ignored){}
+        projekt.setName(this.getName().getText().toString());
+        projekt.setLevel(level);
+        projekt.setArea(this.getArea().getText().toString());
+        projekt.setSector(this.getSector().getText().toString());
+        projekt.setComment(this.getComment().getText().toString());
+        projekt.setRating(this.getRating().getSelectedItemPosition()+1);
+        return projekt;
     }
 }
