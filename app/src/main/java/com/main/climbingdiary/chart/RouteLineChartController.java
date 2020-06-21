@@ -26,7 +26,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.activities.MainActivity;
 import com.main.climbingdiary.database.TaskRepository;
-import com.main.climbingdiary.models.Alerts;
+import com.main.climbingdiary.common.AlertManager;
 import com.main.climbingdiary.models.Colors;
 import com.main.climbingdiary.models.Levels;
 import com.main.climbingdiary.models.Styles;
@@ -149,7 +149,7 @@ public class RouteLineChartController extends RouteChartController {
                 }
             });
         }catch(Exception ex){
-            Alerts.setErrorAlert(this.context);
+            AlertManager.setErrorAlert(this.context);
             Log.d("Erstellung Line chart:",ex.getLocalizedMessage());
         }
     }

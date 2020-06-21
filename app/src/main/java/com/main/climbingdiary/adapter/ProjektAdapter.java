@@ -23,7 +23,7 @@ import com.main.climbingdiary.dialog.DialogFactory;
 import com.main.climbingdiary.database.entities.Projekt;
 import com.main.climbingdiary.database.entities.ProjektRepository;
 import com.main.climbingdiary.database.entities.Route;
-import com.main.climbingdiary.models.Alerts;
+import com.main.climbingdiary.common.AlertManager;
 import com.main.climbingdiary.models.Colors;
 
 import java.text.SimpleDateFormat;
@@ -138,7 +138,7 @@ public class ProjektAdapter extends
                                     .setTitleText("Gelöscht")
                                     .show();
                         } else {
-                            Alerts.setErrorAlert(v.getContext());
+                            AlertManager.setErrorAlert(v.getContext());
                         }
 
                     })

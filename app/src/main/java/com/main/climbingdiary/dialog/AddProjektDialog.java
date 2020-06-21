@@ -1,5 +1,6 @@
 package com.main.climbingdiary.dialog;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,18 +14,15 @@ import com.main.climbingdiary.R;
 import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.database.entities.Projekt;
 import com.main.climbingdiary.database.entities.ProjektRepository;
-import com.main.climbingdiary.models.Alerts;
+import com.main.climbingdiary.common.AlertManager;
 
+@SuppressLint("ValidFragment")
 public class AddProjektDialog extends DialogFragment {
 
-    public AddProjektDialog() {}
-
-    public static AddProjektDialog newInstance(String title){
-        AddProjektDialog add = new AddProjektDialog();
+    public AddProjektDialog(String title) {
         Bundle args = new Bundle();
         args.putString("title", title);
-        add.setArguments(args);
-        return add;
+        this.setArguments(args);
     }
 
     @Override
@@ -44,7 +42,6 @@ public class AddProjektDialog extends DialogFragment {
         creator.setUiElements(true);
 
         // Fetch arguments from bundle and set title
-
         if (getArguments() == null) throw new AssertionError();
         String title = getArguments().getString("title", "Neues Projekt");
 
@@ -56,7 +53,7 @@ public class AddProjektDialog extends DialogFragment {
             if (taskState) {
                 FragmentPager.refreshAllFragments();
             } else {
-                Alerts.setErrorAlert(view.getContext());
+                AlertManager.setErrorAlert(view.getContext());
             }
             //close the dialog
             getDialog().cancel();

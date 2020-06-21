@@ -26,7 +26,7 @@ import com.main.climbingdiary.dialog.DialogFactory;
 import com.main.climbingdiary.database.TaskRepository;
 import com.main.climbingdiary.database.entities.Route;
 import com.main.climbingdiary.database.entities.RouteRepository;
-import com.main.climbingdiary.models.Alerts;
+import com.main.climbingdiary.common.AlertManager;
 import com.main.climbingdiary.models.Colors;
 
 import java.util.ArrayList;
@@ -189,7 +189,7 @@ public class RoutesAdapter extends
                                     .setTitleText("Gelöscht")
                                     .show();
                         }else{
-                            Alerts.setErrorAlert(v.getContext());
+                            AlertManager.setErrorAlert(v.getContext());
                         }
 
                     })

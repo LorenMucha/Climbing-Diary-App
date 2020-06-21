@@ -8,10 +8,10 @@ public class DialogFactory {
 
     public static void openAddRouteDialog(String _type){
         if(_type.equals(Tabs.PROJEKTE.getTitle())){
-            AddProjektDialog addProjekt = AddProjektDialog.newInstance("Neues Projekt");
+            AddProjektDialog addProjekt = new AddProjektDialog("Neues Projekt");
             addProjekt.show(MainActivity.getMainActivity().getSupportFragmentManager(), "fragment_add_Projekt");
         }else {
-            AddRouteDialog addRoute = AddRouteDialog.newInstance("Neue Route");
+            AddRouteDialog addRoute = new AddRouteDialog("Neue Route");
             addRoute.show(MainActivity.getMainActivity().getSupportFragmentManager(), "fragment_add_Route");
         }
     }

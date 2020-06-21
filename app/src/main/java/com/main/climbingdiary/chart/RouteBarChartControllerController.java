@@ -17,7 +17,7 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.database.TaskRepository;
-import com.main.climbingdiary.models.Alerts;
+import com.main.climbingdiary.common.AlertManager;
 import com.main.climbingdiary.models.Colors;
 
 import java.util.ArrayList;
@@ -95,7 +95,7 @@ public class RouteBarChartControllerController extends RouteChartController {
                 }
             });
         }catch(Exception ex){
-            Alerts.setErrorAlert(context);
+            AlertManager.setErrorAlert(context);
             Log.d("Erstellung Barchart:",ex.getLocalizedMessage());
         }
     }

@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 
 import com.main.climbingdiary.R;
+import com.main.climbingdiary.common.AlertManager;
 import com.main.climbingdiary.common.GradeConverter;
 import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.controller.SetDate;
@@ -27,12 +28,14 @@ import com.main.climbingdiary.database.entities.AreaRepository;
 import com.main.climbingdiary.database.entities.Projekt;
 import com.main.climbingdiary.database.entities.Route;
 import com.main.climbingdiary.database.entities.SectorRepository;
+import com.main.climbingdiary.models.Alert;
 import com.main.climbingdiary.models.Levels;
 import com.main.climbingdiary.models.Rating;
 import com.main.climbingdiary.models.Styles;
 
 import java.util.regex.Pattern;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import lombok.Getter;
 
 public class RouteDialogCreator {
@@ -272,5 +275,18 @@ public class RouteDialogCreator {
         projekt.setComment(this.getComment().getText().toString());
         projekt.setRating(this.getRating().getSelectedItemPosition()+1);
         return projekt;
+    }
+
+    public boolean checkDate(){
+        if(date.getText().toString().trim().length() == 0){
+            Alert alert = Alert.builder()
+                    .title(String.format("Datum fehlt %s","\ud83d\ude13"))
+                    .dialogType(SweetAlertDialog.ERROR_TYPE)
+                    .build();
+            new AlertManager().setAlertWithoutContent(_context,alert);
+            return false;
+        }else{
+            return true;
+        }
     }
 }

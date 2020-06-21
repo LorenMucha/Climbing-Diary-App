@@ -12,10 +12,12 @@ import android.util.Log;
 import com.jakewharton.processphoenix.ProcessPhoenix;
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.activities.MainActivity;
+import com.main.climbingdiary.common.AlertManager;
 import com.main.climbingdiary.common.AppFileProvider;
 import com.main.climbingdiary.common.EnvironmentParamter;
 import com.main.climbingdiary.common.preferences.AppPreferenceManager;
 import com.main.climbingdiary.common.preferences.PreferenceKeys;
+import com.main.climbingdiary.models.Alert;
 
 import java.io.File;
 import java.io.IOException;
@@ -92,14 +94,16 @@ public class SettingsFragment extends PreferenceFragment{
     private void exportDb(){
         try {
              new AppFileProvider().exportDBtoPreferencePath();
-             new SweetAlertDialog(this.getContext(),SweetAlertDialog.SUCCESS_TYPE)
-                    .setTitleText("Die Datenbank wurde exportiert !")
-                    .show();
+             new AlertManager().setAlertWithoutContent(
+                     this.getContext(),
+                     Alert.builder().dialogType(SweetAlertDialog.SUCCESS_TYPE).title("Die Datenbank wurde exportiert !").build());
         } catch (IOException e) {
             Log.e("exportDb",e.getLocalizedMessage());
-            new SweetAlertDialog(this.getContext(),SweetAlertDialog.ERROR_TYPE)
-                    .setTitleText(String.format("Der Export ist Schiefgelaufen %s","\ud83d\ude13"))
-                    .show();
+            new AlertManager().setAlertWithoutContent(
+                    this.getContext(),
+                    Alert.builder().dialogType(SweetAlertDialog.ERROR_TYPE)
+                            .title(String.format("Der Export ist Schiefgelaufen %s","\ud83d\ude13"))
+                            .build());
         }
     }
 
@@ -114,9 +118,11 @@ public class SettingsFragment extends PreferenceFragment{
             }
         }catch(IOException e){
             Log.d("restoreDb",e.getLocalizedMessage());
-            new SweetAlertDialog(this.getContext(),SweetAlertDialog.ERROR_TYPE)
-                    .setTitleText(String.format("Der Restore ist Schiefgelaufen %s","\ud83d\ude13"))
-                    .show();
+            new AlertManager().setAlertWithoutContent(
+                    this.getContext(),
+                    Alert.builder().dialogType(SweetAlertDialog.ERROR_TYPE)
+                    .title(String.format("Der Restore ist Schiefgelaufen %s","\ud83d\ude13"))
+                    .build());
         }
     }
 }

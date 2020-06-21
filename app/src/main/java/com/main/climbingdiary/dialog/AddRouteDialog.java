@@ -1,5 +1,6 @@
 package com.main.climbingdiary.dialog;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,22 +14,15 @@ import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.controller.TimeSlider;
 import com.main.climbingdiary.database.entities.Route;
 import com.main.climbingdiary.database.entities.RouteRepository;
-import com.main.climbingdiary.models.Alerts;
+import com.main.climbingdiary.common.AlertManager;
 
+@SuppressLint("ValidFragment")
 public class AddRouteDialog extends DialogFragment{
 
-    private static AddRouteDialog INSTANZ;
-
-    public AddRouteDialog() {}
-    public static AddRouteDialog newInstance(String title){
-        if(INSTANZ==null) {
-            AddRouteDialog add = new AddRouteDialog();
-            Bundle args = new Bundle();
-            args.putString("title", title);
-            add.setArguments(args);
-            INSTANZ = add;
-        }
-        return INSTANZ;
+    public AddRouteDialog(String title) {
+        Bundle args = new Bundle();
+        args.putString("title", title);
+        this.setArguments(args);
     }
 
     @Override
@@ -54,16 +48,20 @@ public class AddRouteDialog extends DialogFragment{
 
         //save the route
         creator.getSaveRoute().setOnClickListener(v -> {
-            Route newRoute = creator.getRoute(false);
-            boolean taskState = RouteRepository.insertRoute(newRoute);
-            if(taskState){
-                FragmentPager.refreshAllFragments();
+            if(creator.checkDate()) {
+                Route newRoute = creator.getRoute(false);
+                boolean taskState = RouteRepository.insertRoute(newRoute);
+                if (taskState) {
+                    FragmentPager.refreshAllFragments();
+                } else {
+                    AlertManager.setErrorAlert(view.getContext());
+                }
+                new TimeSlider();
+                //close the dialog
+                getDialog().cancel();
             }else{
-                Alerts.setErrorAlert(view.getContext());
+
             }
-            new TimeSlider();
-            //close the dialog
-            getDialog().cancel();
         });
     }
 }
