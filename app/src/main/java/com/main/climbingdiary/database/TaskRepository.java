@@ -11,6 +11,7 @@ import com.main.climbingdiary.activities.MainActivity;
 import com.main.climbingdiary.database.entities.Projekt;
 import com.main.climbingdiary.database.entities.Route;
 import com.main.climbingdiary.models.Filter;
+import com.main.climbingdiary.models.Styles;
 
 public class TaskRepository {
 
@@ -132,9 +133,16 @@ public class TaskRepository {
         }
     }
 
-    public Cursor getYears() {
+    public Cursor getYears(boolean filterSet) {
+        String filter = Filter.getFilter(true);
         try {
-            String sql = "select DISTINCT(strftime('%Y',date)) as year from routen order by date DESC";
+            String sql = "select DISTINCT(strftime('%Y',r.date)) as year from routen r order by r.date DESC";
+            if(filterSet) {
+                if (!filter.isEmpty()) {
+                    filter = "where " + Filter.getFilter();
+                    sql = "select DISTINCT(strftime('%Y',r.date)) as year from routen r "+filter+" order by r.date DESC";
+                }
+            }
             Cursor mCur = mDb.rawQuery(sql, null);
             if (mCur != null) {
                 mCur.moveToNext();
@@ -154,11 +162,14 @@ public class TaskRepository {
         }
         try {
             StringBuilder sql = new StringBuilder();
-            sql.append("SELECT r.level,")
-                    .append(String.format("(Select count(*) as OS from routen o join gebiete g on g.id=o.gebiet where r.level=o.level and o.stil='OS' %s) as OS,",filter.replace(replacement_sort,"o.date")))
-                    .append(String.format("(Select count(*) as RP from routen x join gebiete g on g.id=x.gebiet where x.level=r.level and x.stil='RP' %s) as RP,",filter.replace(replacement_sort,"x.date")))
-                    .append(String.format("(Select count(*) as FLASH from routen f join gebiete g on g.id=f.gebiet where r.level=f.level and f.stil='FLASH' %s) as FLASH,",filter.replace(replacement_sort,"f.date")))
-                    .append(String.format("(Select count(*) as GESAMT from routen z join gebiete g on g.id=z.gebiet where r.level=z.level %s) as GESAMT",filter.replace(replacement_sort,"z.date")))
+            String[] styles = Styles.getStyle(false);
+            sql.append("SELECT r.level,");
+            for (String x: styles){
+                char startPoint = x.charAt(1);
+                sql.append(String.format("(Select count(*) as %s from routen %s join gebiete g on g.id=%s.gebiet where r.level=%s.level and %s.stil='%s' %s) as %s,",
+                        x.toUpperCase(),startPoint,startPoint,startPoint,startPoint,x.toUpperCase(),filter.replace(replacement_sort,startPoint+".date"),x.toUpperCase()));
+            }
+            sql.append(String.format("(Select count(*) as GESAMT from routen z join gebiete g on g.id=z.gebiet where r.level=z.level %s) as GESAMT",filter.replace(replacement_sort,"z.date")))
                     .append(" from routen r")
                     .append(" where os >0 or rp >0 or flash > 0")
                     .append(" group by r.level order by r.level DESC");

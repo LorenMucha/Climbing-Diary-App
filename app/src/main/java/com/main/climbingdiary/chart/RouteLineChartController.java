@@ -58,7 +58,7 @@ public class RouteLineChartController extends RouteChartController {
         final ArrayList<String> labels = new ArrayList<>();
         ArrayList<Entry> entries = new ArrayList<>();
         TaskRepository taskRepository = TaskRepository.getInstance();
-        Cursor yearCursor = taskRepository.getYears();
+        Cursor yearCursor = taskRepository.getYears(true);
         //transform the cursor to an array list
         ArrayList<Integer> yearList = new ArrayList<Integer>();
         routeResults.clear();
@@ -121,6 +121,8 @@ public class RouteLineChartController extends RouteChartController {
             lineChart.setData(data);
             lineChart.getDescription().setEnabled(false);
             lineChart.getLegend().setEnabled(false);
+            lineChart.moveViewToX(10);
+            lineChart.setVisibleXRangeMaximum(10);
             //set thex axis
             XAxis xAxis = lineChart.getXAxis();
             xAxis.setLabelCount(yearList.size(),true);

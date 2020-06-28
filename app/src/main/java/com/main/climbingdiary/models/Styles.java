@@ -5,9 +5,9 @@ import java.util.Arrays;
 public class Styles {
     public static String[] getStyle(Boolean UpperCase){
         if(UpperCase){
-            return new String[]{"RP","FLASH","OS"};
+            return new String[]{"OS","RP","FLASH"};
         }else{
-            return new String[]{"rp","flash","os"};
+            return new String[]{"os","rp","flash"};
         }
     }
 

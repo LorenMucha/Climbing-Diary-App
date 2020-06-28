@@ -45,7 +45,7 @@ public class TimeSlider implements OnRangeSeekbarChangeListener, OnRangeSeekbarF
     private static void setTimes(){
         try {
             ArrayList<Integer> years = new ArrayList<>();
-            Cursor cursor = taskRepository.getYears();
+            Cursor cursor = taskRepository.getYears(false);
             if (cursor != null) {
                 while (!cursor.isAfterLast()) {
                     years.add(cursor.getInt(0));

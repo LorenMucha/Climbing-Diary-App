@@ -25,7 +25,7 @@ public class TableView {
     public TableView(Context _context, View _view){
         this.context = _context;
         this.view = _view;
-        this.stk = (TableLayout) this.view.findViewById(R.id.route_table);
+        this.stk = this.view.findViewById(R.id.route_table);
         this.tableScrollView = (ScrollView) view.findViewById(R.id.TableScrollView);
     }
     public void show(){
@@ -40,8 +40,7 @@ public class TableView {
         TaskRepository taskRepository =TaskRepository.getInstance();
         Cursor cursor = taskRepository.getTableValues();
         //tree et because this sort the values
-        Set<String> mLevels = new TreeSet<>();
-        TableLayout stk = (TableLayout) view.findViewById(R.id.route_table);
+        TableLayout stk = view.findViewById(R.id.route_table);
         //clear view
         stk.removeAllViews();
         TableRow tbrow0 = new TableRow(context);
