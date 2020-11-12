@@ -8,7 +8,8 @@ on:
 jobs:
 
   build:
-
+    
+    name: Generate APK
     runs-on: ubuntu-18.04
 
 
@@ -25,7 +26,7 @@ jobs:
       run: ./gradlew clean assembleDebug
 
     - name: Create release and upload apk
-      uses: LorenMucha/Climbing-Diary-App@v1.0.0
+      uses: LorenMucha/Climbing-Diary-App@v2.0.0
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
