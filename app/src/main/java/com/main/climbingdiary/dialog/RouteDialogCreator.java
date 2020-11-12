@@ -249,7 +249,7 @@ public class RouteDialogCreator {
         if(id){newRoute.setId(0);}
         String level = this.getLevel().getSelectedItem().toString();
         try{
-            level = gradeSwitcher.isChecked() ?  level : GradeConverter.convertUiaaToFrech(level);
+            level = gradeSwitcher.isChecked() ?  level : GradeConverter.convertUiaaToFrench(level);
         }catch (Exception ignored){}
         newRoute.setName(this.getName().getText().toString());
         newRoute.setLevel(level);
@@ -266,7 +266,7 @@ public class RouteDialogCreator {
         if(id){projekt.setId(0);}
         String level = this.getLevel().getSelectedItem().toString();
         try{
-            level = gradeSwitcher.isChecked() ?  level : GradeConverter.convertUiaaToFrech(level);
+            level = gradeSwitcher.isChecked() ?  level : GradeConverter.convertUiaaToFrench(level);
         }catch (Exception ignored){}
         projekt.setName(this.getName().getText().toString());
         projekt.setLevel(level);

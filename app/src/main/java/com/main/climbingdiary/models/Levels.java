@@ -10,6 +10,10 @@ public class Levels {
        return new String[]{"I","II","III","IV","V-","V","V+","VI-", "VI", "VI+", "VII-", "VII", "VII+","VII+/VIII−","VIII-", "VIII", "VIII+","VIII+/IX−","IX-", "IX", "IX+", "IX+/X-", "X-", "X", "X+", "XI-", "XI−/XI", "XI"};
    }
 
+   /*
+    Method to build a weight for each grade, used in statistical overview
+    @see com.main.climbingdiary.chart.RouteLineChartController.class
+    */
    public static int getLevelRating(String level){
        return (Arrays.asList(getLevelsFrench()).indexOf(level)*5);
    }
