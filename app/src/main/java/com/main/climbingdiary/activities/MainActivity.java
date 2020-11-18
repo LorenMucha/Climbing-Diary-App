@@ -5,7 +5,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -14,27 +13,34 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.common.AppFileProvider;
 import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.controller.TimeSlider;
 import com.main.climbingdiary.controller.button.AppFloatingActionButton;
 import com.main.climbingdiary.controller.button.ShowTimeSlider;
 
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     private static final int layoutId = R.layout.activity_main;
     @SuppressLint("StaticFieldLeak")
+    public static AppCompatActivity mainActivity;
+    @SuppressLint("StaticFieldLeak")
     private static Context context;
     private static ComponentName componentName;
-    @SuppressLint("StaticFieldLeak")
-    public static AppCompatActivity mainActivity;
 
     public static Context getMainAppContext() {
         return MainActivity.context;
     }
-    public static ComponentName getMainComponentName(){ return MainActivity.componentName;}
-    public static AppCompatActivity getMainActivity(){return MainActivity.mainActivity;};
+
+    public static ComponentName getMainComponentName() {
+        return MainActivity.componentName;
+    }
+
+    public static AppCompatActivity getMainActivity() {
+        return MainActivity.mainActivity;
+    }
+
+    ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +85,7 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==R.id.app_settings){
+        if (item.getItemId() == R.id.app_settings) {
             Intent intent = new Intent(MainActivity.getMainAppContext(), SettingsActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             MainActivity.getMainActivity().startActivity(intent);

@@ -21,12 +21,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class TimeSlider implements OnRangeSeekbarChangeListener, OnRangeSeekbarFinalValueListener {
+    private final static TaskRepository taskRepository = TaskRepository.getInstance();
     private static CrystalRangeSeekbar rangeSeekbar;
     @SuppressLint("StaticFieldLeak")
     private static TextView minText;
     @SuppressLint("StaticFieldLeak")
     private static TextView maxText;
-    private final static TaskRepository taskRepository = TaskRepository.getInstance();
 
     static {
         Activity _activity = MainActivity.getMainActivity();
@@ -35,14 +35,14 @@ public class TimeSlider implements OnRangeSeekbarChangeListener, OnRangeSeekbarF
         maxText = _activity.findViewById(R.id.textMax);
     }
 
-    public TimeSlider(){
+    public TimeSlider() {
         setTimes();
         rangeSeekbar.setOnRangeSeekbarChangeListener(this);
         rangeSeekbar.setOnRangeSeekbarFinalValueListener(this);
     }
 
     @SuppressLint("SetTextI18n")
-    private static void setTimes(){
+    private static void setTimes() {
         try {
             ArrayList<Integer> years = new ArrayList<>();
             Cursor cursor = taskRepository.getYears(false);
@@ -63,7 +63,7 @@ public class TimeSlider implements OnRangeSeekbarChangeListener, OnRangeSeekbarF
             minText.setText(Integer.toString(minYear));
             maxText.setText(Integer.toString(maxYear));
             ShowTimeSlider.showButton();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ShowTimeSlider.hideButton();
         }
     }
@@ -80,14 +80,14 @@ public class TimeSlider implements OnRangeSeekbarChangeListener, OnRangeSeekbarF
     public void finalValue(Number minValue, Number maxValue) {
         String min = String.valueOf(minValue);
         String max = String.valueOf(maxValue);
-        if(!minValue.equals(maxValue)){
-            String filter = "CAST(strftime('%Y',r.date) as int)>="+min+" and CAST(strftime('%Y',r.date) as int) <="+max;
+        if (!minValue.equals(maxValue)) {
+            String filter = "CAST(strftime('%Y',r.date) as int)>=" + min + " and CAST(strftime('%Y',r.date) as int) <=" + max;
             Filter.setFilter(filter, MenuValues.SORT_DATE);
-        }else{
-            String filter = "CAST(strftime('%Y',r.date) as int)=="+max;
-            Filter.setFilter(filter,MenuValues.SORT_DATE);
+        } else {
+            String filter = "CAST(strftime('%Y',r.date) as int)==" + max;
+            Filter.setFilter(filter, MenuValues.SORT_DATE);
         }
-        Log.d("Filter set",Filter.getFilter());
+        Log.d("Filter set", Filter.getFilter());
         minText.setText(min);
         maxText.setText(max);
         FragmentPager.refreshActualFragment();

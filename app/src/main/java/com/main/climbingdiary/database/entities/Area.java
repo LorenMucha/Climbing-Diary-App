@@ -16,7 +16,7 @@ public class Area {
     @Getter
     private double lng;
 
-    private Area(Builder builder){
+    private Area(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
         this.lat = builder.lat;
@@ -24,34 +24,39 @@ public class Area {
         this.country = builder.country;
     }
 
-    public static class Builder{
+    public static class Builder {
         private int id;
         private String name;
         private double lat;
         private double lng;
         private String country;
 
-        public Builder name(String _name){
+        public Builder name(String _name) {
             this.name = _name;
             return this;
         }
-        public Builder id(int _id){
+
+        public Builder id(int _id) {
             this.id = _id;
             return this;
         }
-        public Builder lat(double _lat){
+
+        public Builder lat(double _lat) {
             this.lat = _lat;
             return this;
         }
-        public Builder lng(double _lng){
+
+        public Builder lng(double _lng) {
             this.lng = _lng;
             return this;
         }
-        public Builder country(String _country){
+
+        public Builder country(String _country) {
             this.country = _country;
             return this;
         }
-        public Area build(){
+
+        public Area build() {
             return new Area(this);
         }
     }

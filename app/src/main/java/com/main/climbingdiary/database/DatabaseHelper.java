@@ -14,12 +14,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
+    private static final int DB_VERSION = 1;
     private static String DB_NAME = EnvironmentParamter.DB_NAME;
     private static String DB_PATH = "";
-    private static final int DB_VERSION = 1;
-
-    private SQLiteDatabase mDataBase;
     private final Context mContext;
+    private SQLiteDatabase mDataBase;
     private boolean mNeedUpdate = false;
 
     DatabaseHelper(Context context) {

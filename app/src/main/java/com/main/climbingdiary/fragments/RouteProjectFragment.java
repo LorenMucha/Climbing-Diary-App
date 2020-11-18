@@ -13,9 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.main.climbingdiary.R;
+import com.main.climbingdiary.adapter.ProjektAdapter;
 import com.main.climbingdiary.controller.FilterHeader;
 import com.main.climbingdiary.controller.menu.AppBarMenu;
-import com.main.climbingdiary.adapter.ProjektAdapter;
 import com.main.climbingdiary.database.entities.Projekt;
 import com.main.climbingdiary.database.entities.ProjektRepository;
 import com.main.climbingdiary.models.Filter;
@@ -31,7 +31,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class RouteProjectFragment extends Fragment implements RouteFragment {
 
-    private ArrayList<Projekt> projekts;
+    public static final String TITLE = "Projekte";
+    @SuppressLint("StaticFieldLeak")
+    public static View view;
     private static ProjektAdapter adapter;
     @SuppressLint("StaticFieldLeak")
     private static RecyclerView rvProjekte;
@@ -39,23 +41,24 @@ public class RouteProjectFragment extends Fragment implements RouteFragment {
     @Setter
     private static boolean filter_checked = false;
     @SuppressLint("StaticFieldLeak")
-    public static View view;
-
-    public static final String TITLE = "Projekte";
-    @SuppressLint("StaticFieldLeak")
     private static RouteProjectFragment INSTANCE;
     @SuppressLint("StaticFieldLeak")
     private static FilterHeader header;
+    private ArrayList<Projekt> projekts;
 
-    public static RouteProjectFragment getInstance(){
-        if(INSTANCE ==null){
+    public static RouteProjectFragment getInstance() {
+        if (INSTANCE == null) {
             INSTANCE = new RouteProjectFragment();
         }
         return INSTANCE;
     }
 
+    public static ProjektAdapter getAdapter() {
+        return adapter;
+    }
+
     @Override
-    public View getView(){
+    public View getView() {
         return view;
     }
 
@@ -78,18 +81,15 @@ public class RouteProjectFragment extends Fragment implements RouteFragment {
         return view;
     }
 
-    public static ProjektAdapter getAdapter(){
-        return adapter;
-    }
-
     @Override
-    public void refreshData(){
+    public void refreshData() {
         ArrayList<Projekt> projekts;
         try {
             projekts = ProjektRepository.getProjektList();
             adapter = new ProjektAdapter(projekts);
             rvProjekte.setAdapter(adapter);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
     }
 
@@ -100,26 +100,24 @@ public class RouteProjectFragment extends Fragment implements RouteFragment {
         AppBarMenu appmenu = new AppBarMenu(menu);
         appmenu.setItemVisebility(true);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         item.setChecked(true);
         int id = item.getItemId();
-        if(id==R.id.sort_level){
+        if (id == R.id.sort_level) {
             RouteSort.setSort("level");
             refreshData();
             return true;
-        }
-        else if(id==R.id.sort_area){
+        } else if (id == R.id.sort_area) {
             RouteSort.setSort("area");
             refreshData();
             return true;
-        }
-        else if(id==R.id.sort_date) {
+        } else if (id == R.id.sort_date) {
             RouteSort.setSort("date");
             refreshData();
             return true;
-        }
-        else if(item.getGroupId()==R.id.filter_area+1){
+        } else if (item.getGroupId() == R.id.filter_area + 1) {
             //Filter magic here ;-)
             header.show(item.getTitle().toString());
             return true;

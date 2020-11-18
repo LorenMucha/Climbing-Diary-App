@@ -16,27 +16,31 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.database.TaskRepository;
 import com.main.climbingdiary.common.AlertManager;
+import com.main.climbingdiary.database.TaskRepository;
 import com.main.climbingdiary.models.Colors;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RouteBarChartControllerController extends RouteChartController {
-    private BarChart barChart;
     private static Context context;
-    public RouteBarChartControllerController(View _view){
+    private BarChart barChart;
+
+    public RouteBarChartControllerController(View _view) {
         this.barChart = _view.findViewById(R.id.route_bar_chart);
         context = _view.getContext();
     }
-    public void show(){
+
+    public void show() {
         this.barChart.setVisibility(View.VISIBLE);
     }
-    public void hide(){
+
+    public void hide() {
         this.barChart.setVisibility(View.GONE);
     }
-    public void createChart(){
+
+    public void createChart() {
         try {
             List<BarEntry> entriesGroup = new ArrayList<>();
             final ArrayList<String> labels = new ArrayList<>();
@@ -82,11 +86,11 @@ public class RouteBarChartControllerController extends RouteChartController {
                 @Override
                 public void onValueSelected(Entry e, Highlight h) {
                     //ToDo
-                    float x=e.getX();
-                    int y=(int)e.getY();
+                    float x = e.getX();
+                    int y = (int) e.getY();
                     String style = set.getStackLabels()[h.getStackIndex()];
-                    float sum = entriesGroup.get((int)x).getYVals()[h.getStackIndex()];
-                    Toast.makeText(context,String.format("Stil: %s\nAnzahl: %s",style,sum),Toast.LENGTH_LONG).show();
+                    float sum = entriesGroup.get((int) x).getYVals()[h.getStackIndex()];
+                    Toast.makeText(context, String.format("Stil: %s\nAnzahl: %s", style, sum), Toast.LENGTH_LONG).show();
                 }
 
                 @Override
@@ -94,9 +98,9 @@ public class RouteBarChartControllerController extends RouteChartController {
 
                 }
             });
-        }catch(Exception ex){
+        } catch (Exception ex) {
             AlertManager.setErrorAlert(context);
-            Log.d("Erstellung Barchart:",ex.getLocalizedMessage());
+            Log.d("Erstellung Barchart:", ex.getLocalizedMessage());
         }
     }
 }

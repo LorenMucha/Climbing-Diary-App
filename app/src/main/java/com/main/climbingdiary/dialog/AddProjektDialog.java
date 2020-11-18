@@ -11,10 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.main.climbingdiary.R;
+import com.main.climbingdiary.common.AlertManager;
 import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.database.entities.Projekt;
 import com.main.climbingdiary.database.entities.ProjektRepository;
-import com.main.climbingdiary.common.AlertManager;
 
 @SuppressLint("ValidFragment")
 public class AddProjektDialog extends DialogFragment {
@@ -38,7 +38,7 @@ public class AddProjektDialog extends DialogFragment {
 
         final Context _context = view.getContext();
 
-        RouteDialogCreator creator = new RouteDialogCreator(view,_context,this);
+        RouteDialogCreator creator = new RouteDialogCreator(view, _context, this);
         creator.setUiElements(true);
 
         // Fetch arguments from bundle and set title

@@ -7,7 +7,7 @@ import com.main.climbingdiary.database.TaskRepository;
 import java.util.ArrayList;
 
 public interface AreaRepository {
-    static ArrayList<Area> getAreaList(){
+    static ArrayList<Area> getAreaList() {
         ArrayList<Area> _area_list = new ArrayList<>();
         TaskRepository taskRepository = TaskRepository.getInstance();
         Cursor cursor = taskRepository.getAllAreas();
@@ -30,7 +30,8 @@ public interface AreaRepository {
         }
         return _area_list;
     }
-    static ArrayList<String> getAreaNameList(){
+
+    static ArrayList<String> getAreaNameList() {
         ArrayList<String> _area_list = new ArrayList<>();
         TaskRepository taskRepository = TaskRepository.getInstance();
         Cursor cursor = taskRepository.getAllAreas();

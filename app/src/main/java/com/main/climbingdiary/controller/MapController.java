@@ -34,26 +34,17 @@ import static android.content.Context.LOCATION_SERVICE;
 
 public class MapController {
 
-    private final View view;
     private static MapView map;
     private static IMapController mapController;
     private static GeoPoint startPoint = new GeoPoint(49.58, 11.01);
     private static LocationManager locationManager = (LocationManager) MainActivity.getMainActivity().getSystemService(LOCATION_SERVICE);
     @SuppressLint("StaticFieldLeak")
     private static FilterHeader header;
+    private final View view;
 
-    public MapController(View _view){
+    public MapController(View _view) {
         view = _view;
         AppPermissions.checkPermissions();
-    }
-
-    public void setUpMap() {
-        map = view.findViewById(R.id.map);
-        mapController = map.getController();
-        mapController.setZoom(10);
-        mapController.setCenter(startPoint);
-        setMarker();
-
     }
 
     public static void setUserPosition() {
@@ -94,7 +85,16 @@ public class MapController {
         alert.show();
     }
 
-    public void refreshMap(){
+    public void setUpMap() {
+        map = view.findViewById(R.id.map);
+        mapController = map.getController();
+        mapController.setZoom(10);
+        mapController.setCenter(startPoint);
+        setMarker();
+
+    }
+
+    public void refreshMap() {
         map.getOverlayManager().clear();
         this.setMarker();
     }
@@ -111,7 +111,7 @@ public class MapController {
                 poiMarker.setPosition(new GeoPoint(area.getLat(), area.getLng()));
                 poiMarker.setIcon(poiIcon);
                 poiMarker.setTitle(area.getName());
-                poiMarker.setSnippet(String.format("Hier hast du %s Begehungen gemacht",sumAscents));
+                poiMarker.setSnippet(String.format("Hier hast du %s Begehungen gemacht", sumAscents));
                 poiMarkers.add(poiMarker);
                 poiMarker.setInfoWindow(new CustomInfoWindow(map, area));
             }
@@ -119,25 +119,28 @@ public class MapController {
     }
 
     static class CustomInfoWindow extends MarkerInfoWindow {
-        private Area area;
         TextView btn = (mView.findViewById(org.osmdroid.bonuspack.R.id.bubble_title));
+        private Area area;
+
         CustomInfoWindow(MapView mapView, Area _area) {
             super(org.osmdroid.bonuspack.R.layout.bonuspack_bubble, mapView);
             this.area = _area;
             btn.setOnClickListener(view -> {
                 FragmentPager.setPosition(1);
-                Filter.setFilter(String.format("g.id = %s",area.getId()), MenuValues.FILTER);
+                Filter.setFilter(String.format("g.id = %s", area.getId()), MenuValues.FILTER);
                 FragmentPager.refreshActualFragment();
             });
 
         }
-        @Override public void onOpen(Object item){
+
+        @Override
+        public void onOpen(Object item) {
             super.onOpen(item);
             TextView header = mView.findViewById(org.osmdroid.bonuspack.R.id.bubble_title);
             header.setVisibility(View.VISIBLE);
             header.setTextColor(Colors.getMainColor());
             header.setTextSize(15);
-            header.setPaintFlags(header.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+            header.setPaintFlags(header.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         }
     }
 }

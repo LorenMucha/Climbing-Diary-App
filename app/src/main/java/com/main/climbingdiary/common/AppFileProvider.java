@@ -31,22 +31,22 @@ public class AppFileProvider {
         destination.close();
     }
 
-    public boolean restoreDBfromPreferencePath(Uri uri) throws IOException{
-       File dst = new File(Environment.getDataDirectory(), EnvironmentParamter.DB_PATH);
-       if(dst.delete()) {
-           InputStream in = MainActivity.getMainAppContext().getContentResolver().openInputStream(uri);
-           OutputStream out = new FileOutputStream(dst, false);
-           byte[] buf = new byte[1024];
-           int len;
-           assert in != null;
-           while ((len = in.read(buf)) > 0) {
-               out.write(buf, 0, len);
-           }
-           out.flush();
-           in.close();
-           out.close();
-           return true;
-       }
+    public boolean restoreDBfromPreferencePath(Uri uri) throws IOException {
+        File dst = new File(Environment.getDataDirectory(), EnvironmentParamter.DB_PATH);
+        if (dst.delete()) {
+            InputStream in = MainActivity.getMainAppContext().getContentResolver().openInputStream(uri);
+            OutputStream out = new FileOutputStream(dst, false);
+            byte[] buf = new byte[1024];
+            int len;
+            assert in != null;
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+            out.flush();
+            in.close();
+            out.close();
+            return true;
+        }
         return false;
     }
 

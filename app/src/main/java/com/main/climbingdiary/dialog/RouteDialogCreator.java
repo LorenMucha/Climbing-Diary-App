@@ -41,10 +41,6 @@ import lombok.Getter;
 public class RouteDialogCreator {
 
     @Getter
-    Button closeDialog;
-    @Getter
-    Button saveRoute;
-    @Getter
     private final Spinner stil;
     @Getter
     private final Spinner level;
@@ -67,9 +63,13 @@ public class RouteDialogCreator {
     private final DialogFragment fragment;
     private final LinearLayout routeContent;
     private final LinearLayout gradeSwitcherLayout;
+    @Getter
+    Button closeDialog;
+    @Getter
+    Button saveRoute;
 
 
-    public RouteDialogCreator(View _view, Context context, DialogFragment _fragment){
+    public RouteDialogCreator(View _view, Context context, DialogFragment _fragment) {
         view = _view;
         closeDialog = view.findViewById(R.id.input_route_close);
         saveRoute = view.findViewById(R.id.input_route_save);
@@ -82,14 +82,14 @@ public class RouteDialogCreator {
         sector = view.findViewById(R.id.input_route_sektor);
         comment = view.findViewById(R.id.input_route_comment);
         gradeSwitcher = view.findViewById(R.id.grade_system_switcher);
-        routeContent =view.findViewById(R.id.route_content);
-        gradeSwitcherLayout =  view.findViewById(R.id.grade_switcher_layout);
+        routeContent = view.findViewById(R.id.route_content);
+        gradeSwitcherLayout = view.findViewById(R.id.grade_switcher_layout);
         fragment = _fragment;
-        _context =  context;
+        _context = context;
         setOnCloseButton();
     }
 
-    public void setUiElements(Projekt projekt){
+    public void setUiElements(Projekt projekt) {
         saveRoute.setText("Update");
         name.setText(projekt.getName());
 
@@ -102,7 +102,7 @@ public class RouteDialogCreator {
         sector.setText(projekt.getSector());
         comment.setText(projekt.getComment());
         // set the Spinner
-        this.setRatingSpinner(projekt.getRating()-1);
+        this.setRatingSpinner(projekt.getRating() - 1);
         new SetDate(date, _context);
         routeContent.setVisibility(View.GONE);
 
@@ -110,7 +110,7 @@ public class RouteDialogCreator {
 
     }
 
-    public void setUiElements(Route route){
+    public void setUiElements(Route route) {
         saveRoute.setText("Update");
         name.setText(route.getName());
 
@@ -125,7 +125,7 @@ public class RouteDialogCreator {
         sector.setText(route.getSector());
         comment.setText(route.getComment());
         // set the Spinner
-        this.setRatingSpinner(route.getRating()-1);
+        this.setRatingSpinner(route.getRating() - 1);
         new SetDate(date, _context);
 
         gradeSwitcherLayout.setVisibility(View.GONE);
@@ -137,14 +137,16 @@ public class RouteDialogCreator {
             String[] dateSplit = (route.getDate()).split(Pattern.quote("."));
             sBuilder.append(dateSplit[2]).append("-").append(dateSplit[1]).append("-").append(dateSplit[0]);
             date.setText(sBuilder.toString());
-        }catch(Exception e){
-            Log.e("Error",e.toString());
+        } catch (Exception e) {
+            Log.e("Error", e.toString());
             date.setText(route.getDate());
         }
     }
 
-    public void setUiElements(boolean projekt){
-        if(projekt){routeContent.setVisibility(View.GONE);}
+    public void setUiElements(boolean projekt) {
+        if (projekt) {
+            routeContent.setVisibility(View.GONE);
+        }
         this.setStilSpinner("RP");
         this.setLevelSpinner("8a", Levels.getLevelsFrench());
         this.setAreaSectorAutoComplete();
@@ -154,7 +156,7 @@ public class RouteDialogCreator {
         gradeSwitcherLayout.setVisibility(View.VISIBLE);
     }
 
-    public void setForeGroundSpan(String title){
+    public void setForeGroundSpan(String title) {
         // Initialize a new foreground color span instance
         ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.BLACK);
 
@@ -162,7 +164,7 @@ public class RouteDialogCreator {
         SpannableStringBuilder ssBuilder = new SpannableStringBuilder(title);
 
         // Apply the text color span
-        ssBuilder.setSpan(foregroundColorSpan,0,title.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ssBuilder.setSpan(foregroundColorSpan, 0, title.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         fragment.getDialog().setTitle(ssBuilder);
 
@@ -173,19 +175,19 @@ public class RouteDialogCreator {
             titleDivider.setBackgroundColor(fragment.getResources().getColor(android.R.color.black));
     }
 
-    private void setGradeSwitcher(){
+    private void setGradeSwitcher() {
         gradeSwitcherLayout.setVisibility(View.VISIBLE);
         gradeSwitcher.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if(isChecked){
-                this.setLevelSpinner("8a",Levels.getLevelsFrench());
-            }else{
-                this.setLevelSpinner("IX+/X-",Levels.getLevelsUiaa());
+            if (isChecked) {
+                this.setLevelSpinner("8a", Levels.getLevelsFrench());
+            } else {
+                this.setLevelSpinner("IX+/X-", Levels.getLevelsUiaa());
             }
         });
     }
 
-    private void setAreaSectorAutoComplete(){
-        ArrayAdapter<String> areaArrayAdapter = new ArrayAdapter<String>(view.getContext(),android.R.layout.simple_spinner_item, AreaRepository.getAreaNameList());
+    private void setAreaSectorAutoComplete() {
+        ArrayAdapter<String> areaArrayAdapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_item, AreaRepository.getAreaNameList());
         //will start working from first character
         area.setThreshold(1);
         area.setAdapter(areaArrayAdapter);
@@ -194,98 +196,109 @@ public class RouteDialogCreator {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
+
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
-                ArrayAdapter<String> sectorArrayAdapter = new ArrayAdapter<String>(_context,android.R.layout.simple_spinner_item, SectorRepository.getSectorList(_context,area.getText().toString().trim()));
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                ArrayAdapter<String> sectorArrayAdapter = new ArrayAdapter<String>(_context, android.R.layout.simple_spinner_item, SectorRepository.getSectorList(_context, area.getText().toString().trim()));
                 //will start working from first character
                 sector.setThreshold(1);
                 sector.setAdapter(sectorArrayAdapter);
             }
+
             @Override
             public void afterTextChanged(Editable s) {
 
             }
         });
     }
-    private void setStilSpinner(String selection){
+
+    private void setStilSpinner(String selection) {
         // set Spinner for choosing the style
-        ArrayAdapter<String> stilArrayAdapter = new ArrayAdapter<String>(_context,android.R.layout.simple_spinner_item, Styles.getStyle(true));
+        ArrayAdapter<String> stilArrayAdapter = new ArrayAdapter<String>(_context, android.R.layout.simple_spinner_item, Styles.getStyle(true));
         stilArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
         stil.setAdapter(stilArrayAdapter);
 
         try {
             stil.setSelection(stilArrayAdapter.getPosition(selection));
-        }catch(Exception ex){
-            Log.e("Style was unset",ex.getLocalizedMessage());
+        } catch (Exception ex) {
+            Log.e("Style was unset", ex.getLocalizedMessage());
         }
     }
-    private void setLevelSpinner(String selection, String levels[]){
-        ArrayAdapter<String> levelArrayAdapter = new ArrayAdapter<String>(_context,android.R.layout.simple_spinner_item,levels);
+
+    private void setLevelSpinner(String selection, String levels[]) {
+        ArrayAdapter<String> levelArrayAdapter = new ArrayAdapter<String>(_context, android.R.layout.simple_spinner_item, levels);
         levelArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
         level.setAdapter(levelArrayAdapter);
         level.setSelection(levelArrayAdapter.getPosition(selection));
     }
-    private void setRatingSpinner(int selection){
+
+    private void setRatingSpinner(int selection) {
         // set Spinner for choosing the level
-        ArrayAdapter<String> ratingArrayAdapter = new ArrayAdapter<String>(_context,android.R.layout.simple_spinner_item, Rating.getRating());
+        ArrayAdapter<String> ratingArrayAdapter = new ArrayAdapter<String>(_context, android.R.layout.simple_spinner_item, Rating.getRating());
         ratingArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
         rating.setAdapter(ratingArrayAdapter);
         rating.setSelection(selection);
     }
 
-    private void setOnCloseButton(){
+    private void setOnCloseButton() {
         //close the dialog
-        getCloseDialog().setOnClickListener(v ->{
-            if(FragmentPager.getTabTitle().equals(Tabs.PROJEKTE.getTitle())){
+        getCloseDialog().setOnClickListener(v -> {
+            if (FragmentPager.getTabTitle().equals(Tabs.PROJEKTE.getTitle())) {
                 FragmentPager.refreshActualFragment();
             }
             fragment.getDialog().cancel();
         });
     }
 
-    public Route getRoute(boolean id){
+    public Route getRoute(boolean id) {
         Route newRoute = new Route();
-        if(id){newRoute.setId(0);}
+        if (id) {
+            newRoute.setId(0);
+        }
         String level = this.getLevel().getSelectedItem().toString();
-        try{
-            level = gradeSwitcher.isChecked() ?  level : GradeConverter.convertUiaaToFrench(level);
-        }catch (Exception ignored){}
+        try {
+            level = gradeSwitcher.isChecked() ? level : GradeConverter.convertUiaaToFrench(level);
+        } catch (Exception ignored) {
+        }
         newRoute.setName(this.getName().getText().toString());
         newRoute.setLevel(level);
         newRoute.setDate(this.getDate().getText().toString());
         newRoute.setArea(this.getArea().getText().toString());
         newRoute.setSector(this.getSector().getText().toString());
         newRoute.setComment(this.getComment().getText().toString());
-        newRoute.setRating(this.getRating().getSelectedItemPosition()+1);
+        newRoute.setRating(this.getRating().getSelectedItemPosition() + 1);
         newRoute.setStyle(this.getStil().getSelectedItem().toString());
         return newRoute;
     }
-    public Projekt getProjekt(boolean id){
+
+    public Projekt getProjekt(boolean id) {
         Projekt projekt = new Projekt();
-        if(id){projekt.setId(0);}
+        if (id) {
+            projekt.setId(0);
+        }
         String level = this.getLevel().getSelectedItem().toString();
-        try{
-            level = gradeSwitcher.isChecked() ?  level : GradeConverter.convertUiaaToFrench(level);
-        }catch (Exception ignored){}
+        try {
+            level = gradeSwitcher.isChecked() ? level : GradeConverter.convertUiaaToFrench(level);
+        } catch (Exception ignored) {
+        }
         projekt.setName(this.getName().getText().toString());
         projekt.setLevel(level);
         projekt.setArea(this.getArea().getText().toString());
         projekt.setSector(this.getSector().getText().toString());
         projekt.setComment(this.getComment().getText().toString());
-        projekt.setRating(this.getRating().getSelectedItemPosition()+1);
+        projekt.setRating(this.getRating().getSelectedItemPosition() + 1);
         return projekt;
     }
 
-    public boolean checkDate(){
-        if(date.getText().toString().trim().length() == 0){
+    public boolean checkDate() {
+        if (date.getText().toString().trim().length() == 0) {
             Alert alert = Alert.builder()
-                    .title(String.format("Datum fehlt %s","\ud83d\ude13"))
+                    .title(String.format("Datum fehlt %s", "\ud83d\ude13"))
                     .dialogType(SweetAlertDialog.ERROR_TYPE)
                     .build();
-            new AlertManager().setAlertWithoutContent(_context,alert);
+            new AlertManager().setAlertWithoutContent(_context, alert);
             return false;
-        }else{
+        } else {
             return true;
         }
     }

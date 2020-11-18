@@ -1,15 +1,16 @@
 package com.main.climbingdiary.controller.menu;
 
 public enum MenuValues {
-    SEARCH,FILTER,SORT,SORT_DATE,SETTINGS;
-    public String toString(){
+    SEARCH, FILTER, SORT, SORT_DATE, SETTINGS;
+
+    public String toString() {
         String value = "";
-        switch (this){
+        switch (this) {
             case SEARCH:
                 value = "search";
                 break;
             case FILTER:
-                value="filter";
+                value = "filter";
                 break;
             case SORT:
                 value = "sort";

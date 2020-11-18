@@ -14,7 +14,7 @@ class Sector {
     @Getter
     private double lng;
 
-    private Sector(Sector.Builder builder){
+    private Sector(Sector.Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
         this.lat = builder.lat;
@@ -23,30 +23,34 @@ class Sector {
     }
 
     //builder pattern for optional paramters
-    public static class Builder{
+    public static class Builder {
         private int id;
         private String name;
         private double lat;
         private double lng;
-        private String area_name ;
+        private String area_name;
 
-        public Sector.Builder name(String _name){
+        public Sector.Builder name(String _name) {
             this.name = _name;
             return this;
         }
-        public Sector.Builder id(int _id){
+
+        public Sector.Builder id(int _id) {
             this.id = _id;
             return this;
         }
-        public Sector.Builder lat(double _lat){
+
+        public Sector.Builder lat(double _lat) {
             this.lat = _lat;
             return this;
         }
-        public Sector.Builder lng(double _lng){
+
+        public Sector.Builder lng(double _lng) {
             this.lng = _lng;
             return this;
         }
-        public Sector build(){
+
+        public Sector build() {
             return new Sector(this);
         }
     }

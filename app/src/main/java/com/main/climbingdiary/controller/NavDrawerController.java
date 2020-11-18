@@ -13,7 +13,7 @@ import com.main.climbingdiary.R;
 public class NavDrawerController implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
 
-    public NavDrawerController(AppCompatActivity _activity){
+    public NavDrawerController(AppCompatActivity _activity) {
         int layoutId = R.id.drawer_layout;
         drawer = _activity.findViewById(layoutId);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

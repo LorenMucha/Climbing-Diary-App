@@ -29,14 +29,14 @@ public class EditRouteDialog extends DialogFragment {
     private int route_id;
     private String title;
 
-    public EditRouteDialog(String _title, int _id){
-            route_id = _id;
-            title = _title;
+    public EditRouteDialog(String _title, int _id) {
+        route_id = _id;
+        title = _title;
     }
 
-    public EditRouteDialog(String _title, Route _route){
-            route = _route;
-            title = _title;
+    public EditRouteDialog(String _title, Route _route) {
+        route = _route;
+        title = _title;
     }
 
     @Override
@@ -54,28 +54,28 @@ public class EditRouteDialog extends DialogFragment {
         Route editRoute;
 
         //get the route value which will be edit
-        if(route != null){
+        if (route != null) {
             editRoute = route;
-        }else{
+        } else {
             editRoute = RouteRepository.getRoute(route_id);
         }
 
-        RouteDialogCreator creator = new RouteDialogCreator(view,_context,this);
+        RouteDialogCreator creator = new RouteDialogCreator(view, _context, this);
         creator.setForeGroundSpan(title);
         creator.setUiElements(editRoute);
 
         //save the route
         creator.getSaveRoute().setOnClickListener(v -> {
-            if(FragmentPager.getTabTitle().equals(Tabs.PROJEKTE.getTitle())){
+            if (FragmentPager.getTabTitle().equals(Tabs.PROJEKTE.getTitle())) {
                 FragmentPager.setPosition(1);
                 Projekt projekt = new Projekt();
                 ProjektRepository.deleteProjekt(editRoute.getId());
-                Log.d("delete Projekt with ID:",Integer.toString(editRoute.getId()));
+                Log.d("delete Projekt with ID:", Integer.toString(editRoute.getId()));
                 FragmentPager.refreshActualFragment();
             }
             Route newRoute = creator.getRoute(true);
             boolean taskState = RouteRepository.deleteRoute(editRoute.getId());
-            if(taskState) {
+            if (taskState) {
                 RouteRepository.insertRoute(newRoute);
             }
             //close the dialog

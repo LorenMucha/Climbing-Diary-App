@@ -9,12 +9,12 @@ import com.main.climbingdiary.models.Filter;
 import java.util.ArrayList;
 
 public interface RouteRepository {
-    static Route getRoute(int _id){
+    static Route getRoute(int _id) {
         Route _route = new Route();
         TaskRepository taskRepository = TaskRepository.getInstance();
         //String Sort = (Menu) getA
         Cursor cursor = taskRepository.getRoute(_id);
-        if(cursor.getCount() > 0) {
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             _route.setId(cursor.getInt(0));
             _route.setName(cursor.getString(1));
@@ -28,6 +28,7 @@ public interface RouteRepository {
         }
         return _route;
     }
+
     static ArrayList<Route> getRouteList() {
         ArrayList<Route> _routes = new ArrayList<>();
         TaskRepository taskRepository = TaskRepository.getInstance();
@@ -51,18 +52,19 @@ public interface RouteRepository {
         return _routes;
     }
 
-    static ArrayList<Route> getRouteListByArea(int areaId){
-        Filter.setFilter(String.format("g.id = %s",areaId), MenuValues.FILTER);
+    static ArrayList<Route> getRouteListByArea(int areaId) {
+        Filter.setFilter(String.format("g.id = %s", areaId), MenuValues.FILTER);
         ArrayList<Route> _routes = getRouteList();
         Filter.removeFilter();
         return _routes;
     }
 
-    static boolean deleteRoute(int id){
+    static boolean deleteRoute(int id) {
         TaskRepository taskRepository = TaskRepository.getInstance();
         return taskRepository.deleteRoute(id);
     }
-    static boolean insertRoute(Route route){
+
+    static boolean insertRoute(Route route) {
         TaskRepository taskRepository = TaskRepository.getInstance();
         return taskRepository.insertRoute(route);
     }

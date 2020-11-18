@@ -3,21 +3,18 @@
     <PreferenceCategory android:title="@string/export_pref_header">
         <Preference
             android:key="@string/db_output_path"
-            android:title="Ordner für Backups und Exports"
-            />
+            android:title="Ordner für Backups und Exports" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/safty_copy_pref_header">
         <Preference
             android:key="@string/safty_copy"
             android:selectable="true"
-            android:title="Sicherungskopie"
             android:summary="Erzeugt ein Backup der Datenbank"
-            />
+            android:title="Sicherungskopie" />
         <Preference
             android:key="@string/safty_restore"
             android:selectable="true"
-            android:title="Wiederherstellung"
             android:summary="Wähle ein Backup für die Wiederherstellung"
-            />
+            android:title="Wiederherstellung" />
     </PreferenceCategory>
 </PreferenceScreen>

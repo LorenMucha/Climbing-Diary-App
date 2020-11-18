@@ -5,16 +5,15 @@ import android.util.Log;
 
 import com.main.climbingdiary.database.TaskRepository;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 
 public interface ProjektRepository {
-    static Projekt getProjekt(int _id){
+    static Projekt getProjekt(int _id) {
         Projekt _projekt = new Projekt();
         TaskRepository taskRepository = TaskRepository.getInstance();
         //String Sort = (Menu) getA
         Cursor cursor = taskRepository.getProjekt(_id);
-        if(cursor.getCount() > 0) {
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             _projekt.setId(cursor.getInt(0));
             _projekt.setName(cursor.getString(1));
@@ -50,12 +49,13 @@ public interface ProjektRepository {
         return _projekte;
     }
 
-    static boolean deleteProjekt(int id){
-        Log.d("delete Projekt",Integer.toString(id));
-        TaskRepository taskRepository =TaskRepository.getInstance();
+    static boolean deleteProjekt(int id) {
+        Log.d("delete Projekt", Integer.toString(id));
+        TaskRepository taskRepository = TaskRepository.getInstance();
         return taskRepository.deleteProjekt(id);
     }
-    static boolean insertProjekt(Projekt projekt){
+
+    static boolean insertProjekt(Projekt projekt) {
         TaskRepository taskRepository = TaskRepository.getInstance();
         return taskRepository.insertProjekt(projekt);
     }

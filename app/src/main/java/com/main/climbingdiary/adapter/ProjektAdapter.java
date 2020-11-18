@@ -16,14 +16,14 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.main.climbingdiary.R;
+import com.main.climbingdiary.common.AlertManager;
 import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.controller.Tabs;
 import com.main.climbingdiary.controller.button.AppFloatingActionButton;
-import com.main.climbingdiary.dialog.DialogFactory;
 import com.main.climbingdiary.database.entities.Projekt;
 import com.main.climbingdiary.database.entities.ProjektRepository;
 import com.main.climbingdiary.database.entities.Route;
-import com.main.climbingdiary.common.AlertManager;
+import com.main.climbingdiary.dialog.DialogFactory;
 import com.main.climbingdiary.models.Colors;
 
 import java.text.SimpleDateFormat;
@@ -161,7 +161,7 @@ public class ProjektAdapter extends
             route.setRating(projekt.getRating());
             route.setComment(projekt.getComment());
             route.setStyle("rp");
-            Log.d("Tick projekt: ",projekt.toString());
+            Log.d("Tick projekt: ", projekt.toString());
             DialogFactory.openEditRouteDialog(route);
         });
     }

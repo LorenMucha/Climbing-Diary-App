@@ -19,14 +19,14 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.main.climbingdiary.R;
+import com.main.climbingdiary.common.AlertManager;
 import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.controller.Tabs;
 import com.main.climbingdiary.controller.button.AppFloatingActionButton;
-import com.main.climbingdiary.dialog.DialogFactory;
 import com.main.climbingdiary.database.TaskRepository;
 import com.main.climbingdiary.database.entities.Route;
 import com.main.climbingdiary.database.entities.RouteRepository;
-import com.main.climbingdiary.common.AlertManager;
+import com.main.climbingdiary.dialog.DialogFactory;
 import com.main.climbingdiary.models.Colors;
 
 import java.util.ArrayList;
@@ -39,44 +39,6 @@ public class RoutesAdapter extends
 
     private List<Route> mRoutes;
     private List<Route> mRoutes_filtered;
-
-    // Provide a direct reference to each of the views within a data item
-    // Used to cache the views within the item layout for fast access
-    static class ViewHolder extends RecyclerView.ViewHolder {
-        // Your holder should contain a member variable
-        // for any view that will be set as you render a row
-        TextView nameTextView;
-        TextView dateTextView;
-        TextView levelTextView;
-        TextView areaTextView;
-        ImageView styleTextView;
-        RatingBar ratingView;
-        TextView commentTextView;
-        TableRow hiddenView;
-        ImageButton editButton;
-        ImageButton removeButton;
-        TableRow routeRow;
-
-        // We also create a constructor that accepts the entire item row
-        // and does the view lookups to find each subview
-        private ViewHolder(View itemView) {
-            // Stores the itemView in a public final member variable that can be used
-            // to access the context from any ViewHolder instance.
-            super(itemView);
-
-            nameTextView = (TextView) itemView.findViewById(R.id.route_name);
-            dateTextView = (TextView) itemView.findViewById(R.id.route_date);
-            levelTextView=(TextView) itemView.findViewById(R.id.route_level);
-            areaTextView=(TextView) itemView.findViewById(R.id.route_area);
-            //styleTextView=(TextView) itemView.findViewById(R.id.route_style);
-            styleTextView=(ImageView) itemView.findViewById(R.id.route_style);
-            ratingView = (RatingBar) itemView.findViewById(R.id.route_rating);
-            commentTextView= (TextView) itemView.findViewById(R.id.route_comment);
-            hiddenView = (TableRow) itemView.findViewById(R.id.route_hidden);
-            editButton = (ImageButton) itemView.findViewById(R.id.route_edit);
-            removeButton = (ImageButton) itemView.findViewById(R.id.route_delete);
-        }
-    }
 
     // Pass in the contact array into the constructor
     public RoutesAdapter(List<Route> routes) {
@@ -106,17 +68,17 @@ public class RoutesAdapter extends
         final Route route = mRoutes.get(position);
 
         String gradeText = route.getLevel();
-        String styleText= route.getStyle();
+        String styleText = route.getStyle();
         String areaText = route.getArea();
         String sectorText = route.getSector();
         String commentString = route.getComment();
 
         //create the html string for the route and sector
-        final String routeHtml = areaText+" &#9679; "+sectorText;
-        final String commentHtml = "<b>Kommentar</b><br/>"+commentString;
+        final String routeHtml = areaText + " &#9679; " + sectorText;
+        final String commentHtml = "<b>Kommentar</b><br/>" + commentString;
 
         //tasks for deleting and editing
-        final TaskRepository taskRepository =TaskRepository.getInstance();
+        final TaskRepository taskRepository = TaskRepository.getInstance();
 
         // Set item views
         TextView routeName = viewHolder.nameTextView;
@@ -137,10 +99,10 @@ public class RoutesAdapter extends
         level.setText(gradeText);
         level.setTextColor(Colors.getGradeColor(gradeText));
 
-        try{
+        try {
             Drawable drawable = ContextCompat.getDrawable(viewHolder.itemView.getContext(), getRoutStyleIcon(styleText));
             style.setImageDrawable(drawable);
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("Error drawable loading", styleText);
         }
 
@@ -151,22 +113,23 @@ public class RoutesAdapter extends
         //show comment on holder click
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             int click = 0;
+
             @Override
             public void onClick(View v) {
-                if(click==0){
+                if (click == 0) {
                     //if last element hide add Button
-                    if(mRoutes.indexOf(route)==(mRoutes.size()-1)){
+                    if (mRoutes.indexOf(route) == (mRoutes.size() - 1)) {
                         AppFloatingActionButton.hide();
                     }
                     hidden_layout.setVisibility(View.VISIBLE);
                     click++;
-                }else{
+                } else {
                     //if last element show add Button
-                    if(mRoutes.indexOf(route)==(mRoutes.size()-1)){
+                    if (mRoutes.indexOf(route) == (mRoutes.size() - 1)) {
                         AppFloatingActionButton.show();
                     }
                     hidden_layout.setVisibility(View.GONE);
-                    click =0;
+                    click = 0;
                 }
             }
         });
@@ -182,13 +145,13 @@ public class RoutesAdapter extends
                         //delete the route by id
                         int id = route.getId();
                         boolean taskState = RouteRepository.deleteRoute(id);
-                        if(taskState){
+                        if (taskState) {
                             FragmentPager.refreshAllFragments();
                             sDialog.hide();
                             new SweetAlertDialog(_v.getContext(), SweetAlertDialog.SUCCESS_TYPE)
                                     .setTitleText("Gelöscht")
                                     .show();
-                        }else{
+                        } else {
                             AlertManager.setErrorAlert(v.getContext());
                         }
 
@@ -198,7 +161,7 @@ public class RoutesAdapter extends
         });
         //edit a route
         edit.setOnClickListener(view -> {
-            DialogFactory.openEditRouteDialog(Tabs.ROUTEN.getTitle(),route.getId());
+            DialogFactory.openEditRouteDialog(Tabs.ROUTEN.getTitle(), route.getId());
         });
     }
 
@@ -246,7 +209,7 @@ public class RoutesAdapter extends
         };
     }
 
-    private int getRoutStyleIcon(String style){
+    private int getRoutStyleIcon(String style) {
         style = style.toUpperCase();
         switch (style) {
             case "OS":
@@ -257,5 +220,43 @@ public class RoutesAdapter extends
                 return R.drawable.ic_flash;
         }
         return 0;
+    }
+
+    // Provide a direct reference to each of the views within a data item
+    // Used to cache the views within the item layout for fast access
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        // Your holder should contain a member variable
+        // for any view that will be set as you render a row
+        TextView nameTextView;
+        TextView dateTextView;
+        TextView levelTextView;
+        TextView areaTextView;
+        ImageView styleTextView;
+        RatingBar ratingView;
+        TextView commentTextView;
+        TableRow hiddenView;
+        ImageButton editButton;
+        ImageButton removeButton;
+        TableRow routeRow;
+
+        // We also create a constructor that accepts the entire item row
+        // and does the view lookups to find each subview
+        private ViewHolder(View itemView) {
+            // Stores the itemView in a public final member variable that can be used
+            // to access the context from any ViewHolder instance.
+            super(itemView);
+
+            nameTextView = (TextView) itemView.findViewById(R.id.route_name);
+            dateTextView = (TextView) itemView.findViewById(R.id.route_date);
+            levelTextView = (TextView) itemView.findViewById(R.id.route_level);
+            areaTextView = (TextView) itemView.findViewById(R.id.route_area);
+            //styleTextView=(TextView) itemView.findViewById(R.id.route_style);
+            styleTextView = (ImageView) itemView.findViewById(R.id.route_style);
+            ratingView = (RatingBar) itemView.findViewById(R.id.route_rating);
+            commentTextView = (TextView) itemView.findViewById(R.id.route_comment);
+            hiddenView = (TableRow) itemView.findViewById(R.id.route_hidden);
+            editButton = (ImageButton) itemView.findViewById(R.id.route_edit);
+            removeButton = (ImageButton) itemView.findViewById(R.id.route_delete);
+        }
     }
 }

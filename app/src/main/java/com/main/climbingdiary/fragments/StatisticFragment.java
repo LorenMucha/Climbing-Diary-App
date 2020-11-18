@@ -13,33 +13,39 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.controller.TableView;
 import com.main.climbingdiary.chart.RouteBarChartControllerController;
 import com.main.climbingdiary.chart.RouteLineChartController;
+import com.main.climbingdiary.controller.TableView;
 import com.main.climbingdiary.controller.menu.AppBarMenu;
 import com.main.climbingdiary.controller.menu.MenuValues;
 import com.main.climbingdiary.models.Colors;
 
-public class StatisticFragment extends Fragment implements RouteFragment{
+public class StatisticFragment extends Fragment implements RouteFragment {
 
+    public static final String TITLE = "Statistik";
+    @SuppressLint("StaticFieldLeak")
+    public static StatisticFragment INSTANCE;
     @SuppressLint("StaticFieldLeak")
     private static Button setLineChartBtn, setBarChartBtn, setTableBtn;
     @SuppressLint("StaticFieldLeak")
     private static View view;
-    public static final String TITLE = "Statistik";
-    @SuppressLint("StaticFieldLeak")
-    public static StatisticFragment INSTANCE;
 
-
-    public static StatisticFragment getInstance(){
-        if(INSTANCE == null){
+    public static StatisticFragment getInstance() {
+        if (INSTANCE == null) {
             INSTANCE = new StatisticFragment();
         }
         return INSTANCE;
     }
 
+    //XAxis Formatter
+    public static void resetButtonBackground() {
+        setLineChartBtn.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.buttonColor));
+        setBarChartBtn.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.buttonColor));
+        setTableBtn.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.buttonColor));
+    }
+
     @Override
-    public View getView(){
+    public View getView() {
         return view;
     }
 
@@ -49,11 +55,11 @@ public class StatisticFragment extends Fragment implements RouteFragment{
         view = inflater.inflate(R.layout.statistic_fragment, container, false);
         //set the bar barChart as Standard
         setBarChartBtn = view.findViewById(R.id.btn_stat);
-        setLineChartBtn  = view.findViewById(R.id.btn_dev);
+        setLineChartBtn = view.findViewById(R.id.btn_dev);
         setTableBtn = view.findViewById(R.id.btn_table);
         //set the views
         final RouteLineChartController _routeLineChart = new RouteLineChartController(view);
-        final TableView _routeTable = new TableView(view.getContext(),view);
+        final TableView _routeTable = new TableView(view.getContext(), view);
         final RouteBarChartControllerController _routeBarChartController = new RouteBarChartControllerController(view);
         //the Button Click Listener
         setLineChartBtn.setOnClickListener(v -> {
@@ -84,15 +90,9 @@ public class StatisticFragment extends Fragment implements RouteFragment{
         setBarChartBtn.callOnClick();
         return view;
     }
-    //XAxis Formatter
-    public static void resetButtonBackground(){
-        setLineChartBtn.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.buttonColor));
-        setBarChartBtn.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.buttonColor));
-        setTableBtn.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.buttonColor));
-    }
 
     @Override
-    public void refreshData(){
+    public void refreshData() {
         try {
             final RouteLineChartController _routeLineChart = new RouteLineChartController(view);
             final TableView _routeTable = new TableView(view.getContext(), view);
@@ -100,20 +100,23 @@ public class StatisticFragment extends Fragment implements RouteFragment{
             _routeBarChartController.createChart();
             _routeLineChart.createChart();
             _routeTable.createTableView();
-        }catch(Exception ignored){}
+        } catch (Exception ignored) {
+        }
     }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Do something that differs the Activity's menu here
         super.onCreateOptionsMenu(menu, inflater);
         AppBarMenu appmenu = new AppBarMenu(menu);
-        appmenu.setItemVisebility(MenuValues.FILTER,true);
-        appmenu.setItemVisebility(MenuValues.SEARCH,false);
+        appmenu.setItemVisebility(MenuValues.FILTER, true);
+        appmenu.setItemVisebility(MenuValues.SEARCH, false);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         item.setChecked(true);
-        if(item.getGroupId()==R.id.filter_area+1){
+        if (item.getGroupId() == R.id.filter_area + 1) {
             return true;
         }
         return super.onOptionsItemSelected(item);

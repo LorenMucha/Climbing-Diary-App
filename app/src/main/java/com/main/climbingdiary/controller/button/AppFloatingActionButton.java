@@ -11,34 +11,25 @@ import com.main.climbingdiary.controller.MapController;
 import com.main.climbingdiary.dialog.DialogFactory;
 import com.main.climbingdiary.fragments.MapFragment;
 
-public class AppFloatingActionButton implements View.OnClickListener{
+public class AppFloatingActionButton implements View.OnClickListener {
 
     @SuppressLint("StaticFieldLeak")
     private static FloatingActionButton floatingActionButtonAdd;
     @SuppressLint("StaticFieldLeak")
     private static FloatingActionButton floatingActionButtonLocate;
 
-    public AppFloatingActionButton(){
+    public AppFloatingActionButton() {
         floatingActionButtonAdd = MainActivity.getMainActivity().findViewById(R.id.floating_action_btn_add);
         floatingActionButtonLocate = MainActivity.getMainActivity().findViewById(R.id.floating_action_btn_locate);
         floatingActionButtonAdd.setOnClickListener(this);
         floatingActionButtonLocate.setOnClickListener(this);
     }
 
-    @Override
-    public void onClick(View v) {
-        if(FragmentPager.getTabTitle().equals(MapFragment.TITLE)){
-            MapController.setUserPosition();
-        }else{
-            DialogFactory.openAddRouteDialog(FragmentPager.getTabTitle());
-        }
-    }
-
     public static void show() {
         hide();
-        if(FragmentPager.getTabTitle().equals(MapFragment.TITLE)){
+        if (FragmentPager.getTabTitle().equals(MapFragment.TITLE)) {
             floatingActionButtonLocate.show();
-        }else{
+        } else {
             floatingActionButtonAdd.show();
         }
     }
@@ -46,5 +37,14 @@ public class AppFloatingActionButton implements View.OnClickListener{
     public static void hide() {
         floatingActionButtonAdd.hide();
         floatingActionButtonLocate.hide();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (FragmentPager.getTabTitle().equals(MapFragment.TITLE)) {
+            MapController.setUserPosition();
+        } else {
+            DialogFactory.openAddRouteDialog(FragmentPager.getTabTitle());
+        }
     }
 }

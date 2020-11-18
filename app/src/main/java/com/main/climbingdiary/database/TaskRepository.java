@@ -16,10 +16,9 @@ import com.main.climbingdiary.models.Styles;
 public class TaskRepository {
 
     private static final String TAG = "DataAdapter";
-
+    private static TaskRepository INSTANCE;
     private SQLiteDatabase mDb;
     private DatabaseHelper mDbHelper;
-    private static TaskRepository INSTANCE;
 
     private TaskRepository() {
         Context mContext = MainActivity.getMainAppContext();
@@ -34,7 +33,7 @@ public class TaskRepository {
     }
 
     public static TaskRepository getInstance() {
-        if(INSTANCE == null){
+        if (INSTANCE == null) {
             INSTANCE = new TaskRepository();
         }
         return INSTANCE;
@@ -71,7 +70,7 @@ public class TaskRepository {
 
     public Cursor getRoute(int _id) {
         String sql = "SELECT r.id, r.name,g.name as gebiet,r.level,r.stil,r.rating, r.kommentar, strftime('%d.%m.%Y',r.date) as date, k.name as sektor FROM routen r, gebiete g, sektoren k where g.id=r.gebiet and k.id=r.sektor AND r.id=" + _id;
-        Log.d("Get Route",sql);
+        Log.d("Get Route", sql);
         Cursor mCur = mDb.rawQuery(sql, null);
         if (mCur != null) {
             mCur.moveToNext();
@@ -137,10 +136,10 @@ public class TaskRepository {
         String filter = Filter.getFilter(true);
         try {
             String sql = "select DISTINCT(strftime('%Y',r.date)) as year from routen r order by r.date DESC";
-            if(filterSet) {
+            if (filterSet) {
                 if (!filter.isEmpty()) {
                     filter = "where " + Filter.getFilter();
-                    sql = "select DISTINCT(strftime('%Y',r.date)) as year from routen r "+filter+" order by r.date DESC";
+                    sql = "select DISTINCT(strftime('%Y',r.date)) as year from routen r " + filter + " order by r.date DESC";
                 }
             }
             Cursor mCur = mDb.rawQuery(sql, null);
@@ -164,12 +163,12 @@ public class TaskRepository {
             StringBuilder sql = new StringBuilder();
             String[] styles = Styles.getStyle(false);
             sql.append("SELECT r.level,");
-            for (String x: styles){
+            for (String x : styles) {
                 char startPoint = x.charAt(1);
                 sql.append(String.format("(Select count(*) as %s from routen %s join gebiete g on g.id=%s.gebiet where r.level=%s.level and %s.stil='%s' %s) as %s,",
-                        x.toUpperCase(),startPoint,startPoint,startPoint,startPoint,x.toUpperCase(),filter.replace(replacement_sort,startPoint+".date"),x.toUpperCase()));
+                        x.toUpperCase(), startPoint, startPoint, startPoint, startPoint, x.toUpperCase(), filter.replace(replacement_sort, startPoint + ".date"), x.toUpperCase()));
             }
-            sql.append(String.format("(Select count(*) as GESAMT from routen z join gebiete g on g.id=z.gebiet where r.level=z.level %s) as GESAMT",filter.replace(replacement_sort,"z.date")))
+            sql.append(String.format("(Select count(*) as GESAMT from routen z join gebiete g on g.id=z.gebiet where r.level=z.level %s) as GESAMT", filter.replace(replacement_sort, "z.date")))
                     .append(" from routen r")
                     .append(" where os >0 or rp >0 or flash > 0")
                     .append(" group by r.level order by r.level DESC");
@@ -192,7 +191,7 @@ public class TaskRepository {
             filter_set = " where " + Filter.getFilter();
         }
         try {
-            String sql = String.format("select r.level,sum(r.stil='RP') as rp, sum(r.stil='OS') as os,sum(r.stil='FLASH') as flash from routen r join gebiete g on g.id=r.gebiet %s group by r.level",filter_set);
+            String sql = String.format("select r.level,sum(r.stil='RP') as rp, sum(r.stil='OS') as os,sum(r.stil='FLASH') as flash from routen r join gebiete g on g.id=r.gebiet %s group by r.level", filter_set);
             Log.d("SQL getBarChartValues", sql);
             Cursor mCur = mDb.rawQuery(sql, null);
             if (mCur != null) {

@@ -10,14 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.main.climbingdiary.R;
+import com.main.climbingdiary.common.AlertManager;
 import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.controller.TimeSlider;
 import com.main.climbingdiary.database.entities.Route;
 import com.main.climbingdiary.database.entities.RouteRepository;
-import com.main.climbingdiary.common.AlertManager;
 
 @SuppressLint("ValidFragment")
-public class AddRouteDialog extends DialogFragment{
+public class AddRouteDialog extends DialogFragment {
 
     public AddRouteDialog(String title) {
         Bundle args = new Bundle();
@@ -38,7 +38,7 @@ public class AddRouteDialog extends DialogFragment{
 
         final Context _context = view.getContext();
 
-        RouteDialogCreator creator = new RouteDialogCreator(view,_context,this);
+        RouteDialogCreator creator = new RouteDialogCreator(view, _context, this);
         creator.setUiElements(false);
 
         // Fetch arguments from bundle and set title
@@ -48,7 +48,7 @@ public class AddRouteDialog extends DialogFragment{
 
         //save the route
         creator.getSaveRoute().setOnClickListener(v -> {
-            if(creator.checkDate()) {
+            if (creator.checkDate()) {
                 Route newRoute = creator.getRoute(false);
                 boolean taskState = RouteRepository.insertRoute(newRoute);
                 if (taskState) {
@@ -59,7 +59,7 @@ public class AddRouteDialog extends DialogFragment{
                 new TimeSlider();
                 //close the dialog
                 getDialog().cancel();
-            }else{
+            } else {
 
             }
         });

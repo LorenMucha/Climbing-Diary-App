@@ -25,8 +25,8 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.activities.MainActivity;
-import com.main.climbingdiary.database.TaskRepository;
 import com.main.climbingdiary.common.AlertManager;
+import com.main.climbingdiary.database.TaskRepository;
 import com.main.climbingdiary.models.Colors;
 import com.main.climbingdiary.models.Levels;
 import com.main.climbingdiary.models.Styles;
@@ -44,17 +44,21 @@ public class RouteLineChartController extends RouteChartController {
     private LineChart lineChart;
     private Context context;
     private Map<Integer, List<InfoObject>> routeResults = new LinkedHashMap<>();
-    public RouteLineChartController(View view){
+
+    public RouteLineChartController(View view) {
         this.lineChart = view.findViewById(R.id.route_line_chart);
         this.context = view.getContext();
     }
-    public void show(){
+
+    public void show() {
         this.lineChart.setVisibility(View.VISIBLE);
     }
-    public void hide(){
+
+    public void hide() {
         this.lineChart.setVisibility(View.GONE);
     }
-    public void createChart(){
+
+    public void createChart() {
         final ArrayList<String> labels = new ArrayList<>();
         ArrayList<Entry> entries = new ArrayList<>();
         TaskRepository taskRepository = TaskRepository.getInstance();
@@ -79,7 +83,7 @@ public class RouteLineChartController extends RouteChartController {
                     while (!cursor.isAfterLast()) {
                         String level = cursor.getString(0);
                         String stil = cursor.getString(1);
-                        int points = (Levels.getLevelRating(level)+ Styles.getStyleRatingFactor(stil));
+                        int points = (Levels.getLevelRating(level) + Styles.getStyleRatingFactor(stil));
                         InfoObject route = new InfoObject();
                         route.points = points;
                         route.route_level = level;
@@ -91,7 +95,7 @@ public class RouteLineChartController extends RouteChartController {
                     }
                 }
                 labels.add(Integer.toString(yearVal));
-                routeResults.put(yearVal,routesYear);
+                routeResults.put(yearVal, routesYear);
                 entries.add(new Entry(i, sum));
                 i++;
             }
@@ -125,24 +129,24 @@ public class RouteLineChartController extends RouteChartController {
             lineChart.setVisibleXRangeMaximum(10);
             //set thex axis
             XAxis xAxis = lineChart.getXAxis();
-            xAxis.setLabelCount(yearList.size(),true);
+            xAxis.setLabelCount(yearList.size(), true);
             xAxis.setDrawAxisLine(false);
             xAxis.setDrawGridLines(false);
-            xAxis.setLabelCount(labels.size(),true);
+            xAxis.setLabelCount(labels.size(), true);
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
             xAxis.setValueFormatter(new XAxisValueFormatter(labels));
             YAxis yAxis = lineChart.getAxisLeft();
             yAxis.setDrawGridLines(false);
             yAxis.setSpaceBottom(5f);
             yAxis.setSpaceTop(5f);
-            yAxis.setAxisMaximum(data.getYMax()+200);
+            yAxis.setAxisMaximum(data.getYMax() + 200);
             //refresh
             lineChart.invalidate();
             this.lineChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
                 @Override
                 public void onValueSelected(Entry e, Highlight h) {
-                    int year = yearList.get((int)e.getX());
-                    showDialog(Objects.requireNonNull(routeResults.get(year)),year);
+                    int year = yearList.get((int) e.getX());
+                    showDialog(Objects.requireNonNull(routeResults.get(year)), year);
                 }
 
                 @Override
@@ -150,21 +154,21 @@ public class RouteLineChartController extends RouteChartController {
 
                 }
             });
-        }catch(Exception ex){
+        } catch (Exception ex) {
             AlertManager.setErrorAlert(this.context);
-            Log.d("Erstellung Line chart:",ex.getLocalizedMessage());
+            Log.d("Erstellung Line chart:", ex.getLocalizedMessage());
         }
     }
 
-    private void showDialog(List<InfoObject> objectList, int year){
+    private void showDialog(List<InfoObject> objectList, int year) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
         Context dialogContext = builder.getContext();
         LayoutInflater inflater = LayoutInflater.from(dialogContext);
         @SuppressLint("InflateParams") View alertView = inflater.inflate(R.layout.dialog_line_chart_top_ten, null);
         builder.setView(alertView);
-        builder.setTitle("Die 10 schwersten Touren - "+year);
+        builder.setTitle("Die 10 schwersten Touren - " + year);
         TableLayout tableLayout = alertView.findViewById(R.id.tableLayoutTopTen);
-        for(InfoObject infoObject: objectList ){
+        for (InfoObject infoObject : objectList) {
 
             TableRow tableRow = new TableRow(dialogContext);
             TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
@@ -172,23 +176,23 @@ public class RouteLineChartController extends RouteChartController {
 
             TextView textViewName = new TextView(dialogContext);
             textViewName.setText(infoObject.getRouteName());
-            textViewName.setTypeface(null,Typeface.BOLD);
+            textViewName.setTypeface(null, Typeface.BOLD);
             textViewName.setTextColor(this.context.getResources().getColor(R.color.black));
-            textViewName.setPadding(10,0,10,0);
+            textViewName.setPadding(10, 0, 10, 0);
             tableRow.addView(textViewName);
 
             TextView textViewLevel = new TextView(dialogContext);
             textViewLevel.setText(infoObject.getRoute_level());
             textViewLevel.setTypeface(null, Typeface.BOLD);
             textViewLevel.setTextColor(Colors.getGradeColor(infoObject.getRoute_level()));
-            textViewLevel.setPadding(10,0,10,0);
+            textViewLevel.setPadding(10, 0, 10, 0);
             tableRow.addView(textViewLevel);
 
             TextView textViewStil = new TextView(dialogContext);
             textViewStil.setText(infoObject.getRouteStil());
             textViewStil.setTypeface(null, Typeface.BOLD);
             textViewStil.setTextColor(Colors.getStyleColor(infoObject.getRouteStil()));
-            textViewStil.setPadding(10,0,10,0);
+            textViewStil.setPadding(10, 0, 10, 0);
             tableRow.addView(textViewStil);
 
             TextView textViewPoints = new TextView(dialogContext);
@@ -205,7 +209,7 @@ public class RouteLineChartController extends RouteChartController {
     }
 
     @Data
-    private static class InfoObject{
+    private static class InfoObject {
         private String route_level;
         private String routeName;
         private String routeStil;

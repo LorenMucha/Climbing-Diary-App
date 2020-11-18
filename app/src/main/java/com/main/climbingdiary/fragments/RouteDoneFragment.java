@@ -13,9 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.main.climbingdiary.R;
+import com.main.climbingdiary.adapter.RoutesAdapter;
 import com.main.climbingdiary.controller.FilterHeader;
 import com.main.climbingdiary.controller.menu.AppBarMenu;
-import com.main.climbingdiary.adapter.RoutesAdapter;
 import com.main.climbingdiary.database.entities.Route;
 import com.main.climbingdiary.database.entities.RouteRepository;
 import com.main.climbingdiary.models.RouteSort;
@@ -23,32 +23,35 @@ import com.main.climbingdiary.models.RouteSort;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public class RouteDoneFragment extends Fragment implements RouteFragment {
 
+    public static final String TITLE = "Routen";
+    @SuppressLint("StaticFieldLeak")
+    public static View view;
     private static RoutesAdapter adapter;
     @SuppressLint("StaticFieldLeak")
     private static RecyclerView rvRoutes;
     @SuppressLint("StaticFieldLeak")
-    public static View view;
-    @SuppressLint("StaticFieldLeak")
     private static FilterHeader header;
-    public static final String TITLE = "Routen";
     @SuppressLint("StaticFieldLeak")
     private static RouteDoneFragment INSTANCE;
 
-    public static RouteDoneFragment getInstance(){
-        if(INSTANCE==null){
+    public static RouteDoneFragment getInstance() {
+        if (INSTANCE == null) {
             INSTANCE = new RouteDoneFragment();
         }
         return INSTANCE;
     }
 
+    public static RoutesAdapter getAdapter() {
+        return adapter;
+    }
+
     @Override
-    public View getView(){
+    public View getView() {
         return view;
     }
 
@@ -72,18 +75,15 @@ public class RouteDoneFragment extends Fragment implements RouteFragment {
         return view;
     }
 
-    public static RoutesAdapter getAdapter(){
-        return adapter;
-    }
-
     @Override
-    public void refreshData(){
+    public void refreshData() {
         ArrayList<Route> routes;
         try {
             routes = RouteRepository.getRouteList();
             adapter = new RoutesAdapter(routes);
             rvRoutes.setAdapter(adapter);
-        }catch(Exception ignored){}
+        } catch (Exception ignored) {
+        }
     }
 
     @Override
@@ -93,26 +93,24 @@ public class RouteDoneFragment extends Fragment implements RouteFragment {
         AppBarMenu appmenu = new AppBarMenu(menu);
         appmenu.setItemVisebility(true);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         item.setChecked(true);
         int id = item.getItemId();
-        if(id==R.id.sort_level){
+        if (id == R.id.sort_level) {
             RouteSort.setSort("level");
             refreshData();
             return true;
-        }
-        else if(id==R.id.sort_area){
+        } else if (id == R.id.sort_area) {
             RouteSort.setSort("area");
             refreshData();
             return true;
-        }
-        else if(id==R.id.sort_date) {
+        } else if (id == R.id.sort_date) {
             RouteSort.setSort("date");
             refreshData();
             return true;
-        }
-        else if(item.getGroupId()==R.id.filter_area+1){
+        } else if (item.getGroupId() == R.id.filter_area + 1) {
             header.show(item.getTitle().toString());
             return true;
         }

@@ -15,14 +15,14 @@ import org.osmdroid.config.Configuration;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class MapFragment extends Fragment implements RouteFragment{
+public class MapFragment extends Fragment implements RouteFragment {
 
     public static final String TITLE = "Map";
     private static MapFragment INSTACE;
     private MapController mapController;
 
-    public static MapFragment getInstance(){
-        if(INSTACE==null){
+    public static MapFragment getInstance() {
+        if (INSTACE == null) {
             INSTACE = new MapFragment();
         }
         return INSTACE;

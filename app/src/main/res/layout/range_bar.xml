@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorPrimaryDark"
     android:layout_width="match_parent"
-    android:padding="10dp"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimaryDark"
+    android:padding="10dp">
 
     <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
         android:id="@+id/timerange"
-        app:bar_color="@color/white"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bar_color="@color/white"
         app:bar_highlight_color="@color/blue_btn_bg_color"
         app:left_thumb_color="@color/white"
         app:left_thumb_color_pressed="@color/blue_btn_bg_pressed_color"
         app:right_thumb_color="@color/white"
-        app:right_thumb_color_pressed="@color/blue_btn_bg_pressed_color"
-        android:layout_height="wrap_content"/>
+        app:right_thumb_color_pressed="@color/blue_btn_bg_pressed_color" />
 
     <TextView
         android:id="@+id/textMin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/timerange"
-        android:layout_marginTop="5dp"
         android:layout_marginStart="10dp"
-        android:textSize="@dimen/route_date"
-        android:textColor="@color/white"/>
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/route_date" />
 
     <TextView
         android:id="@+id/textMax"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/timerange"
+        android:layout_alignParentRight="true"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
-        android:textSize="@dimen/route_date"
         android:textColor="@color/white"
-        android:layout_alignParentRight="true"/>
+        android:textSize="@dimen/route_date" />
 
 </RelativeLayout>

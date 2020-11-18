@@ -26,9 +26,6 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
     @SuppressLint("StaticFieldLeak")
     private static TabLayout tabLayout;
     private static String tabTitle;
-    public static String getTabTitle(){
-        return tabTitle;
-    }
     private static List<Tabs> fragmentMap = new ArrayList<>();
 
     static {
@@ -38,12 +35,12 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
         //fragmentMap.add(Tabs.MAP);
     }
 
-    public FragmentPager(AppCompatActivity _activity){
+    public FragmentPager(AppCompatActivity _activity) {
         ViewPager viewPager = _activity.findViewById(view_layout);
         tabLayout = _activity.findViewById(tab_layout);
         TabAdapter adapter = new TabAdapter(_activity.getSupportFragmentManager());
-        for(Tabs tab:fragmentMap){
-            adapter.addFragment((Fragment) tab.getFragment(),tab.getTitle());
+        for (Tabs tab : fragmentMap) {
+            adapter.addFragment((Fragment) tab.getFragment(), tab.getTitle());
         }
         //adapter.addFragment(Tabs.MAP.getFragment(),Tabs.MAP.getTitle());
         viewPager.setAdapter(adapter);
@@ -51,10 +48,30 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
         tabLayout.addOnTabSelectedListener(this);
     }
 
+    public static String getTabTitle() {
+        return tabTitle;
+    }
+
+    public static void setPosition(int pos) {
+        Objects.requireNonNull(tabLayout.getTabAt(pos)).select();
+    }
+
+    public static void refreshActualFragment() {
+        int tabPosition = tabLayout.getSelectedTabPosition();
+        RouteFragment fragment = fragmentMap.get(tabPosition).getFragment();
+        fragment.refreshData();
+    }
+
+    public static void refreshAllFragments() {
+        for (Tabs tab : fragmentMap) {
+            tab.getFragment().refreshData();
+        }
+    }
+
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         tabTitle = Objects.requireNonNull(tab.getText()).toString();
-        switch(tabTitle) {
+        switch (tabTitle) {
             //statistic
             case StatisticFragment.TITLE:
                 ShowTimeSlider.show();
@@ -74,11 +91,12 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
                 ShowTimeSlider.hide();
                 AppFloatingActionButton.show();
                 break;
-            default :
+            default:
                 ShowTimeSlider.hide();
                 break;
         }
     }
+
     @Override
     public void onTabUnselected(TabLayout.Tab tab) {
 
@@ -87,21 +105,5 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
 
-    }
-
-    public static void setPosition(int pos){
-        Objects.requireNonNull(tabLayout.getTabAt(pos)).select();
-    }
-
-    public static void refreshActualFragment(){
-        int tabPosition = tabLayout.getSelectedTabPosition();
-        RouteFragment fragment = fragmentMap.get(tabPosition).getFragment();
-        fragment.refreshData();
-    }
-
-    public static void refreshAllFragments(){
-        for(Tabs tab: fragmentMap){
-            tab.getFragment().refreshData();
-        }
     }
 }
