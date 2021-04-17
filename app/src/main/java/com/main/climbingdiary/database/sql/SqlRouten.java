@@ -8,18 +8,20 @@ import com.main.climbingdiary.database.entities.SectorRepository;
 import com.main.climbingdiary.models.RouteSort;
 import com.main.climbingdiary.models.RouteType;
 
+import java.util.regex.Pattern;
+
 import static com.main.climbingdiary.database.sql.SqlAreaSektoren.getAreaTableName;
 import static com.main.climbingdiary.database.sql.SqlAreaSektoren.getSektorenTableName;
-import static com.main.climbingdiary.database.sql.SqlHelper.getType;
+
 
 public class SqlRouten {
 
     public static String getProjekteTableName() {
-        return "projekte_" + getType();
+        return "projekte_" + AppPreferenceManager.getSportType().typeToString();
     }
 
     public static String getRoutenTableName() {
-        return "routen_" + getType();
+        return "routen_" + AppPreferenceManager.getSportType().typeToString();
     }
 
     public static String getRouteList(RouteType routeType) {
@@ -154,16 +156,16 @@ public class SqlRouten {
         return new String[]{insertArea, insertSektor, insertProjekt};
     }
 
-    public static String updateRoute(Route route){
+    public static String updateRoute(Route route) {
         String areaName = route.getArea();
         String sectorName = route.getSector();
-        if(!SqlHelper.checkIfNumeric(areaName) && !SqlHelper.checkIfNumeric(sectorName)){
+        if (checkIfNumeric(areaName) && checkIfNumeric(sectorName)) {
             route.setArea(Integer.toString(AreaRepository.getInstance().getAreaByAreaNameAndSectorName(sectorName, areaName).getId()));
-            route.setSector(Integer.toString(SectorRepository.getInstance().getSectorByAreaNameAndSectorName(sectorName,areaName).getId()));
+            route.setSector(Integer.toString(SectorRepository.getInstance().getSectorByAreaNameAndSectorName(sectorName, areaName).getId()));
         }
         return String.format("UPDATE %s SET date='%s', name='%s', level='%s', stil='%s', rating='%s', kommentar='%s' where id=%s",
                 getRoutenTableName(), route.getDate(), route.getName(), route.getLevel(), route.getStyle(), route.getRating(),
-                route.getComment(),  route.getId());
+                route.getComment(), route.getId());
     }
 
     public static String deleteRoute(int id) {
@@ -172,5 +174,13 @@ public class SqlRouten {
 
     public static String deleteProjekt(int id) {
         return "DELETE FROM " + getProjekteTableName() + " WHERE id=" + id;
+    }
+
+    private static boolean checkIfNumeric(String toCheck) {
+        final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
+        if (toCheck == null) {
+            return true;
+        }
+        return !pattern.matcher(toCheck).matches();
     }
 }

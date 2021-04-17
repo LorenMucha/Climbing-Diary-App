@@ -20,8 +20,7 @@ public class AppPermissions {
             Manifest.permission.LOCATION_HARDWARE,
             Manifest.permission.ACCESS_NETWORK_STATE};
 
-    public static void checkPermissions(){
-        Context context = MainActivity.getMainAppContext();
+    public static void checkPermissions(Context context){
         for(String perm: PERMS){
             if (!EasyPermissions.hasPermissions(context, perm)) {
                 // Request one permission

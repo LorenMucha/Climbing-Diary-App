@@ -43,7 +43,6 @@ public class MapController {
 
     public MapController(View _view){
         view = _view;
-        AppPermissions.checkPermissions();
         routeRepository = new RouteRepository<>(Route.class);
     }
 

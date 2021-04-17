@@ -25,12 +25,12 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import lombok.var;
 
 import static android.app.Activity.RESULT_OK;
+import static com.main.climbingdiary.common.preferences.PreferenceKeys.FILE_CHOOOSER_REQUEST_RESTORE_COPY;
+import static com.main.climbingdiary.common.preferences.PreferenceKeys.FILE_CHOOOSER_REQUEST_SAFTY_COPY;
 
 public class SettingsFragment extends PreferenceFragment {
 
     private Preference dbOutputPath;
-    private static final int FILE_CHOOOSER_REQUEST_SAFTY_COPY = 12345;
-    private static final int FILE_CHOOOSER_REQUEST_RESTORE_COPY = 123456;
     private static volatile SettingsFragment INSTANZ = null;
 
     public synchronized static SettingsFragment getInstance() {

@@ -20,6 +20,7 @@ android {
         unitTests.returnDefaultValues = true
     }
     sourceSets {
+        android.sourceSets.main.assets.srcDirs += ['src/main/assets/']
         androidTest.java.srcDirs += 'src/androidTest/java'
         test.java.srcDirs += 'src/test/java'
     }
@@ -78,4 +79,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-web:3.3.0'
     androidTestImplementation 'androidx.test.espresso.idling:idling-concurrent:3.3.0'
     androidTestImplementation 'androidx.test.espresso:espresso-idling-resource:3.3.0'
+}
+
+def getFlavorConfig(String str) {
+    return ["$projectDir.absolutePath/src/main/assets/"];
 }

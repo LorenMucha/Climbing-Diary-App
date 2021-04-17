@@ -20,7 +20,7 @@ public class SettingsActivity extends AppCompatActivity {
         getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        AppPermissions.checkPermissions();
+        AppPermissions.checkPermissions(this.getApplicationContext());
     }
 
     public static AppCompatActivity getSettingsActivity(){return SettingsActivity.mainActivity;}

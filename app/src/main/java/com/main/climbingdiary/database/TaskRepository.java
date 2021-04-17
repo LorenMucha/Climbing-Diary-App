@@ -1,13 +1,11 @@
 package com.main.climbingdiary.database;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
-import com.main.climbingdiary.activities.MainActivity;
 import com.main.climbingdiary.database.entities.Projekt;
 import com.main.climbingdiary.database.entities.Route;
 import com.main.climbingdiary.database.sql.SqlAreaSektoren;
@@ -64,12 +62,12 @@ public class TaskRepository {
         return getCursor(SqlAreaSektoren.getSectorByAreaName(name));
     }
 
-    public Cursor getSectorIdByAreaNameAndSectorName(String sectorName, String areaName){
-        return getCursor(SqlAreaSektoren.getSectorIdBySectorNameAndAreaName(sectorName,areaName));
+    public Cursor getSectorIdByAreaNameAndSectorName(String sectorName, String areaName) {
+        return getCursor(SqlAreaSektoren.getSectorIdBySectorNameAndAreaName(sectorName, areaName));
     }
 
-    public Cursor getAreaIdByAreaNameAndSectorName(String sectorName, String areaName){
-        return getCursor(SqlAreaSektoren.getAreaIdBySectorNameAndAreaName(sectorName,areaName));
+    public Cursor getAreaIdByAreaNameAndSectorName(String sectorName, String areaName) {
+        return getCursor(SqlAreaSektoren.getAreaIdBySectorNameAndAreaName(sectorName, areaName));
     }
 
     public Cursor getTopTenRoutes(int year) {
@@ -97,7 +95,7 @@ public class TaskRepository {
         return executeSqlTasks(SqlRouten.getInsertProjektTasks(projekt));
     }
 
-    public boolean updateRoute(Route route){
+    public boolean updateRoute(Route route) {
         return executeSqlTasks(new String[]{SqlRouten.updateRoute(route)});
     }
 

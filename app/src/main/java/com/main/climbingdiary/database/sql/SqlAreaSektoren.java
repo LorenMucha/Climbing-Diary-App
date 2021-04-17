@@ -2,16 +2,17 @@ package com.main.climbingdiary.database.sql;
 
 import android.util.Log;
 
-import static com.main.climbingdiary.database.sql.SqlHelper.getType;
+import com.main.climbingdiary.common.preferences.AppPreferenceManager;
+
 
 public class SqlAreaSektoren {
 
     public static String getAreaTableName() {
-        return "gebiete_" + getType();
+        return "gebiete_" +  AppPreferenceManager.getSportType().typeToString();
     }
 
     public static String getSektorenTableName() {
-        return "sektoren_" + getType();
+        return "sektoren_" +  AppPreferenceManager.getSportType().typeToString();
     }
 
     public static String getAllAreas(){
