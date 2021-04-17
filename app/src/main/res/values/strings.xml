@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Climbing Diary</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="search_hint">Suche</string>
+    <string name="star">\u2605</string>
+    <!--Settings-->
+    <string name="verwalten_pref_header">Verwalten</string>
+    <string name="pref_gebiete">Gebiete</string>
+    <string name="pref_gebiete_list">Gebietsliste</string>
+    <string name="pref_sektoren">Sektoren</string>
+    <string name="export_pref_header">Export</string>
+    <string name="safty_copy_pref_header">Sicherungskopie</string>
+    <string name="menu_suche">Suche</string>
+    <string name="menu_filter">Filter</string>
+    <string name="menu_gebiete">Gebiete</string>
+    <string name="menu_sortieren">Sortieren</string>
+    <string name="menu_schwierigkeit">Schwierigkeit</string>
+    <string name="menu_gebiet">Gebiet</string>
+    <string name="menu_datum">Datum</string>
+</resources>
