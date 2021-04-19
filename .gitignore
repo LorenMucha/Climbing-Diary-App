@@ -1,6 +1,5 @@
 # sqlite
 
-app/src/main/assets/*.db
 
 # Built application files
 *.apk
