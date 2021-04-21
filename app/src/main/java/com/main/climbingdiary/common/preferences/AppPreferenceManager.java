@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 
 import com.main.climbingdiary.activities.MainActivity;
 import com.main.climbingdiary.common.FileUtil;
+import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.models.MenuValues;
 import com.main.climbingdiary.models.RouteSort;
 import com.main.climbingdiary.models.SportType;
@@ -36,7 +37,7 @@ public class AppPreferenceManager {
     }
 
     public static synchronized SportType getSportType(){
-        return SportType.stringToSportType(Objects.requireNonNull(PREFS.getString(PreferenceKeys.SPORT, "klettern")));
+        return SportType.stringToSportType(Objects.requireNonNull(PREFS.getString(PreferenceKeys.SPORT, FragmentPager.getInstance().getContextSport())));
     }
 
     public static synchronized void setFilter(String filter){

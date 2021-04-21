@@ -17,9 +17,8 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      #- name: Run Tests
-       # run: bash ./gradlew test --stacktrace
-      #Fixme: upload der App klappt nicht richtig, da die Datenbank nicht mit verwendet wird
+      - name: Run Tests
+        run: bash ./gradlew test --stacktrace
       - name: Build Signed APK
         uses: victorbnl/build-signed-apk@main
         with:

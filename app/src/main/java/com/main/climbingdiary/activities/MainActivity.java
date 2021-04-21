@@ -91,12 +91,6 @@ public class MainActivity extends AppCompatActivity{
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        AppPreferenceManager.removeAllTempPrefs();
-    }
-
-    @Override
     protected void onStop() {
         super.onStop();
         AppPreferenceManager.removeAllTempPrefs();

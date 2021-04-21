@@ -67,6 +67,10 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
         return INSTANZE;
     }
 
+    public String getContextSport(){
+        return tabLayout.getTabAt(1).getText().toString();
+    }
+
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         Tabs tabSelected = Tabs.stringToTabs(Objects.requireNonNull(tab.getText()).toString());
