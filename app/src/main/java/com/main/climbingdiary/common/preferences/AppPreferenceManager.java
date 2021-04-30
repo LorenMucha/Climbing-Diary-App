@@ -37,7 +37,7 @@ public class AppPreferenceManager {
     }
 
     public static synchronized SportType getSportType(){
-        return SportType.stringToSportType(Objects.requireNonNull(PREFS.getString(PreferenceKeys.SPORT, FragmentPager.getInstance().getContextSport())));
+        return SportType.stringToSportType(Objects.requireNonNull(PREFS.getString(PreferenceKeys.SPORT,"klettern")));
     }
 
     public static synchronized void setFilter(String filter){

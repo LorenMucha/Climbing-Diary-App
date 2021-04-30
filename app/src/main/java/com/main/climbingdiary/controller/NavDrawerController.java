@@ -17,6 +17,7 @@ public class NavDrawerController implements NavigationView.OnNavigationItemSelec
 
     private final DrawerLayout drawer;
 
+
     public NavDrawerController(AppCompatActivity activity) {
         int layoutId = R.id.nav_drawer_layout;
         drawer = activity.findViewById(layoutId);
