@@ -163,9 +163,9 @@ public class SqlRouten {
             route.setArea(Integer.toString(AreaRepository.getInstance().getAreaByAreaNameAndSectorName(sectorName, areaName).getId()));
             route.setSector(Integer.toString(SectorRepository.getInstance().getSectorByAreaNameAndSectorName(sectorName, areaName).getId()));
         }
-        return String.format("UPDATE %s SET date='%s', name='%s', level='%s', stil='%s', rating='%s', kommentar='%s' where id=%s",
+        return String.format("UPDATE %s SET date='%s', name='%s', level='%s', stil='%s', rating='%s', kommentar='%s',  gebiet='%s', sektor='%s' where id=%s",
                 getRoutenTableName(), route.getDate(), route.getName(), route.getLevel(), route.getStyle(), route.getRating(),
-                route.getComment(), route.getId());
+                route.getComment(), route.getArea(),route.getSector(), route.getId());
     }
 
     public static String deleteRoute(int id) {

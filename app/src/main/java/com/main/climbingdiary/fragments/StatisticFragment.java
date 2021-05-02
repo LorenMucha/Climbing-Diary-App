@@ -27,7 +27,7 @@ public class StatisticFragment extends Fragment implements RouteFragment {
 
     private Button setLineChartBtn, setBarChartBtn, setTableBtn;
     private View view;
-    public static final String TITLE = "Statistik";
+
     private static StatisticFragment INSTANZ = null;
 
     public static StatisticFragment getInstance() {

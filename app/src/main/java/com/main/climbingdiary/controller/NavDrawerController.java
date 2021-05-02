@@ -36,7 +36,6 @@ public class NavDrawerController implements NavigationView.OnNavigationItemSelec
         AppPreferenceManager.setSportType(type);
         FragmentPager.getInstance().initializeSportType();
         drawer.closeDrawer(GravityCompat.START);
-        Log.d("SportType selected", AppPreferenceManager.getSportType().typeToString());
         return true;
     }
 }

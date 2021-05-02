@@ -27,9 +27,6 @@ public class SqlAreaSektoren {
     }
 
     public static String getAreaIdBySectorNameAndAreaName(String sectorName, String areaName){
-        final String query = String.format("SELECT a.* FROM %s s, %s a where s.name='%s' AND a.name='%s'",
-                getSektorenTableName(), getAreaTableName(), sectorName, areaName);
-        Log.d("get Query:",query);
         return String.format("SELECT * FROM %s s, %s a where s.name='%s' AND a.name='%s'",
                 getSektorenTableName(), getAreaTableName(), sectorName, areaName);
     }
