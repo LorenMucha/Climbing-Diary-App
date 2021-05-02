@@ -1,5 +1,6 @@
 package com.main.climbingdiary.activities
 
+import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.Context
 import android.os.Bundle
@@ -9,12 +10,12 @@ import com.main.climbingdiary.R
 class MainActivity : AppCompatActivity() {
 
     companion object{
-        var APPLICATION: AppCompatActivity? = null
-        var COMPONENT_NAME: ComponentName? = null
-        var CONTEXT: Context? = null
-        fun getMainActivity(): AppCompatActivity? = APPLICATION
-        fun getComponentName(): ComponentName? = COMPONENT_NAME
-        fun getContext(): Context? = CONTEXT
+        @Volatile var APPLICATION: AppCompatActivity? = null
+        @Volatile var COMPONENT_NAME: ComponentName? = null
+        @SuppressLint("StaticFieldLeak")
+        @Volatile var CONTEXT: Context? = null
+        @Synchronized fun getApplication(): AppCompatActivity? = APPLICATION
+        @Synchronized fun getAppContext(): Context? = CONTEXT
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
