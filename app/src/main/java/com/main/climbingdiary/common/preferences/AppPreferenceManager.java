@@ -6,7 +6,6 @@ import android.preference.PreferenceManager;
 
 import com.main.climbingdiary.activities.MainActivity;
 import com.main.climbingdiary.common.FileUtil;
-import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.models.MenuValues;
 import com.main.climbingdiary.models.RouteSort;
 import com.main.climbingdiary.models.SportType;
@@ -18,7 +17,6 @@ public class AppPreferenceManager {
 
     private static final SharedPreferences PREFS = PreferenceManager.getDefaultSharedPreferences(MainActivity.getMainAppContext());
     private static final SharedPreferences.Editor EDITOR = PREFS.edit();
-
 
     public static synchronized void setOutputPath(String path){
         Uri treeUri = Uri.parse(path);

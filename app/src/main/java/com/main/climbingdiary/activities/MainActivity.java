@@ -22,6 +22,7 @@ import com.main.climbingdiary.controller.TimeSlider;
 import com.main.climbingdiary.controller.button.AppFloatingActionButton;
 import com.main.climbingdiary.controller.button.ShowTimeSlider;
 import com.main.climbingdiary.database.TaskRepository;
+import com.main.climbingdiary.models.SportType;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -56,6 +57,8 @@ public class MainActivity extends AppCompatActivity{
         //manager for the tabs
         FragmentPager.getInstance();
 
+        AppPreferenceManager.removeAllFilterPrefs();
+
         //the add buttons
         new ShowTimeSlider();
         //the slider
@@ -88,17 +91,5 @@ public class MainActivity extends AppCompatActivity{
             startActivity(intent);
         }
         return false;
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        AppPreferenceManager.removeAllTempPrefs();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        AppPreferenceManager.removeAllTempPrefs();
     }
 }
