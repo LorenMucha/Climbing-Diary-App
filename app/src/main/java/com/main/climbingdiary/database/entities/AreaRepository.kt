@@ -9,7 +9,7 @@ object AreaRepository {
 
     private val uOrm = MicroOrm()
 
-    fun getAreaByAreaNameAndSectorName(sectorName: String?, areaName: String?): Area? {
+    fun getAreaByAreaNameAndSectorName(sectorName: String?, areaName: String?): Area {
         val cursor: Cursor? = TaskRepository.getAreaIdByAreaNameAndSectorName(sectorName, areaName)
         return uOrm.fromCursor(cursor, Area::class.java)
     }

@@ -12,6 +12,7 @@ import com.main.climbingdiary.model.SportType
 import com.main.climbingdiary.model.Tabs
 import java.util.*
 
+
 @SuppressLint("StaticFieldLeak")
 object AppPreferenceManager {
 
@@ -51,7 +52,7 @@ object AppPreferenceManager {
     }
 
     fun getFilter(): String {
-        return preferences.getString(PreferenceKeys.FILTER, "")
+        return preferences.getString(PreferenceKeys.FILTER, "").toString()
     }
 
     fun getSort(): RouteSort {
@@ -95,7 +96,7 @@ object AppPreferenceManager {
         preferences.edit().putString(PreferenceKeys.TAB, tab.toString()).apply();
     }
 
-    fun getSelectedTabsTitle(): Tabs? {
+    fun getSelectedTabsTitle(): Tabs {
         return Tabs.valueOf(
             preferences.getString(PreferenceKeys.TAB, "").toString().toUpperCase(Locale.ROOT)
         )

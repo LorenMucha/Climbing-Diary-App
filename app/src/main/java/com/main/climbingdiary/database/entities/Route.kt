@@ -3,13 +3,13 @@ package com.main.climbingdiary.database.entities
 import org.chalup.microorm.annotations.Column
 
 data class Route(
-    @Column("id") val id: Int,
-    @Column("stil") val style: String,
-    @Column("level") val levelval: String,
-    @Column("name") val name: String,
-    @Column("sektor") val sector: String,
-    @Column("gebiet") val area: String,
-    @Column("rating") val rating: Int,
-    @Column("kommentar") val comment: String,
-    @Column("date") val date: String
+    @Column("id") var id: Int,
+    @Column("stil") var style: String,
+    @Column("level") var level: String,
+    @Column("name") var name: String,
+    @Column("sektor") var sector: String,
+    @Column("gebiet") var area: String,
+    @Column("rating") var rating: Int,
+    @Column("kommentar") var comment: String,
+    @Column("date") var date: String
 ):RouteElement

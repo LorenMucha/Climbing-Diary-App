@@ -3,9 +3,9 @@ package com.main.climbingdiary.database.entities
 import org.chalup.microorm.annotations.Column
 
 data class Sector(
-    @Column("gebiet") val area_name: Int,
-    @Column("name") val name: String,
-@Column("id") val id:Int,
-@Column("lat") val lat:Int,
-@Column("lng") val lng: Int
+    @Column("gebiet") var area_name: Int,
+    @Column("name") var name: String,
+    @Column("id") var id: Int,
+    @Column("lat") var lat: Int,
+    @Column("lng") var lng: Int
 )
