@@ -6,44 +6,45 @@ import com.main.climbingdiary.database.TaskRepository
 import com.main.climbingdiary.model.MenuValues
 import org.chalup.microorm.MicroOrm
 import java.util.*
+import kotlin.reflect.KClass
 
-class RouteRepository<T>(val klass: Class<T>) {
+class RouteRepository<T:RouteElement>(val klass: KClass<T>) {
 
     private val uOrm = MicroOrm()
 
     fun getRoute(_id: Int): T {
-        var cursor: Cursor? = null
-        if (klass == Route::class.java) {
+        var cursor:Cursor? = null
+        if (klass == Route::class) {
             cursor = TaskRepository.getRoute(_id)
         } else if (klass == Projekt::class) {
             cursor = TaskRepository.getProjekt(_id)
         }
-        return uOrm.fromCursor(cursor, klass)
+        return uOrm.fromCursor(cursor, klass.java)
     }
 
     fun getRouteList(): ArrayList<T> {
         val routes = ArrayList<T>()
         var cursor: Cursor? = null
-        if (klass == Route::class.java) {
+        if (klass == Route::class) {
             cursor = TaskRepository.getAllRoutes()
         } else if (klass == Projekt::class) {
             cursor = TaskRepository.getAllProjekts()
         }
         if (cursor != null) {
             while (!cursor.isAfterLast) {
-                routes.add(uOrm.fromCursor(cursor, klass))
+                routes.add(uOrm.fromCursor(cursor, klass.java))
                 cursor.moveToNext()
             }
         }
         return routes
     }
 
-    fun getListByArea(areaId: Int): ArrayList<T>? {
+    fun getListByArea(areaId: Int): ArrayList<T> {
         AppPreferenceManager.setFilterSetter(MenuValues.FILTER)
         AppPreferenceManager.setFilter(String.format("g.id = %s", areaId))
-        val _routes = getRouteList()
+        val routes = getRouteList()
         AppPreferenceManager.removeAllFilterPrefs()
-        return _routes
+        return routes
     }
 
     fun deleteRoute(routeElement: RouteElement): Boolean {
@@ -56,9 +57,9 @@ class RouteRepository<T>(val klass: Class<T>) {
 
     fun insertRoute(route: Any?): Boolean {
         return if (route is Route) {
-            TaskRepository.insertRoute(route as Route?)
+            TaskRepository.insertRoute(route as Route)
         } else if (route is Projekt) {
-            TaskRepository.insertProjekt(route as Projekt?)
+            TaskRepository.insertProjekt(route as Projekt)
         } else {
             false
         }
@@ -66,9 +67,9 @@ class RouteRepository<T>(val klass: Class<T>) {
 
     fun updateRoute(`object`: Any?): Boolean {
         return if (`object` is Route) {
-            TaskRepository.updateRoute(`object` as Route?)
+            TaskRepository.updateRoute(`object` as Route)
         } else if (`object` is Projekt) {
-            TaskRepository.insertProjekt(`object` as Projekt?)
+            TaskRepository.insertProjekt(`object` as Projekt)
         } else {
             false
         }

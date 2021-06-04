@@ -4,7 +4,7 @@ import android.content.Context
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.main.climbingdiary.model.Alert
 
-class AlertManager {
+object AlertManager {
     fun setErrorAlert(context: Context?) {
         SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
             .setTitleText("Oops...")

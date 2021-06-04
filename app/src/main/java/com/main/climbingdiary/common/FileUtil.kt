@@ -1,18 +1,21 @@
 package com.main.climbingdiary.common
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.os.storage.StorageManager
 import android.provider.DocumentsContract
+import com.main.climbingdiary.activities.MainActivity
 import java.io.File
 
+@SuppressLint("StaticFieldLeak")
 object FileUtil {
+
     private const val PRIMARY_VOLUME_NAME = "primary"
+    private val context:Context = MainActivity.getAppContext()!!
 
-    fun getFullPathFromTreeUri(treeUri: Uri?, con: Context): String? {
-        if (treeUri == null) return null
-
-        var volumePath = getVolumePath(getVolumeIdFromTreeUri(treeUri), con)
+    fun getFullPathFromTreeUri(treeUri: Uri): String? {
+        var volumePath = getVolumeIdFromTreeUri(treeUri)?.let { getVolumePath(it) }
         if (volumePath == null) return File.separator
         if (volumePath.endsWith(File.separator)) volumePath =
             volumePath.substring(0, volumePath.length - 1)
@@ -26,7 +29,7 @@ object FileUtil {
     }
 
 
-    private fun getVolumePath(volumeId: String?, context: Context): String? {
+    private fun getVolumePath(volumeId: String): String? {
         return try {
             val mStorageManager =
                 context.getSystemService(Context.STORAGE_SERVICE) as StorageManager

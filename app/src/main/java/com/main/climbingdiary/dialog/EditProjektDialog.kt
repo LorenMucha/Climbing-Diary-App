@@ -4,53 +4,54 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import androidx.fragment.app.DialogFragment
 import com.main.climbingdiary.R
-import com.main.climbingdiary.common.preferences.AlertManager
 import com.main.climbingdiary.controller.FragmentPager
 import com.main.climbingdiary.database.entities.Projekt
 import com.main.climbingdiary.database.entities.RouteRepository
 
-class AddProjektDialog(title: String?) : DialogFragment() {
-
-    private val routeRepository: RouteRepository<*> = RouteRepository(Projekt::class)
+class EditProjektDialog(title: String?, _id: Int) : DialogFragment() {
+    private val routeRepository: RouteRepository<Projekt> = RouteRepository(Projekt::class)
 
     init {
         val args = Bundle()
         args.putString("title", title)
+        args.putInt("id", _id)
         this.arguments = args
     }
 
     override fun onCreateView(
-        @NonNull inflater: LayoutInflater,
+        inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         return inflater.inflate(R.layout.dialog_add_route, container)
     }
 
-    override fun onViewCreated(@NonNull view: View, @Nullable savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, @Nullable savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val context = view.context
+        assert(arguments != null)
+        val title: String = requireArguments().getString("title", "Bearbeiten")
+        //get the route value which will be edit
+        val routeId: Int = requireArguments().getInt("id", 0)
+        val editProjekt = routeRepository.getRoute(routeId)
         val creator = RouteDialogCreator(view, context, this)
-        creator.setUiElements(true)
-
-        // Fetch arguments from bundle and set title
-        if (arguments == null) throw AssertionError()
-        val title = requireArguments().getString("title", "Neues Projekt")
         creator.setForeGroundSpan(title)
-        creator.saveRoute.setOnClickListener { v ->
-            val newProjekt: Projekt = creator.getProjekt(false) as Projekt
-            val taskState = routeRepository.insertRoute(newProjekt)
+        creator.setUiElements(editProjekt)
+
+        //save the route
+        creator.saveRoute.setOnClickListener {
+            val projekt = creator.getProjekt(true)
+            val taskState = routeRepository.deleteRoute(editProjekt)
             if (taskState) {
-                FragmentPager.refreshAllFragments()
-            } else {
-                AlertManager.setErrorAlert(view.context)
+                routeRepository.insertRoute(projekt)
             }
             //close the dialog
             dialog!!.cancel()
+            FragmentPager.refreshAllFragments()
         }
     }
 }
+
