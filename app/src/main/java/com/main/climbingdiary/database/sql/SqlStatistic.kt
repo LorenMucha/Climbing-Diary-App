@@ -1,6 +1,6 @@
 package com.main.climbingdiary.database.sql
 
-import com.main.climbingdiary.common.AppPreferenceManager
+import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.database.sql.SqlAreaSektoren.getAreaTableName
 import com.main.climbingdiary.database.sql.SqlRouten.getRoutenTableName
 import com.main.climbingdiary.model.Styles

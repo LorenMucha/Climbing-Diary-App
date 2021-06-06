@@ -5,7 +5,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.main.climbingdiary.R
-import com.main.climbingdiary.common.AppPreferenceManager
+import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.fragments.RouteFragment
 import com.main.climbingdiary.model.MenuValues
 

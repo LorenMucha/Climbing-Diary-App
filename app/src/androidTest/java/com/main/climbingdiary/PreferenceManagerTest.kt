@@ -2,7 +2,7 @@ package com.main.climbingdiary
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.main.climbingdiary.common.AppPreferenceManager
+import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.model.SportType
 import org.junit.Assert.assertEquals
 import org.junit.Test

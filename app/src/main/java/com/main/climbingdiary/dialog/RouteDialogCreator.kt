@@ -14,10 +14,10 @@ import android.widget.*
 import androidx.fragment.app.DialogFragment
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.main.climbingdiary.R
-import com.main.climbingdiary.common.AppPreferenceManager
+import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.common.GradeConverter
 import com.main.climbingdiary.common.RouteConverter
-import com.main.climbingdiary.common.preferences.AlertManager
+import com.main.climbingdiary.common.AlertManager
 import com.main.climbingdiary.controller.FragmentPager
 import com.main.climbingdiary.controller.SetDate
 import com.main.climbingdiary.database.entities.AreaRepository

@@ -1,6 +1,6 @@
 package com.main.climbingdiary.database.sql
 
-import com.main.climbingdiary.common.AppPreferenceManager
+import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.database.entities.AreaRepository
 import com.main.climbingdiary.database.entities.Projekt
 import com.main.climbingdiary.database.entities.Route
@@ -9,7 +9,6 @@ import com.main.climbingdiary.database.sql.SqlAreaSektoren.getAreaTableName
 import com.main.climbingdiary.database.sql.SqlAreaSektoren.getSektorenTableName
 import com.main.climbingdiary.model.RouteSort
 import com.main.climbingdiary.model.RouteType
-import java.util.regex.Pattern
 
 object SqlRouten {
     fun getProjekteTableName(): String {

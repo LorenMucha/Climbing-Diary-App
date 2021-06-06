@@ -1,6 +1,5 @@
 package com.main.climbingdiary.controller
 
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
@@ -8,7 +7,7 @@ import com.google.android.material.tabs.TabLayout
 import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity
 import com.main.climbingdiary.adapter.TabAdapter
-import com.main.climbingdiary.common.AppPreferenceManager
+import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.controller.button.AppFloatingActionButton
 import com.main.climbingdiary.controller.button.ShowTimeSlider
 import com.main.climbingdiary.fragments.RouteFragment

@@ -7,7 +7,7 @@ import android.view.Menu
 import androidx.appcompat.widget.SearchView
 import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity
-import com.main.climbingdiary.common.AppPreferenceManager
+import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.database.entities.AreaRepository
 import com.main.climbingdiary.model.MenuValues
 import com.main.climbingdiary.model.Tabs

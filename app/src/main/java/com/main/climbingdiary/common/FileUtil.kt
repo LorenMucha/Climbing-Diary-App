@@ -14,7 +14,7 @@ object FileUtil {
     private const val PRIMARY_VOLUME_NAME = "primary"
     private val context:Context = MainActivity.getAppContext()!!
 
-    fun getFullPathFromTreeUri(treeUri: Uri): String? {
+    fun getFullPathFromTreeUri(treeUri: Uri, context: Context): String? {
         var volumePath = getVolumeIdFromTreeUri(treeUri)?.let { getVolumePath(it) }
         if (volumePath == null) return File.separator
         if (volumePath.endsWith(File.separator)) volumePath =

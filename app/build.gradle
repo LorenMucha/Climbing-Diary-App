@@ -52,6 +52,12 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     //wiki: https://github.com/chalup/microorm
     implementation('org.chalup.microorm:microorm:0.8.0')
+    //easypermission: https://github.com/googlesamples/easypermissions
+    implementation 'pub.devrel:easypermissions:2.0.1'
+    //osmdroid: https://github.com/osmdroid/osmdroid
+    implementation 'org.osmdroid:osmdroid-android:6.1.6'
+    //wiki: https://github.com/MKergall/osmbonuspack/wiki/
+    implementation 'com.github.MKergall:osmbonuspack:6.6.0'
 
     testImplementation 'junit:junit:4.+'
     testImplementation 'androidx.test:core:1.3.0'

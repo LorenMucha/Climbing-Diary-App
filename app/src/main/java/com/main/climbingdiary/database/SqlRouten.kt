@@ -1,6 +1,6 @@
 package com.main.climbingdiary.database
 
-import com.main.climbingdiary.common.AppPreferenceManager
+import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.database.entities.AreaRepository
 import com.main.climbingdiary.database.entities.Projekt
 import com.main.climbingdiary.database.entities.Route

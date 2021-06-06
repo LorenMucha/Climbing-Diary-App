@@ -6,8 +6,8 @@ import android.view.View
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import androidx.fragment.app.DialogFragment
-import com.main.climbingdiary.common.AppPreferenceManager
-import com.main.climbingdiary.common.preferences.AlertManager
+import com.main.climbingdiary.common.preferences.AppPreferenceManager
+import com.main.climbingdiary.common.AlertManager
 import com.main.climbingdiary.controller.FragmentPager
 import com.main.climbingdiary.controller.TimeSlider
 import com.main.climbingdiary.database.entities.Route

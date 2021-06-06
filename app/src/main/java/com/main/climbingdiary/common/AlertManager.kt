@@ -1,4 +1,4 @@
-package com.main.climbingdiary.common.preferences
+package com.main.climbingdiary.common
 
 import android.content.Context
 import cn.pedant.SweetAlert.SweetAlertDialog

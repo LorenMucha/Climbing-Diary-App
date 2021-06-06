@@ -5,6 +5,8 @@ import com.main.climbingdiary.activities.MainActivity
 
 object PreferenceKeys {
     const val preferences = "prefs"
+    const val FILE_CHOOOSER_REQUEST_SAFTY_COPY = 12345
+    const val FILE_CHOOOSER_REQUEST_RESTORE_COPY = 123456
     var DB_OUTPUT_PATH: String = MainActivity.getAppContext()!!.getString(R.string.db_output_path)
     var SAFTY_COPY: String = MainActivity.getAppContext()!!.getString(R.string.safty_copy)
     var RESTORE_COPY: String = MainActivity.getAppContext()!!.getString(R.string.safty_restore)

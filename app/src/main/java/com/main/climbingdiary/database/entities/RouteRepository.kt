@@ -1,7 +1,7 @@
 package com.main.climbingdiary.database.entities
 
 import android.database.Cursor
-import com.main.climbingdiary.common.AppPreferenceManager
+import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.database.TaskRepository
 import com.main.climbingdiary.model.MenuValues
 import org.chalup.microorm.MicroOrm

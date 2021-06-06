@@ -1,11 +1,11 @@
-package com.main.climbingdiary.common
+package com.main.climbingdiary.common.preferences
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.net.Uri
-import com.main.climbingdiary.common.preferences.PreferenceKeys
+import com.main.climbingdiary.common.FileUtil
 import com.main.climbingdiary.model.MenuValues
 import com.main.climbingdiary.model.RouteSort
 import com.main.climbingdiary.model.SportType
@@ -20,8 +20,8 @@ object AppPreferenceManager {
     private lateinit var preferences: SharedPreferences
 
     operator fun invoke(context: Context): AppPreferenceManager {
-        this.context = context
-        this.preferences = context.getSharedPreferences(PreferenceKeys.preferences, MODE_PRIVATE)
+        AppPreferenceManager.context = context
+        preferences = context.getSharedPreferences(PreferenceKeys.preferences, MODE_PRIVATE)
         return this
     }
 

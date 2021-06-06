@@ -11,7 +11,7 @@ import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListen
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
 import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity
-import com.main.climbingdiary.common.AppPreferenceManager
+import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.controller.button.ShowTimeSlider
 import com.main.climbingdiary.database.TaskRepository
 import com.main.climbingdiary.model.MenuValues

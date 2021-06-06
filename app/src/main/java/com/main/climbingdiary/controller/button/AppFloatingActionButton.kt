@@ -4,7 +4,7 @@ import android.view.View
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity
-import com.main.climbingdiary.common.AppPreferenceManager
+import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.dialog.DialogFactory
 import com.main.climbingdiary.model.Tabs
 

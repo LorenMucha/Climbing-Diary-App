@@ -1,6 +1,6 @@
 package com.main.climbingdiary.database.sql
 
-import com.main.climbingdiary.common.AppPreferenceManager
+import com.main.climbingdiary.common.preferences.AppPreferenceManager
 
 object SqlAreaSektoren {
 
