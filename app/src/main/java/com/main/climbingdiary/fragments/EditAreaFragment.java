@@ -2,13 +2,10 @@ package com.main.climbingdiary.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 
-import com.main.climbingdiary.R;
 import com.main.climbingdiary.activities.SettingsActivity;
 import com.main.climbingdiary.database.entities.Area;
 import com.main.climbingdiary.database.entities.AreaRepository;
@@ -22,7 +19,7 @@ public class EditAreaFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
         SettingsActivity.getSettingsActivity().setTheme(android.R.style.Theme_Black);
         Context context = getActivity();
-        AreaRepository areaRepository = AreaRepository.getInstance();
+        AreaRepository areaRepository = AreaRepository.INSTANCE;
 
         PreferenceScreen preferenceScreen = getPreferenceManager().createPreferenceScreen(context);
         setPreferenceScreen(preferenceScreen);

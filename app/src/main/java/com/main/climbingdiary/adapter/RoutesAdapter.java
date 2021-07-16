@@ -21,10 +21,10 @@ import android.widget.TextView;
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.common.AlertManager;
 import com.main.climbingdiary.controller.FragmentPager;
-import com.main.climbingdiary.models.Tabs;
-import com.main.climbingdiary.controller.button.AppFloatingActionButton;
 import com.main.climbingdiary.database.entities.Route;
 import com.main.climbingdiary.database.entities.RouteRepository;
+import com.main.climbingdiary.models.Tabs;
+import com.main.climbingdiary.controller.button.AppFloatingActionButton;
 import com.main.climbingdiary.dialog.DialogFactory;
 import com.main.climbingdiary.models.Colors;
 
@@ -32,13 +32,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import kotlin.jvm.JvmClassMappingKt;
 
 public class RoutesAdapter extends
         RecyclerView.Adapter<RoutesAdapter.ViewHolder> implements Filterable {
 
     private List<Route> mRoutes;
     private final List<Route> mRoutes_filtered;
-    private final RouteRepository routeRepository;
+    private final RouteRepository<Route> routeRepository;
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
@@ -81,7 +82,7 @@ public class RoutesAdapter extends
     public RoutesAdapter(List<Route> routes) {
         this.mRoutes = routes;
         this.mRoutes_filtered = routes;
-        this.routeRepository = new RouteRepository<>(Route.class);
+        this.routeRepository = new RouteRepository<>(JvmClassMappingKt.getKotlinClass(Route.class));
     }
 
     // Usually involves inflating a layout from XML and returning the holder

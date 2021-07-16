@@ -8,9 +8,9 @@ import android.widget.SearchView;
 
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.common.preferences.AppPreferenceManager;
+import com.main.climbingdiary.database.entities.AreaRepository;
 import com.main.climbingdiary.models.Tabs;
 import com.main.climbingdiary.activities.MainActivity;
-import com.main.climbingdiary.database.entities.AreaRepository;
 import com.main.climbingdiary.fragments.RouteDoneFragment;
 import com.main.climbingdiary.fragments.RouteProjectFragment;
 import com.main.climbingdiary.models.MenuValues;
@@ -35,7 +35,7 @@ public class AppBarMenu implements SearchView.OnQueryTextListener{
 
     private void init(){
         SearchView searchview = (SearchView) menu.findItem(searchId).getActionView();
-        AreaRepository repo = AreaRepository.getInstance();
+        AreaRepository repo = AreaRepository.INSTANCE;
         searchview.setSearchableInfo(searchManager
                 .getSearchableInfo(MainActivity.getMainComponentName()));
         searchview.setMaxWidth(Integer.MAX_VALUE);

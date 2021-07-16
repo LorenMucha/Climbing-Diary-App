@@ -14,13 +14,11 @@ import com.main.climbingdiary.R;
 import com.main.climbingdiary.activities.MainActivity;
 import com.main.climbingdiary.common.preferences.AppPreferenceManager;
 import com.main.climbingdiary.controller.button.ShowTimeSlider;
-import com.main.climbingdiary.models.MenuValues;
 import com.main.climbingdiary.database.TaskRepository;
+import com.main.climbingdiary.models.MenuValues;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
-import lombok.NoArgsConstructor;
 
 public class TimeSlider implements OnRangeSeekbarChangeListener, OnRangeSeekbarFinalValueListener {
 
@@ -50,7 +48,7 @@ public class TimeSlider implements OnRangeSeekbarChangeListener, OnRangeSeekbarF
     public void setTimes(){
         try {
             ArrayList<Integer> years = new ArrayList<>();
-            Cursor cursor = TaskRepository.getInstance().getYears(false);
+            Cursor cursor = TaskRepository.INSTANCE.getYears(false);
             if (cursor != null) {
                 while (!cursor.isAfterLast()) {
                     years.add(cursor.getInt(0));

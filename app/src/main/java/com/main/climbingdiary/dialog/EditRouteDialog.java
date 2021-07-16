@@ -15,11 +15,13 @@ import com.main.climbingdiary.common.AlertManager;
 import com.main.climbingdiary.common.RouteConverter;
 import com.main.climbingdiary.common.preferences.AppPreferenceManager;
 import com.main.climbingdiary.controller.FragmentPager;
-import com.main.climbingdiary.models.Tabs;
 import com.main.climbingdiary.database.entities.Route;
 import com.main.climbingdiary.database.entities.RouteRepository;
+import com.main.climbingdiary.models.Tabs;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import kotlin.jvm.JvmClassMappingKt;
 
 /*
 Fixme: switcher level noch anpassen
@@ -36,13 +38,13 @@ public class EditRouteDialog extends DialogFragment {
     public EditRouteDialog(String _title, int _id){
             route_id = _id;
             title = _title;
-            this.routeRepository = new RouteRepository<>(Route.class);
+            this.routeRepository = new RouteRepository<>(JvmClassMappingKt.getKotlinClass(Route.class));
     }
 
-    public EditRouteDialog(String _title, Route _route){
-            route = _route;
-            title = _title;
-        this.routeRepository = new RouteRepository<>(Route.class);
+    public EditRouteDialog(String _title, Route _route) {
+        route = _route;
+        title = _title;
+        this.routeRepository = new RouteRepository<>(JvmClassMappingKt.getKotlinClass(Route.class));
     }
 
     @Override

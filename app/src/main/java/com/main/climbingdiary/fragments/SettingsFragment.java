@@ -158,13 +158,4 @@ public class SettingsFragment extends PreferenceFragment {
                             .build());
         }
     }
-
-    private void changeAreaOrSectorName(String key) {
-        SettingsActivity
-                .getSettingsActivity()
-                .getFragmentManager()
-                .beginTransaction()
-                .replace(android.R.id.content, new EditAreaFragment()).commit();
-
-    }
 }

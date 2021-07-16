@@ -17,10 +17,9 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.database.TaskRepository;
 import com.main.climbingdiary.common.AlertManager;
+import com.main.climbingdiary.database.TaskRepository;
 import com.main.climbingdiary.models.Colors;
-import com.main.climbingdiary.models.SportType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +27,7 @@ import java.util.List;
 public class RouteBarChartController extends RouteChartController {
     private final BarChart barChart;
     @SuppressLint("StaticFieldLeak")
-    private static Context context;
+    private final Context context;
 
     public RouteBarChartController(View _view){
         this.barChart = _view.findViewById(R.id.route_bar_chart);
@@ -46,7 +45,7 @@ public class RouteBarChartController extends RouteChartController {
             List<BarEntry> entriesGroup = new ArrayList<>();
             final ArrayList<String> labels = new ArrayList<>();
             //get the cjart entries
-            TaskRepository taskRepository = TaskRepository.getInstance();
+            TaskRepository taskRepository = TaskRepository.INSTANCE;
             //String Sort = (Menu) getA
             Cursor cursor = taskRepository.getBarChartValues();
             int i = 0;

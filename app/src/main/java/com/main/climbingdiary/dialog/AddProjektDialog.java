@@ -14,7 +14,10 @@ import com.main.climbingdiary.R;
 import com.main.climbingdiary.common.AlertManager;
 import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.database.entities.Projekt;
+import com.main.climbingdiary.database.entities.Route;
 import com.main.climbingdiary.database.entities.RouteRepository;
+
+import kotlin.jvm.JvmClassMappingKt;
 
 @SuppressLint("ValidFragment")
 public class AddProjektDialog extends DialogFragment {
@@ -25,7 +28,7 @@ public class AddProjektDialog extends DialogFragment {
         Bundle args = new Bundle();
         args.putString("title", title);
         this.setArguments(args);
-        routeRepository = new RouteRepository<>(Projekt.class);
+        routeRepository = new RouteRepository<>(JvmClassMappingKt.getKotlinClass(Projekt.class));
     }
 
     @Override

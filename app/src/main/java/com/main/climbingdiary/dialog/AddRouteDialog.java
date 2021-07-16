@@ -15,11 +15,11 @@ import com.main.climbingdiary.R;
 import com.main.climbingdiary.common.preferences.AppPreferenceManager;
 import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.controller.TimeSlider;
-import com.main.climbingdiary.database.entities.Projekt;
 import com.main.climbingdiary.database.entities.Route;
-import com.main.climbingdiary.database.entities.RouteRepository;
 import com.main.climbingdiary.common.AlertManager;
-import com.main.climbingdiary.models.SportType;
+import com.main.climbingdiary.database.entities.RouteRepository;
+
+import kotlin.jvm.JvmClassMappingKt;
 
 @SuppressLint("ValidFragment")
 public class AddRouteDialog extends DialogFragment{
@@ -30,7 +30,7 @@ public class AddRouteDialog extends DialogFragment{
         Bundle args = new Bundle();
         args.putString("title", title);
         this.setArguments(args);
-        this.routeRepository = new RouteRepository(Route.class);
+        this.routeRepository = new RouteRepository<>(JvmClassMappingKt.getKotlinClass(Route.class));
     }
 
     @Override

@@ -14,17 +14,18 @@ import android.view.ViewGroup;
 
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.adapter.ProjektAdapter;
-import com.main.climbingdiary.adapter.RoutesAdapter;
 import com.main.climbingdiary.common.preferences.AppPreferenceManager;
 import com.main.climbingdiary.controller.FilterHeader;
 import com.main.climbingdiary.controller.AppBarMenu;
 import com.main.climbingdiary.database.entities.Projekt;
+import com.main.climbingdiary.database.entities.Route;
 import com.main.climbingdiary.database.entities.RouteRepository;
 import com.main.climbingdiary.models.RouteSort;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
+import kotlin.jvm.JvmClassMappingKt;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -46,7 +47,7 @@ public class RouteProjectFragment extends Fragment implements RouteFragment {
 
     @SuppressLint("ValidFragment")
     private RouteProjectFragment() {
-        this.routeRepository = new RouteRepository<>(Projekt.class);
+        this.routeRepository =new RouteRepository<>(JvmClassMappingKt.getKotlinClass(Projekt.class));
     }
 
     public static RouteProjectFragment getInstance(){

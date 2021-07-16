@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +24,8 @@ import com.main.climbingdiary.models.RouteSort;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import kotlin.jvm.JvmClassMappingKt;
+
 public class RouteDoneFragment extends Fragment implements RouteFragment {
 
     private static RoutesAdapter adapter;
@@ -39,7 +40,7 @@ public class RouteDoneFragment extends Fragment implements RouteFragment {
 
     @SuppressLint("ValidFragment")
     private RouteDoneFragment() {
-        this.routeRepository = new RouteRepository<>(Route.class);
+        this.routeRepository = new RouteRepository<>(JvmClassMappingKt.getKotlinClass(Route.class));
     }
 
     public static RouteDoneFragment getInstance() {

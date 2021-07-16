@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,32 +13,26 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.common.AppPermissions;
 import com.main.climbingdiary.common.preferences.AppPreferenceManager;
 import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.controller.NavDrawerController;
-import com.main.climbingdiary.controller.TimeSlider;
 import com.main.climbingdiary.controller.button.AppFloatingActionButton;
 import com.main.climbingdiary.controller.button.ShowTimeSlider;
-import com.main.climbingdiary.database.TaskRepository;
-import com.main.climbingdiary.models.SportType;
 
 import lombok.Getter;
 import lombok.Setter;
-
-import static com.main.climbingdiary.common.preferences.PreferenceKeys.FILE_CHOOOSER_REQUEST_RESTORE_COPY;
-import static com.main.climbingdiary.common.preferences.PreferenceKeys.FILE_CHOOOSER_REQUEST_SAFTY_COPY;
 
 
 public class MainActivity extends AppCompatActivity{
 
     private static final int layoutId = R.layout.activity_main;
     @SuppressLint("StaticFieldLeak")
-    @Getter @Setter private static Context mainAppContext;
+    private static Context mainAppContext;
     private static ComponentName componentName;
     @SuppressLint("StaticFieldLeak")
     public static AppCompatActivity mainActivity;
 
+    public static Context getMainAppContext(){return MainActivity.mainAppContext;}
     public static ComponentName getMainComponentName(){ return MainActivity.componentName;}
     public static AppCompatActivity getMainActivity(){return MainActivity.mainActivity;}
 

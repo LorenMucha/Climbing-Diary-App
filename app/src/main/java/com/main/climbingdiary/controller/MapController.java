@@ -10,13 +10,12 @@ import android.widget.TextView;
 
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.activities.MainActivity;
-import com.main.climbingdiary.common.AppPermissions;
 import com.main.climbingdiary.common.preferences.AppPreferenceManager;
-import com.main.climbingdiary.models.MenuValues;
 import com.main.climbingdiary.database.entities.Area;
 import com.main.climbingdiary.database.entities.AreaRepository;
 import com.main.climbingdiary.database.entities.Route;
 import com.main.climbingdiary.database.entities.RouteRepository;
+import com.main.climbingdiary.models.MenuValues;
 import com.main.climbingdiary.models.Colors;
 
 import org.osmdroid.api.IMapController;
@@ -30,6 +29,9 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import java.util.List;
 
+import kotlin.jvm.JvmClassMappingKt;
+import kotlin.reflect.KClass;
+
 import static android.content.Context.LOCATION_SERVICE;
 
 public class MapController {
@@ -39,11 +41,11 @@ public class MapController {
     private static IMapController mapController;
     private static final GeoPoint startPoint = new GeoPoint(49.58, 11.01);
     private static final LocationManager locationManager = (LocationManager) MainActivity.getMainActivity().getSystemService(LOCATION_SERVICE);
-    private final RouteRepository routeRepository;
+    private final RouteRepository<Route> routeRepository;
 
     public MapController(View _view){
         view = _view;
-        routeRepository = new RouteRepository<>(Route.class);
+        routeRepository = new RouteRepository<>(JvmClassMappingKt.getKotlinClass(Route.class));
     }
 
     public void setUpMap() {
@@ -99,7 +101,7 @@ public class MapController {
     }
 
     private void setMarker() {
-        List<Area> areaList = AreaRepository.getInstance().getAreaList();
+        List<Area> areaList = AreaRepository.INSTANCE.getAreaList();
         FolderOverlay poiMarkers = new FolderOverlay(map.getContext());
         map.getOverlays().add(poiMarkers);
         Drawable poiIcon = MainActivity.getMainActivity().getResources().getDrawable(R.drawable.ic_berg);

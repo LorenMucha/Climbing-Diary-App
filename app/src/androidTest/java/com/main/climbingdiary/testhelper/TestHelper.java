@@ -1,12 +1,8 @@
 package com.main.climbingdiary.testhelper;
 
 import com.main.climbingdiary.common.preferences.AppPreferenceManager;
-import com.main.climbingdiary.database.entities.Projekt;
-import com.main.climbingdiary.database.entities.Route;
-import com.main.climbingdiary.database.entities.RouteRepository;
 import com.main.climbingdiary.models.Levels;
 import com.main.climbingdiary.models.SportType;
-import com.main.climbingdiary.models.Styles;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

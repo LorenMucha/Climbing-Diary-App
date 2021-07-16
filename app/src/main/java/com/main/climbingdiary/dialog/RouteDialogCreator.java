@@ -27,7 +27,6 @@ import com.main.climbingdiary.common.RouteConverter;
 import com.main.climbingdiary.common.preferences.AppPreferenceManager;
 import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.controller.SetDate;
-import com.main.climbingdiary.database.entities.Area;
 import com.main.climbingdiary.database.entities.AreaRepository;
 import com.main.climbingdiary.database.entities.Projekt;
 import com.main.climbingdiary.database.entities.Route;
@@ -198,7 +197,7 @@ public class RouteDialogCreator {
     }
 
     private void setAreaSectorAutoComplete() {
-        ArrayAdapter<String> areaArrayAdapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_item, AreaRepository.getInstance().getAreaNameList());
+        ArrayAdapter<String> areaArrayAdapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_item, AreaRepository.INSTANCE.getAreaNameList());
         //will start working from first character
         area.setThreshold(1);
         area.setAdapter(areaArrayAdapter);
@@ -210,7 +209,7 @@ public class RouteDialogCreator {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                ArrayAdapter<String> sectorArrayAdapter = new ArrayAdapter<String>(_context, android.R.layout.simple_spinner_item, SectorRepository.getInstance().getSectorList( area.getText().toString().trim()));
+                ArrayAdapter<String> sectorArrayAdapter = new ArrayAdapter<String>(_context, android.R.layout.simple_spinner_item, SectorRepository.INSTANCE.getSectorList( area.getText().toString().trim()));
                 //will start working from first character
                 sector.setThreshold(1);
                 sector.setAdapter(sectorArrayAdapter);
@@ -225,7 +224,7 @@ public class RouteDialogCreator {
 
     private void setStilSpinner(String selection) {
         // set Spinner for choosing the style
-        ArrayAdapter<String> stilArrayAdapter = new ArrayAdapter<String>(_context, android.R.layout.simple_spinner_item, Styles.getStyle(true));
+        ArrayAdapter<String> stilArrayAdapter = new ArrayAdapter<String>(_context, android.R.layout.simple_spinner_item, Styles.INSTANCE.getStyle(true));
         stilArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
         stil.setAdapter(stilArrayAdapter);
 

@@ -36,8 +36,8 @@ public class TableView {
     @SuppressLint("SetTextI18n")
     public void createTableView() {
         //Variables
-        String[] styles = Styles.getStyle(true);
-        TaskRepository taskRepository = TaskRepository.getInstance();
+        String[] styles = Styles.INSTANCE.getStyle(true);
+        TaskRepository taskRepository = TaskRepository.INSTANCE;
         Cursor cursor = taskRepository.getTableValues();
         //tree et because this sort the values
         TableLayout stk = view.findViewById(R.id.route_table);

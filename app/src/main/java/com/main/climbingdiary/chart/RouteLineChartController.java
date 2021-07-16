@@ -25,11 +25,10 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.activities.MainActivity;
-import com.main.climbingdiary.database.TaskRepository;
 import com.main.climbingdiary.common.AlertManager;
+import com.main.climbingdiary.database.TaskRepository;
 import com.main.climbingdiary.models.Colors;
 import com.main.climbingdiary.models.Levels;
-import com.main.climbingdiary.models.SportType;
 import com.main.climbingdiary.models.Styles;
 
 import java.util.ArrayList;
@@ -58,7 +57,7 @@ public class RouteLineChartController extends RouteChartController {
     public void createChart(){
         final ArrayList<String> labels = new ArrayList<>();
         ArrayList<Entry> entries = new ArrayList<>();
-        TaskRepository taskRepository = TaskRepository.getInstance();
+        TaskRepository taskRepository = TaskRepository.INSTANCE;
         Cursor yearCursor = taskRepository.getYears(true);
         //transform the cursor to an array list
         ArrayList<Integer> yearList = new ArrayList<Integer>();
@@ -80,7 +79,7 @@ public class RouteLineChartController extends RouteChartController {
                     while (!cursor.isAfterLast()) {
                         String level = cursor.getString(0);
                         String stil = cursor.getString(1);
-                        int points = (Levels.getLevelRating(level)+ Styles.getStyleRatingFactor(stil));
+                        int points = (Levels.getLevelRating(level)+ Styles.INSTANCE.getStyleRatingFactor(stil));
                         InfoObject route = new InfoObject();
                         route.points = points;
                         route.route_level = level;

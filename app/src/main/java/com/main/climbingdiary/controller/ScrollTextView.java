@@ -12,9 +12,6 @@ public class ScrollTextView extends android.support.v7.widget.AppCompatTextView 
     // scrolling feature
     private Scroller mSlr;
 
-    // milliseconds for a round of scrolling
-    private int mRndDuration = 10000;
-
     // the X offset when paused
     private int mXPaused = 0;
 
@@ -82,6 +79,8 @@ public class ScrollTextView extends android.support.v7.widget.AppCompatTextView 
 
         int scrollingLen = calculateScrollingLen();
         int distance = scrollingLen - (getWidth() + mXPaused);
+        // milliseconds for a round of scrolling
+        int mRndDuration = 10000;
         int duration = (new Double(mRndDuration * distance * 1.00000
                 / scrollingLen)).intValue();
 

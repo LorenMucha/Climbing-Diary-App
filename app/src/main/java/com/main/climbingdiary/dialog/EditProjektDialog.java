@@ -10,12 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.main.climbingdiary.R;
-import com.main.climbingdiary.common.preferences.AppPreferenceManager;
 import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.database.entities.Projekt;
+import com.main.climbingdiary.database.entities.Route;
 import com.main.climbingdiary.database.entities.RouteRepository;
-import com.main.climbingdiary.models.SportType;
-import com.main.climbingdiary.models.Tabs;
+
+import kotlin.jvm.JvmClassMappingKt;
 
 
 @SuppressLint("ValidFragment")
@@ -28,7 +28,7 @@ public class EditProjektDialog extends DialogFragment {
             args.putString("title", title);
             args.putInt("id", _id);
             this.setArguments(args);
-            this.routeRepository = new RouteRepository<>(Projekt.class);
+            this.routeRepository = new RouteRepository<>(JvmClassMappingKt.getKotlinClass(Projekt.class));
     }
 
     @Override
