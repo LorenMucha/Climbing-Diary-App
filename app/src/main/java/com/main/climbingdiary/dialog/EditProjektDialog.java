@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.database.entities.Projekt;
-import com.main.climbingdiary.database.entities.Route;
 import com.main.climbingdiary.database.entities.RouteRepository;
 
 import kotlin.jvm.JvmClassMappingKt;
@@ -23,12 +22,12 @@ public class EditProjektDialog extends DialogFragment {
 
     private final RouteRepository<Projekt> routeRepository;
 
-    public EditProjektDialog(String title, int _id){
-            Bundle args = new Bundle();
-            args.putString("title", title);
-            args.putInt("id", _id);
-            this.setArguments(args);
-            this.routeRepository = new RouteRepository<>(JvmClassMappingKt.getKotlinClass(Projekt.class));
+    public EditProjektDialog(String title, int _id) {
+        Bundle args = new Bundle();
+        args.putString("title", title);
+        args.putInt("id", _id);
+        this.setArguments(args);
+        this.routeRepository = new RouteRepository<>(JvmClassMappingKt.getKotlinClass(Projekt.class));
     }
 
     @Override
@@ -48,9 +47,9 @@ public class EditProjektDialog extends DialogFragment {
         assert getArguments() != null;
         String title = getArguments().getString("title", "Bearbeiten");
         //get the route value which will be edit
-        int route_id = getArguments().getInt("id",0);
+        int route_id = getArguments().getInt("id", 0);
         Projekt editProjekt = routeRepository.getRoute(route_id);
-        RouteDialogCreator creator = new RouteDialogCreator(view,_context,this);
+        RouteDialogCreator creator = new RouteDialogCreator(view, _context, this);
         creator.setForeGroundSpan(title);
         creator.setUiElements(editProjekt);
 
@@ -58,7 +57,7 @@ public class EditProjektDialog extends DialogFragment {
         creator.getSaveRoute().setOnClickListener(v -> {
             Projekt projekt = creator.getProjekt(true);
             boolean taskState = routeRepository.deleteRoute(editProjekt);
-            if(taskState) {
+            if (taskState) {
                 routeRepository.insertRoute(projekt);
             }
             //close the dialog

@@ -5,10 +5,10 @@ import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.database.TaskRepository
 import com.main.climbingdiary.models.MenuValues
 import org.chalup.microorm.MicroOrm
-import java.util.ArrayList
+import java.util.*
 import kotlin.reflect.KClass
 
-class RouteRepository<T:RouteElement>(val klass: KClass<T>) {
+class RouteRepository<T : RouteElement>(val klass: KClass<T>) {
 
     private val uOrm = MicroOrm()
 

@@ -12,7 +12,6 @@ import android.util.Log;
 
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.activities.MainActivity;
-import com.main.climbingdiary.activities.SettingsActivity;
 import com.main.climbingdiary.common.AlertManager;
 import com.main.climbingdiary.common.AppFileProvider;
 import com.main.climbingdiary.common.preferences.AppPreferenceManager;
@@ -30,8 +29,8 @@ import static com.main.climbingdiary.common.preferences.PreferenceKeys.FILE_CHOO
 
 public class SettingsFragment extends PreferenceFragment {
 
-    private Preference dbOutputPath;
     private static volatile SettingsFragment INSTANZ = null;
+    private Preference dbOutputPath;
 
     public synchronized static SettingsFragment getInstance() {
         if (INSTANZ == null) {

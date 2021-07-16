@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 public class ProjektAdapter(projekts: List<Projekt>) : Filterable,
-        RecyclerView.Adapter<ProjektAdapter.ViewHolder>() {
+    RecyclerView.Adapter<ProjektAdapter.ViewHolder>() {
 
     var mProjekts: List<Projekt>
     val mprojektsFiltered: List<Projekt>
@@ -103,39 +103,39 @@ public class ProjektAdapter(projekts: List<Projekt>) : Filterable,
         //delete a route
         delete.setOnClickListener { v: View ->
             SweetAlertDialog(v.context, SweetAlertDialog.WARNING_TYPE)
-                    .setTitleText("Bist du sicher ?")
-                    .setConfirmText("OK")
-                    .setCancelText("Abbrechen")
-                    .setConfirmClickListener { sDialog: SweetAlertDialog ->
-                        //delete the route by id
-                        val taskState = routeRepository.deleteRoute(projekt)
-                        if (taskState) {
-                            FragmentPager.getInstance().refreshSelectedFragment()
-                            sDialog.hide()
-                            SweetAlertDialog(v.context, SweetAlertDialog.SUCCESS_TYPE)
-                                    .setTitleText("Gelöscht")
-                                    .show()
-                        } else {
-                            AlertManager.setErrorAlert(v.context)
-                        }
+                .setTitleText("Bist du sicher ?")
+                .setConfirmText("OK")
+                .setCancelText("Abbrechen")
+                .setConfirmClickListener { sDialog: SweetAlertDialog ->
+                    //delete the route by id
+                    val taskState = routeRepository.deleteRoute(projekt)
+                    if (taskState) {
+                        FragmentPager.getInstance().refreshSelectedFragment()
+                        sDialog.hide()
+                        SweetAlertDialog(v.context, SweetAlertDialog.SUCCESS_TYPE)
+                            .setTitleText("Gelöscht")
+                            .show()
+                    } else {
+                        AlertManager.setErrorAlert(v.context)
                     }
-                    .setCancelButton(
-                            "Cancel"
-                    ) { sDialog: SweetAlertDialog -> sDialog.cancel() }
-                    .show()
+                }
+                .setCancelButton(
+                    "Cancel"
+                ) { sDialog: SweetAlertDialog -> sDialog.cancel() }
+                .show()
         }
         //edit a route
         edit.setOnClickListener { view: View? ->
             DialogFactory.openEditRouteDialog(
-                    Tabs.PROJEKTE,
-                    projekt.id
+                Tabs.PROJEKTE,
+                projekt.id
             )
         }
 
         //tick projekt
         routeTick.setOnClickListener { view: View? ->
             val sdf =
-                    SimpleDateFormat("YYYY-MM-dd", Locale.GERMAN)
+                SimpleDateFormat("YYYY-MM-dd", Locale.GERMAN)
             val route = Route()
             route.id = projekt.id
             route.name = projekt.name
@@ -167,15 +167,15 @@ public class ProjektAdapter(projekts: List<Projekt>) : Filterable,
                     val filteredList: MutableList<Projekt> = ArrayList()
                     for (row in mProjekts) {
                         if (row.name!!.toLowerCase(Locale.ROOT)
-                                        .contains(charString.toLowerCase(Locale.ROOT)) ||
-                                row.level.contains(charString) ||
-                                row.area!!.toLowerCase(Locale.ROOT)
-                                        .contains(charString.toLowerCase(Locale.ROOT)) ||
-                                row.sector!!.toLowerCase(Locale.ROOT).contains(
-                                        charString.toLowerCase(
-                                                Locale.ROOT
-                                        )
+                                .contains(charString.toLowerCase(Locale.ROOT)) ||
+                            row.level.contains(charString) ||
+                            row.area!!.toLowerCase(Locale.ROOT)
+                                .contains(charString.toLowerCase(Locale.ROOT)) ||
+                            row.sector!!.toLowerCase(Locale.ROOT).contains(
+                                charString.toLowerCase(
+                                    Locale.ROOT
                                 )
+                            )
                         ) {
                             filteredList.add(row)
                         }

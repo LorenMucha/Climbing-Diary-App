@@ -19,22 +19,27 @@ import com.main.climbingdiary.controller.NavDrawerController;
 import com.main.climbingdiary.controller.button.AppFloatingActionButton;
 import com.main.climbingdiary.controller.button.ShowTimeSlider;
 
-import lombok.Getter;
-import lombok.Setter;
 
-
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     private static final int layoutId = R.layout.activity_main;
     @SuppressLint("StaticFieldLeak")
+    public static AppCompatActivity mainActivity;
+    @SuppressLint("StaticFieldLeak")
     private static Context mainAppContext;
     private static ComponentName componentName;
-    @SuppressLint("StaticFieldLeak")
-    public static AppCompatActivity mainActivity;
 
-    public static Context getMainAppContext(){return MainActivity.mainAppContext;}
-    public static ComponentName getMainComponentName(){ return MainActivity.componentName;}
-    public static AppCompatActivity getMainActivity(){return MainActivity.mainActivity;}
+    public static Context getMainAppContext() {
+        return MainActivity.mainAppContext;
+    }
+
+    public static ComponentName getMainComponentName() {
+        return MainActivity.componentName;
+    }
+
+    public static AppCompatActivity getMainActivity() {
+        return MainActivity.mainActivity;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +84,7 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==R.id.app_settings){
+        if (item.getItemId() == R.id.app_settings) {
             Intent intent = new Intent(this.getApplicationContext(), SettingsActivity.class);
             startActivity(intent);
         }

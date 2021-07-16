@@ -4,17 +4,17 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-       <!-- <item
-            android:icon="@drawable/ic_fitness"
-            android:id="@+id/nav_training"
-            android:title="Training" />-->
+        <!-- <item
+             android:icon="@drawable/ic_fitness"
+             android:id="@+id/nav_training"
+             android:title="Training" />-->
         <item
-            android:icon="@drawable/ic_rope"
             android:id="@+id/nav_climbing"
+            android:icon="@drawable/ic_rope"
             android:title="Klettern" />
         <item
-            android:icon="@drawable/ic_climbing"
             android:id="@+id/nav_bouldern"
+            android:icon="@drawable/ic_climbing"
             android:title="Bouldern" />
     </group>
 </menu>

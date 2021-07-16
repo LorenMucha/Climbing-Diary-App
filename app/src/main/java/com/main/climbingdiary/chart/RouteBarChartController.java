@@ -29,18 +29,20 @@ public class RouteBarChartController extends RouteChartController {
     @SuppressLint("StaticFieldLeak")
     private final Context context;
 
-    public RouteBarChartController(View _view){
+    public RouteBarChartController(View _view) {
         this.barChart = _view.findViewById(R.id.route_bar_chart);
         context = _view.getContext();
     }
-    public void show(){
+
+    public void show() {
         this.barChart.setVisibility(View.VISIBLE);
     }
-    public void hide(){
+
+    public void hide() {
         this.barChart.setVisibility(View.GONE);
     }
 
-    public void createChart(){
+    public void createChart() {
         try {
             List<BarEntry> entriesGroup = new ArrayList<>();
             final ArrayList<String> labels = new ArrayList<>();
@@ -64,7 +66,7 @@ public class RouteBarChartController extends RouteChartController {
             BarDataSet set = new BarDataSet(entriesGroup, "");
             set.setColors(Colors.getStyleColor("flash"), Colors.getStyleColor("rp"), Colors.getStyleColor("os"));
             set.setDrawValues(false);
-            set.setStackLabels(new String[]{"FLASH", "OS","RP"});
+            set.setStackLabels(new String[]{"FLASH", "OS", "RP"});
             BarData data = new BarData(set);
             barChart.setData(data);
             barChart.getDescription().setEnabled(false);
@@ -86,11 +88,11 @@ public class RouteBarChartController extends RouteChartController {
                 @Override
                 public void onValueSelected(Entry e, Highlight h) {
                     //ToDo
-                    float x=e.getX();
-                    int y=(int)e.getY();
+                    float x = e.getX();
+                    int y = (int) e.getY();
                     String style = set.getStackLabels()[h.getStackIndex()];
-                    float sum = entriesGroup.get((int)x).getYVals()[h.getStackIndex()];
-                    Toast.makeText(context,String.format("Stil: %s\nAnzahl: %s",style,sum),Toast.LENGTH_LONG).show();
+                    float sum = entriesGroup.get((int) x).getYVals()[h.getStackIndex()];
+                    Toast.makeText(context, String.format("Stil: %s\nAnzahl: %s", style, sum), Toast.LENGTH_LONG).show();
                 }
 
                 @Override
@@ -98,9 +100,9 @@ public class RouteBarChartController extends RouteChartController {
 
                 }
             });
-        }catch(Exception ex){
+        } catch (Exception ex) {
             AlertManager.setErrorAlert(context);
-            Log.d("Erstellung Barchart:",ex.getLocalizedMessage());
+            Log.d("Erstellung Barchart:", ex.getLocalizedMessage());
         }
     }
 }

@@ -2,9 +2,8 @@ package com.main.climbingdiary.database.entities
 
 import android.database.Cursor
 import com.main.climbingdiary.database.TaskRepository
-import com.main.climbingdiary.database.sql.SqlAreaSektoren.getAllAreas
 import org.chalup.microorm.MicroOrm
-import java.util.ArrayList
+import java.util.*
 
 object AreaRepository {
 
@@ -20,10 +19,10 @@ object AreaRepository {
         val cursor: Cursor = TaskRepository.getAllAreas()
         while (cursor.moveToNext()) {
             area_list.add(
-                    uOrm.fromCursor(
-                            cursor,
-                            Area::class.java
-                    )
+                uOrm.fromCursor(
+                    cursor,
+                    Area::class.java
+                )
             )
         }
         return area_list

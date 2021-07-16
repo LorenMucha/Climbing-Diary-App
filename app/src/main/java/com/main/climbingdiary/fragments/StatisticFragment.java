@@ -25,10 +25,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StatisticFragment extends Fragment implements RouteFragment {
 
+    private static StatisticFragment INSTANZ = null;
     private Button setLineChartBtn, setBarChartBtn, setTableBtn;
     private View view;
-
-    private static StatisticFragment INSTANZ = null;
 
     public static StatisticFragment getInstance() {
         if (INSTANZ == null) {

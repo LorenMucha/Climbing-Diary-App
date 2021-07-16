@@ -15,10 +15,9 @@ import android.view.ViewGroup;
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.adapter.ProjektAdapter;
 import com.main.climbingdiary.common.preferences.AppPreferenceManager;
-import com.main.climbingdiary.controller.FilterHeader;
 import com.main.climbingdiary.controller.AppBarMenu;
+import com.main.climbingdiary.controller.FilterHeader;
 import com.main.climbingdiary.database.entities.Projekt;
-import com.main.climbingdiary.database.entities.Route;
 import com.main.climbingdiary.database.entities.RouteRepository;
 import com.main.climbingdiary.models.RouteSort;
 
@@ -32,29 +31,32 @@ import lombok.Setter;
 public class RouteProjectFragment extends Fragment implements RouteFragment {
 
     private static ProjektAdapter adapter;
-    private RecyclerView rvProjekte;
     @Getter
     @Setter
     private static boolean filter_checked = false;
-    public View view;
-
-    @SuppressLint("StaticFieldLeak")
-    private FilterHeader header;
     @SuppressLint("StaticFieldLeak")
     private static RouteProjectFragment INSTANZ = null;
     private final RouteRepository<Projekt> routeRepository;
+    public View view;
+    private RecyclerView rvProjekte;
+    @SuppressLint("StaticFieldLeak")
+    private FilterHeader header;
     private ArrayList<Projekt> projekts;
 
     @SuppressLint("ValidFragment")
     private RouteProjectFragment() {
-        this.routeRepository =new RouteRepository<>(JvmClassMappingKt.getKotlinClass(Projekt.class));
+        this.routeRepository = new RouteRepository<>(JvmClassMappingKt.getKotlinClass(Projekt.class));
     }
 
-    public static RouteProjectFragment getInstance(){
-        if(INSTANZ==null){
+    public static RouteProjectFragment getInstance() {
+        if (INSTANZ == null) {
             INSTANZ = new RouteProjectFragment();
         }
         return INSTANZ;
+    }
+
+    public static synchronized ProjektAdapter getAdapter() {
+        return adapter;
     }
 
     @Override
@@ -79,10 +81,6 @@ public class RouteProjectFragment extends Fragment implements RouteFragment {
         setHasOptionsMenu(true);
         header = new FilterHeader(this);
         return view;
-    }
-
-    public static synchronized ProjektAdapter getAdapter() {
-        return adapter;
     }
 
     @Override

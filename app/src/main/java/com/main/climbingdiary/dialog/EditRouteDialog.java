@@ -30,15 +30,15 @@ Fixme: switcher level noch anpassen
 @SuppressLint("ValidFragment")
 public class EditRouteDialog extends DialogFragment {
 
-    private Route route;
-    private int route_id;
     private final String title;
     private final RouteRepository<Route> routeRepository;
+    private Route route;
+    private int route_id;
 
-    public EditRouteDialog(String _title, int _id){
-            route_id = _id;
-            title = _title;
-            this.routeRepository = new RouteRepository<>(JvmClassMappingKt.getKotlinClass(Route.class));
+    public EditRouteDialog(String _title, int _id) {
+        route_id = _id;
+        title = _title;
+        this.routeRepository = new RouteRepository<>(JvmClassMappingKt.getKotlinClass(Route.class));
     }
 
     public EditRouteDialog(String _title, Route _route) {
@@ -63,24 +63,24 @@ public class EditRouteDialog extends DialogFragment {
         Route editRoute;
 
         //get the route value which will be edit
-        if(route != null){
+        if (route != null) {
             editRoute = route;
-        }else{
+        } else {
             editRoute = routeRepository.getRoute(route_id);
         }
 
-        RouteDialogCreator creator = new RouteDialogCreator(view,_context,this);
+        RouteDialogCreator creator = new RouteDialogCreator(view, _context, this);
         creator.setForeGroundSpan(title);
         creator.setUiElements(editRoute);
 
         creator.getSaveRoute().setOnClickListener(v -> {
             //save ticked Project on if else save updated Route
-            if(AppPreferenceManager.getSelectedTabsTitle() == Tabs.PROJEKTE){
+            if (AppPreferenceManager.getSelectedTabsTitle() == Tabs.PROJEKTE) {
                 FragmentPager.getInstance().setPosition(1);
                 //needs to be converted to a project
                 routeRepository.deleteRoute(RouteConverter.routeToProjekt(editRoute));
                 taskState.set(routeRepository.insertRoute(creator.getRoute(true)));
-            }else{
+            } else {
                 Route updateRoute = creator.getRoute(false);
                 updateRoute.setId(editRoute.getId());
                 taskState.set(routeRepository.updateRoute(updateRoute));

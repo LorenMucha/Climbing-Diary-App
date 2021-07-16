@@ -22,20 +22,13 @@ import java.util.Collections;
 
 public class TimeSlider implements OnRangeSeekbarChangeListener, OnRangeSeekbarFinalValueListener {
 
+    @SuppressLint("StaticFieldLeak")
+    private static volatile TimeSlider INSTANZ = null;
     private final CrystalRangeSeekbar rangeSeekbar;
     private final TextView minText;
     private final TextView maxText;
-    @SuppressLint("StaticFieldLeak")
-    private static volatile TimeSlider INSTANZ = null;
 
-    public static synchronized TimeSlider getInstance(){
-        if(INSTANZ== null){
-            INSTANZ = new TimeSlider();
-        }
-        return INSTANZ;
-    }
-
-    private TimeSlider(){
+    private TimeSlider() {
         Activity _activity = MainActivity.getMainActivity();
         rangeSeekbar = _activity.findViewById(R.id.timerange);
         minText = _activity.findViewById(R.id.textMin);
@@ -44,8 +37,15 @@ public class TimeSlider implements OnRangeSeekbarChangeListener, OnRangeSeekbarF
         rangeSeekbar.setOnRangeSeekbarFinalValueListener(this);
     }
 
+    public static synchronized TimeSlider getInstance() {
+        if (INSTANZ == null) {
+            INSTANZ = new TimeSlider();
+        }
+        return INSTANZ;
+    }
+
     @SuppressLint("SetTextI18n")
-    public void setTimes(){
+    public void setTimes() {
         try {
             ArrayList<Integer> years = new ArrayList<>();
             Cursor cursor = TaskRepository.INSTANCE.getYears(false);
@@ -64,7 +64,7 @@ public class TimeSlider implements OnRangeSeekbarChangeListener, OnRangeSeekbarF
             rangeSeekbar.setMaxStartValue(maxYear);
             minText.setText(Integer.toString(minYear));
             maxText.setText(Integer.toString(maxYear));
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ShowTimeSlider.hideButton();
         }
     }
@@ -82,9 +82,9 @@ public class TimeSlider implements OnRangeSeekbarChangeListener, OnRangeSeekbarF
         final String min = String.valueOf(minValue);
         final String max = String.valueOf(maxValue);
         final String filter;
-        if(!minValue.equals(maxValue)){
+        if (!minValue.equals(maxValue)) {
             filter = "CAST(strftime('%Y',r.date) as int)>=" + min + " and CAST(strftime('%Y',r.date) as int) <=" + max;
-        }else{
+        } else {
             filter = "CAST(strftime('%Y',r.date) as int)==" + max;
         }
         AppPreferenceManager.setFilterSetter(MenuValues.SORT_DATE);

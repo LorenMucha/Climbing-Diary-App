@@ -20,15 +20,15 @@ public final class FileUtil {
     private static volatile FileUtil INSTANZ = null;
     private final Context context;
 
+    private FileUtil() {
+        context = MainActivity.getMainAppContext();
+    }
+
     public static synchronized FileUtil getInstance() {
         if (INSTANZ == null) {
             INSTANZ = new FileUtil();
         }
         return INSTANZ;
-    }
-
-    private FileUtil() {
-        context = MainActivity.getMainAppContext();
     }
 
     public String getFullPathFromTreeUri(@Nullable final Uri treeUri) {

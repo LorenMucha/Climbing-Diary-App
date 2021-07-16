@@ -11,11 +11,9 @@ import android.util.Log;
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.activities.MainActivity;
 import com.main.climbingdiary.adapter.TabAdapter;
-import com.main.climbingdiary.common.AlertManager;
 import com.main.climbingdiary.common.preferences.AppPreferenceManager;
 import com.main.climbingdiary.controller.button.AppFloatingActionButton;
 import com.main.climbingdiary.controller.button.ShowTimeSlider;
-import com.main.climbingdiary.fragments.MapFragment;
 import com.main.climbingdiary.fragments.RouteDoneFragment;
 import com.main.climbingdiary.fragments.RouteFragment;
 import com.main.climbingdiary.fragments.RouteProjectFragment;
@@ -31,16 +29,17 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
 
     private static final int view_layout = R.id.viewPager;
     private static final int tab_layout = R.id.tabLayout;
-    private final TabLayout tabLayout;
+    private static final Map<Tabs, RouteFragment> fragmentMap = new LinkedHashMap<>();
     @SuppressLint("StaticFieldLeak")
     private static FragmentPager INSTANZE = null;
-    private static final Map<Tabs, RouteFragment> fragmentMap = new LinkedHashMap<>();
 
     static {
         fragmentMap.put(Tabs.STATISTIK, StatisticFragment.getInstance());
         fragmentMap.put(Tabs.ROUTEN, RouteDoneFragment.getInstance());
         fragmentMap.put(Tabs.PROJEKTE, RouteProjectFragment.getInstance());
     }
+
+    private final TabLayout tabLayout;
 
 
     private FragmentPager() {
@@ -50,7 +49,7 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
         FragmentManager fragmentManager = activity.getSupportFragmentManager();
         TabAdapter adapter = new TabAdapter(fragmentManager);
         //init the fragments
-        for(Map.Entry<Tabs,RouteFragment> entry : fragmentMap.entrySet()){
+        for (Map.Entry<Tabs, RouteFragment> entry : fragmentMap.entrySet()) {
             adapter.addFragment((Fragment) entry.getValue(), entry.getKey().typeToString());
         }
 
@@ -60,8 +59,8 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
         tabLayout.addOnTabSelectedListener(this);
     }
 
-    public static FragmentPager getInstance(){
-        if(INSTANZE==null){
+    public static FragmentPager getInstance() {
+        if (INSTANZE == null) {
             INSTANZE = new FragmentPager();
         }
         return INSTANZE;
@@ -71,7 +70,7 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
     public void onTabSelected(TabLayout.Tab tab) {
         Tabs tabSelected = Tabs.stringToTabs(Objects.requireNonNull(tab.getText()).toString());
         AppPreferenceManager.setSelectedTabsTitle(tabSelected);
-        Log.d("Selected Tab:",tabSelected.typeToString());
+        Log.d("Selected Tab:", tabSelected.typeToString());
         switch (tabSelected) {
             //statistic
             case STATISTIK:
@@ -80,7 +79,7 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
                 AppPreferenceManager.setFilter("");
                 break;
             //routes
-            case ROUTEN :
+            case ROUTEN:
             case BOULDER:
                 ShowTimeSlider.show();
                 AppFloatingActionButton.show();
@@ -102,10 +101,12 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
     }
 
     @Override
-    public void onTabUnselected(TabLayout.Tab tab) {}
+    public void onTabUnselected(TabLayout.Tab tab) {
+    }
 
     @Override
-    public void onTabReselected(TabLayout.Tab tab) {}
+    public void onTabReselected(TabLayout.Tab tab) {
+    }
 
     public void setPosition(int pos) {
         Objects.requireNonNull(tabLayout.getTabAt(pos)).select();
@@ -116,22 +117,22 @@ public class FragmentPager implements TabLayout.OnTabSelectedListener {
     }
 
     public void refreshAllFragments() {
-        for(Map.Entry<Tabs,RouteFragment> entry : fragmentMap.entrySet()){
+        for (Map.Entry<Tabs, RouteFragment> entry : fragmentMap.entrySet()) {
             refreshFragment(entry.getValue());
         }
     }
 
-    public void initializeSportType(){
-                SportType type = AppPreferenceManager.getSportType();
+    public void initializeSportType() {
+        SportType type = AppPreferenceManager.getSportType();
         refreshAllFragments();
         Objects.requireNonNull(tabLayout.getTabAt(1)).setText(type.getRouteName());
     }
 
-    private void refreshFragment(RouteFragment frg){
-        try{
+    private void refreshFragment(RouteFragment frg) {
+        try {
             frg.refreshData();
-        }catch (Exception ex){
-            Log.d("refreshFragment:",ex.getLocalizedMessage());
+        } catch (Exception ex) {
+            Log.d("refreshFragment:", ex.getLocalizedMessage());
         }
     }
 }

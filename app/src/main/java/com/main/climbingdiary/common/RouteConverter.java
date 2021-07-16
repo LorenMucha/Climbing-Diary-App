@@ -6,7 +6,7 @@ import com.main.climbingdiary.database.entities.Route;
 import lombok.var;
 
 public class RouteConverter {
-    public static Projekt routeToProjekt(Route route){
+    public static Projekt routeToProjekt(Route route) {
         Projekt projekt = new Projekt();
         projekt.setId(route.getId());
         projekt.setLevel(route.getLevel());
@@ -18,15 +18,15 @@ public class RouteConverter {
         return projekt;
     }
 
-    public static Object cleanRoute(Object route){
-        if(route instanceof Projekt) {
+    public static Object cleanRoute(Object route) {
+        if (route instanceof Projekt) {
             var routeSet = (Projekt) route;
             routeSet.setName(cleanString(routeSet.getName()));
             routeSet.setArea(cleanString(routeSet.getArea()));
             routeSet.setSector(cleanString(routeSet.getSector()));
             routeSet.setComment(cleanString(routeSet.getComment()));
             return routeSet;
-        }else{
+        } else {
             var routeSet = (Route) route;
             routeSet.setName(cleanString(routeSet.getName()));
             routeSet.setArea(cleanString(routeSet.getArea()));
@@ -36,7 +36,7 @@ public class RouteConverter {
         }
     }
 
-    private static String cleanString(String toClean){
-        return toClean.replace("`","'");
+    private static String cleanString(String toClean) {
+        return toClean.replace("`", "'");
     }
 }

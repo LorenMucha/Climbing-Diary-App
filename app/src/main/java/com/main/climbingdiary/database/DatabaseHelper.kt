@@ -10,7 +10,12 @@ import java.io.IOException
 import java.io.OutputStream
 
 class DatabaseHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
-        SQLiteOpenHelper(context, EnvironmentParamter.DB_NAME, factory, EnvironmentParamter.DB_VERSION){
+    SQLiteOpenHelper(
+        context,
+        EnvironmentParamter.DB_NAME,
+        factory,
+        EnvironmentParamter.DB_VERSION
+    ) {
 
     private val DB_NAME: String = EnvironmentParamter.DB_NAME
     private var DB_PATH = context.applicationInfo.dataDir + "/databases/"
@@ -51,7 +56,7 @@ class DatabaseHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
 
     fun openDataBase(): Boolean {
         mDataBase =
-                SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.CREATE_IF_NECESSARY)
+            SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.CREATE_IF_NECESSARY)
         return mDataBase != null
     }
 

@@ -24,12 +24,6 @@ public class AppFloatingActionButton implements View.OnClickListener {
         floatingActionButtonLocate.setOnClickListener(this);
     }
 
-    @Override
-    public void onClick(View v) {
-
-        DialogFactory.openAddRouteDialog(AppPreferenceManager.getSelectedTabsTitle());
-    }
-
     public static void show() {
         hide();
         if (AppPreferenceManager.getSelectedTabsTitle() == Tabs.MAP) {
@@ -42,5 +36,11 @@ public class AppFloatingActionButton implements View.OnClickListener {
     public static void hide() {
         floatingActionButtonAdd.hide();
         floatingActionButtonLocate.hide();
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        DialogFactory.openAddRouteDialog(AppPreferenceManager.getSelectedTabsTitle());
     }
 }

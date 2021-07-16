@@ -29,13 +29,12 @@ import kotlin.jvm.JvmClassMappingKt;
 public class RouteDoneFragment extends Fragment implements RouteFragment {
 
     private static RoutesAdapter adapter;
+    @SuppressLint("StaticFieldLeak")
+    private static RouteDoneFragment INSTANZ = null;
+    private final RouteRepository<Route> routeRepository;
     private RecyclerView rvRoutes;
     private View view;
     private FilterHeader header;
-    private final RouteRepository<Route> routeRepository;
-
-    @SuppressLint("StaticFieldLeak")
-    private static RouteDoneFragment INSTANZ = null;
     private ArrayList<Route> routes;
 
     @SuppressLint("ValidFragment")
@@ -50,6 +49,9 @@ public class RouteDoneFragment extends Fragment implements RouteFragment {
         return INSTANZ;
     }
 
+    public static synchronized RoutesAdapter getAdapter() {
+        return adapter;
+    }
 
     @Override
     public View getView() {
@@ -74,10 +76,6 @@ public class RouteDoneFragment extends Fragment implements RouteFragment {
         // Set layout manager to position the items
         rvRoutes.setLayoutManager(new LinearLayoutManager(Objects.requireNonNull(getActivity()).getApplicationContext()));
         return view;
-    }
-
-    public static synchronized RoutesAdapter getAdapter() {
-        return adapter;
     }
 
     @Override

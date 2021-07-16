@@ -139,7 +139,9 @@ object SqlRouten {
             "INSERT OR IGNORE INTO ${SqlAreaSektoren.getAreaTableName()} (name) VALUES ('${projekt.area}')"
         val insertSektor =
             """INSERT OR IGNORE INTO ${SqlAreaSektoren.getSektorenTableName()} (name,gebiet)
-               | SELECT '${projekt.sector}',id FROM ${SqlAreaSektoren.getAreaTableName().toString()} 
+               | SELECT '${projekt.sector}',id FROM ${
+                SqlAreaSektoren.getAreaTableName().toString()
+            } 
                | WHERE name='${projekt.area}'""".trimMargin()
         val insertProjekt =
             """INSERT OR IGNORE INTO ${getProjekteTableName()} (name,level,rating,kommentar,gebiet,sektor)

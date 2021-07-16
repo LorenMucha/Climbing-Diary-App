@@ -16,7 +16,7 @@ public class SetDate implements View.OnFocusChangeListener, DatePickerDialog.OnD
     private final Calendar calender;
     private final Context context;
 
-    public SetDate(EditText editText, Context ctx){
+    public SetDate(EditText editText, Context ctx) {
         this.editText = editText;
         this.editText.setOnFocusChangeListener(this);
         calender = Calendar.getInstance();
@@ -24,7 +24,7 @@ public class SetDate implements View.OnFocusChangeListener, DatePickerDialog.OnD
     }
 
     @Override
-    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth){
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         //bring String in SQL-Format
         String myFormat = "yyyy-MM-dd";
         SimpleDateFormat sdformat = new SimpleDateFormat(myFormat, Locale.GERMAN);
@@ -38,7 +38,7 @@ public class SetDate implements View.OnFocusChangeListener, DatePickerDialog.OnD
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         // TODO Auto-generated method stub
-        if(hasFocus){
+        if (hasFocus) {
             new DatePickerDialog(this.context, this, calender
                     .get(Calendar.YEAR), calender.get(Calendar.MONTH),
                     calender.get(Calendar.DAY_OF_MONTH)).show();

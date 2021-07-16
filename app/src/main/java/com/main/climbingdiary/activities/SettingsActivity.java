@@ -13,6 +13,11 @@ public class SettingsActivity extends AppCompatActivity {
 
     @SuppressLint("StaticFieldLeak")
     public static AppCompatActivity mainActivity;
+
+    public static AppCompatActivity getSettingsActivity() {
+        return SettingsActivity.mainActivity;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,8 +27,6 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         AppPermissions.checkPermissions(this.getApplicationContext());
     }
-
-    public static AppCompatActivity getSettingsActivity(){return SettingsActivity.mainActivity;}
 
     @Override
     public void onBackPressed() {

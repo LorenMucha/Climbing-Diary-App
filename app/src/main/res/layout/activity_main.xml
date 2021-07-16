@@ -4,9 +4,9 @@
     android:id="@+id/nav_drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:layout_gravity="start"
-    android:background="@color/backgroundColorPrimary">
+    android:background="@color/backgroundColorPrimary"
+    android:fitsSystemWindows="true">
 
     <include
         layout="@layout/app_bar_main"
@@ -21,6 +21,6 @@
         android:background="@color/colorPrimaryDark"
         android:maxWidth="200dp"
         app:itemTextColor="@color/white"
-        app:menu="@menu/activity_main_drawer"/>
+        app:menu="@menu/activity_main_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

@@ -1,97 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_marginBottom="50dp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="50dp"
+    android:orientation="vertical">
 
-    <include
-        layout="@layout/filter_header"/>
+    <include layout="@layout/filter_header" />
 
     <RelativeLayout
-        android:gravity="center_horizontal"
         android:id="@+id/control_btn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    <Button
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Statistik"
-        android:textColor="@color/white"
-        android:background="@color/buttonColor"
-        android:id="@+id/btn_stat"
-        android:layout_gravity="center_vertical" />
+        android:gravity="center_horizontal">
 
-    <Button
-        android:layout_toRightOf="@id/btn_stat"
-        android:layout_marginLeft="2dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Verlauf"
-        android:id="@+id/btn_dev"
-        android:textColor="@color/white"
-        android:background="@color/buttonColor"
-        android:layout_gravity="center_vertical" />
+        <Button
+            android:id="@+id/btn_stat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@color/buttonColor"
+            android:text="Statistik"
+            android:textColor="@color/white" />
 
-    <Button
-        android:layout_toRightOf="@id/btn_dev"
-        android:layout_marginLeft="2dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tabelle"
-        android:id="@+id/btn_table"
-        android:textColor="@color/white"
-        android:background="@color/buttonColor"
-        android:layout_gravity="center_vertical" />
+        <Button
+            android:id="@+id/btn_dev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="2dp"
+            android:layout_toRightOf="@id/btn_stat"
+            android:background="@color/buttonColor"
+            android:text="Verlauf"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btn_table"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="2dp"
+            android:layout_toRightOf="@id/btn_dev"
+            android:background="@color/buttonColor"
+            android:text="Tabelle"
+            android:textColor="@color/white" />
 
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_margin="30dp"
-        android:layout_height="match_parent">
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
 
         <com.github.mikephil.charting.charts.BarChart
-            android:visibility="gone"
             android:id="@+id/route_bar_chart"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:visibility="gone" />
 
         <com.github.mikephil.charting.charts.LineChart
-            android:visibility="gone"
             android:id="@+id/route_line_chart"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-        
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
         <ScrollView
-            android:layout_marginTop="10dp"
-            android:visibility="gone"
             android:id="@+id/TableScrollView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:visibility="gone">
 
             <HorizontalScrollView
                 android:id="@+id/HorizontalTableView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_height="fill_parent"
-                    android:orientation="vertical" >
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
 
                     <TableLayout
                         android:id="@+id/route_table"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:padding="5dp"
-                        android:layout_centerHorizontal="true">
-                    </TableLayout>
+                        android:layout_centerHorizontal="true"
+                        android:padding="5dp"></TableLayout>
                 </RelativeLayout>
             </HorizontalScrollView>
         </ScrollView>

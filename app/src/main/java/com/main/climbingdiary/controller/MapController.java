@@ -15,8 +15,8 @@ import com.main.climbingdiary.database.entities.Area;
 import com.main.climbingdiary.database.entities.AreaRepository;
 import com.main.climbingdiary.database.entities.Route;
 import com.main.climbingdiary.database.entities.RouteRepository;
-import com.main.climbingdiary.models.MenuValues;
 import com.main.climbingdiary.models.Colors;
+import com.main.climbingdiary.models.MenuValues;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.util.GeoPoint;
@@ -30,31 +30,21 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 import java.util.List;
 
 import kotlin.jvm.JvmClassMappingKt;
-import kotlin.reflect.KClass;
 
 import static android.content.Context.LOCATION_SERVICE;
 
 public class MapController {
 
-    private final View view;
-    private static MapView map;
-    private static IMapController mapController;
     private static final GeoPoint startPoint = new GeoPoint(49.58, 11.01);
     private static final LocationManager locationManager = (LocationManager) MainActivity.getMainActivity().getSystemService(LOCATION_SERVICE);
+    private static MapView map;
+    private static IMapController mapController;
+    private final View view;
     private final RouteRepository<Route> routeRepository;
 
-    public MapController(View _view){
+    public MapController(View _view) {
         view = _view;
         routeRepository = new RouteRepository<>(JvmClassMappingKt.getKotlinClass(Route.class));
-    }
-
-    public void setUpMap() {
-        map = view.findViewById(R.id.map);
-        mapController = map.getController();
-        mapController.setZoom(10);
-        mapController.setCenter(startPoint);
-        setMarker();
-
     }
 
     public static void setUserPosition() {
@@ -95,7 +85,16 @@ public class MapController {
         alert.show();
     }
 
-    public void refreshMap(){
+    public void setUpMap() {
+        map = view.findViewById(R.id.map);
+        mapController = map.getController();
+        mapController.setZoom(10);
+        mapController.setCenter(startPoint);
+        setMarker();
+
+    }
+
+    public void refreshMap() {
         map.getOverlayManager().clear();
         this.setMarker();
     }
@@ -112,7 +111,7 @@ public class MapController {
                 poiMarker.setPosition(new GeoPoint(area.getLat(), area.getLng()));
                 poiMarker.setIcon(poiIcon);
                 poiMarker.setTitle(area.getName());
-                poiMarker.setSnippet(String.format("Hier hast du %s Begehungen gemacht",sumAscents));
+                poiMarker.setSnippet(String.format("Hier hast du %s Begehungen gemacht", sumAscents));
                 poiMarkers.add(poiMarker);
                 poiMarker.setInfoWindow(new CustomInfoWindow(map, area));
             }
@@ -120,26 +119,29 @@ public class MapController {
     }
 
     static class CustomInfoWindow extends MarkerInfoWindow {
-        private Area area;
         TextView btn = (mView.findViewById(org.osmdroid.bonuspack.R.id.bubble_title));
+        private Area area;
+
         CustomInfoWindow(MapView mapView, Area _area) {
             super(org.osmdroid.bonuspack.R.layout.bonuspack_bubble, mapView);
             this.area = _area;
             btn.setOnClickListener(view -> {
                 FragmentPager.getInstance().setPosition(1);
-                AppPreferenceManager.setFilter(String.format("g.id = %s",area.getId()));
+                AppPreferenceManager.setFilter(String.format("g.id = %s", area.getId()));
                 AppPreferenceManager.setFilterSetter(MenuValues.FILTER);
                 FragmentPager.getInstance().refreshSelectedFragment();
             });
 
         }
-        @Override public void onOpen(Object item){
+
+        @Override
+        public void onOpen(Object item) {
             super.onOpen(item);
             TextView header = mView.findViewById(org.osmdroid.bonuspack.R.id.bubble_title);
             header.setVisibility(View.VISIBLE);
             header.setTextColor(Colors.getMainColor());
             header.setTextSize(15);
-            header.setPaintFlags(header.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+            header.setPaintFlags(header.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         }
     }
 }

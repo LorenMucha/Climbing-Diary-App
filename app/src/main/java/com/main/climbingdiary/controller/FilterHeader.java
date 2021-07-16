@@ -7,16 +7,16 @@ import android.widget.TextView;
 
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.common.preferences.AppPreferenceManager;
-import com.main.climbingdiary.models.MenuValues;
 import com.main.climbingdiary.fragments.RouteFragment;
+import com.main.climbingdiary.models.MenuValues;
 
 public class FilterHeader implements View.OnClickListener {
 
     private final LinearLayout LAYOUT;
     private final TextView TEXT;
     private final ImageView IMAGE;
-    private String filterText;
     private final RouteFragment fragment;
+    private String filterText;
 
     public FilterHeader(RouteFragment _fragment) {
         View view = _fragment.getView();

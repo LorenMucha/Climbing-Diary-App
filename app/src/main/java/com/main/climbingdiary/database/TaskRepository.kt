@@ -24,7 +24,7 @@ object TaskRepository {
 
     init {
         val context: Context = MainActivity.getMainAppContext()
-        val mDbHelper = DatabaseHelper(context,null)
+        val mDbHelper = DatabaseHelper(context, null)
         mDbHelper.openDataBase()
         mDb = mDbHelper.writableDatabase
     }

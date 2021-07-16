@@ -46,10 +46,6 @@ import lombok.Getter;
 public class RouteDialogCreator {
 
     @Getter
-    Button closeDialog;
-    @Getter
-    Button saveRoute;
-    @Getter
     private final Spinner stil;
     @Getter
     private final Spinner level;
@@ -73,6 +69,10 @@ public class RouteDialogCreator {
     private final DialogFragment fragment;
     private final LinearLayout routeContent;
     private final LinearLayout gradeSwitcherLayout;
+    @Getter
+    Button closeDialog;
+    @Getter
+    Button saveRoute;
 
     public RouteDialogCreator(View _view, Context context, DialogFragment _fragment) {
         view = _view;
@@ -209,7 +209,7 @@ public class RouteDialogCreator {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                ArrayAdapter<String> sectorArrayAdapter = new ArrayAdapter<String>(_context, android.R.layout.simple_spinner_item, SectorRepository.INSTANCE.getSectorList( area.getText().toString().trim()));
+                ArrayAdapter<String> sectorArrayAdapter = new ArrayAdapter<String>(_context, android.R.layout.simple_spinner_item, SectorRepository.INSTANCE.getSectorList(area.getText().toString().trim()));
                 //will start working from first character
                 sector.setThreshold(1);
                 sector.setAdapter(sectorArrayAdapter);
@@ -260,8 +260,8 @@ public class RouteDialogCreator {
         });
     }
 
-    private void setRouteNameHeaderText(){
-        String header = AppPreferenceManager.getSportType().getRouteName()+"name";
+    private void setRouteNameHeaderText() {
+        String header = AppPreferenceManager.getSportType().getRouteName() + "name";
         nameHeader.setText(header);
     }
 

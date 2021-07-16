@@ -18,7 +18,7 @@ public class XAxisValueFormatter implements IAxisValueFormatter {
         // "value" represents the position of the label on the axis (x or y)
         try {
             return mValues.get((int) value);
-        }catch(Exception e){
+        } catch (Exception e) {
             return "False";
         }
     }

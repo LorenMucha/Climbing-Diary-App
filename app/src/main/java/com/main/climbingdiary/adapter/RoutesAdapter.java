@@ -21,12 +21,12 @@ import android.widget.TextView;
 import com.main.climbingdiary.R;
 import com.main.climbingdiary.common.AlertManager;
 import com.main.climbingdiary.controller.FragmentPager;
+import com.main.climbingdiary.controller.button.AppFloatingActionButton;
 import com.main.climbingdiary.database.entities.Route;
 import com.main.climbingdiary.database.entities.RouteRepository;
-import com.main.climbingdiary.models.Tabs;
-import com.main.climbingdiary.controller.button.AppFloatingActionButton;
 import com.main.climbingdiary.dialog.DialogFactory;
 import com.main.climbingdiary.models.Colors;
+import com.main.climbingdiary.models.Tabs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,46 +37,9 @@ import kotlin.jvm.JvmClassMappingKt;
 public class RoutesAdapter extends
         RecyclerView.Adapter<RoutesAdapter.ViewHolder> implements Filterable {
 
-    private List<Route> mRoutes;
     private final List<Route> mRoutes_filtered;
     private final RouteRepository<Route> routeRepository;
-
-    // Provide a direct reference to each of the views within a data item
-    // Used to cache the views within the item layout for fast access
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        // Your holder should contain a member variable
-        // for any view that will be set as you render a row
-        TextView nameTextView;
-        TextView dateTextView;
-        TextView levelTextView;
-        TextView areaTextView;
-        ImageView styleTextView;
-        RatingBar ratingView;
-        TextView commentTextView;
-        TableRow hiddenView;
-        ImageButton editButton;
-        ImageButton removeButton;
-
-        // We also create a constructor that accepts the entire item row
-        // and does the view lookups to find each subview
-        private ViewHolder(View itemView) {
-            // Stores the itemView in a public final member variable that can be used
-            // to access the context from any ViewHolder instance.
-            super(itemView);
-
-            nameTextView = itemView.findViewById(R.id.route_name);
-            dateTextView = itemView.findViewById(R.id.route_date);
-            levelTextView = itemView.findViewById(R.id.route_level);
-            areaTextView = itemView.findViewById(R.id.route_area);
-            //styleTextView=(TextView) itemView.findViewById(R.id.route_style);
-            styleTextView = itemView.findViewById(R.id.route_style);
-            ratingView = itemView.findViewById(R.id.route_rating);
-            commentTextView = itemView.findViewById(R.id.route_comment);
-            hiddenView = itemView.findViewById(R.id.route_hidden);
-            editButton = itemView.findViewById(R.id.route_edit);
-            removeButton = itemView.findViewById(R.id.route_delete);
-        }
-    }
+    private List<Route> mRoutes;
 
     // Pass in the contact array into the constructor
     public RoutesAdapter(List<Route> routes) {
@@ -255,5 +218,42 @@ public class RoutesAdapter extends
                 return R.drawable.ic_flash;
         }
         return 0;
+    }
+
+    // Provide a direct reference to each of the views within a data item
+    // Used to cache the views within the item layout for fast access
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        // Your holder should contain a member variable
+        // for any view that will be set as you render a row
+        TextView nameTextView;
+        TextView dateTextView;
+        TextView levelTextView;
+        TextView areaTextView;
+        ImageView styleTextView;
+        RatingBar ratingView;
+        TextView commentTextView;
+        TableRow hiddenView;
+        ImageButton editButton;
+        ImageButton removeButton;
+
+        // We also create a constructor that accepts the entire item row
+        // and does the view lookups to find each subview
+        private ViewHolder(View itemView) {
+            // Stores the itemView in a public final member variable that can be used
+            // to access the context from any ViewHolder instance.
+            super(itemView);
+
+            nameTextView = itemView.findViewById(R.id.route_name);
+            dateTextView = itemView.findViewById(R.id.route_date);
+            levelTextView = itemView.findViewById(R.id.route_level);
+            areaTextView = itemView.findViewById(R.id.route_area);
+            //styleTextView=(TextView) itemView.findViewById(R.id.route_style);
+            styleTextView = itemView.findViewById(R.id.route_style);
+            ratingView = itemView.findViewById(R.id.route_rating);
+            commentTextView = itemView.findViewById(R.id.route_comment);
+            hiddenView = itemView.findViewById(R.id.route_hidden);
+            editButton = itemView.findViewById(R.id.route_edit);
+            removeButton = itemView.findViewById(R.id.route_delete);
+        }
     }
 }
