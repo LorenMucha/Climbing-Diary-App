@@ -10,8 +10,8 @@ public class GradeConverter {
 
     public static String convertUiaaToFrench(String gradeUiaa) {
         try {
-            int pos = Arrays.asList(Levels.getLevelsUiaa()).indexOf(gradeUiaa);
-            return Levels.getLevelsFrench()[pos];
+            int pos = Arrays.asList(Levels.INSTANCE.getLevelsUiaa()).indexOf(gradeUiaa);
+            return Levels.INSTANCE.getLevelsFrench()[pos];
         } catch (Exception ex) {
             Log.d("GradeConverter", ex.getLocalizedMessage());
             return null;
@@ -20,8 +20,8 @@ public class GradeConverter {
 
     public static String convertFrenchToUiaa(String french) {
         try {
-            int pos = Arrays.asList(Levels.getLevelsFrench()).indexOf(french);
-            return Levels.getLevelsUiaa()[pos];
+            int pos = Arrays.asList(Levels.INSTANCE.getLevelsFrench()).indexOf(french);
+            return Levels.INSTANCE.getLevelsUiaa()[pos];
         } catch (Exception ex) {
             Log.d("GradeConverter", ex.getLocalizedMessage());
             return null;

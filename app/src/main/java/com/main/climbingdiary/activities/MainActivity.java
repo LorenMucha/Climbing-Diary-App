@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.main.climbingdiary.R;
+import com.main.climbingdiary.common.AppPermissions;
 import com.main.climbingdiary.common.preferences.AppPreferenceManager;
 import com.main.climbingdiary.controller.FragmentPager;
 import com.main.climbingdiary.controller.NavDrawerController;
@@ -24,20 +25,20 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int layoutId = R.layout.activity_main;
     @SuppressLint("StaticFieldLeak")
-    public static AppCompatActivity mainActivity;
+    public static volatile AppCompatActivity mainActivity;
     @SuppressLint("StaticFieldLeak")
-    private static Context mainAppContext;
-    private static ComponentName componentName;
+    private static volatile Context mainAppContext;
+    private static volatile ComponentName componentName;
 
-    public static Context getMainAppContext() {
+    public static synchronized Context getMainAppContext() {
         return MainActivity.mainAppContext;
     }
 
-    public static ComponentName getMainComponentName() {
+    public static synchronized ComponentName getMainComponentName() {
         return MainActivity.componentName;
     }
 
-    public static AppCompatActivity getMainActivity() {
+    public static synchronized AppCompatActivity getMainActivity() {
         return MainActivity.mainActivity;
     }
 

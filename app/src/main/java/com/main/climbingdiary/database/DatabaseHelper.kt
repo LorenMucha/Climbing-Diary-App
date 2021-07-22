@@ -17,17 +17,21 @@ class DatabaseHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         EnvironmentParamter.DB_VERSION
     ) {
 
-    private val DB_NAME: String = EnvironmentParamter.DB_NAME
-    private var DB_PATH = context.applicationInfo.dataDir + "/databases/"
+    private val dbName: String = EnvironmentParamter.DB_NAME
+    private var dbPath = context.applicationInfo.dataDir + "/databases/"
 
     @Volatile
     private var mDataBase: SQLiteDatabase? = null
     private var mNeedUpdate = false
     private val mContext = context
 
+    init{
+        copyDataBase()
+        this.readableDatabase
+    }
 
     private fun checkDataBase(): Boolean {
-        val dbFile = File(DB_PATH + DB_NAME)
+        val dbFile = File(dbPath + dbName)
         return dbFile.exists()
     }
 
@@ -44,8 +48,8 @@ class DatabaseHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     }
 
     private fun copyDBFile() {
-        val mInput = mContext!!.assets.open(DB_NAME)
-        val mOutput: OutputStream = FileOutputStream(DB_PATH + DB_NAME)
+        val mInput = mContext.assets.open(dbName)
+        val mOutput: OutputStream = FileOutputStream(dbPath + dbName)
         val mBuffer = ByteArray(1024)
         var mLength: Int
         while (mInput.read(mBuffer).also { mLength = it } > 0) mOutput.write(mBuffer, 0, mLength)
@@ -54,10 +58,9 @@ class DatabaseHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         mInput.close()
     }
 
-    fun openDataBase(): Boolean {
+    fun openDataBase() {
         mDataBase =
-            SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.CREATE_IF_NECESSARY)
-        return mDataBase != null
+            SQLiteDatabase.openDatabase(dbPath + dbName, null, SQLiteDatabase.CREATE_IF_NECESSARY)
     }
 
     @Synchronized

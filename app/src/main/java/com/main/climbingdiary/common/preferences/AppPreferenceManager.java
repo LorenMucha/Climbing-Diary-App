@@ -49,7 +49,7 @@ public class AppPreferenceManager {
     }
 
     public static synchronized RouteSort getSort() {
-        return RouteSort.stringToSportType(PREFS.getString(PreferenceKeys.SORT, "date"));
+        return RouteSort.Companion.stringToSportType(PREFS.getString(PreferenceKeys.SORT, "date"));
     }
 
     public static synchronized void setSort(RouteSort sort) {
@@ -58,7 +58,7 @@ public class AppPreferenceManager {
     }
 
     public static synchronized MenuValues getFilterSetter() {
-        return MenuValues.stringToSportType(Objects.requireNonNull(PREFS.getString(PreferenceKeys.FILTER_MENU, "date")));
+        return MenuValues.Companion.stringToSportType(Objects.requireNonNull(PREFS.getString(PreferenceKeys.FILTER_MENU, "date")));
     }
 
     public static synchronized void setFilterSetter(MenuValues value) {

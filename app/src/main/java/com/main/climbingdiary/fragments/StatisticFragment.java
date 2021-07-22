@@ -56,7 +56,7 @@ public class StatisticFragment extends Fragment implements RouteFragment {
         //the Button Click Listener
         setLineChartBtn.setOnClickListener(v -> {
             resetButtonBackground();
-            setLineChartBtn.setBackgroundColor(Colors.getActiveColor());
+            setLineChartBtn.setBackgroundColor(Colors.INSTANCE.getActiveColor());
             _routeLineChart.show();
             _routeTable.hide();
             _routeBarChartController.hide();
@@ -64,7 +64,7 @@ public class StatisticFragment extends Fragment implements RouteFragment {
         });
         setBarChartBtn.setOnClickListener(v -> {
             resetButtonBackground();
-            setBarChartBtn.setBackgroundColor(Colors.getActiveColor());
+            setBarChartBtn.setBackgroundColor(Colors.INSTANCE.getActiveColor());
             _routeTable.hide();
             _routeLineChart.hide();
             _routeBarChartController.show();
@@ -72,7 +72,7 @@ public class StatisticFragment extends Fragment implements RouteFragment {
         });
         setTableBtn.setOnClickListener(v -> {
             resetButtonBackground();
-            setTableBtn.setBackgroundColor(Colors.getActiveColor());
+            setTableBtn.setBackgroundColor(Colors.INSTANCE.getActiveColor());
             _routeBarChartController.hide();
             _routeLineChart.hide();
             _routeTable.show();

@@ -119,12 +119,12 @@ public class SettingsFragment extends PreferenceFragment {
             new AppFileProvider().exportDBtoPreferencePath();
             new AlertManager().setAlertWithoutContent(
                     this.getContext(),
-                    Alert.builder().dialogType(SweetAlertDialog.SUCCESS_TYPE).title("Die Datenbank wurde exportiert !").build());
+                    new Alert.Builder().dialogType(SweetAlertDialog.SUCCESS_TYPE).title("Die Datenbank wurde exportiert !").build());
         } catch (IOException e) {
             Log.e("exportDb", e.getLocalizedMessage());
             new AlertManager().setAlertWithoutContent(
                     this.getContext(),
-                    Alert.builder().dialogType(SweetAlertDialog.ERROR_TYPE)
+                    new Alert.Builder().dialogType(SweetAlertDialog.ERROR_TYPE)
                             .title(String.format("Der Export ist Schiefgelaufen %s", "\ud83d\ude13"))
                             .build());
         }
@@ -152,7 +152,7 @@ public class SettingsFragment extends PreferenceFragment {
             Log.d("restoreDb", e.getLocalizedMessage());
             new AlertManager().setAlertWithoutContent(
                     this.getContext(),
-                    Alert.builder().dialogType(SweetAlertDialog.ERROR_TYPE)
+                    new Alert.Builder().dialogType(SweetAlertDialog.ERROR_TYPE)
                             .title(String.format("Der Restore ist Schiefgelaufen %s", "\ud83d\ude13"))
                             .build());
         }

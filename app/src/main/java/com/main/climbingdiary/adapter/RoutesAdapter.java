@@ -95,7 +95,7 @@ public class RoutesAdapter extends
         routeName.setText(route.getName());
         date.setText(route.getDate());
         level.setText(gradeText);
-        level.setTextColor(Colors.getGradeColor(gradeText));
+        level.setTextColor(Colors.INSTANCE.getGradeColor(gradeText));
 
         try {
             Drawable drawable = ContextCompat.getDrawable(viewHolder.itemView.getContext(), getRoutStyleIcon(styleText));

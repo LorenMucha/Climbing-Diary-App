@@ -102,7 +102,7 @@ public class RouteDialogCreator {
         name.setText(projekt.getName());
         this.setRouteNameHeaderText();
         // set Spinner for choosing the level
-        this.setLevelSpinner(projekt.getLevel(), Levels.getLevelsFrench());
+        this.setLevelSpinner(projekt.getLevel(), Levels.INSTANCE.getLevelsFrench());
         this.setGradeSwitcher(true);
 
         //get the route List and set autocomplete
@@ -125,7 +125,7 @@ public class RouteDialogCreator {
         // set Spinner for choosing the style
         this.setStilSpinner(route.getStyle().toUpperCase());
         // set Spinner for choosing the level
-        this.setLevelSpinner(route.getLevel(), Levels.getLevelsFrench());
+        this.setLevelSpinner(route.getLevel(), Levels.INSTANCE.getLevelsFrench());
 
         //get the route List and set autocomplete
         this.setAreaSectorAutoComplete();
@@ -156,7 +156,7 @@ public class RouteDialogCreator {
             routeContent.setVisibility(View.GONE);
         }
         this.setStilSpinner("RP");
-        this.setLevelSpinner("8a", Levels.getLevelsFrench());
+        this.setLevelSpinner("8a", Levels.INSTANCE.getLevelsFrench());
         this.setAreaSectorAutoComplete();
         this.setRatingSpinner(1);
         this.setGradeSwitcher(true);
@@ -189,9 +189,9 @@ public class RouteDialogCreator {
         gradeSwitcherLayout.setVisibility(viewState);
         gradeSwitcher.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                this.setLevelSpinner("8a", Levels.getLevelsFrench());
+                this.setLevelSpinner("8a", Levels.INSTANCE.getLevelsFrench());
             } else {
-                this.setLevelSpinner("IX+/X-", Levels.getLevelsUiaa());
+                this.setLevelSpinner("IX+/X-", Levels.INSTANCE.getLevelsUiaa());
             }
         });
     }
@@ -244,7 +244,7 @@ public class RouteDialogCreator {
 
     private void setRatingSpinner(int selection) {
         // set Spinner for choosing the level
-        ArrayAdapter<String> ratingArrayAdapter = new ArrayAdapter<String>(_context, android.R.layout.simple_spinner_item, Rating.getRating());
+        ArrayAdapter<String> ratingArrayAdapter = new ArrayAdapter<String>(_context, android.R.layout.simple_spinner_item, Rating.INSTANCE.getRating());
         ratingArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
         rating.setAdapter(ratingArrayAdapter);
         rating.setSelection(selection);
@@ -307,7 +307,7 @@ public class RouteDialogCreator {
 
     public boolean checkDate() {
         if (date.getText().toString().trim().length() == 0) {
-            Alert alert = Alert.builder()
+            Alert alert = new Alert.Builder()
                     .title(String.format("Datum fehlt %s", "\ud83d\ude13"))
                     .dialogType(SweetAlertDialog.ERROR_TYPE)
                     .build();

@@ -83,7 +83,7 @@ public class RouteLineChartController extends RouteChartController {
                     while (!cursor.isAfterLast()) {
                         String level = cursor.getString(0);
                         String stil = cursor.getString(1);
-                        int points = (Levels.getLevelRating(level) + Styles.INSTANCE.getStyleRatingFactor(stil));
+                        int points = (Levels.INSTANCE.getLevelRating(level) + Styles.INSTANCE.getStyleRatingFactor(stil));
                         InfoObject route = new InfoObject();
                         route.points = points;
                         route.route_level = level;
@@ -102,8 +102,8 @@ public class RouteLineChartController extends RouteChartController {
             Collections.sort(labels);
             LineDataSet dataSet = new LineDataSet(entries, "");
             dataSet.setColor(R.color.main_blue_color);
-            dataSet.setCircleHoleColor(Colors.getActiveColor());
-            dataSet.setCircleColor(Colors.getMainColor());
+            dataSet.setCircleHoleColor(Colors.INSTANCE.getActiveColor());
+            dataSet.setCircleColor(Colors.INSTANCE.getMainColor());
             dataSet.setHighLightColor(Color.RED);
             dataSet.setLineWidth(5);
             dataSet.setCircleRadius(15);
@@ -182,14 +182,14 @@ public class RouteLineChartController extends RouteChartController {
             TextView textViewLevel = new TextView(dialogContext);
             textViewLevel.setText(infoObject.getRoute_level());
             textViewLevel.setTypeface(null, Typeface.BOLD);
-            textViewLevel.setTextColor(Colors.getGradeColor(infoObject.getRoute_level()));
+            textViewLevel.setTextColor(Colors.INSTANCE.getGradeColor(infoObject.getRoute_level()));
             textViewLevel.setPadding(20, 0, 0, 0);
             tableRow.addView(textViewLevel);
 
             TextView textViewStil = new TextView(dialogContext);
             textViewStil.setText(infoObject.getRouteStil());
             textViewStil.setTypeface(null, Typeface.BOLD);
-            textViewStil.setTextColor(Colors.getStyleColor(infoObject.getRouteStil()));
+            textViewStil.setTextColor(Colors.INSTANCE.getStyleColor(infoObject.getRouteStil()));
             textViewStil.setPadding(20, 0, 0, 0);
             tableRow.addView(textViewStil);
 

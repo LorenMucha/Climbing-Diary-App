@@ -64,7 +64,7 @@ public class RouteBarChartController extends RouteChartController {
                 }
             }
             BarDataSet set = new BarDataSet(entriesGroup, "");
-            set.setColors(Colors.getStyleColor("flash"), Colors.getStyleColor("rp"), Colors.getStyleColor("os"));
+            set.setColors(Colors.INSTANCE.getStyleColor("flash"), Colors.INSTANCE.getStyleColor("rp"), Colors.INSTANCE.getStyleColor("os"));
             set.setDrawValues(false);
             set.setStackLabels(new String[]{"FLASH", "OS", "RP"});
             BarData data = new BarData(set);
