@@ -2,6 +2,7 @@ package com.main.climbingdiary.models
 
 import android.graphics.Color
 import com.main.climbingdiary.R
+import java.util.*
 
 object Colors {
     val mainColor: Int
@@ -27,7 +28,7 @@ object Colors {
     }
 
     fun getStyleColor(_style: String): Int {
-        return when (_style.toLowerCase()) {
+        return when (_style.toLowerCase(Locale.ROOT)) {
             "os" -> Color.parseColor("#33b5e5")
             "rp" -> Color.parseColor("#0d47a1")
             else -> Color.parseColor("#00C851")

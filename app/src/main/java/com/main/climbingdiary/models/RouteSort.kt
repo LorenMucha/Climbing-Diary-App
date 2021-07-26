@@ -7,6 +7,7 @@ enum class RouteSort {
     LEVEL, AREA, DATE;
 
     companion object {
+        @JvmStatic
         fun stringToSportType(type: String): RouteSort? {
             var value: RouteSort? = null
             try {
@@ -18,7 +19,7 @@ enum class RouteSort {
         }
     }
 
-    open fun typeToString(): String? {
+    fun typeToString(): String {
         return this.toString().toLowerCase(Locale.ROOT)
     }
 }

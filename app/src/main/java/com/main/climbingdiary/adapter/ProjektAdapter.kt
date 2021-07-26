@@ -84,7 +84,7 @@ public class ProjektAdapter(projekts: List<Projekt>) : Filterable,
             override fun onClick(v: View) {
                 if (click == 0) {
                     //if last element hide add Button
-                    if (mProjekts!!.indexOf(projekt) == mProjekts!!.size - 1) {
+                    if (mProjekts.indexOf(projekt) == mProjekts.size - 1) {
                         AppFloatingActionButton.hide()
                     }
                     hiddenLayout.visibility = View.VISIBLE
@@ -110,7 +110,7 @@ public class ProjektAdapter(projekts: List<Projekt>) : Filterable,
                     //delete the route by id
                     val taskState = routeRepository.deleteRoute(projekt)
                     if (taskState) {
-                        FragmentPager.getInstance().refreshSelectedFragment()
+                        FragmentPager.refreshSelectedFragment()
                         sDialog.hide()
                         SweetAlertDialog(v.context, SweetAlertDialog.SUCCESS_TYPE)
                             .setTitleText("Gelöscht")

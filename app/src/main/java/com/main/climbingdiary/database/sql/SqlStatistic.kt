@@ -35,7 +35,7 @@ object SqlStatistic {
     }
 
     fun getBarChartValues(): String {
-        var filterSet: String = AppPreferenceManager.getFilter()
+        var filterSet: String = AppPreferenceManager.getFilter()!!
         if (filterSet.isNotEmpty()) {
             filterSet = " where $filterSet"
         }

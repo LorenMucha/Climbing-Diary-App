@@ -184,7 +184,7 @@ public class RouteDialogCreator {
     }
 
     private void setGradeSwitcher(boolean visibility) {
-        int viewState = visibility && AppPreferenceManager.getSportType() == SportType.KLETTERN ? View.VISIBLE : View.GONE;
+        int viewState = visibility && AppPreferenceManager.INSTANCE.getSportType() == SportType.KLETTERN ? View.VISIBLE : View.GONE;
 
         gradeSwitcherLayout.setVisibility(viewState);
         gradeSwitcher.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -253,15 +253,15 @@ public class RouteDialogCreator {
     private void setOnCloseButton() {
         //close the dialog
         getCloseDialog().setOnClickListener(v -> {
-            if (AppPreferenceManager.getSelectedTabsTitle() == Tabs.PROJEKTE) {
-                FragmentPager.getInstance().refreshSelectedFragment();
+            if (AppPreferenceManager.INSTANCE.getSelectedTabsTitle() == Tabs.PROJEKTE) {
+                FragmentPager.INSTANCE.refreshSelectedFragment();
             }
             fragment.getDialog().cancel();
         });
     }
 
     private void setRouteNameHeaderText() {
-        String header = AppPreferenceManager.getSportType().getRouteName() + "name";
+        String header = AppPreferenceManager.INSTANCE.getSportType().getRouteName() + "name";
         nameHeader.setText(header);
     }
 
@@ -311,7 +311,7 @@ public class RouteDialogCreator {
                     .title(String.format("Datum fehlt %s", "\ud83d\ude13"))
                     .dialogType(SweetAlertDialog.ERROR_TYPE)
                     .build();
-            new AlertManager().setAlertWithoutContent(_context, alert);
+            AlertManager.setAlertWithoutContent(_context, alert);
             return false;
         } else {
             return true;

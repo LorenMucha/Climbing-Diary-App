@@ -143,7 +143,7 @@ public class RoutesAdapter extends
                         //delete the route by id
                         boolean taskState = routeRepository.deleteRoute(route);
                         if (taskState) {
-                            FragmentPager.getInstance().refreshAllFragments();
+                            FragmentPager.INSTANCE.refreshAllFragments();
                             sDialog.hide();
                             new SweetAlertDialog(_v.getContext(), SweetAlertDialog.SUCCESS_TYPE)
                                     .setTitleText("Gelöscht")

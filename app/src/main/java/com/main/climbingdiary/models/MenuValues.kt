@@ -1,21 +1,31 @@
 package com.main.climbingdiary.models
 
+import com.main.climbingdiary.common.preferences.PreferenceKeys
 import java.util.*
+
 
 enum class MenuValues {
     SEARCH, FILTER, SORT, SORT_DATE, SETTINGS;
 
     companion object {
-        fun stringToSportType(type: String): MenuValues? {
+        fun stringToSportType(type: String): MenuValues {
             return valueOf(type.toUpperCase(Locale.ROOT))
         }
     }
 
-    open fun typeToString(): String {
+    fun typeToString(): String {
         return this.toString().toLowerCase(Locale.ROOT)
     }
 
     override fun toString(): String {
-        return this.toString().replace("SORT_", "")
+        var value = ""
+        value = when (this) {
+            SEARCH -> "search"
+            FILTER -> "filter"
+            SORT -> "sort"
+            SORT_DATE -> "date"
+            SETTINGS -> "settings"
+        }
+        return value
     }
 }

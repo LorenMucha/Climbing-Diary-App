@@ -19,9 +19,9 @@ object SqlRouten {
     }
 
     fun getRouteList(routeType: RouteType): String {
-        var filterSet: String = AppPreferenceManager.getFilter()
+        var filterSet: String = AppPreferenceManager.getFilter()!!
         filterSet = if (filterSet.isEmpty()) "" else String.format(" where %s", filterSet)
-        val sort: RouteSort = AppPreferenceManager.getSort()
+        val sort: RouteSort = AppPreferenceManager.getSort()!!
         var sql = ""
         if (routeType === RouteType.ROUTE) {
             when {
@@ -107,8 +107,8 @@ object SqlRouten {
     }
 
     fun getYears(filterSet: Boolean): String {
-        val filter: String = if (filterSet && AppPreferenceManager.getFilter().isNotEmpty())
-            AppPreferenceManager.getFilter() else ""
+        val filter: String = if (filterSet && AppPreferenceManager.getFilter()!!.isNotEmpty())
+            AppPreferenceManager.getFilter()!! else ""
         return """select DISTINCT(strftime('%Y',r.date)) as year from ${getRoutenTableName()} r 
             | $filter order by r.date DESC""".trimMargin()
     }

@@ -53,15 +53,8 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.componentName = getComponentName();
         MainActivity.mainActivity = this;
 
-        //manager for the tabs
-        FragmentPager.getInstance();
-
-        AppPreferenceManager.removeAllFilterPrefs();
-
-        //the add buttons
-        new ShowTimeSlider();
-        //the slider
-        new AppFloatingActionButton();
+        AppPreferenceManager.INSTANCE.removeAllFilterPrefs();
+        FragmentPager.INSTANCE.create();
         //navigation View
         new NavDrawerController(this);
     }

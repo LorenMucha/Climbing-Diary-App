@@ -62,7 +62,7 @@ public class EditProjektDialog extends DialogFragment {
             }
             //close the dialog
             getDialog().cancel();
-            FragmentPager.getInstance().refreshAllFragments();
+            FragmentPager.INSTANCE.refreshAllFragments();
         });
 
     }

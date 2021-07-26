@@ -57,7 +57,7 @@ public class AddProjektDialog extends DialogFragment {
 
             boolean taskState = routeRepository.insertRoute(newProjekt);
             if (taskState) {
-                FragmentPager.getInstance().refreshAllFragments();
+                FragmentPager.INSTANCE.refreshAllFragments();
             } else {
                 AlertManager.setErrorAlert(view.getContext());
             }

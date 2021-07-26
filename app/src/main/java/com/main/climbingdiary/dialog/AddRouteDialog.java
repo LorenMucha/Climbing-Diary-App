@@ -24,7 +24,7 @@ import kotlin.jvm.JvmClassMappingKt;
 @SuppressLint("ValidFragment")
 public class AddRouteDialog extends DialogFragment {
 
-    private final RouteRepository routeRepository;
+    private final RouteRepository<Route> routeRepository;
 
     public AddRouteDialog(String title) {
         Bundle args = new Bundle();
@@ -46,12 +46,13 @@ public class AddRouteDialog extends DialogFragment {
 
         final Context _context = view.getContext();
 
-        Log.d("State set:", AppPreferenceManager.getSportType().typeToString());
+        Log.d("State set:", AppPreferenceManager.INSTANCE.getSportType().typeToString());
 
         RouteDialogCreator creator = new RouteDialogCreator(view, _context, this);
         creator.setUiElements(false);
 
         // Fetch arguments from bundle and set title
+        assert getArguments() != null;
         String title = getArguments().getString("title", "Neue Kletterroute");
 
         creator.setForeGroundSpan(title);
@@ -62,11 +63,11 @@ public class AddRouteDialog extends DialogFragment {
                 Route newRoute = creator.getRoute(false);
                 boolean taskState = routeRepository.insertRoute(newRoute);
                 if (taskState) {
-                    FragmentPager.getInstance().refreshAllFragments();
+                    FragmentPager.INSTANCE.refreshAllFragments();
                 } else {
                     AlertManager.setErrorAlert(view.getContext());
                 }
-                TimeSlider.getInstance().setTimes();
+                TimeSlider.INSTANCE.setTimes();
                 //close the dialog
                 getDialog().cancel();
             }

@@ -75,8 +75,8 @@ public class EditRouteDialog extends DialogFragment {
 
         creator.getSaveRoute().setOnClickListener(v -> {
             //save ticked Project on if else save updated Route
-            if (AppPreferenceManager.getSelectedTabsTitle() == Tabs.PROJEKTE) {
-                FragmentPager.getInstance().setPosition(1);
+            if (AppPreferenceManager.INSTANCE.getSelectedTabsTitle() == Tabs.PROJEKTE) {
+                FragmentPager.INSTANCE.setPosition(1);
                 //needs to be converted to a project
                 routeRepository.deleteRoute(RouteConverter.routeToProjekt(editRoute));
                 taskState.set(routeRepository.insertRoute(creator.getRoute(true)));
@@ -88,7 +88,7 @@ public class EditRouteDialog extends DialogFragment {
             //close the dialog
             getDialog().cancel();
             if (taskState.get()) {
-                FragmentPager.getInstance().refreshAllFragments();
+                FragmentPager.INSTANCE.refreshAllFragments();
             } else {
                 AlertManager.setErrorAlert(view.getContext());
             }

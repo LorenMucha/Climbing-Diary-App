@@ -99,15 +99,15 @@ public class RouteDoneFragment extends Fragment implements RouteFragment {
         item.setChecked(true);
         int id = item.getItemId();
         if (id == R.id.sort_level) {
-            AppPreferenceManager.setSort(RouteSort.LEVEL);
+            AppPreferenceManager.INSTANCE.setSort(RouteSort.LEVEL);
             refreshData();
             return true;
         } else if (id == R.id.sort_area) {
-            AppPreferenceManager.setSort(RouteSort.AREA);
+            AppPreferenceManager.INSTANCE.setSort(RouteSort.AREA);
             refreshData();
             return true;
         } else if (id == R.id.sort_date) {
-            AppPreferenceManager.setSort(RouteSort.DATE);
+            AppPreferenceManager.INSTANCE.setSort(RouteSort.DATE);
             refreshData();
             return true;
         } else if (item.getGroupId() == R.id.filter_area + 1) {

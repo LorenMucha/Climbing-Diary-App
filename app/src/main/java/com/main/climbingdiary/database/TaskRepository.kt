@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.main.climbingdiary.activities.MainActivity
 import com.main.climbingdiary.database.entities.Projekt
@@ -21,9 +22,9 @@ import com.main.climbingdiary.models.RouteType
 object TaskRepository {
     private val TAG = "DataAdapter"
     private val mDb: SQLiteDatabase
+    private val context: Context by lazy { MainActivity.getMainAppContext() }
 
     init {
-        val context: Context = MainActivity.getMainAppContext()
         val mDbHelper = DatabaseHelper(context, null)
         mDbHelper.openDataBase()
         mDb = mDbHelper.writableDatabase

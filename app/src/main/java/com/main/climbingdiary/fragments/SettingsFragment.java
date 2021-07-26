@@ -24,13 +24,13 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import lombok.var;
 
 import static android.app.Activity.RESULT_OK;
-import static com.main.climbingdiary.common.preferences.PreferenceKeys.FILE_CHOOOSER_REQUEST_RESTORE_COPY;
-import static com.main.climbingdiary.common.preferences.PreferenceKeys.FILE_CHOOOSER_REQUEST_SAFTY_COPY;
 
 public class SettingsFragment extends PreferenceFragment {
 
     private static volatile SettingsFragment INSTANZ = null;
     private Preference dbOutputPath;
+    private static final int FILE_CHOOOSER_REQUEST_RESTORE_COPY = PreferenceKeys.INSTANCE.getFILE_CHOOOSER_REQUEST_RESTORE_COPY();
+    private static final int FILE_CHOOOSER_REQUEST_SAFTY_COPY = PreferenceKeys.INSTANCE.getFILE_CHOOOSER_REQUEST_SAFTY_COPY();
 
     public synchronized static SettingsFragment getInstance() {
         if (INSTANZ == null) {
@@ -45,9 +45,9 @@ public class SettingsFragment extends PreferenceFragment {
         addPreferencesFromResource(R.xml.settings);
         PreferenceManager.getDefaultSharedPreferences(MainActivity.getMainAppContext());
 
-        dbOutputPath = getPreferenceManager().findPreference(PreferenceKeys.DB_OUTPUT_PATH);
-        Preference shareDb = getPreferenceManager().findPreference(PreferenceKeys.SAFTY_COPY);
-        Preference restoreDbPath = getPreferenceManager().findPreference(PreferenceKeys.RESTORE_COPY);
+        dbOutputPath = getPreferenceManager().findPreference(PreferenceKeys.INSTANCE.getDB_OUTPUT_PATH());
+        Preference shareDb = getPreferenceManager().findPreference(PreferenceKeys.INSTANCE.getSAFTY_COPY());
+        Preference restoreDbPath = getPreferenceManager().findPreference(PreferenceKeys.INSTANCE.getRESTORE_COPY());
         /* ToDo
         Preference changeAreaName = getPreferenceManager().findPreference(PreferenceKeys.UPDATE_AREA);
         Preference changeSectorName = getPreferenceManager().findPreference(PreferenceKeys.UPDATE_SECTOR);*/
@@ -86,8 +86,8 @@ public class SettingsFragment extends PreferenceFragment {
         if (requestCode == FILE_CHOOOSER_REQUEST_SAFTY_COPY && resultCode == RESULT_OK) {
             Uri selectedfile = data.getData();
             assert selectedfile != null;
-            AppPreferenceManager.setOutputPath(selectedfile.toString());
-            dbOutputPath.setSummary(AppPreferenceManager.getOutputPath());
+            AppPreferenceManager.INSTANCE.setOutputPath(selectedfile.toString());
+            dbOutputPath.setSummary(AppPreferenceManager.INSTANCE.getOutputPath());
         }
         if (requestCode == FILE_CHOOOSER_REQUEST_RESTORE_COPY && resultCode == RESULT_OK) {
             Uri path = data.getData();
@@ -97,7 +97,7 @@ public class SettingsFragment extends PreferenceFragment {
 
     private void initPrefs() {
         try {
-            dbOutputPath.setSummary(AppPreferenceManager.getOutputPath());
+            dbOutputPath.setSummary(AppPreferenceManager.INSTANCE.getOutputPath());
         } catch (NullPointerException ignored) {
         }
     }
@@ -117,12 +117,12 @@ public class SettingsFragment extends PreferenceFragment {
     private void exportDb() {
         try {
             new AppFileProvider().exportDBtoPreferencePath();
-            new AlertManager().setAlertWithoutContent(
+            AlertManager.setAlertWithoutContent(
                     this.getContext(),
                     new Alert.Builder().dialogType(SweetAlertDialog.SUCCESS_TYPE).title("Die Datenbank wurde exportiert !").build());
         } catch (IOException e) {
             Log.e("exportDb", e.getLocalizedMessage());
-            new AlertManager().setAlertWithoutContent(
+            AlertManager.setAlertWithoutContent(
                     this.getContext(),
                     new Alert.Builder().dialogType(SweetAlertDialog.ERROR_TYPE)
                             .title(String.format("Der Export ist Schiefgelaufen %s", "\ud83d\ude13"))
@@ -150,7 +150,7 @@ public class SettingsFragment extends PreferenceFragment {
             }
         } catch (IOException e) {
             Log.d("restoreDb", e.getLocalizedMessage());
-            new AlertManager().setAlertWithoutContent(
+            AlertManager.setAlertWithoutContent(
                     this.getContext(),
                     new Alert.Builder().dialogType(SweetAlertDialog.ERROR_TYPE)
                             .title(String.format("Der Restore ist Schiefgelaufen %s", "\ud83d\ude13"))

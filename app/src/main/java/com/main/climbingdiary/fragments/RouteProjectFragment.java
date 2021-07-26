@@ -69,7 +69,7 @@ public class RouteProjectFragment extends Fragment implements RouteFragment {
         view = inflater.inflate(R.layout.project_fragment, container, false);
         // Lookup the recyclerview in activity layout
         rvProjekte = view.findViewById(R.id.rvProjekte);
-        AppPreferenceManager.removeAllFilterPrefs();
+        AppPreferenceManager.INSTANCE.removeAllFilterPrefs();
         // Initialize projects
         projekts = routeRepository.getRouteList();
         // Create adapter passing in the sample user data
@@ -104,15 +104,15 @@ public class RouteProjectFragment extends Fragment implements RouteFragment {
         item.setChecked(true);
         int id = item.getItemId();
         if (id == R.id.sort_level) {
-            AppPreferenceManager.setSort(RouteSort.LEVEL);
+            AppPreferenceManager.INSTANCE.setSort(RouteSort.LEVEL);
             refreshData();
             return true;
         } else if (id == R.id.sort_area) {
-            AppPreferenceManager.setSort(RouteSort.AREA);
+            AppPreferenceManager.INSTANCE.setSort(RouteSort.AREA);
             refreshData();
             return true;
         } else if (id == R.id.sort_date) {
-            AppPreferenceManager.setSort(RouteSort.DATE);
+            AppPreferenceManager.INSTANCE.setSort(RouteSort.DATE);
             refreshData();
             return true;
         } else if (item.getGroupId() == R.id.filter_area + 1) {
