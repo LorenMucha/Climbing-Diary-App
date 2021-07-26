@@ -2,7 +2,7 @@ package com.main.climbingdiary.models
 
 import cn.pedant.SweetAlert.SweetAlertDialog
 
-class Alert private constructor(val title: String?, val message: String?, val dialogType: Int?) {
+class Alert constructor(val title: String?, val message: String?, val dialogType: Int?) {
     data class Builder(
         var title: String? = "",
         var message: String? = "",

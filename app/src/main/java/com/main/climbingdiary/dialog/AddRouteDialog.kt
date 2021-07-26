@@ -1,0 +1,65 @@
+package com.main.climbingdiary.dialog
+
+import com.main.climbingdiary.R
+import android.annotation.SuppressLint
+import android.os.Bundle
+import android.support.v4.app.DialogFragment
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.main.climbingdiary.common.AlertManager
+import com.main.climbingdiary.common.preferences.AppPreferenceManager
+import com.main.climbingdiary.controller.FragmentPager
+import com.main.climbingdiary.controller.TimeSlider
+import com.main.climbingdiary.database.entities.Route
+import com.main.climbingdiary.database.entities.RouteRepository
+
+
+@SuppressLint("ValidFragment")
+class AddRouteDialog(val title: String) : DialogFragment() {
+
+    private val routeRepository: RouteRepository<Route> = RouteRepository(Route::class)
+
+    init {
+        val args = Bundle()
+        args.putString("title", title)
+        this.arguments = args
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.dialog_add_route, container)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val context = view.context
+        Log.d("State set:", AppPreferenceManager.getSportType().toString())
+        val creator = RouteDialogCreator(view, context, this)
+        creator.setUiElements(false)
+
+        // Fetch arguments from bundle and set title
+        val title = arguments!!.getString("title", "Neue Kletterroute")
+        creator.setForeGroundSpan(title)
+
+        //save the route
+        creator.saveRoute.setOnClickListener { v: View? ->
+            if (creator.checkDate()) {
+                val newRoute: Route = creator.getRoute(false)
+                val taskState = routeRepository.insertRoute(newRoute)
+                if (taskState) {
+                    FragmentPager.refreshAllFragments()
+                } else {
+                    AlertManager.setErrorAlert(view.context)
+                }
+                TimeSlider.setTimes()
+                //close the dialog
+                dialog!!.cancel()
+            }
+        }
+    }
+}

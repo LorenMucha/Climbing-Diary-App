@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity
+import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.getSelectedTabsTitle
 import com.main.climbingdiary.dialog.DialogFactory
 import com.main.climbingdiary.models.Tabs
@@ -42,6 +43,6 @@ object AppFloatingActionButton: View.OnClickListener {
 
 
     override fun onClick(v: View?) {
-        DialogFactory.openAddRouteDialog(getSelectedTabsTitle())
+        getSelectedTabsTitle()?.let { DialogFactory.openAddRouteDialog(it) }
     }
 }

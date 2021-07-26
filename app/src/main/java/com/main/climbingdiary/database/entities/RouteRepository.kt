@@ -8,7 +8,7 @@ import org.chalup.microorm.MicroOrm
 import java.util.*
 import kotlin.reflect.KClass
 
-class RouteRepository<T : RouteElement>(val klass: KClass<T>) {
+class RouteRepository<T : RouteElement>(private val klass: KClass<T>) {
 
     private val uOrm = MicroOrm()
 
@@ -57,9 +57,9 @@ class RouteRepository<T : RouteElement>(val klass: KClass<T>) {
 
     fun insertRoute(route: Any?): Boolean {
         return if (route is Route) {
-            TaskRepository.insertRoute(route as Route)
+            TaskRepository.insertRoute(route)
         } else if (route is Projekt) {
-            TaskRepository.insertProjekt(route as Projekt)
+            TaskRepository.insertProjekt(route)
         } else {
             false
         }

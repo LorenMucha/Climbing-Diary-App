@@ -140,13 +140,13 @@ object SqlRouten {
         val insertSektor =
             """INSERT OR IGNORE INTO ${SqlAreaSektoren.getSektorenTableName()} (name,gebiet)
                | SELECT '${projekt.sector}',id FROM ${
-                SqlAreaSektoren.getAreaTableName().toString()
+                SqlAreaSektoren.getAreaTableName()
             } 
                | WHERE name='${projekt.area}'""".trimMargin()
         val insertProjekt =
             """INSERT OR IGNORE INTO ${getProjekteTableName()} (name,level,rating,kommentar,gebiet,sektor)
                | SELECT '${projekt.name}','${projekt.level}','${projekt.rating}','${projekt.comment}',a.id,s.id
-               | FROM "${SqlAreaSektoren.getAreaTableName()} a, ${SqlAreaSektoren.getSektorenTableName()} s 
+               | FROM ${SqlAreaSektoren.getAreaTableName()} a, ${SqlAreaSektoren.getSektorenTableName()} s 
                | WHERE a.name = '${projekt.area}'
                | AND s.name='${projekt.sector}'""".trimMargin()
         return arrayOf(insertArea, insertSektor, insertProjekt)
