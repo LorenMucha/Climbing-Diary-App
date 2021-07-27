@@ -12,7 +12,7 @@ import com.main.climbingdiary.activities.MainActivity
 @SuppressLint("StaticFieldLeak")
 object ShowTimeSlider : View.OnClickListener {
 
-    val activity: AppCompatActivity by lazy { MainActivity.mainActivity }
+    val activity: AppCompatActivity by lazy { MainActivity.getMainActivity() }
     private val imageButton: ImageButton =
         activity.findViewById(com.main.climbingdiary.R.id.showTimeSlider)
     private val layout: RelativeLayout =

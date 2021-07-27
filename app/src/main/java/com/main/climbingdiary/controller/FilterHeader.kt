@@ -14,7 +14,7 @@ import com.main.climbingdiary.models.MenuValues
 import java.util.*
 
 class FilterHeader(val routeFragment: RouteFragment): View.OnClickListener {
-    private val view: View = routeFragment.view
+    private val view: View = routeFragment.getView()
     private val layout: LinearLayout = view.findViewById(R.id.filter_header)
     private val textView: TextView = view.findViewById(R.id.filter_header_txt)
     private val imageView: ImageView = view.findViewById(R.id.filter_image)

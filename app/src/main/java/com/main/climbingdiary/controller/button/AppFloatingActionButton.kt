@@ -14,7 +14,7 @@ import com.main.climbingdiary.models.Tabs
 @SuppressLint("StaticFieldLeak")
 object AppFloatingActionButton: View.OnClickListener {
 
-    val activity: AppCompatActivity by lazy {MainActivity.mainActivity}
+    val activity: AppCompatActivity by lazy {MainActivity.getMainActivity()}
     private val floatingActionButtonAdd: FloatingActionButton = activity
         .findViewById(R.id.floating_action_btn_add)
     private val floatingActionButtonLocate: FloatingActionButton = activity

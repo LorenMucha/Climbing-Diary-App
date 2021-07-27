@@ -31,9 +31,9 @@ object FragmentPager: TabLayout.OnTabSelectedListener {
     private const val viewLayout: Int = R.id.viewPager
     private const val layoutTabs: Int = R.id.tabLayout
     private val fragmentMap: Map<Tabs, RouteFragment> = mapOf(
-        Tabs.STATISTIK to StatisticFragment.getInstance(),
-        Tabs.ROUTEN to RouteDoneFragment.getInstance(),
-        Tabs.PROJEKTE to RouteProjectFragment.getInstance()
+        Tabs.STATISTIK to StatisticFragment,
+        Tabs.ROUTEN to RouteDoneFragment,
+        Tabs.PROJEKTE to RouteProjectFragment
     )
     private var tabLayout: TabLayout = activity.findViewById(layoutTabs)
 
@@ -45,7 +45,7 @@ object FragmentPager: TabLayout.OnTabSelectedListener {
         //init the fragments
         //init the fragments
         for ((key, value) in fragmentMap) {
-            adapter.addFragment(value as Fragment, key.typeToString())
+            key.typeToString()?.let { adapter.addFragment(value as Fragment, it) }
         }
         viewPager.adapter = adapter
         tabLayout.setupWithViewPager(viewPager)

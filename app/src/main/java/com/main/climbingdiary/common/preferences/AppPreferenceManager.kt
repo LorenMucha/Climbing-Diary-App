@@ -1,9 +1,7 @@
 package com.main.climbingdiary.common.preferences
 
-import android.net.Uri
 import android.preference.PreferenceManager
 import com.main.climbingdiary.activities.MainActivity
-import com.main.climbingdiary.common.FileUtil
 import com.main.climbingdiary.models.MenuValues
 import com.main.climbingdiary.models.RouteSort
 import com.main.climbingdiary.models.SportType
@@ -21,10 +19,7 @@ object AppPreferenceManager {
     }
 
     fun setOutputPath(path: String?) {
-        val treeUri = Uri.parse(path)
-        val context = MainActivity.getMainAppContext()
-        val pathSet = FileUtil(context).getFullPathFromTreeUri(treeUri)
-        EDITOR.putString(PreferenceKeys.DB_OUTPUT_PATH, pathSet)
+        EDITOR.putString(PreferenceKeys.DB_OUTPUT_PATH, path)
         EDITOR.apply()
     }
 
