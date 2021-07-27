@@ -1,6 +1,6 @@
 package com.main.climbingdiary.dialog
 
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.FragmentManager
 import com.main.climbingdiary.activities.MainActivity
 import com.main.climbingdiary.database.entities.Route
 import com.main.climbingdiary.models.Tabs

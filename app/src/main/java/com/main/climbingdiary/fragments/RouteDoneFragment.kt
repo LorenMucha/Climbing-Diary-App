@@ -2,10 +2,10 @@ package com.main.climbingdiary.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.*
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.main.climbingdiary.R
 import com.main.climbingdiary.adapter.RoutesAdapter
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.setSort
@@ -54,7 +54,7 @@ object RouteDoneFragment : Fragment(), RouteFragment {
         rvRoutes.adapter = adapter
         // Set layout manager to position the items
         rvRoutes.layoutManager = LinearLayoutManager(
-            Objects.requireNonNull(activity)!!.applicationContext
+            requireActivity().applicationContext
         )
         return view
     }
@@ -66,10 +66,10 @@ object RouteDoneFragment : Fragment(), RouteFragment {
         rvRoutes.adapter = adapter
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         // Do something that differs the Activity's menu here
         super.onCreateOptionsMenu(menu, inflater)
-        val appmenu = AppBarMenu(menu!!)
+        val appmenu = AppBarMenu(menu)
         appmenu.setItemVisebility(true)
     }
 

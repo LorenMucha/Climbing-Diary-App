@@ -59,7 +59,6 @@ class AppBarMenu(val menu: Menu) : SearchView.OnQueryTextListener {
     }
 
     override fun onQueryTextChange(query: String?): Boolean {
-        Log.d("Query", query)
         // filter recycler view when text is changed
         if (getSelectedTabsTitle() === Tabs.PROJEKTE) {
             RouteProjectFragment.getAdapter().filter.filter(query)

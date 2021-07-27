@@ -1,10 +1,10 @@
 package com.main.climbingdiary.controller
 
 import android.annotation.SuppressLint
-import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.util.Log
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListener
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar

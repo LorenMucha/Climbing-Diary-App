@@ -1,13 +1,13 @@
 package com.main.climbingdiary.adapter
 
 import android.annotation.SuppressLint
-import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.recyclerview.widget.RecyclerView
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.main.climbingdiary.R
 import com.main.climbingdiary.common.AlertManager

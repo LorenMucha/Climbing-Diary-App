@@ -8,10 +8,10 @@ enum class RouteSort {
 
     companion object {
         @JvmStatic
-        fun stringToSportType(type: String): RouteSort? {
+        fun stringToSportType(type: String?): RouteSort? {
             var value: RouteSort? = null
             try {
-                value = valueOf(type.toUpperCase(Locale.ROOT))
+                value = valueOf(type!!.toUpperCase(Locale.ROOT))
             } catch (ex: Exception) {
                 Log.d("Exception in MenuValues stringToSportType() ", ex.localizedMessage)
             }

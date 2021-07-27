@@ -6,11 +6,10 @@ enum class Tabs {
     STATISTIK, ROUTEN, BOULDER, PROJEKTE, MAP;
 
     companion object{
-        @JvmStatic
-        fun stringToTabs(type: String): Tabs? {
+        fun stringToTabs(type: String?): Tabs? {
             var result: Tabs? = null
             try {
-                result = valueOf(type.toUpperCase(Locale.ROOT))
+                result = valueOf(type!!.toUpperCase(Locale.ROOT))
             } catch (ignored: Exception) {
             }
             return result

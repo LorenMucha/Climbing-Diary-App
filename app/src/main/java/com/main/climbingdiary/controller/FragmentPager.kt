@@ -1,12 +1,12 @@
 package com.main.climbingdiary.controller
 
 import android.annotation.SuppressLint
-import android.support.design.widget.TabLayout
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.view.ViewPager
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.viewpager.widget.ViewPager
+import com.google.android.material.tabs.TabLayout
 import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity
 import com.main.climbingdiary.adapter.TabAdapter
@@ -56,7 +56,6 @@ object FragmentPager: TabLayout.OnTabSelectedListener {
         val tabSelected =
             stringToTabs(Objects.requireNonNull(tab.text).toString())!!
         setSelectedTabsTitle(tabSelected)
-        Log.d("Selected Tab:", tabSelected.typeToString())
         when (tabSelected) {
             Tabs.STATISTIK -> {
                 ShowTimeSlider.hide()

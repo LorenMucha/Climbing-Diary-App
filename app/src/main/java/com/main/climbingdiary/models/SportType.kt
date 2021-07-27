@@ -6,9 +6,8 @@ enum class SportType {
     KLETTERN, BOULDERN;
     
     companion object{
-        @JvmStatic
-        fun stringToSportType(type: String): SportType {
-            return valueOf(type.toUpperCase(Locale.ROOT))
+        fun stringToSportType(type: String?): SportType {
+            return valueOf(type!!.toUpperCase(Locale.ROOT))
         }
     }
 

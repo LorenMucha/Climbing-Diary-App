@@ -1,6 +1,5 @@
 package com.main.climbingdiary.models
 
-import com.main.climbingdiary.common.preferences.PreferenceKeys
 import java.util.*
 
 
@@ -8,8 +7,8 @@ enum class MenuValues {
     SEARCH, FILTER, SORT, SORT_DATE, SETTINGS;
 
     companion object {
-        fun stringToSportType(type: String): MenuValues {
-            return valueOf(type.toUpperCase(Locale.ROOT))
+        fun stringToSportType(type: String?): MenuValues {
+            return valueOf(type!!.toUpperCase(Locale.ROOT))
         }
     }
 

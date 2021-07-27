@@ -6,7 +6,6 @@ import android.database.Cursor
 import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.main.climbingdiary.activities.MainActivity
 import com.main.climbingdiary.database.entities.Projekt

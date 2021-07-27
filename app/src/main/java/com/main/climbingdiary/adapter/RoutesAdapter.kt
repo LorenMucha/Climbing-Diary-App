@@ -1,14 +1,14 @@
 package com.main.climbingdiary.adapter
 
 import android.graphics.drawable.Drawable
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.main.climbingdiary.R
 import com.main.climbingdiary.common.AlertManager
@@ -152,18 +152,21 @@ class RoutesAdapter(private val routes: List<Route>) : Filterable,
                 } else {
                     val filteredList: MutableList<Route> = ArrayList()
                     for (row in mRoutes) {
-                        if (row.name!!.toLowerCase(Locale.ROOT).contains(charString.toLowerCase(
-                                Locale.ROOT
-                            )
+                        if (row.name!!.toLowerCase(Locale.ROOT).contains(
+                                charString.toLowerCase(
+                                    Locale.ROOT
+                                )
                             ) ||
                             row.level.contains(charString) ||
-                            row.area!!.toLowerCase(Locale.ROOT).contains(charString.toLowerCase(
-                                Locale.ROOT
-                            )
+                            row.area!!.toLowerCase(Locale.ROOT).contains(
+                                charString.toLowerCase(
+                                    Locale.ROOT
+                                )
                             ) ||
-                            row.sector!!.toLowerCase(Locale.ROOT).contains(charString.toLowerCase(
-                                Locale.ROOT
-                            )
+                            row.sector!!.toLowerCase(Locale.ROOT).contains(
+                                charString.toLowerCase(
+                                    Locale.ROOT
+                                )
                             ) ||
                             row.date!!.contains(charString)
                         ) {

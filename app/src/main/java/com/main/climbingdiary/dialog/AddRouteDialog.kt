@@ -3,11 +3,11 @@ package com.main.climbingdiary.dialog
 import com.main.climbingdiary.R
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import com.main.climbingdiary.common.AlertManager
 import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.controller.FragmentPager
@@ -43,7 +43,7 @@ class AddRouteDialog(val title: String) : DialogFragment() {
         creator.setUiElements(false)
 
         // Fetch arguments from bundle and set title
-        val title = arguments!!.getString("title", "Neue Kletterroute")
+        val title = requireArguments().getString("title", "Neue Kletterroute")
         creator.setForeGroundSpan(title)
 
         //save the route

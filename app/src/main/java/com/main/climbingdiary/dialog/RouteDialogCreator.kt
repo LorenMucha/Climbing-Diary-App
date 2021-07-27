@@ -3,7 +3,6 @@ package com.main.climbingdiary.dialog
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
-import android.support.v4.app.DialogFragment
 import android.text.Editable
 import android.text.SpannableStringBuilder
 import android.text.Spanned
@@ -12,6 +11,7 @@ import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.fragment.app.DialogFragment
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.main.climbingdiary.R
 import com.main.climbingdiary.common.AlertManager.setAlertWithoutContent
@@ -51,6 +51,7 @@ class RouteDialogCreator(
     private var sector: AutoCompleteTextView = view.findViewById(R.id.input_route_sektor)
     private var comment: EditText =
         view.findViewById<AutoCompleteTextView>(R.id.input_route_comment)
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     private var gradeSwitcher: Switch = view.findViewById(R.id.grade_system_switcher)
     private var routeContent: LinearLayout = view.findViewById(R.id.route_content)
     private var gradeSwitcherLayout: LinearLayout = view.findViewById(R.id.grade_switcher_layout)
@@ -137,12 +138,12 @@ class RouteDialogCreator(
 
         // Apply the text color span
         ssBuilder.setSpan(foregroundColorSpan, 0, title.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        fragment.dialog.setTitle(ssBuilder)
+        fragment.dialog!!.setTitle(ssBuilder)
 
         // Set title divider color
         val titleDividerId: Int =
             fragment.resources.getIdentifier("titleDivider", "id", "android")
-        fragment.dialog.findViewById<View?>(titleDividerId)?.setBackgroundColor(
+        fragment.dialog!!.findViewById<View?>(titleDividerId)?.setBackgroundColor(
             fragment.resources.getColor(android.R.color.black)
         )
     }
@@ -218,7 +219,7 @@ class RouteDialogCreator(
             if (getSelectedTabsTitle() === Tabs.PROJEKTE) {
                 refreshSelectedFragment()
             }
-            fragment.dialog.cancel()
+            fragment.dialog!!.cancel()
         }
     }
 

@@ -2,10 +2,10 @@ package com.main.climbingdiary.dialog
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import com.main.climbingdiary.R
 import com.main.climbingdiary.common.AlertManager
 import com.main.climbingdiary.common.RouteConverter.routeToProjekt

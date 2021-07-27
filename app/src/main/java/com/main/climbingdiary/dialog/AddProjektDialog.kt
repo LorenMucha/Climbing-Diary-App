@@ -2,10 +2,10 @@ package com.main.climbingdiary.dialog
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import com.main.climbingdiary.R
 import com.main.climbingdiary.common.AlertManager
 import com.main.climbingdiary.controller.FragmentPager
@@ -39,7 +39,7 @@ class AddProjektDialog(val title: String) : DialogFragment() {
 
         // Fetch arguments from bundle and set title
         if (arguments == null) throw AssertionError()
-        val title = arguments!!.getString("title", "Neues Projekt")
+        val title = requireArguments().getString("title", "Neues Projekt")
         creator.setForeGroundSpan(title)
         creator.saveRoute.setOnClickListener { v ->
             val newProjekt: Projekt = creator.getProjekt(false) as Projekt

@@ -7,7 +7,6 @@ import com.main.climbingdiary.models.RouteSort
 import com.main.climbingdiary.models.SportType
 import com.main.climbingdiary.models.Tabs
 import com.main.climbingdiary.models.Tabs.Companion.stringToTabs
-import java.util.*
 
 object AppPreferenceManager {
     private val PREFS =
@@ -25,11 +24,9 @@ object AppPreferenceManager {
 
     fun getSportType(): SportType {
         return SportType.stringToSportType(
-            Objects.requireNonNull(
-                PREFS.getString(
-                    PreferenceKeys.SPORT,
-                    "klettern"
-                )
+            PREFS.getString(
+                PreferenceKeys.SPORT,
+                "klettern"
             )
         )
     }
@@ -51,11 +48,9 @@ object AppPreferenceManager {
 
     fun getSort(): RouteSort? {
         return RouteSort.stringToSportType(
-            Objects.requireNonNull(
-                PREFS.getString(
-                    PreferenceKeys.SORT,
-                    "date"
-                )
+            PREFS.getString(
+                PreferenceKeys.SORT,
+                "date"
             )
         )
     }
@@ -67,12 +62,10 @@ object AppPreferenceManager {
 
     fun getFilterSetter(): MenuValues {
         return MenuValues.stringToSportType(
-            Objects.requireNonNull(
                 PREFS.getString(
                     PreferenceKeys.FILTER_MENU,
                     "date"
                 )
-            )
         )
     }
 
@@ -94,7 +87,7 @@ object AppPreferenceManager {
     }
 
     fun getSelectedTabsTitle(): Tabs? {
-        return stringToTabs(Objects.requireNonNull(PREFS.getString(PreferenceKeys.TAB, "")))
+        return stringToTabs(PREFS.getString(PreferenceKeys.TAB, ""))
     }
 
     fun setSelectedTabsTitle(tab: Tabs) {

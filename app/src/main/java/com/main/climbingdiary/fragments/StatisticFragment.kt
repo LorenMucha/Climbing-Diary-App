@@ -2,10 +2,10 @@ package com.main.climbingdiary.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
 import android.view.*
 import android.widget.Button
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.main.climbingdiary.R
 import com.main.climbingdiary.chart.RouteBarChartController
 import com.main.climbingdiary.chart.RouteLineChartController

@@ -11,7 +11,12 @@ import java.util.*
 
 class SetDate (private val editText: EditText, val context: Context): View.OnFocusChangeListener, OnDateSetListener {
     private val calender: Calendar = Calendar.getInstance()
-    override fun onDateSet(view: DatePicker?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
+
+    init {
+        this.editText.onFocusChangeListener = this
+    }
+
+    override fun onDateSet(view: DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int) {
         //bring String in SQL-Format
         val myFormat = "yyyy-MM-dd"
         val sdformat = SimpleDateFormat(myFormat, Locale.GERMAN)

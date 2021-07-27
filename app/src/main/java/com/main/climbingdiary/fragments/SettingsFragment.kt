@@ -33,7 +33,7 @@ import java.util.*
 @SuppressLint("ValidFragment", "StaticFieldLeak")
 object SettingsFragment: PreferenceFragment() {
 
-    private val dbOutputPath: Preference by lazy{ preferenceManager.findPreference(DB_OUTPUT_PATH)}
+    private val dbOutputPath: Preference? by lazy{ preferenceManager.findPreference(DB_OUTPUT_PATH)}
     private val FILE_CHOOOSER_REQUEST_RESTORE_COPY =
         PreferenceKeys.FILE_CHOOOSER_REQUEST_RESTORE_COPY
     private val FILE_CHOOOSER_REQUEST_SAFTY_COPY = PreferenceKeys.FILE_CHOOOSER_REQUEST_SAFTY_COPY
@@ -47,7 +47,7 @@ object SettingsFragment: PreferenceFragment() {
         /* ToDo
         Preference changeAreaName = getPreferenceManager().findPreference(PreferenceKeys.UPDATE_AREA);
         Preference changeSectorName = getPreferenceManager().findPreference(PreferenceKeys.UPDATE_SECTOR);*/
-        dbOutputPath.onPreferenceClickListener = OnPreferenceClickListener {
+        dbOutputPath!!.onPreferenceClickListener = OnPreferenceClickListener {
             openFolderChooser()
             true
         }
@@ -78,11 +78,11 @@ object SettingsFragment: PreferenceFragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == FILE_CHOOOSER_REQUEST_SAFTY_COPY && resultCode == RESULT_OK) {
             val selectedfile = data.data!!
-            val paths: List<String> = Objects.requireNonNull(selectedfile.path).split(":")
+            val paths: List<String> = selectedfile.path!!.split(":")
             val completePath = Environment.getExternalStorageDirectory().toString() +
                     if (paths.size > 1) File.separator + paths[1] else ""
             AppPreferenceManager.setOutputPath(completePath)
-            dbOutputPath.summary = completePath
+            dbOutputPath!!.summary = completePath
 
         }
         if (requestCode == FILE_CHOOOSER_REQUEST_RESTORE_COPY && resultCode == RESULT_OK) {
@@ -93,7 +93,7 @@ object SettingsFragment: PreferenceFragment() {
 
     private fun initPrefs() {
         try {
-            dbOutputPath.summary = getOutputPath()
+            dbOutputPath!!.summary = getOutputPath()
         } catch (ignored: NullPointerException) {
         }
     }

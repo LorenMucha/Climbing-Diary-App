@@ -2,10 +2,10 @@ package com.main.climbingdiary.dialog
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import com.main.climbingdiary.R
 import com.main.climbingdiary.controller.FragmentPager
 import com.main.climbingdiary.database.entities.Projekt
@@ -34,10 +34,9 @@ class EditProjektDialog(title: String, _id: Int) : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val context = view.context
-        assert(arguments != null)
-        val title: String = arguments!!.getString("title", "Bearbeiten")
+        val title: String = requireArguments().getString("title", "Bearbeiten")
         //get the route value which will be edit
-        val routeId: Int = arguments!!.getInt("id", 0)
+        val routeId: Int = requireArguments().getInt("id", 0)
         val editProjekt = routeRepository.getRoute(routeId)
         val creator = RouteDialogCreator(view, context, this)
         creator.setForeGroundSpan(title)
