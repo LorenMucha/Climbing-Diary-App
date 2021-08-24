@@ -1,12 +1,14 @@
 package com.main.climbingdiary.common
 
 import android.content.Context
+import android.content.ContextWrapper
 import android.net.Uri
 import android.os.Environment
 import com.main.climbingdiary.activities.MainActivity
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.getOutputPath
 import java.io.*
 import java.nio.channels.FileChannel
+
 
 class AppFileProvider {
 
@@ -17,7 +19,7 @@ class AppFileProvider {
         val path = getOutputPath()
         val source: FileChannel
         val destination: FileChannel
-        val currentDB = File(Environment.getDataDirectory(), EnvironmentParamter.DB_PATH)
+        val currentDB = File(Environment.getDataDirectory().toString(), EnvironmentParamter.DB_PATH)
         val backupDB = File(path, EnvironmentParamter.dbExportName)
         source = FileInputStream(currentDB).channel
         destination = FileOutputStream(backupDB, true).channel

@@ -18,6 +18,7 @@ import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity.Companion.getMainAppContext
 import com.main.climbingdiary.common.AlertManager.setAlertWithoutContent
 import com.main.climbingdiary.common.AppFileProvider
+import com.main.climbingdiary.common.AppPermissions
 import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.getOutputPath
 import com.main.climbingdiary.common.preferences.PreferenceKeys

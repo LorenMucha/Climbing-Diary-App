@@ -4,9 +4,8 @@ import android.R
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.main.climbingdiary.common.AppPermissions.checkPermissions
+import com.main.climbingdiary.common.AppPermissions
 import com.main.climbingdiary.fragments.SettingsFragment
-import java.util.*
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -25,7 +24,7 @@ class SettingsActivity : AppCompatActivity() {
         fragmentManager.beginTransaction().replace(R.id.content, SettingsFragment).commit()
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        checkPermissions(this.applicationContext)
+        AppPermissions.checkPermissions(applicationContext)
     }
 
     override fun onBackPressed() {
