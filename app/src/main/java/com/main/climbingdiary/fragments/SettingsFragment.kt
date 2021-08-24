@@ -32,7 +32,7 @@ import java.util.*
 
 
 @SuppressLint("ValidFragment", "StaticFieldLeak")
-object SettingsFragment: PreferenceFragment() {
+class SettingsFragment: PreferenceFragment() {
 
     private val dbOutputPath: Preference? by lazy{ preferenceManager.findPreference(DB_OUTPUT_PATH)}
     private val FILE_CHOOOSER_REQUEST_RESTORE_COPY =
