@@ -5,13 +5,16 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import java.util.*
 
 class XAxisValueFormatter(private val values: ArrayList<String>) : ValueFormatter() {
+    
+    override fun getFormattedValue(value: Float): String {
+        return value.toString()
+    }
 
-    override fun getFormattedValue(value: Float, axis: AxisBase): String {
-        // "value" represents the position of the label on the axis (x or y)
-        return try {
-            values[value.toInt()]
-        } catch (e: Exception) {
-            "False"
+    override fun getAxisLabel(value: Float, axis: AxisBase): String {
+        if (value.toInt() >= 0 && value.toInt() <= values.size - 1) {
+            return values[value.toInt()]
+        } else {
+            return ("").toString()
         }
     }
 }

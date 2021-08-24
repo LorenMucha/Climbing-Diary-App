@@ -57,6 +57,7 @@ class RouteBarChartController(val view: View) : RouteChartController() {
             )
             set.setDrawValues(false)
             set.stackLabels = arrayOf("FLASH", "OS", "RP")
+
             val data = BarData(set)
             barChart.data = data
             barChart.description.isEnabled = false
