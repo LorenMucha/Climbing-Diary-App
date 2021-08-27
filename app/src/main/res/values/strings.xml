@@ -22,4 +22,5 @@
     <string name="menu_schwierigkeit">Schwierigkeit</string>
     <string name="menu_gebiet">Gebiet</string>
     <string name="menu_datum">Datum</string>
+    <string name="settings_title">Settings</string>
 </resources>

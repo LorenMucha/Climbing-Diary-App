@@ -4,7 +4,7 @@ import com.main.climbingdiary.database.entities.Projekt
 import com.main.climbingdiary.database.entities.Route
 
 object RouteConverter {
-    @JvmStatic
+
     fun routeToProjekt(route: Route): Projekt {
         val projekt = Projekt()
         projekt.id = route.id
@@ -16,7 +16,7 @@ object RouteConverter {
         projekt.comment = route.comment
         return projekt
     }
-    @JvmStatic
+
     fun cleanRoute(route: Any): Any {
         return if (route is Projekt) {
             route.name = cleanString(route.name)
@@ -35,6 +35,7 @@ object RouteConverter {
     }
 
     private fun cleanString(toClean: String?): String {
-        return toClean!!.replace("`", "'")
+        val badCharacter = """[`´]""".toRegex()
+        return toClean!!.replace(badCharacter, "'")
     }
 }
