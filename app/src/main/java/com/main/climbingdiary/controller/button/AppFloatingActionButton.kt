@@ -8,7 +8,6 @@ import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.getSelectedTabsTitle
 import com.main.climbingdiary.dialog.DialogFactory
-import com.main.climbingdiary.models.Tabs
 
 @SuppressLint("StaticFieldLeak")
 object AppFloatingActionButton : View.OnClickListener {
@@ -24,17 +23,11 @@ object AppFloatingActionButton : View.OnClickListener {
         floatingActionButtonLocate.setOnClickListener(this)
     }
 
-    @JvmStatic
     fun show() {
         hide()
-        if (getSelectedTabsTitle() === Tabs.MAP) {
-            floatingActionButtonLocate.show()
-        } else {
-            floatingActionButtonAdd.show()
-        }
+        floatingActionButtonAdd.show()
     }
 
-    @JvmStatic
     fun hide() {
         floatingActionButtonAdd.hide()
         floatingActionButtonLocate.hide()

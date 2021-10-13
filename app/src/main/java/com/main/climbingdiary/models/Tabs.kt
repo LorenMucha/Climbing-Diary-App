@@ -3,7 +3,7 @@ package com.main.climbingdiary.models
 import java.util.*
 
 enum class Tabs {
-    STATISTIK, ROUTEN, BOULDER, PROJEKTE, MAP;
+    STATISTIK, ROUTEN, BOULDER, PROJEKTE;
 
     companion object{
         fun stringToTabs(type: String?): Tabs? {

@@ -1,6 +1,5 @@
 package com.main.climbingdiary.controller
 
-import android.annotation.SuppressLint
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -16,6 +15,7 @@ import com.main.climbingdiary.common.preferences.AppPreferenceManager.setFilter
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.setSelectedTabsTitle
 import com.main.climbingdiary.controller.button.AppFloatingActionButton
 import com.main.climbingdiary.controller.button.ShowTimeSlider
+import com.main.climbingdiary.controller.slider.TimeSliderFactory
 import com.main.climbingdiary.fragments.RouteDoneFragment
 import com.main.climbingdiary.fragments.RouteFragment
 import com.main.climbingdiary.fragments.RouteProjectFragment
@@ -24,8 +24,7 @@ import com.main.climbingdiary.models.Tabs
 import com.main.climbingdiary.models.Tabs.Companion.stringToTabs
 import java.util.*
 
-@SuppressLint("StaticFieldLeak")
-object FragmentPager: TabLayout.OnTabSelectedListener {
+object FragmentPager : TabLayout.OnTabSelectedListener {
 
     private val activity: AppCompatActivity by lazy { MainActivity.getMainActivity() }
     private const val viewLayout: Int = R.id.viewPager
@@ -37,7 +36,7 @@ object FragmentPager: TabLayout.OnTabSelectedListener {
     )
     private var tabLayout: TabLayout = activity.findViewById(layoutTabs)
 
-    fun create(){
+    fun createViewPager() {
         val viewPager = activity.findViewById<ViewPager>(viewLayout)
         tabLayout = activity.findViewById(layoutTabs)
         val fragmentManager: FragmentManager = activity.supportFragmentManager
@@ -65,11 +64,7 @@ object FragmentPager: TabLayout.OnTabSelectedListener {
             Tabs.ROUTEN, Tabs.BOULDER -> {
                 ShowTimeSlider.show()
                 AppFloatingActionButton.show()
-                TimeSlider.setTimesRange()
-            }
-            Tabs.MAP -> {
-                AppFloatingActionButton.show()
-                ShowTimeSlider.hide()
+                TimeSliderFactory.setSlider()
             }
             Tabs.PROJEKTE -> {
                 ShowTimeSlider.hide()

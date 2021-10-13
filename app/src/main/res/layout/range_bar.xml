@@ -24,6 +24,7 @@
             app:right_thumb_color_pressed="@color/blue_btn_bg_pressed_color" />
 
         <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
+            android:visibility="gone"
             android:id="@+id/timeslider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

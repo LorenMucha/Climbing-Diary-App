@@ -12,6 +12,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog
 import com.main.climbingdiary.R
 import com.main.climbingdiary.common.AlertManager
 import com.main.climbingdiary.controller.FragmentPager
+import com.main.climbingdiary.controller.FragmentPager.refreshSelectedFragment
 import com.main.climbingdiary.controller.button.AppFloatingActionButton
 import com.main.climbingdiary.database.entities.Projekt
 import com.main.climbingdiary.database.entities.Route
@@ -112,7 +113,7 @@ class ProjektAdapter(projekts: List<Projekt>) : Filterable,
                     //delete the route by id
                     val taskState = routeRepository.deleteRoute(projekt)
                     if (taskState) {
-                        FragmentPager.refreshSelectedFragment()
+                        refreshSelectedFragment()
                         sDialog.hide()
                         SweetAlertDialog(v.context, SweetAlertDialog.SUCCESS_TYPE)
                             .setTitleText("Gelöscht")

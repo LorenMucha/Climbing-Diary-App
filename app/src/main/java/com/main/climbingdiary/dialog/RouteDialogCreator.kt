@@ -19,6 +19,7 @@ import com.main.climbingdiary.common.GradeConverter.convertUiaaToFrench
 import com.main.climbingdiary.common.RouteConverter.cleanRoute
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.getSelectedTabsTitle
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.getSportType
+import com.main.climbingdiary.controller.FragmentPager
 import com.main.climbingdiary.controller.FragmentPager.refreshSelectedFragment
 import com.main.climbingdiary.controller.SetDate
 import com.main.climbingdiary.database.entities.AreaRepository.getAreaNameList

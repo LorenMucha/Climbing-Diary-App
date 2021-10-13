@@ -19,6 +19,8 @@ import com.main.climbingdiary.common.RessourceFinder
 import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.getOutputPath
 import com.main.climbingdiary.common.preferences.PreferenceKeys
+import com.main.climbingdiary.controller.FragmentPager
+import com.main.climbingdiary.controller.slider.TimeSliderFactory
 import com.main.climbingdiary.models.Alert
 import com.main.climbingdiary.models.TimeRange
 import java.io.File
@@ -60,8 +62,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
         timeSliderView?.setOnPreferenceChangeListener { _, newValue ->
             val range = TimeRange.translate(newValue as String)
             AppPreferenceManager.setTimeSliderView(range)
-            Log.d("jkfhjkwqhfjfhjhfakhk", AppPreferenceManager.getTimeSliderView().toString())
             timeSliderView!!.summary = newValue
+            TimeSliderFactory.reloadSlider()
             true
         }
 

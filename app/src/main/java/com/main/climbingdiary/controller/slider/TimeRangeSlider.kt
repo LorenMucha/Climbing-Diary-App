@@ -1,18 +1,16 @@
-package com.main.climbingdiary.controller
+package com.main.climbingdiary.controller.slider
 
-import android.annotation.SuppressLint
 import android.text.TextUtils
 import android.util.Log
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListener
-import com.crystal.crystalrangeseekbar.interfaces.OnSeekbarChangeListener
-import com.crystal.crystalrangeseekbar.interfaces.OnSeekbarFinalValueListener
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
-import com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
 import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity
+import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.setFilter
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.setFilterSetter
 import com.main.climbingdiary.controller.FragmentPager.refreshSelectedFragment
@@ -22,24 +20,28 @@ import com.main.climbingdiary.models.MenuValues
 import java.util.*
 import kotlin.collections.ArrayList
 
-@SuppressLint("StaticFieldLeak")
-object TimeSlider: OnRangeSeekbarChangeListener, OnRangeSeekbarFinalValueListener, OnSeekbarChangeListener, OnSeekbarFinalValueListener {
+class TimeRangeSlider : OnRangeSeekbarChangeListener, OnRangeSeekbarFinalValueListener, Slider {
     private val activity: AppCompatActivity by lazy { MainActivity.getMainActivity() }
     private val rangeSeekbar: CrystalRangeSeekbar = activity.findViewById(R.id.timerange)
-    private val timeSeekbar : CrystalSeekbar = activity.findViewById(R.id.timeslider)
     private val minText: TextView = activity.findViewById(R.id.textMin)
     private val maxText: TextView = activity.findViewById(R.id.textMax)
     private val times: ArrayList<Int>
 
-    init{
-        /*rangeSeekbar.setOnRangeSeekbarChangeListener(this)
-        rangeSeekbar.setOnRangeSeekbarFinalValueListener(this)*/
-        timeSeekbar.setOnSeekbarChangeListener(this)
-        timeSeekbar.setOnSeekbarFinalValueListener(this)
+    init {
+        rangeSeekbar.setOnRangeSeekbarChangeListener(this)
+        rangeSeekbar.setOnRangeSeekbarFinalValueListener(this)
         times = initTimes()
     }
 
-    private fun initTimes(): ArrayList<Int>{
+    override fun show() {
+        rangeSeekbar.visibility = View.VISIBLE
+    }
+
+    override fun hide() {
+        rangeSeekbar.visibility = View.GONE
+    }
+
+    override fun initTimes(): ArrayList<Int> {
         val years = ArrayList<Int>()
         val cursor = getYears(false)
         while (!cursor.isAfterLast) {
@@ -49,19 +51,16 @@ object TimeSlider: OnRangeSeekbarChangeListener, OnRangeSeekbarFinalValueListene
         return years
     }
 
-    @SuppressLint("SetTextI18n")
-    fun setTimesRange() {
+    override fun setTimesRange() {
         try {
             Log.d("Years set", TextUtils.join(",", times))
             val minYear = Collections.min(times)
             val maxYear = Collections.max(times)
-/*            rangeSeekbar.setMinValue(minYear.toFloat())
+            rangeSeekbar.setMinValue(minYear.toFloat())
             rangeSeekbar.setMaxValue(maxYear.toFloat())
             rangeSeekbar.setMinStartValue(minYear.toFloat())
-            rangeSeekbar.setMaxStartValue(maxYear.toFloat())*/
-            timeSeekbar.minValue = minYear.toFloat()
-            timeSeekbar.maxValue = maxYear.toFloat()
-            timeSeekbar.minStartValue = minYear.toFloat()
+            rangeSeekbar.setMaxStartValue(maxYear.toFloat())
+            rangeSeekbar.apply()
             minText.text = minYear.toString()
             maxText.text = maxYear.toString()
         } catch (ex: Exception) {
@@ -89,13 +88,5 @@ object TimeSlider: OnRangeSeekbarChangeListener, OnRangeSeekbarFinalValueListene
         minText.text = min
         maxText.text = max
         refreshSelectedFragment()
-    }
-
-    override fun valueChanged(value: Number?) {
-        maxText.text = value.toString()
-    }
-
-    override fun finalValue(value: Number?) {
-
     }
 }

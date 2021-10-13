@@ -9,6 +9,7 @@ import androidx.fragment.app.DialogFragment
 import com.main.climbingdiary.R
 import com.main.climbingdiary.common.AlertManager
 import com.main.climbingdiary.controller.FragmentPager
+import com.main.climbingdiary.controller.FragmentPager.refreshAllFragments
 import com.main.climbingdiary.database.entities.Projekt
 import com.main.climbingdiary.database.entities.RouteRepository
 
@@ -45,7 +46,7 @@ class AddProjektDialog(val title: String) : DialogFragment() {
             val newProjekt: Projekt = creator.getProjekt(false) as Projekt
             val taskState = routeRepository.insertRoute(newProjekt)
             if (taskState) {
-                FragmentPager.refreshAllFragments()
+                refreshAllFragments()
             } else {
                 AlertManager.setErrorAlert(view.context)
             }

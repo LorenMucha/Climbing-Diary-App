@@ -11,6 +11,8 @@ import com.main.climbingdiary.common.AlertManager
 import com.main.climbingdiary.common.RouteConverter.routeToProjekt
 import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.controller.FragmentPager
+import com.main.climbingdiary.controller.FragmentPager.refreshAllFragments
+import com.main.climbingdiary.controller.FragmentPager.setPosition
 import com.main.climbingdiary.database.entities.Route
 import com.main.climbingdiary.database.entities.RouteRepository
 import com.main.climbingdiary.models.Tabs
@@ -44,7 +46,7 @@ class EditRouteDialog(private val title: String, private val routeId: Int) : Dia
         creator.saveRoute.setOnClickListener {
             //save ticked Project on if else save updated Route
             if (AppPreferenceManager.getSelectedTabsTitle() === Tabs.PROJEKTE) {
-                FragmentPager.setPosition(1)
+                setPosition(1)
                 //needs to be converted to a project
                 routeRepository.deleteRoute(routeToProjekt(editRoute))
                 taskState.set(routeRepository.insertRoute(creator.getRoute(true)))
@@ -56,7 +58,7 @@ class EditRouteDialog(private val title: String, private val routeId: Int) : Dia
             //close the dialog
             dialog!!.cancel()
             if (taskState.get()) {
-                FragmentPager.refreshAllFragments()
+                refreshAllFragments()
             } else {
                 AlertManager.setErrorAlert(view.context)
             }
