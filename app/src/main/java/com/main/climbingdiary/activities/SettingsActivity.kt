@@ -21,7 +21,7 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mInstance = this
-        fragmentManager.beginTransaction().replace(R.id.content, SettingsFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.content, SettingsFragment()).commit()
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         AppPermissions.checkPermissions(applicationContext)

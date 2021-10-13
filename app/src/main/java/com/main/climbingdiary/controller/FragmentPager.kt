@@ -65,7 +65,7 @@ object FragmentPager: TabLayout.OnTabSelectedListener {
             Tabs.ROUTEN, Tabs.BOULDER -> {
                 ShowTimeSlider.show()
                 AppFloatingActionButton.show()
-                TimeSlider.setTimes()
+                TimeSlider.setTimesRange()
             }
             Tabs.MAP -> {
                 AppFloatingActionButton.show()

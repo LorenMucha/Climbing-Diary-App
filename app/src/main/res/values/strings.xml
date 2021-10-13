@@ -15,6 +15,7 @@
     <string name="pref_sektoren">Sektoren</string>
     <string name="export_pref_header">Export</string>
     <string name="safty_copy_pref_header">Sicherungskopie</string>
+    <string name="pref_time_slider">Time-Slider</string>
     <string name="menu_suche">Suche</string>
     <string name="menu_filter">Filter</string>
     <string name="menu_gebiete">Gebiete</string>
@@ -22,4 +23,5 @@
     <string name="menu_schwierigkeit">Schwierigkeit</string>
     <string name="menu_gebiet">Gebiet</string>
     <string name="menu_datum">Datum</string>
+    <string name="settings_ui_header">Bedienung</string>
 </resources>

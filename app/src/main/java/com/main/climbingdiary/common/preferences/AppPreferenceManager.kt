@@ -1,11 +1,8 @@
 package com.main.climbingdiary.common.preferences
 
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import com.main.climbingdiary.activities.MainActivity
-import com.main.climbingdiary.models.MenuValues
-import com.main.climbingdiary.models.RouteSort
-import com.main.climbingdiary.models.SportType
-import com.main.climbingdiary.models.Tabs
+import com.main.climbingdiary.models.*
 import com.main.climbingdiary.models.Tabs.Companion.stringToTabs
 
 object AppPreferenceManager {
@@ -79,13 +76,6 @@ object AppPreferenceManager {
         PREFS.edit().remove(PreferenceKeys.FILTER_MENU).apply()
     }
 
-    fun removeAllTempPrefs() {
-        removeAllFilterPrefs()
-        PREFS.edit().remove(PreferenceKeys.SORT).apply()
-        PREFS.edit().remove(PreferenceKeys.TAB).apply()
-        PREFS.edit().remove(PreferenceKeys.SPORT).apply()
-    }
-
     fun getSelectedTabsTitle(): Tabs? {
         return stringToTabs(PREFS.getString(PreferenceKeys.TAB, ""))
     }
@@ -93,5 +83,15 @@ object AppPreferenceManager {
     fun setSelectedTabsTitle(tab: Tabs) {
         EDITOR.putString(PreferenceKeys.TAB, tab.typeToString())
         EDITOR.apply()
+    }
+
+    fun setTimeSliderView(range: TimeRange?){
+        EDITOR.putString(PreferenceKeys.TIME_SLIDER_RANGE, range.toString())
+        EDITOR.apply()
+    }
+
+    fun getTimeSliderView(): TimeRange{
+        val value : String? = PREFS.getString(PreferenceKeys.TIME_SLIDER_RANGE, TimeRange.YEAR.toString())
+        return TimeRange.valueOf(value!!)
     }
 }

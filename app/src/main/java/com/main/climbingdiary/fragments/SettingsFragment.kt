@@ -1,6 +1,5 @@
 package com.main.climbingdiary.fragments
 
-import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
@@ -8,77 +7,71 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.preference.Preference
-import android.preference.Preference.OnPreferenceClickListener
-import android.preference.PreferenceFragment
-import android.preference.PreferenceManager
 import android.util.Log
+import androidx.preference.ListPreference
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.main.climbingdiary.R
-import com.main.climbingdiary.activities.MainActivity.Companion.getMainAppContext
 import com.main.climbingdiary.common.AlertManager.setAlertWithoutContent
 import com.main.climbingdiary.common.AppFileProvider
-import com.main.climbingdiary.common.AppPermissions
+import com.main.climbingdiary.common.RessourceFinder
 import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.getOutputPath
 import com.main.climbingdiary.common.preferences.PreferenceKeys
-import com.main.climbingdiary.common.preferences.PreferenceKeys.DB_OUTPUT_PATH
-import com.main.climbingdiary.common.preferences.PreferenceKeys.RESTORE_COPY
-import com.main.climbingdiary.common.preferences.PreferenceKeys.SAFTY_COPY
 import com.main.climbingdiary.models.Alert
+import com.main.climbingdiary.models.TimeRange
 import java.io.File
 import java.io.IOException
-import java.util.*
 
+class SettingsFragment : PreferenceFragmentCompat() {
 
-@SuppressLint("ValidFragment", "StaticFieldLeak")
-class SettingsFragment: PreferenceFragment() {
-
-    private val dbOutputPath: Preference? by lazy{ preferenceManager.findPreference(DB_OUTPUT_PATH)}
+    private val dbOutputPath: Preference? by lazy {
+        findPreference(RessourceFinder.getStringRessourceById(R.string.db_output_path))
+    }
     private val FILE_CHOOOSER_REQUEST_RESTORE_COPY =
         PreferenceKeys.FILE_CHOOOSER_REQUEST_RESTORE_COPY
     private val FILE_CHOOOSER_REQUEST_SAFTY_COPY = PreferenceKeys.FILE_CHOOOSER_REQUEST_SAFTY_COPY
+    private val timeSliderView: ListPreference? by lazy {
+        findPreference(RessourceFinder.getStringRessourceById(R.string.pref_time_slider))
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        addPreferencesFromResource(R.xml.settings)
-        PreferenceManager.getDefaultSharedPreferences(getMainAppContext())
-        val shareDb = preferenceManager.findPreference(SAFTY_COPY)
-        val restoreDbPath = preferenceManager.findPreference(RESTORE_COPY)
-        /* ToDo
-        Preference changeAreaName = getPreferenceManager().findPreference(PreferenceKeys.UPDATE_AREA);
-        Preference changeSectorName = getPreferenceManager().findPreference(PreferenceKeys.UPDATE_SECTOR);*/
-        dbOutputPath!!.onPreferenceClickListener = OnPreferenceClickListener {
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        setPreferencesFromResource(R.xml.settings, rootKey)
+        val shareDb: Preference? =
+            findPreference(RessourceFinder.getStringRessourceById(R.string.safty_copy))
+        val restoreDbPath: Preference? =
+            findPreference(RessourceFinder.getStringRessourceById(R.string.safty_copy))
+
+        dbOutputPath?.setOnPreferenceClickListener {
             openFolderChooser()
             true
         }
-        restoreDbPath!!.onPreferenceClickListener =
-            OnPreferenceClickListener {
-                openFileChooser()
-                true
-            }
-        shareDb!!.onPreferenceClickListener = OnPreferenceClickListener {
+        restoreDbPath?.setOnPreferenceClickListener {
+            openFileChooser()
+            true
+        }
+        shareDb?.setOnPreferenceClickListener {
             exportDb()
             true
         }
-        /* ToDo
-       assert changeAreaName != null;
-        changeAreaName.setOnPreferenceClickListener(preference -> {
-            this.changeAreaOrSectorName(changeAreaName.getKey());
-            return true;
-        });
-        assert changeSectorName != null;
-        changeSectorName.setOnPreferenceClickListener(preference -> {
-            this.changeAreaOrSectorName(changeSectorName.getKey());
-            return true;
-        });*/
+
+        //Fixme
+        timeSliderView?.setOnPreferenceChangeListener { _, newValue ->
+            val range = TimeRange.translate(newValue as String)
+            AppPreferenceManager.setTimeSliderView(range)
+            Log.d("jkfhjkwqhfjfhjhfakhk", AppPreferenceManager.getTimeSliderView().toString())
+            timeSliderView!!.summary = newValue
+            true
+        }
+
         initPrefs()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == FILE_CHOOOSER_REQUEST_SAFTY_COPY && resultCode == RESULT_OK) {
-            val selectedfile = data.data!!
+            val selectedfile = data?.data!!
             val paths: List<String> = selectedfile.path!!.split(":")
             val completePath = Environment.getExternalStorageDirectory().toString() +
                     if (paths.size > 1) File.separator + paths[1] else ""
@@ -87,7 +80,7 @@ class SettingsFragment: PreferenceFragment() {
 
         }
         if (requestCode == FILE_CHOOOSER_REQUEST_RESTORE_COPY && resultCode == RESULT_OK) {
-            val path = data.data
+            val path = data?.data
             restoreDB(path)
         }
     }
@@ -95,6 +88,13 @@ class SettingsFragment: PreferenceFragment() {
     private fun initPrefs() {
         try {
             dbOutputPath!!.summary = getOutputPath()
+            //set the default value
+            timeSliderView!!.let {
+                if (it.value == null) {
+                    it.setValueIndex(0)
+                }
+            }
+            timeSliderView!!.summary = TimeRange.translate(AppPreferenceManager.getTimeSliderView())
         } catch (ignored: NullPointerException) {
         }
     }
@@ -118,19 +118,23 @@ class SettingsFragment: PreferenceFragment() {
     private fun exportDb() {
         try {
             AppFileProvider().exportDBtoPreferencePath()
-            setAlertWithoutContent(
-                this.context,
-                Alert.Builder().dialogType(SweetAlertDialog.SUCCESS_TYPE)
-                    .title("Die Datenbank wurde exportiert !").build()
-            )
+            this.context?.let {
+                setAlertWithoutContent(
+                    it,
+                    Alert.Builder().dialogType(SweetAlertDialog.SUCCESS_TYPE)
+                        .title("Die Datenbank wurde exportiert !").build()
+                )
+            }
         } catch (e: IOException) {
             Log.e("exportDb", e.localizedMessage)
-            setAlertWithoutContent(
-                this.context,
-                Alert.Builder().dialogType(SweetAlertDialog.ERROR_TYPE)
-                    .title(String.format("Der Export ist Schiefgelaufen %s", "\ud83d\ude13"))
-                    .build()
-            )
+            this.context?.let {
+                setAlertWithoutContent(
+                    it,
+                    Alert.Builder().dialogType(SweetAlertDialog.ERROR_TYPE)
+                        .title(String.format("Der Export ist Schiefgelaufen %s", "\ud83d\ude13"))
+                        .build()
+                )
+            }
         }
     }
 
@@ -153,13 +157,15 @@ class SettingsFragment: PreferenceFragment() {
                     .show()
             }
         } catch (e: IOException) {
-            Log.d("restoreDb", e.localizedMessage)
-            setAlertWithoutContent(
-                this.context,
-                Alert.Builder().dialogType(SweetAlertDialog.ERROR_TYPE)
-                    .title(String.format("Der Restore ist Schiefgelaufen %s", "\ud83d\ude13"))
-                    .build()
-            )
+            Log.d("restoreDb", e.localizedMessage as String)
+            this.context?.let {
+                setAlertWithoutContent(
+                    it,
+                    Alert.Builder().dialogType(SweetAlertDialog.ERROR_TYPE)
+                        .title(String.format("Der Restore ist Schiefgelaufen %s", "\ud83d\ude13"))
+                        .build()
+                )
+            }
         }
     }
 }

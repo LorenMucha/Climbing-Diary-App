@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- ToDo
-    <PreferenceCategory android:title="@string/verwalten_pref_header">
-         <Preference
-             android:key="@string/pref_gebiete"
-             android:selectable="true"
-             android:title="Gebiete"
-             android:summary="Bearbeiten der Gebietsnamen"
-             />
-         <Preference
-             android:key="@string/pref_sektoren"
-             android:selectable="true"
-             android:title="Sektoren"
-             android:summary="Bearbeiten der Sektornamen"
-             />
-     </PreferenceCategory>-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory android:title="@string/export_pref_header">
         <Preference
             android:key="@string/db_output_path"
@@ -31,5 +17,15 @@
             android:selectable="true"
             android:summary="Wähle ein Backup für die Wiederherstellung"
             android:title="Wiederherstellung" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/settings_ui_header">
+        <ListPreference
+            android:key="@string/pref_time_slider"
+            android:selectable="true"
+            android:title="Time-Slider"
+            android:entries="@array/entries_time_slider"
+            android:entryValues="@array/entries_time_slider"
+            android:summary="In Jahren oder Zeitraum"
+            />
     </PreferenceCategory>
 </PreferenceScreen>

@@ -56,7 +56,7 @@ class AddRouteDialog(val title: String) : DialogFragment() {
                 } else {
                     AlertManager.setErrorAlert(view.context)
                 }
-                TimeSlider.setTimes()
+                TimeSlider.setTimesRange()
                 //close the dialog
                 dialog!!.cancel()
             }

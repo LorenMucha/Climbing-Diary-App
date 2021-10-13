@@ -7,7 +7,10 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListener
+import com.crystal.crystalrangeseekbar.interfaces.OnSeekbarChangeListener
+import com.crystal.crystalrangeseekbar.interfaces.OnSeekbarFinalValueListener
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
+import com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
 import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.setFilter
@@ -17,35 +20,48 @@ import com.main.climbingdiary.controller.button.ShowTimeSlider.hideButton
 import com.main.climbingdiary.database.TaskRepository.getYears
 import com.main.climbingdiary.models.MenuValues
 import java.util.*
+import kotlin.collections.ArrayList
 
 @SuppressLint("StaticFieldLeak")
-object TimeSlider: OnRangeSeekbarChangeListener, OnRangeSeekbarFinalValueListener {
+object TimeSlider: OnRangeSeekbarChangeListener, OnRangeSeekbarFinalValueListener, OnSeekbarChangeListener, OnSeekbarFinalValueListener {
     private val activity: AppCompatActivity by lazy { MainActivity.getMainActivity() }
     private val rangeSeekbar: CrystalRangeSeekbar = activity.findViewById(R.id.timerange)
+    private val timeSeekbar : CrystalSeekbar = activity.findViewById(R.id.timeslider)
     private val minText: TextView = activity.findViewById(R.id.textMin)
     private val maxText: TextView = activity.findViewById(R.id.textMax)
+    private val times: ArrayList<Int>
 
     init{
-        rangeSeekbar.setOnRangeSeekbarChangeListener(this)
-        rangeSeekbar.setOnRangeSeekbarFinalValueListener(this)
+        /*rangeSeekbar.setOnRangeSeekbarChangeListener(this)
+        rangeSeekbar.setOnRangeSeekbarFinalValueListener(this)*/
+        timeSeekbar.setOnSeekbarChangeListener(this)
+        timeSeekbar.setOnSeekbarFinalValueListener(this)
+        times = initTimes()
+    }
+
+    private fun initTimes(): ArrayList<Int>{
+        val years = ArrayList<Int>()
+        val cursor = getYears(false)
+        while (!cursor.isAfterLast) {
+            years.add(cursor.getInt(0))
+            cursor.moveToNext()
+        }
+        return years
     }
 
     @SuppressLint("SetTextI18n")
-    fun setTimes() {
+    fun setTimesRange() {
         try {
-            val years = ArrayList<Int>()
-            val cursor = getYears(false)
-            while (!cursor.isAfterLast) {
-                years.add(cursor.getInt(0))
-                cursor.moveToNext()
-            }
-            Log.d("Years set", TextUtils.join(",", years))
-            val minYear = Collections.min(years)
-            val maxYear = Collections.max(years)
-            rangeSeekbar.setMinValue(minYear.toFloat())
+            Log.d("Years set", TextUtils.join(",", times))
+            val minYear = Collections.min(times)
+            val maxYear = Collections.max(times)
+/*            rangeSeekbar.setMinValue(minYear.toFloat())
             rangeSeekbar.setMaxValue(maxYear.toFloat())
             rangeSeekbar.setMinStartValue(minYear.toFloat())
-            rangeSeekbar.setMaxStartValue(maxYear.toFloat())
+            rangeSeekbar.setMaxStartValue(maxYear.toFloat())*/
+            timeSeekbar.minValue = minYear.toFloat()
+            timeSeekbar.maxValue = maxYear.toFloat()
+            timeSeekbar.minStartValue = minYear.toFloat()
             minText.text = minYear.toString()
             maxText.text = maxYear.toString()
         } catch (ex: Exception) {
@@ -73,5 +89,13 @@ object TimeSlider: OnRangeSeekbarChangeListener, OnRangeSeekbarFinalValueListene
         minText.text = min
         maxText.text = max
         refreshSelectedFragment()
+    }
+
+    override fun valueChanged(value: Number?) {
+        maxText.text = value.toString()
+    }
+
+    override fun finalValue(value: Number?) {
+
     }
 }
