@@ -51,6 +51,7 @@ jobs:
           release_name: Release v1.0.32
           body: |
             - add option to choose a time slider instead a time-range
+            - Update to JAVA 11
       - name: Upload Release APK
         id: upload_release_asset
         uses: actions/upload-release-asset@v1.0.1
