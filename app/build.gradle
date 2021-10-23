@@ -19,16 +19,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    /*testOptions {
-        unitTests.returnDefaultValues = false
-        unitTests.all {
-            includeAndroidResources = true
+    testOptions {
+        unitTests.includeAndroidResources = true
+        unitTests.all{
             useJUnitPlatform()
-            testLogging {
-                events "passed", "skipped", "failed"
-            }
         }
-    }*/
+    }
+
     sourceSets {
         android.sourceSets.main.assets.srcDirs += ['src/main/assets/']
         androidTest.java.srcDirs += 'src/androidTest/java'
