@@ -1,11 +1,14 @@
 package com.main.climbingdiary.database.entities
 
+import android.annotation.SuppressLint
 import com.main.climbingdiary.models.Styles
 import org.chalup.microorm.annotations.Column
+import java.text.SimpleDateFormat
+import java.util.*
 
 data class Projekt(
     @Column("id") var id: Int = 0,
-    @Column("level") var level: String = Styles.getRP(),
+    @Column("level") var level: String = "8a",
     @Column("name") var name: String? = null,
     @Column("sektor") var sector: String? = null,
     @Column("gebiet") var area: String? = null,

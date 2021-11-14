@@ -15,7 +15,7 @@ jobs:
       - name: Setup JDK
         uses: actions/setup-java@v1
         with:
-          java-version: 1.8
+          java-version: 11
       - name: Run Tests
         run: bash ./gradlew test --stacktrace
       - name: Build Signed APK
@@ -47,10 +47,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v1.0.32
+          tag_name: v1.0.33
           release_name: Release v1.0.32
           body: |
-            - fix hidden setting fragment
+            - add option to choose a time slider instead a time-range
+            - Update to JAVA 11
       - name: Upload Release APK
         id: upload_release_asset
         uses: actions/upload-release-asset@v1.0.1

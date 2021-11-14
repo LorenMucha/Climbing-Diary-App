@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 31
     defaultConfig {
         applicationId "com.main.climbingdiary"
         minSdkVersion 26
-        targetSdkVersion 29
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -20,26 +20,24 @@ android {
         }
     }
     testOptions {
-        unitTests.returnDefaultValues = false
-        unitTests.all {
-            includeAndroidResources = true
+        unitTests.includeAndroidResources = true
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
+        unitTests.all{
             useJUnitPlatform()
-            testLogging {
-                events "passed", "skipped", "failed"
-            }
         }
     }
+
     sourceSets {
         android.sourceSets.main.assets.srcDirs += ['src/main/assets/']
         androidTest.java.srcDirs += 'src/androidTest/java'
         test.java.srcDirs += 'src/test/java'
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '11'
     }
 }
 
@@ -51,10 +49,11 @@ repositories {
 dependencies {
     //noinspection GradleDependency
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'com.google.guava:guava:27.0.1-android'
+    implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
     implementation 'androidx.preference:preference-ktx:1.1.1'
     //doku: https://github.com/syedowaisali/crystal-range-seekbar
     implementation 'com.crystal:crystalrangeseekbar:1.1.3'
@@ -69,11 +68,15 @@ dependencies {
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'androidx.test:core:1.4.0'
-    testImplementation 'org.mockito:mockito-core:3.12.2'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.1'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.7.1'
+    testImplementation 'org.mockito:mockito-core:4.0.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     androidTestImplementation('androidx.test.espresso:espresso-intents:3.4.0')
+    androidTestImplementation('androidx.test.espresso:espresso-contrib:3.4.0')
+    androidTestImplementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+    androidTestUtil 'androidx.test:orchestrator:1.4.0'
+
 }
