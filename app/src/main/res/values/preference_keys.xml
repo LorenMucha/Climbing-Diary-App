@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="db_output_path">db_output_path</string>
+    <string name="safty_copy">safty_copy</string>
+    <string name="share_copy">safty_copy</string>
+    <string name="safty_restore">safty_restore</string>
+    <string name="time_slider">time_slider</string>
+    <array name="entries_time_slider">
+        <item>Jahr</item>
+        <item>Zeitraum</item>
+    </array>
+</resources>

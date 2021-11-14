@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory android:title="@string/export_pref_header">
+        <Preference
+            android:key="@string/db_output_path"
+            android:title="Ordner für Backups und Exports" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/safty_copy_pref_header">
+        <Preference
+            android:key="@string/safty_copy"
+            android:selectable="true"
+            android:summary="Erzeugt ein Backup der Datenbank"
+            android:title="Sicherungskopie" />
+        <Preference
+            android:key="@string/safty_restore"
+            android:selectable="true"
+            android:summary="Wähle ein Backup für die Wiederherstellung"
+            android:title="Wiederherstellung" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/settings_ui_header">
+        <ListPreference
+            android:key="@string/pref_time_slider"
+            android:selectable="true"
+            android:title="Time-Slider"
+            android:entries="@array/entries_time_slider"
+            android:entryValues="@array/entries_time_slider"
+            android:summary="In Jahren oder Zeitraum"
+            />
+    </PreferenceCategory>
+</PreferenceScreen>

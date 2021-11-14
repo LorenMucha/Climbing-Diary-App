@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <!-- <item
+             android:icon="@drawable/ic_fitness"
+             android:id="@+id/nav_training"
+             android:title="Training" />-->
+        <item
+            android:id="@+id/nav_climbing"
+            android:icon="@drawable/ic_rope"
+            android:title="Klettern" />
+        <item
+            android:id="@+id/nav_bouldern"
+            android:icon="@drawable/ic_climbing"
+            android:title="Bouldern" />
+    </group>
+</menu>

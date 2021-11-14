@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/filter_header"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="1dp"
+    android:background="@color/colorPrimary"
+    android:orientation="horizontal"
+    android:padding="5dp"
+    android:visibility="gone">
+
+    <ImageView
+        android:id="@+id/filter_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:adjustViewBounds="true"
+        android:maxWidth="25dp"
+        android:maxHeight="25dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_filter" />
+
+    <TextView
+        android:id="@+id/filter_header_txt"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:gravity="center"
+        android:textColor="@color/colorPrimaryDark" />
+
+    <TextView
+        style="@style/TableRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:text="X"
+        android:textColor="@color/colorPrimaryDark" />
+</LinearLayout>
