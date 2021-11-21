@@ -57,7 +57,17 @@ class RouteRepository<T : RouteElement>(private val klass: KClass<T>) {
     }
 
     fun insertRoute(route: RouteElement): Boolean {
-        route.let {
+        return if (route is Route) {
+            TaskRepository.insertRoute(route)
+        } else if (route is Projekt) {
+            TaskRepository.insertProjekt(route)
+        } else {
+            false
+        }
+    }
+
+    fun updateRoute(toUpdate: RouteElement): Boolean {
+        toUpdate.let {
             var area = Area(name = it.area!!)
             // if not numeric, the area doesn´t exists
             if (!checkIfNumeric(it.area!!)) {
@@ -75,17 +85,6 @@ class RouteRepository<T : RouteElement>(private val klass: KClass<T>) {
                 ).id.toString()
             }
         }
-
-        return if (route is Route) {
-            TaskRepository.insertRoute(route)
-        } else if (route is Projekt) {
-            TaskRepository.insertProjekt(route)
-        } else {
-            false
-        }
-    }
-
-    fun updateRoute(toUpdate: RouteElement?): Boolean {
         return if (toUpdate is Route) {
             TaskRepository.updateRoute(toUpdate)
         } else if (toUpdate is Projekt) {

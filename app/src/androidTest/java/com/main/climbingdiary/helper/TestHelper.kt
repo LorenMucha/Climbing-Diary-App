@@ -105,4 +105,9 @@ object TestHelper {
         }
         return routeArray
     }
+
+    fun translateDate(date:String?):String{
+        val dateList= date!!.split("-")
+        return "${dateList[2]}.${dateList[1]}.${dateList[0]}"
+    }
 }
