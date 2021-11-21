@@ -8,8 +8,10 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.util.Log
 import com.main.climbingdiary.activities.MainActivity
+import com.main.climbingdiary.database.entities.Area
 import com.main.climbingdiary.database.entities.Projekt
 import com.main.climbingdiary.database.entities.Route
+import com.main.climbingdiary.database.entities.Sector
 import com.main.climbingdiary.database.sql.SqlAreaSektoren
 import com.main.climbingdiary.database.sql.SqlRouten
 import com.main.climbingdiary.database.sql.SqlRouten.getInsertProjektTasks
@@ -61,6 +63,10 @@ object TaskRepository {
         return getCursor(SqlAreaSektoren.getAreaIdBySectorNameAndAreaName(sectorName, areaName))
     }
 
+    fun getAreaByAreaName(areaName: String?):Cursor{
+        return getCursor(SqlAreaSektoren.getAreaByName(areaName))
+    }
+
     fun getTopTenRoutes(year: Int): Cursor {
         return getCursor(SqlRouten.getTopTenRoutes(year))
     }
@@ -80,6 +86,14 @@ object TaskRepository {
     fun insertRoute(route: Route): Boolean {
         //create the transaction
         return executeSqlTasks(getInsertRouteTasks(route))
+    }
+
+    fun insertArea(area: Area):Boolean{
+        return executeSqlTasks(arrayOf(SqlAreaSektoren.insertArea(area)))
+    }
+
+    fun insertSector(sector: Sector):Boolean{
+       return executeSqlTasks(arrayOf(SqlAreaSektoren.insertSector(sector)))
     }
 
     fun insertProjekt(projekt: Projekt): Boolean {
@@ -110,7 +124,7 @@ object TaskRepository {
         }
     }
 
-    private fun executeSqlTasks(tasks: Array<String>): Boolean {
+    fun executeSqlTasks(tasks: Array<String>): Boolean {
         mDb.beginTransaction()
         return try {
             for (x in tasks) {

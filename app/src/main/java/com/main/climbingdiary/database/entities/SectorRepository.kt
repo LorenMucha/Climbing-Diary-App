@@ -9,8 +9,12 @@ object SectorRepository {
 
     private val uOrm = MicroOrm()
 
+    fun insertSector(sector:Sector):Boolean{
+        return TaskRepository.insertSector(sector)
+    }
+
     fun getSectorByAreaNameAndSectorName(sectorName: String, areaName: String): Sector {
-        val cursor: Cursor? =
+        val cursor: Cursor =
             TaskRepository.getSectorIdByAreaNameAndSectorName(sectorName, areaName)
         return uOrm.fromCursor(cursor, Sector::class.java)
     }

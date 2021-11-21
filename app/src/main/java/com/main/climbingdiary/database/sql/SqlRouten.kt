@@ -1,12 +1,16 @@
 package com.main.climbingdiary.database.sql
 
+import com.main.climbingdiary.activities.MainActivity
+import com.main.climbingdiary.common.AlertManager
 import com.main.climbingdiary.common.preferences.AppPreferenceManager
+import com.main.climbingdiary.database.TaskRepository
 import com.main.climbingdiary.database.entities.AreaRepository
 import com.main.climbingdiary.database.entities.Projekt
 import com.main.climbingdiary.database.entities.Route
 import com.main.climbingdiary.database.entities.SectorRepository
 import com.main.climbingdiary.models.RouteSort
 import com.main.climbingdiary.models.RouteType
+import java.lang.RuntimeException
 import java.util.*
 
 object SqlRouten {
@@ -118,8 +122,8 @@ object SqlRouten {
             "INSERT OR IGNORE INTO ${SqlAreaSektoren.getAreaTableName()} (name) VALUES ('${route.area}')"
         val insertSektor =
             """INSERT OR IGNORE INTO ${SqlAreaSektoren.getSektorenTableName()} (name,gebiet)
-                    | SELECT '${route.sector}',
-                    | id FROM ${SqlAreaSektoren.getAreaTableName()}
+                    | SELECT '${route.sector}',id
+                    | FROM ${SqlAreaSektoren.getAreaTableName()}
                     | WHERE name='${route.area}'""".trimMargin()
         val insertRoute =
             """INSERT OR IGNORE INTO ${getRoutenTableName()}
@@ -153,16 +157,6 @@ object SqlRouten {
     }
 
     fun updateRoute(route: Route): String {
-        val areaName = route.area!!
-        val sectorName = route.sector!!
-        if (checkIfNumeric(areaName) && checkIfNumeric(sectorName)) {
-            route.area =
-                AreaRepository.getAreaByAreaNameAndSectorName(sectorName, areaName).id.toString()
-            route.sector = SectorRepository.getSectorByAreaNameAndSectorName(
-                sectorName,
-                areaName
-            ).id.toString()
-        }
         return """ UPDATE ${getRoutenTableName()} SET
                     | date = '${route.date}',
                     | name = '${route.name}',
@@ -182,10 +176,5 @@ object SqlRouten {
 
     fun deleteProjekt(id: Int): String {
         return "DELETE FROM ${getProjekteTableName()} WHERE id=$id"
-    }
-
-    fun checkIfNumeric(toCheck: String): Boolean {
-        val regex = "-?\\d+(\\.\\d+)?".toRegex()
-        return !regex.containsMatchIn(toCheck)
     }
 }

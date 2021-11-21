@@ -14,6 +14,15 @@ object AreaRepository {
         return uOrm.fromCursor(cursor, Area::class.java)
     }
 
+    fun insertArea(area:Area): Boolean{
+        return TaskRepository.insertArea(area)
+    }
+
+    fun getAreaByName(name:String):Area{
+        val cursor:Cursor = TaskRepository.getAreaByAreaName(name)
+        return uOrm.fromCursor(cursor,Area::class.java)
+    }
+
     fun getAreaList(): ArrayList<Area> {
         val area_list = ArrayList<Area>()
         val cursor: Cursor = TaskRepository.getAllAreas()

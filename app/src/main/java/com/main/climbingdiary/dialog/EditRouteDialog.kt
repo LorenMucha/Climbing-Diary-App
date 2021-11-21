@@ -49,21 +49,22 @@ class EditRouteDialog(private val title: String, private val routeId: Int, priva
         creator.setUiElements(editRoute,isTickedRoute)
         creator.saveRoute.setOnClickListener {
             //save ticked Project on if else save updated Route
-            if (isTickedRoute) {
-                setPosition(1)
-                projektRepository.deleteRoute(routeToProjekt(editRoute))
-                taskState.set(routeRepository.insertRoute(creator.getRoute(true)))
-            } else {
-                val updateRoute = creator.getRoute(false)
-                updateRoute.id = editRoute.id
-                taskState.set(routeRepository.updateRoute(updateRoute))
-            }
-            //close the dialog
-            dialog!!.cancel()
-            if (taskState.get()) {
-                refreshAllFragments()
-            } else {
-                AlertManager.setErrorAlert(view.context)
+            it.run {
+                if (isTickedRoute) {
+                    setPosition(1)
+                    projektRepository.deleteRoute(routeToProjekt(editRoute))
+                    taskState.set(routeRepository.insertRoute(creator.getRoute(true)))
+                } else {
+                    val updateRoute = creator.getRoute(false)
+                    updateRoute.id = editRoute.id
+                    taskState.set(routeRepository.updateRoute(updateRoute))
+                }
+                dialog!!.cancel()
+                if (taskState.get()) {
+                    refreshAllFragments()
+                } else {
+                    AlertManager.setErrorAlert(view.context)
+                }
             }
         }
     }

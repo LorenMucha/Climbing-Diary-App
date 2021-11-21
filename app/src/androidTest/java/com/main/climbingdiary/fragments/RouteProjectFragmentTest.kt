@@ -2,8 +2,6 @@ package com.main.climbingdiary.fragments
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
-import androidx.test.espresso.Espresso
-import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -18,33 +16,25 @@ import com.main.climbingdiary.database.entities.Projekt
 import com.main.climbingdiary.database.entities.RouteRepository
 import com.main.climbingdiary.helper.TestHelper.clickOnViewChild
 import com.main.climbingdiary.helper.TestHelper.getRandomProjekt
-import com.main.climbingdiary.helper.TestHelper.getRandomString
 import com.main.climbingdiary.helper.TestHelper.hasItem
 import com.main.climbingdiary.helper.TestProvider
-import com.main.climbingdiary.models.Levels
-import com.main.climbingdiary.models.Styles
-import org.hamcrest.CoreMatchers.*
-import org.hamcrest.core.AllOf.allOf
+import com.main.climbingdiary.helper.TestSqliteHelper.cleanAllTables
+import com.main.climbingdiary.models.Tabs
+import org.hamcrest.CoreMatchers.not
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import androidx.test.espresso.Espresso.onView
-
-import androidx.test.espresso.Espresso.onData
-
-
-
-
 
 internal class RouteProjectFragmentTest {
+
     private lateinit var activityScenario: ActivityScenario<MainActivity>
 
     private val repo = RouteRepository(Projekt::class)
-    private val project = getRandomProjekt()
+    private lateinit var project: Projekt
 
     @After
     fun cleanUp() {
-        repo.deleteRoute(project)
+        cleanAllTables()
         activityScenario.close()
     }
 
@@ -52,6 +42,7 @@ internal class RouteProjectFragmentTest {
     fun setUp() {
         activityScenario =
             ActivityScenario.launch(com.main.climbingdiary.activities.MainActivity::class.java)
+        project = getRandomProjekt()
         repo.insertRoute(project)
     }
 
@@ -59,21 +50,23 @@ internal class RouteProjectFragmentTest {
     @LargeTest
     fun tickedProjectShutShownInRouteDoneView() {
         //open project tab
-        TestProvider.openProjectTab()
+        TestProvider.openTab(Tabs.PROJEKTE)
         //click checkbox to tick project
         onView(withId(R.id.rvProjekte))
-            .perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>
-                (0, clickOnViewChild(R.id.tick_project)))
+            .perform(
+                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>
+                    (0, clickOnViewChild(R.id.tick_project))
+            )
         //click update to setup the tick
         onView(withId(R.id.input_route_save))
             .inRoot(isDialog())
             .check(matches(withText("Ticken")))
-            .perform(scrollTo(),click())
+            .perform(scrollTo(), click())
         //check if the route is included in the List for route done
         onView(withId(R.id.rvRoutes))
             .check(matches(hasItem(hasDescendant(withText("TestRoute")))))
         //go back to project
-        TestProvider.openProjectTab()
+        TestProvider.openTab(Tabs.PROJEKTE)
         //check that project not exists anymore inside the list
         onView(withId(R.id.rvProjekte))
             .check(matches((hasItem(not(hasDescendant(withText(project.name)))))))
@@ -84,12 +77,12 @@ internal class RouteProjectFragmentTest {
 
     @Test
     @MediumTest
-    fun addNewProjectToList(){
-        TestProvider.openProjectTab()
+    fun addNewProjectToList() {
+        TestProvider.openTab(Tabs.PROJEKTE)
         //open add Project Button
         onView(withId(R.id.floating_action_btn_add)).perform(click())
         //fill the input fields
-       onView(withId(R.id.input_route_name))
+        onView(withId(R.id.input_route_name))
             .inRoot(isDialog())
             .perform(typeText(project.name))
         onView(withId(R.id.input_route_area))
@@ -103,7 +96,7 @@ internal class RouteProjectFragmentTest {
         onView(withId(R.id.input_route_save))
             .inRoot(isDialog())
             .check(matches(withText("Speichern")))
-            .perform(scrollTo(),click())
+            .perform(scrollTo(), click())
         //check if List contains new project
         onView(withId(R.id.rvProjekte))
             .check(matches((hasItem(not(hasDescendant(withText(project.name)))))))
