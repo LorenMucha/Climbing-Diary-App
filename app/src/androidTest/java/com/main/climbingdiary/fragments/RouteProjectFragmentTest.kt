@@ -10,6 +10,13 @@ import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
 import androidx.test.filters.MediumTest
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertContains
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertNotContains
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertNotDisplayed
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertNotExist
+import com.adevinta.android.barista.internal.viewaction.SleepViewAction.sleep
 import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity
 import com.main.climbingdiary.database.entities.Projekt
@@ -63,16 +70,13 @@ internal class RouteProjectFragmentTest {
             .check(matches(withText("Ticken")))
             .perform(scrollTo(), click())
         //check if the route is included in the List for route done
-        onView(withId(R.id.rvRoutes))
-            .check(matches(hasItem(hasDescendant(withText("TestRoute")))))
+        assertDisplayed(project.name!!)
+
         //go back to project
         TestProvider.openTab(Tabs.PROJEKTE)
+
         //check that project not exists anymore inside the list
-        onView(withId(R.id.rvProjekte))
-            .check(matches((hasItem(not(hasDescendant(withText(project.name)))))))
-            .check(matches((hasItem(not(hasDescendant(withText(project.area)))))))
-            .check(matches((hasItem(not(hasDescendant(withText(project.sector)))))))
-            .check(matches((hasItem(not(hasDescendant(withText(project.level)))))))
+        assertNotDisplayed(project.name!!)
     }
 
     @Test
@@ -98,9 +102,9 @@ internal class RouteProjectFragmentTest {
             .check(matches(withText("Speichern")))
             .perform(scrollTo(), click())
         //check if List contains new project
-        onView(withId(R.id.rvProjekte))
-            .check(matches((hasItem(not(hasDescendant(withText(project.name)))))))
-            .check(matches((hasItem(not(hasDescendant(withText(project.area)))))))
-            .check(matches((hasItem(not(hasDescendant(withText(project.sector)))))))
+        assertDisplayed(project.name!!)
+        assertContains(project.sector!!)
+        assertContains(project.area!!)
+        assertDisplayed(project.level)
     }
 }

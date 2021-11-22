@@ -2,19 +2,27 @@ package com.main.climbingdiary.helper
 
 import android.view.View
 import androidx.test.espresso.Espresso
+import androidx.test.espresso.Espresso.onData
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.PerformException
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
+import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers
 import com.google.android.material.tabs.TabLayout
 import com.main.climbingdiary.R
 import com.main.climbingdiary.models.Tabs
+import org.hamcrest.CoreMatchers
+import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.core.AllOf
 
+
 object TestProvider {
-    fun openTab(tabvalue: Tabs){
+    fun openTab(tabvalue: Tabs) {
         val tabMap = mapOf(Tabs.PROJEKTE to 2, Tabs.STATISTIK to 0, Tabs.ROUTEN to 1)
-        Espresso.onView(ViewMatchers.withId(R.id.tabLayout)).perform(
+        onView(ViewMatchers.withId(R.id.tabLayout)).perform(
             selectTabAtPosition(
                 tabMap.get(tabvalue)
             )
@@ -41,5 +49,24 @@ object TestProvider {
                 tabAtIndex.select()
             }
         }
+    }
+
+    fun changeInputTest(id: Int, string: String) {
+        onView(ViewMatchers.withId(id))
+            .perform(ViewActions.replaceText(string))
+    }
+
+    fun setSpinnerSelect(id: Int, choice: String) {
+        onView(ViewMatchers.withId(id))
+            .perform(ViewActions.click())
+
+        onData(
+            allOf(
+                `is`(CoreMatchers.instanceOf(String::class.java)),
+                `is`(choice)
+            )
+        )
+            .inRoot(RootMatchers.isPlatformPopup())
+            .perform(ViewActions.click())
     }
 }

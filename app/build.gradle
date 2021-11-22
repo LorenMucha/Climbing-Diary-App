@@ -77,6 +77,10 @@ dependencies {
     androidTestImplementation('androidx.test.espresso:espresso-intents:3.4.0')
     androidTestImplementation('androidx.test.espresso:espresso-contrib:3.4.0')
     androidTestImplementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+    //Doku: https://github.com/AdevintaSpain/Barista
+    androidTestImplementation('com.adevinta.android:barista:4.2.0') {
+        exclude group: 'org.jetbrains.kotlin'
+    }
     androidTestUtil 'androidx.test:orchestrator:1.4.0'
 
 }

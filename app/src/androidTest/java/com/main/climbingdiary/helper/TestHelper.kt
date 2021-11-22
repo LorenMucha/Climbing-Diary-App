@@ -97,11 +97,11 @@ object TestHelper {
         return formatter.format(randomDate)
     }
 
-    fun getRandomRouteList(max: Int = 500): Array<Route> {
-        val routeArray = emptyArray<Route>()
+    fun getRandomRouteList(max: Int = 500): List<Route> {
+        val routeArray:MutableList<Route> = ArrayList()
         for (i in 1..max) {
             val route = getRandomRoute()
-            routeArray[i] = route
+            routeArray.add(route)
         }
         return routeArray
     }
