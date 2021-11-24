@@ -7,7 +7,7 @@ on:
       - 'v*'
 
 jobs:
-  test:
+  build:
     runs-on: macos-latest
     strategy:
       matrix:
@@ -55,11 +55,7 @@ jobs:
          arch: x86
          profile: Nexus 6
          script: ./gradlew connectedCheck --stacktrace
-  build:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Build Signed APK
+      - name: build signed APK
         uses: victorbnl/build-signed-apk@main
         with:
           keystore: ${{ secrets.SIGNING_KEY }}
