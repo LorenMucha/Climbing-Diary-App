@@ -50,7 +50,7 @@ class RouteDialogCreator(
     private var area: AutoCompleteTextView = view.findViewById(R.id.input_route_area)
     private var sector: AutoCompleteTextView = view.findViewById(R.id.input_route_sektor)
     private var comment: EditText =
-        view.findViewById<AutoCompleteTextView>(R.id.input_route_comment)
+        view.findViewById(R.id.input_route_comment)
 
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private var gradeSwitcher: Switch = view.findViewById(R.id.grade_system_switcher)

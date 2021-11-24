@@ -3,31 +3,35 @@ package com.main.climbingdiary.fragments
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.*
-import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.matcher.RootMatchers.isDialog
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.filters.LargeTest
 import androidx.test.filters.MediumTest
-import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions
+import androidx.test.filters.SmallTest
+import com.adevinta.android.barista.assertion.BaristaListAssertions.assertDisplayedAtPosition
+import com.adevinta.android.barista.assertion.BaristaListAssertions.assertDrawableDisplayedAtPosition
+import com.adevinta.android.barista.assertion.BaristaRecyclerViewAssertions
+import com.adevinta.android.barista.assertion.BaristaRecyclerViewAssertions.assertRecyclerViewItemCount
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertContains
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
-import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertNotContains
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertNotDisplayed
-import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertNotExist
-import com.adevinta.android.barista.internal.viewaction.SleepViewAction.sleep
+import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
+import com.adevinta.android.barista.interaction.BaristaListInteractions
+import com.adevinta.android.barista.interaction.BaristaListInteractions.clickListItemChild
 import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity
+import com.main.climbingdiary.adapter.RoutesAdapter.Companion.getRoutStyleIcon
 import com.main.climbingdiary.database.entities.Projekt
 import com.main.climbingdiary.database.entities.RouteRepository
 import com.main.climbingdiary.helper.TestHelper.clickOnViewChild
 import com.main.climbingdiary.helper.TestHelper.getRandomProjekt
-import com.main.climbingdiary.helper.TestHelper.hasItem
+import com.main.climbingdiary.helper.TestHelper.getRandomProjektList
 import com.main.climbingdiary.helper.TestProvider
+import com.main.climbingdiary.helper.TestProvider.changeInputTest
+import com.main.climbingdiary.helper.TestProvider.setSpinnerSelect
 import com.main.climbingdiary.helper.TestSqliteHelper.cleanAllTables
 import com.main.climbingdiary.models.Tabs
-import org.hamcrest.CoreMatchers.not
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -48,16 +52,15 @@ internal class RouteProjectFragmentTest {
     @Before
     fun setUp() {
         activityScenario =
-            ActivityScenario.launch(com.main.climbingdiary.activities.MainActivity::class.java)
+            ActivityScenario.launch(MainActivity::class.java)
         project = getRandomProjekt()
         repo.insertRoute(project)
+        TestProvider.openTab(Tabs.PROJEKTE)
     }
 
     @Test
     @LargeTest
     fun tickedProjectShutShownInRouteDoneView() {
-        //open project tab
-        TestProvider.openTab(Tabs.PROJEKTE)
         //click checkbox to tick project
         onView(withId(R.id.rvProjekte))
             .perform(
@@ -65,12 +68,20 @@ internal class RouteProjectFragmentTest {
                     (0, clickOnViewChild(R.id.tick_project))
             )
         //click update to setup the tick
-        onView(withId(R.id.input_route_save))
-            .inRoot(isDialog())
-            .check(matches(withText("Ticken")))
-            .perform(scrollTo(), click())
+        clickOn("Ticken")
+
         //check if the route is included in the List for route done
-        assertDisplayed(project.name!!)
+        assertDisplayedAtPosition(R.id.rvRoutes, 0, R.id.route_name, project.name!!)
+        assertContains(project.area!!)
+        assertContains(project.sector!!)
+        assertContains(project.sector!!)
+        assertDisplayedAtPosition(R.id.rvRoutes, 0, R.id.route_level, project.level)
+        assertDrawableDisplayedAtPosition(
+            R.id.rvRoutes,
+            0,
+            R.id.route_style,
+            getRoutStyleIcon("RP")
+        )
 
         //go back to project
         TestProvider.openTab(Tabs.PROJEKTE)
@@ -82,29 +93,34 @@ internal class RouteProjectFragmentTest {
     @Test
     @MediumTest
     fun addNewProjectToList() {
-        TestProvider.openTab(Tabs.PROJEKTE)
+        val projectSet = getRandomProjekt()
         //open add Project Button
         onView(withId(R.id.floating_action_btn_add)).perform(click())
         //fill the input fields
-        onView(withId(R.id.input_route_name))
-            .inRoot(isDialog())
-            .perform(typeText(project.name))
-        onView(withId(R.id.input_route_area))
-            .inRoot(isDialog())
-            .perform(typeText(project.area))
-        onView(withId(R.id.input_route_sektor))
-            .inRoot(isDialog())
-            .perform(typeText(project.sector))
+        changeInputTest(R.id.input_route_name, projectSet.name!!)
+        changeInputTest(R.id.input_route_area, projectSet.area!!)
+        changeInputTest(R.id.input_route_sektor, projectSet.sector!!)
+        changeInputTest(R.id.input_route_comment, projectSet.comment!!)
+
+        setSpinnerSelect(R.id.input_route_level, projectSet.level)
 
         //select save
-        onView(withId(R.id.input_route_save))
-            .inRoot(isDialog())
-            .check(matches(withText("Speichern")))
-            .perform(scrollTo(), click())
+        clickOn("Speichern")
+
         //check if List contains new project
-        assertDisplayed(project.name!!)
-        assertContains(project.sector!!)
-        assertContains(project.area!!)
-        assertDisplayed(project.level)
+        assertDisplayed(projectSet.name!!)
+        assertContains(projectSet.area!!)
+        assertContains(projectSet.sector!!)
+        assertDisplayed(projectSet.level)
+    }
+
+    @Test
+    @SmallTest
+    fun deleteProjektOk(){
+        assertRecyclerViewItemCount(R.id.rvProjekte, 1)
+        clickListItemChild(R.id.rvProjekte, 0, R.id.route_delete)
+        clickOn("Ok")
+        clickOn("Ok")
+        assertRecyclerViewItemCount(R.id.rvProjekte, 0)
     }
 }

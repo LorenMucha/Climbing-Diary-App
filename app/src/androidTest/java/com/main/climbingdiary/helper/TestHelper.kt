@@ -106,6 +106,15 @@ object TestHelper {
         return routeArray
     }
 
+    fun getRandomProjektList(max: Int = 500): List<Projekt> {
+        val routeArray:MutableList<Projekt> = ArrayList()
+        for (i in 1..max) {
+            val projekt = getRandomProjekt()
+            routeArray.add(projekt)
+        }
+        return routeArray
+    }
+
     fun translateDate(date:String?):String{
         val dateList= date!!.split("-")
         return "${dateList[2]}.${dateList[1]}.${dateList[0]}"

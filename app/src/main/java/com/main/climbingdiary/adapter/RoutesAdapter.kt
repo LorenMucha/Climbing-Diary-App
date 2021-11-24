@@ -107,7 +107,7 @@ class RoutesAdapter(private val routes: List<Route>) : Filterable,
         delete.setOnClickListener { v: View ->
             SweetAlertDialog(v.context, SweetAlertDialog.WARNING_TYPE)
                 .setTitleText("Bist du sicher ?")
-                .setConfirmText("OK")
+                .setConfirmText("Ok")
                 .setCancelText("Abbrechen")
                 .setConfirmClickListener { sDialog: SweetAlertDialog ->
                     //delete the route by id

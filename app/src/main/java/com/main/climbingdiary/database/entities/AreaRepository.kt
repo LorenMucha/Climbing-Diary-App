@@ -1,6 +1,7 @@
 package com.main.climbingdiary.database.entities
 
 import android.database.Cursor
+import android.database.CursorIndexOutOfBoundsException
 import com.main.climbingdiary.database.TaskRepository
 import org.chalup.microorm.MicroOrm
 import java.util.*
@@ -9,18 +10,28 @@ object AreaRepository {
 
     private val uOrm = MicroOrm()
 
-    fun getAreaByAreaNameAndSectorName(sectorName: String?, areaName: String?): Area {
-        val cursor: Cursor = TaskRepository.getAreaIdByAreaNameAndSectorName(sectorName, areaName)
-        return uOrm.fromCursor(cursor, Area::class.java)
+    fun getAreaByAreaNameAndSectorName(sectorName: String?, areaName: String?): Area? {
+        try {
+            val cursor: Cursor =
+                TaskRepository.getAreaIdByAreaNameAndSectorName(sectorName, areaName)
+            return uOrm.fromCursor(cursor, Area::class.java)
+        } catch (ex: CursorIndexOutOfBoundsException) {
+            return null
+        }
     }
 
-    fun insertArea(area:Area): Boolean{
+    fun insertArea(area: Area): Boolean {
         return TaskRepository.insertArea(area)
     }
 
-    fun getAreaByName(name:String):Area{
-        val cursor:Cursor = TaskRepository.getAreaByAreaName(name)
-        return uOrm.fromCursor(cursor,Area::class.java)
+    fun getAreaByName(name: String): Area? {
+        //Fixme: return null if not exists
+        try {
+            val cursor: Cursor = TaskRepository.getAreaByAreaName(name)
+            return uOrm.fromCursor(cursor, Area::class.java)
+        } catch (ex: CursorIndexOutOfBoundsException) {
+            return null
+        }
     }
 
     fun getAreaList(): ArrayList<Area> {

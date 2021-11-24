@@ -116,7 +116,7 @@ object TaskRepository {
     fun getCursor(sql: String): Cursor {
         return try {
             val mCur = mDb.rawQuery(sql, null)
-            mCur?.moveToNext()
+            mCur.moveToNext()
             mCur
         } catch (mSQLExeption: SQLException) {
             Log.e(TAG, "Error >>$mSQLExeption")

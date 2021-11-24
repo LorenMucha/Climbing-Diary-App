@@ -67,24 +67,32 @@ class RouteRepository<T : RouteElement>(private val klass: KClass<T>) {
     }
 
     fun updateRoute(toUpdate: RouteElement): Boolean {
-        toUpdate.let {
-            var area = Area(name = it.area!!)
-            // if not numeric, the area doesn´t exists
-            if (!checkIfNumeric(it.area!!)) {
-                AreaRepository.insertArea(area)
-                area = AreaRepository.getAreaByName(area.name)
-                it.area = area.id.toString()
-            }
-            //if numeric, the sector doesn´t exists
-            if (!checkIfNumeric(it.sector!!)) {
-                val sector = Sector(name = it.sector!!, area = area.id)
-                SectorRepository.insertSector(sector)
-                it.sector = SectorRepository.getSectorByAreaNameAndSectorName(
-                    sector.name,
-                    area.name
-                ).id.toString()
-            }
+
+        var area = Area(name = toUpdate.area!!)
+        // check if area exists
+        //Fixme update sector
+        AreaRepository.getAreaByName(area.name)?.let{
+            toUpdate.area = it.id.toString()
+        }?:run{
+            AreaRepository.insertArea(area)
+            area = AreaRepository.getAreaByName(area.name)!!
+            toUpdate.area = area.id.toString()
         }
+        //if numeric, the sector doesn´t exists
+        SectorRepository.getSectorByAreaNameAndSectorName(
+            sectorName = toUpdate.sector!!,
+            areaName = area.name
+        )?.let{
+            toUpdate.sector = it.id.toString()
+        }?:run{
+            val sector = Sector(name = toUpdate.sector!!, area = area.id)
+            SectorRepository.insertSector(sector)
+            toUpdate.sector = SectorRepository.getSectorByAreaNameAndSectorName(
+                sector.name,
+                area.name
+            )!!.id.toString()
+        }
+
         return if (toUpdate is Route) {
             TaskRepository.updateRoute(toUpdate)
         } else if (toUpdate is Projekt) {
@@ -93,6 +101,4 @@ class RouteRepository<T : RouteElement>(private val klass: KClass<T>) {
             false
         }
     }
-
-
 }

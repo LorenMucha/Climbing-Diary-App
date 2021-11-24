@@ -24,7 +24,6 @@
                 android:layout_height="match_parent" >
 
                 <TextView
-                    android:text="Routenname"
                     android:textStyle="bold"
                     android:textSize="@dimen/route_name"
                     android:textColor="@color/black"
@@ -36,7 +35,6 @@
                     android:layout_marginStart="5dp"
                     tools:ignore="SpUsage" />
                 <TextView
-                    android:text="8a+"
                     android:textStyle="bold"
                     android:textSize="@dimen/route_content"
                     android:textColor="@color/black"
@@ -160,7 +158,8 @@
                         android:background="@color/buttonColor"
                         android:src="@drawable/ic_pen"
                         android:paddingEnd="30dp"
-                        android:layout_toLeftOf="@id/route_delete" />
+                        android:layout_toStartOf="@id/route_delete"
+                        tools:ignore="RtlSymmetry" />
 
                     <ImageButton
                         android:layout_marginTop="5dp"
@@ -171,7 +170,7 @@
                         android:layout_margin="5dp"
                         android:background="@color/buttonColor"
                         android:src="@drawable/ic_trash"
-                        android:layout_alignParentRight="true" />
+                        android:layout_alignParentEnd="true" />
 
                 </RelativeLayout>
             </TableRow>
