@@ -1,6 +1,11 @@
 package com.main.climbingdiary.fragments
 
+import androidx.preference.Preference
 import androidx.test.core.app.ActivityScenario
+import androidx.test.espresso.Espresso.onData
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.matcher.PreferenceMatchers
+import androidx.test.espresso.matcher.PreferenceMatchers.withTitle
 import androidx.test.filters.LargeTest
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.adevinta.android.barista.interaction.BaristaMenuClickInteractions.clickMenu
@@ -12,10 +17,12 @@ import com.main.climbingdiary.database.entities.Route
 import com.main.climbingdiary.database.entities.RouteRepository
 import com.main.climbingdiary.helper.TestHelper.getRandomProjektList
 import com.main.climbingdiary.helper.TestHelper.getRandomRouteList
-import com.main.climbingdiary.helper.TestSqliteHelper
+import com.main.climbingdiary.helper.TestSqliteHelper.cleanAllTables
+import org.hamcrest.Matchers.*
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+
 
 internal class SettingsFragmentTest {
     private lateinit var activityScenario: ActivityScenario<MainActivity>
@@ -25,6 +32,7 @@ internal class SettingsFragmentTest {
 
     @After
     fun cleanUp() {
+        cleanAllTables()
         activityScenario.close()
     }
 
@@ -32,6 +40,7 @@ internal class SettingsFragmentTest {
     fun setUp() {
         activityScenario =
             ActivityScenario.launch(MainActivity::class.java)
+        cleanAllTables()
         getRandomRouteList(50).forEach { routeRepo.insertRoute(it) }
         getRandomProjektList(10).forEach { projektRepo.insertRoute(it) }
         AppPreferenceManager.setOutputPath("storage/emulated/0/Download")
@@ -41,9 +50,10 @@ internal class SettingsFragmentTest {
     @Test
     @LargeTest
     fun dataBaseExportWorks() {
-        clickOn("Sicherungskopie")
+        clickOn("Sicherungskopie erstellen")
         clickOn("Ok")
-        clickOn("Wiederherstellung")
+        clickOn("Datenbank wiederherstellen")
+        //Todo
     }
 
 }

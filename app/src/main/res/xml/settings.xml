@@ -11,12 +11,12 @@
             android:key="@string/safty_copy"
             android:selectable="true"
             android:summary="Erzeugt ein Backup der Datenbank"
-            android:title="Sicherungskopie" />
+            android:title="Sicherungskopie erstellen" />
         <Preference
             android:key="@string/safty_restore"
             android:selectable="true"
             android:summary="Wähle ein Backup für die Wiederherstellung"
-            android:title="Wiederherstellung" />
+            android:title="Datenbank wiederherstellen" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/settings_ui_header">
         <ListPreference

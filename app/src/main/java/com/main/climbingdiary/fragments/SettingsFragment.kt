@@ -19,7 +19,6 @@ import com.main.climbingdiary.common.RessourceFinder
 import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.getOutputPath
 import com.main.climbingdiary.common.preferences.PreferenceKeys
-import com.main.climbingdiary.controller.FragmentPager
 import com.main.climbingdiary.controller.slider.TimeSliderFactory
 import com.main.climbingdiary.models.Alert
 import com.main.climbingdiary.models.TimeRange
@@ -40,20 +39,21 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
-        val shareDb: Preference? =
+        val exportDb: Preference? =
             findPreference(RessourceFinder.getStringRessourceById(R.string.safty_copy))
-        val restoreDbPath: Preference? =
-            findPreference(RessourceFinder.getStringRessourceById(R.string.safty_copy))
+
+        val saftyCopy: Preference? =
+            findPreference(RessourceFinder.getStringRessourceById(R.string.safty_restore))
 
         dbOutputPath?.setOnPreferenceClickListener {
             openFolderChooser()
             true
         }
-        restoreDbPath?.setOnPreferenceClickListener {
+        saftyCopy?.setOnPreferenceClickListener {
             openFileChooser()
             true
         }
-        shareDb?.setOnPreferenceClickListener {
+        exportDb?.setOnPreferenceClickListener {
             exportDb()
             true
         }
