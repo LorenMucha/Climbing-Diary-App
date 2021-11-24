@@ -7,7 +7,7 @@ on:
       - 'v*'
 
 jobs:
-  apk:
+  setup:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -16,6 +16,9 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+  tests:
+    runs-on: macos-latest
+    steps:
       - name: Run Tests
         run: bash ./gradlew test --stacktrace
       - name: Instrumentation Tests
@@ -26,6 +29,9 @@ jobs:
          arch: x86
          profile: Nexus 6
          script: ./gradlew connectedCheck --stacktrace
+  build:
+    runs-on: ubuntu-latest
+    steps:
       - name: Build Signed APK
         uses: victorbnl/build-signed-apk@main
         with:
