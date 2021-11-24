@@ -9,6 +9,7 @@ object DialogFactory {
 
     private val manager: FragmentManager by lazy { MainActivity.getMainActivity().supportFragmentManager }
 
+    @JvmStatic
     fun openAddRouteDialog(tab: Tabs) {
         if (tab === Tabs.PROJEKTE) {
             val addProjekt = AddProjektDialog("Neues Projekt")
@@ -24,6 +25,7 @@ object DialogFactory {
             )
         }
     }
+    @JvmStatic
     fun openEditRouteDialog(tab: Tabs, id: Int) {
         if (tab === Tabs.PROJEKTE) {
             val editDialog = EditProjektDialog("Projekt bearbeiten", id)
@@ -33,9 +35,9 @@ object DialogFactory {
             editDialog.show(manager, "edit")
         }
     }
-
-    fun openTickProjektDialog(projektId: Int) {
-        val editDialog = EditRouteDialog("Projekt ticken", projektId,true)
-        editDialog.show(manager, "tick")
+    @JvmStatic
+    fun openEditRouteDialog(route: Route) {
+        val editDialog = EditRouteDialog("Route bearbeiten", route.id)
+        editDialog.show(manager, "edit")
     }
 }

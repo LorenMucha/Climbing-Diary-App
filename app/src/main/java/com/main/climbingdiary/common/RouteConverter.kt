@@ -2,8 +2,6 @@ package com.main.climbingdiary.common
 
 import com.main.climbingdiary.database.entities.Projekt
 import com.main.climbingdiary.database.entities.Route
-import java.text.SimpleDateFormat
-import java.util.*
 
 object RouteConverter {
 
@@ -17,22 +15,6 @@ object RouteConverter {
         projekt.rating = route.rating
         projekt.comment = route.comment
         return projekt
-    }
-
-    fun projektToRoute(projekt: Projekt):Route{
-        val sdf =
-            SimpleDateFormat("YYYY-MM-dd", Locale.GERMAN)
-        val route = Route()
-        route.id = projekt.id
-        route.name = projekt.name
-        route.area = projekt.area
-        route.level = projekt.level
-        route.sector = projekt.sector
-        route.date = sdf.format(Date())
-        route.rating = projekt.rating!!
-        route.comment = projekt.comment
-        route.style = "rp"
-        return route
     }
 
     fun cleanRoute(route: Any): Any {

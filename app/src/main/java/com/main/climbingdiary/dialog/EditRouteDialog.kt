@@ -8,16 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.main.climbingdiary.R
 import com.main.climbingdiary.common.AlertManager
-import com.main.climbingdiary.common.RouteConverter
-import com.main.climbingdiary.common.RouteConverter.projektToRoute
 import com.main.climbingdiary.common.RouteConverter.routeToProjekt
 import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.controller.FragmentPager
 import com.main.climbingdiary.controller.FragmentPager.refreshAllFragments
 import com.main.climbingdiary.controller.FragmentPager.setPosition
-import com.main.climbingdiary.database.entities.Projekt
 import com.main.climbingdiary.database.entities.Route
-import com.main.climbingdiary.database.entities.RouteElement
 import com.main.climbingdiary.database.entities.RouteRepository
 import com.main.climbingdiary.models.Tabs
 import java.util.concurrent.atomic.AtomicBoolean
@@ -25,10 +21,10 @@ import java.util.concurrent.atomic.AtomicBoolean
 /*
 Fixme: switcher level noch anpassen
  */
-class EditRouteDialog(private val title: String, private val routeId: Int, private val isTickedRoute:Boolean=false) : DialogFragment() {
+@SuppressLint("ValidFragment")
+class EditRouteDialog(private val title: String, private val routeId: Int) : DialogFragment() {
 
     private val routeRepository: RouteRepository<Route> = RouteRepository(Route::class)
-    private val projektRepository: RouteRepository<Projekt> = RouteRepository(Projekt::class)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,15 +39,16 @@ class EditRouteDialog(private val title: String, private val routeId: Int, priva
         val context = view.context
         val taskState = AtomicBoolean(false)
         //get the route value which will be edit
-        val editRoute = getRoute()
+        val editRoute = routeRepository.getRoute(routeId)
         val creator = RouteDialogCreator(view, context, this)
         creator.setForeGroundSpan(title)
-        creator.setUiElements(editRoute,isTickedRoute)
+        creator.setUiElements(editRoute)
         creator.saveRoute.setOnClickListener {
             //save ticked Project on if else save updated Route
-            if (isTickedRoute) {
+            if (AppPreferenceManager.getSelectedTabsTitle() === Tabs.PROJEKTE) {
                 setPosition(1)
-                projektRepository.deleteRoute(routeToProjekt(editRoute))
+                //needs to be converted to a project
+                routeRepository.deleteRoute(routeToProjekt(editRoute))
                 taskState.set(routeRepository.insertRoute(creator.getRoute(true)))
             } else {
                 val updateRoute = creator.getRoute(false)
@@ -66,9 +63,5 @@ class EditRouteDialog(private val title: String, private val routeId: Int, priva
                 AlertManager.setErrorAlert(view.context)
             }
         }
-    }
-
-    private fun getRoute():Route{
-        return if (isTickedRoute) projektToRoute(projektRepository.getRoute(routeId)) else routeRepository.getRoute(routeId)
     }
 }

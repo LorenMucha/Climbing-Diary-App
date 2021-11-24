@@ -19,6 +19,7 @@ import com.main.climbingdiary.common.GradeConverter.convertUiaaToFrench
 import com.main.climbingdiary.common.RouteConverter.cleanRoute
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.getSelectedTabsTitle
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.getSportType
+import com.main.climbingdiary.controller.FragmentPager
 import com.main.climbingdiary.controller.FragmentPager.refreshSelectedFragment
 import com.main.climbingdiary.controller.SetDate
 import com.main.climbingdiary.database.entities.AreaRepository.getAreaNameList
@@ -51,7 +52,6 @@ class RouteDialogCreator(
     private var sector: AutoCompleteTextView = view.findViewById(R.id.input_route_sektor)
     private var comment: EditText =
         view.findViewById<AutoCompleteTextView>(R.id.input_route_comment)
-
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private var gradeSwitcher: Switch = view.findViewById(R.id.grade_system_switcher)
     private var routeContent: LinearLayout = view.findViewById(R.id.route_content)
@@ -64,8 +64,8 @@ class RouteDialogCreator(
     }
 
     @SuppressLint("SetTextI18n")
-    fun setUiElements(projekt: Projekt, isTicked: Boolean = false) {
-        saveRoute.text = if (isTicked) "Update" else "Speichern"
+    fun setUiElements(projekt: Projekt) {
+        saveRoute.text = "Update"
         name.setText(projekt.name)
         setRouteNameHeaderText()
         // set Spinner for choosing the level
@@ -84,8 +84,8 @@ class RouteDialogCreator(
     }
 
     @SuppressLint("SetTextI18n")
-    fun setUiElements(route: Route?, isTicked: Boolean = false) {
-        saveRoute.text = if (isTicked) "Ticken" else "Update"
+    fun setUiElements(route: Route?) {
+        saveRoute.text = "Update"
         name.setText(route?.name)
         setRouteNameHeaderText()
         // set Spinner for choosing the style
@@ -200,7 +200,7 @@ class RouteDialogCreator(
 
     private fun setLevelSpinner(selection: String, levels: Array<String>) {
         val levelArrayAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, levels)
-        levelArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        levelArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) // The drop down view
         level.adapter = levelArrayAdapter
         level.setSelection(levelArrayAdapter.getPosition(selection))
     }

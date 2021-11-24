@@ -137,7 +137,20 @@ class ProjektAdapter(projekts: List<Projekt>) : Filterable,
 
         //tick projekt
         routeTick.setOnClickListener {
-            DialogFactory.openTickProjektDialog(projekt.id)
+            val sdf =
+                SimpleDateFormat("YYYY-MM-dd", Locale.GERMAN)
+            val route = Route()
+            route.id = projekt.id
+            route.name = projekt.name
+            route.area = projekt.area
+            route.level = projekt.level
+            route.sector = projekt.sector
+            route.date = sdf.format(Date())
+            route.rating = projekt.rating!!
+            route.comment = projekt.comment
+            route.style = "rp"
+            Log.d("Tick projekt: ", projekt.toString())
+            DialogFactory.openEditRouteDialog(route)
         }
     }
 
