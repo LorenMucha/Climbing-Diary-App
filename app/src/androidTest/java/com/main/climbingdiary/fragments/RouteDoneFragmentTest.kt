@@ -101,7 +101,7 @@ internal class RouteDoneFragmentTest {
         assertDisplayedAtPosition(R.id.rvRoutes, pos, R.id.route_level, updateRoute.level)
         assertDrawableDisplayedAtPosition(R.id.rvRoutes, pos, R.id.route_style, getRoutStyleIcon(updateRoute.style))
 
-        assertListItemCount(R.id.rvRoutes, pos+1)
+        assertListItemCount(R.id.rvRoutes, maxRoutes+1)
     }
 
     @Test
