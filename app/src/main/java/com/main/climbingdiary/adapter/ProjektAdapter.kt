@@ -2,7 +2,6 @@ package com.main.climbingdiary.adapter
 
 import android.annotation.SuppressLint
 import android.text.Html
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,16 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.main.climbingdiary.R
 import com.main.climbingdiary.common.AlertManager
-import com.main.climbingdiary.controller.FragmentPager
 import com.main.climbingdiary.controller.FragmentPager.refreshSelectedFragment
 import com.main.climbingdiary.controller.button.AppFloatingActionButton
 import com.main.climbingdiary.database.entities.Projekt
-import com.main.climbingdiary.database.entities.Route
 import com.main.climbingdiary.database.entities.RouteRepository
 import com.main.climbingdiary.dialog.DialogFactory
 import com.main.climbingdiary.models.Colors
 import com.main.climbingdiary.models.Tabs
-import java.text.SimpleDateFormat
 import java.util.*
 
 class ProjektAdapter(projekts: List<Projekt>) : Filterable,
@@ -107,7 +103,7 @@ class ProjektAdapter(projekts: List<Projekt>) : Filterable,
         delete.setOnClickListener { v: View ->
             SweetAlertDialog(v.context, SweetAlertDialog.WARNING_TYPE)
                 .setTitleText("Bist du sicher ?")
-                .setConfirmText("OK")
+                .setConfirmText("Ok")
                 .setCancelText("Abbrechen")
                 .setConfirmClickListener { sDialog: SweetAlertDialog ->
                     //delete the route by id
@@ -137,20 +133,7 @@ class ProjektAdapter(projekts: List<Projekt>) : Filterable,
 
         //tick projekt
         routeTick.setOnClickListener {
-            val sdf =
-                SimpleDateFormat("YYYY-MM-dd", Locale.GERMAN)
-            val route = Route()
-            route.id = projekt.id
-            route.name = projekt.name
-            route.area = projekt.area
-            route.level = projekt.level
-            route.sector = projekt.sector
-            route.date = sdf.format(Date())
-            route.rating = projekt.rating!!
-            route.comment = projekt.comment
-            route.style = "rp"
-            Log.d("Tick projekt: ", projekt.toString())
-            DialogFactory.openEditRouteDialog(route)
+            DialogFactory.openTickProjektDialog(projekt.id)
         }
     }
 

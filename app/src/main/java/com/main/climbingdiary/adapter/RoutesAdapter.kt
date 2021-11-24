@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.main.climbingdiary.R
 import com.main.climbingdiary.common.AlertManager
-import com.main.climbingdiary.controller.FragmentPager
 import com.main.climbingdiary.controller.FragmentPager.refreshAllFragments
 import com.main.climbingdiary.controller.button.AppFloatingActionButton
 import com.main.climbingdiary.database.entities.Route
@@ -51,7 +50,7 @@ class RoutesAdapter(private val routes: List<Route>) : Filterable,
         val commentString = route.comment
 
         //create the html string for the route and sector
-        val routeHtml = "$areaText &#9679; $sectorText"
+        val routeHtml = getRouteAndSectorString(areaText!!,sectorText!!)
         val commentHtml = "<b>Kommentar</b><br/>$commentString"
 
         // Set item views
@@ -108,7 +107,7 @@ class RoutesAdapter(private val routes: List<Route>) : Filterable,
         delete.setOnClickListener { v: View ->
             SweetAlertDialog(v.context, SweetAlertDialog.WARNING_TYPE)
                 .setTitleText("Bist du sicher ?")
-                .setConfirmText("OK")
+                .setConfirmText("Ok")
                 .setCancelText("Abbrechen")
                 .setConfirmClickListener { sDialog: SweetAlertDialog ->
                     //delete the route by id
@@ -188,14 +187,20 @@ class RoutesAdapter(private val routes: List<Route>) : Filterable,
         }
     }
 
-    private fun getRoutStyleIcon(style: String): Int {
-        style.toUpperCase(Locale.ROOT)
-        when (style) {
-            "OS" -> return R.drawable.ic_os
-            "RP" -> return R.drawable.ic_rp
-            "FLASH" -> return R.drawable.ic_flash
+    companion object {
+        fun getRoutStyleIcon(style: String): Int {
+            style.uppercase(Locale.ROOT)
+            when (style) {
+                "OS" -> return R.drawable.ic_os
+                "RP" -> return R.drawable.ic_rp
+                "FLASH" -> return R.drawable.ic_flash
+            }
+            return 0
         }
-        return 0
+
+        fun getRouteAndSectorString(areaText:String, sectorText:String):String{
+            return "$areaText &#9679; $sectorText"
+        }
     }
 
     // Provide a direct reference to each of the views within a data item

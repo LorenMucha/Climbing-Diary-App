@@ -2,6 +2,7 @@ package com.main.climbingdiary.database.entities
 
 import android.database.Cursor
 import com.main.climbingdiary.common.preferences.AppPreferenceManager
+import com.main.climbingdiary.database.DatabaseHelper.Companion.checkIfNumeric
 import com.main.climbingdiary.database.TaskRepository
 import com.main.climbingdiary.models.MenuValues
 import org.chalup.microorm.MicroOrm
@@ -55,7 +56,7 @@ class RouteRepository<T : RouteElement>(private val klass: KClass<T>) {
         }
     }
 
-    fun insertRoute(route: Any?): Boolean {
+    fun insertRoute(route: RouteElement): Boolean {
         return if (route is Route) {
             TaskRepository.insertRoute(route)
         } else if (route is Projekt) {
@@ -65,14 +66,39 @@ class RouteRepository<T : RouteElement>(private val klass: KClass<T>) {
         }
     }
 
-    fun updateRoute(`object`: Any?): Boolean {
-        return if (`object` is Route) {
-            TaskRepository.updateRoute(`object` as Route)
-        } else if (`object` is Projekt) {
-            TaskRepository.insertProjekt(`object` as Projekt)
+    fun updateRoute(toUpdate: RouteElement): Boolean {
+
+        var area = Area(name = toUpdate.area!!)
+        // check if area exists
+        //Fixme update sector
+        AreaRepository.getAreaByName(area.name)?.let{
+            toUpdate.area = it.id.toString()
+        }?:run{
+            AreaRepository.insertArea(area)
+            area = AreaRepository.getAreaByName(area.name)!!
+            toUpdate.area = area.id.toString()
+        }
+        //if numeric, the sector doesn´t exists
+        SectorRepository.getSectorByAreaNameAndSectorName(
+            sectorName = toUpdate.sector!!,
+            areaName = area.name
+        )?.let{
+            toUpdate.sector = it.id.toString()
+        }?:run{
+            val sector = Sector(name = toUpdate.sector!!, area = area.id)
+            SectorRepository.insertSector(sector)
+            toUpdate.sector = SectorRepository.getSectorByAreaNameAndSectorName(
+                sector.name,
+                area.name
+            )!!.id.toString()
+        }
+
+        return if (toUpdate is Route) {
+            TaskRepository.updateRoute(toUpdate)
+        } else if (toUpdate is Projekt) {
+            TaskRepository.insertProjekt(toUpdate)
         } else {
             false
         }
     }
-
 }

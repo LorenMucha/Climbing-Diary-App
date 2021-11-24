@@ -20,6 +20,13 @@ class DatabaseHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     private val dbName: String = EnvironmentParamter.DB_NAME
     private var dbPath = context.applicationInfo.dataDir + "/databases/"
 
+    companion object{
+        fun checkIfNumeric(toCheck: String): Boolean {
+            val regex = "-?\\d+(\\.\\d+)?".toRegex()
+            return !regex.containsMatchIn(toCheck)
+        }
+    }
+
     @Volatile
     private var mDataBase: SQLiteDatabase? = null
     private var mNeedUpdate = false

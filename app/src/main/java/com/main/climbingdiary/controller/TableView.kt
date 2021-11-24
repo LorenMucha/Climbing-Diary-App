@@ -14,7 +14,7 @@ import com.main.climbingdiary.models.Styles.getStyle
 
 class TableView(val context: Context, val view: View) {
 
-    private val tableScrollView: ScrollView = view.findViewById(R.id.TableScrollView)
+    private val tableScrollView: ScrollView = view.findViewById(R.id.table_scroll_view)
 
     fun show() {
         this.tableScrollView.visibility = View.VISIBLE
