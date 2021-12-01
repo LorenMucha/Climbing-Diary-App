@@ -1,5 +1,6 @@
 package com.main.climbingdiary.helper
 
+import android.os.Build
 import android.view.View
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onData
@@ -10,6 +11,9 @@ import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.uiautomator.UiDevice
+import androidx.test.uiautomator.UiSelector
 import com.google.android.material.tabs.TabLayout
 import com.main.climbingdiary.R
 import com.main.climbingdiary.models.Tabs
@@ -68,5 +72,23 @@ object TestProvider {
         )
             .inRoot(RootMatchers.isPlatformPopup())
             .perform(ViewActions.click())
+    }
+    fun grantPermission() {
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        if (Build.VERSION.SDK_INT >= 23) {
+            val allowPermission = UiDevice.getInstance(instrumentation).findObject(
+                UiSelector().text(
+                    when {
+                        Build.VERSION.SDK_INT == 23 -> "Allow"
+                        Build.VERSION.SDK_INT <= 28 -> "ALLOW"
+                        Build.VERSION.SDK_INT == 29 -> "Allow only while using the app"
+                        else -> "While using the app"
+                    }
+                )
+            )
+            if (allowPermission.exists()) {
+                allowPermission.click()
+            }
+        }
     }
 }

@@ -150,7 +150,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                         val context: Context? = this.context
                         val packageManager: PackageManager = context!!.packageManager
                         val intent =
-                            packageManager.getLaunchIntentForPackage(context!!.packageName)!!
+                            packageManager.getLaunchIntentForPackage(context.packageName)!!
                         val componentName = intent.component
                         val mainIntent = Intent.makeRestartActivityTask(componentName)
                         context.startActivity(mainIntent)
