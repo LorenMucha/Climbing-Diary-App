@@ -7,6 +7,7 @@ import android.app.Instrumentation
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.net.Uri
+import androidx.core.app.ActivityCompat
 import androidx.test.InstrumentationRegistry.getContext
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.intent.Intents
@@ -14,6 +15,7 @@ import androidx.test.espresso.intent.Intents.intending
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasData
 import androidx.test.filters.LargeTest
+import androidx.test.filters.SmallTest
 import androidx.test.rule.GrantPermissionRule
 import com.adevinta.android.barista.assertion.BaristaListAssertions.assertListItemCount
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
@@ -34,10 +36,7 @@ import com.main.climbingdiary.helper.TestProvider.openTab
 import com.main.climbingdiary.helper.TestSqliteHelper.cleanAllTables
 import com.main.climbingdiary.models.Tabs
 import org.hamcrest.Matchers.allOf
-import org.junit.After
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.junit.*
 
 
 internal class SettingsFragmentTest {
@@ -67,11 +66,18 @@ internal class SettingsFragmentTest {
     }
 
     @Test
-    @LargeTest
+    @SmallTest
     fun dataBaseExportOk() {
-        //click export
         clickOn("Sicherungskopie erstellen")
         assertDisplayed("Die Datenbank wurde exportiert !")
         clickOn("Ok")
+    }
+
+    @Ignore("Needs to be implemented")
+    @Test
+    @SmallTest
+    fun restoreDataBaseOk(){
+        clickOn("Datenbank wiederherstellen")
+        TODO()
     }
 }
