@@ -14,7 +14,7 @@ import android.widget.*
 import androidx.fragment.app.DialogFragment
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.main.climbingdiary.R
-import com.main.climbingdiary.common.AlertManager.setAlertWithoutContent
+import com.main.climbingdiary.common.AlertManager.setAlert
 import com.main.climbingdiary.common.GradeConverter.convertUiaaToFrench
 import com.main.climbingdiary.common.RouteConverter.cleanRoute
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.getSelectedTabsTitle
@@ -274,7 +274,7 @@ class RouteDialogCreator(
     fun checkDate(): Boolean {
         return if (date.text.toString().trim { it <= ' ' }.isEmpty()) {
             val alert = Alert("Datum fehlt \ud83d\ude13", "", SweetAlertDialog.ERROR_TYPE)
-            setAlertWithoutContent(context, alert)
+            setAlert(context, alert)
             false
         } else {
             true

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.main.climbingdiary.R
 import com.main.climbingdiary.common.AlertManager
 import com.main.climbingdiary.common.RouteConverter.projektToRoute
@@ -14,6 +15,8 @@ import com.main.climbingdiary.controller.FragmentPager.setPosition
 import com.main.climbingdiary.database.entities.Projekt
 import com.main.climbingdiary.database.entities.Route
 import com.main.climbingdiary.database.entities.RouteRepository
+import com.main.climbingdiary.models.Alert
+import com.skyfishjy.library.RippleBackground
 import java.util.concurrent.atomic.AtomicBoolean
 
 class EditRouteDialog(
@@ -24,6 +27,7 @@ class EditRouteDialog(
 
     private val routeRepository: RouteRepository<Route> = RouteRepository(Route::class)
     private val projektRepository: RouteRepository<Projekt> = RouteRepository(Projekt::class)
+    private lateinit var rippleBackground: RippleBackground
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,8 +59,11 @@ class EditRouteDialog(
                     taskState.set(routeRepository.updateRoute(updateRoute))
                 }
                 dialog!!.cancel()
+                if (isTickedRoute) AlertManager.setAlert(
+                    view.context, Alert(title="Stark! \uD83C\uDF89"))
                 if (taskState.get()) {
                     refreshAllFragments()
+
                 } else {
                     AlertManager.setErrorAlert(view.context)
                 }

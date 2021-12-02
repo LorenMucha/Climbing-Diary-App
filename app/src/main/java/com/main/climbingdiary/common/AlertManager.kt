@@ -13,7 +13,7 @@ object AlertManager {
             .show()
     }
 
-    fun setAlertWithoutContent(context: Context, alert:Alert){
+    fun setAlert(context: Context, alert:Alert){
         SweetAlertDialog(context, alert.dialogType!!)
             .setTitleText(alert.title)
             .show()

@@ -69,6 +69,7 @@ internal class RouteProjectFragmentTest {
             )
         //click update to setup the tick
         clickOn("Ticken")
+        clickOn("Ok")
 
         //check if the route is included in the List for route done
         assertDisplayedAtPosition(R.id.rvRoutes, 0, R.id.route_name, project.name!!)
