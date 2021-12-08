@@ -8,11 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import com.main.climbingdiary.common.AlertManager
+import com.main.climbingdiary.common.AlertFactory
 import com.main.climbingdiary.common.preferences.AppPreferenceManager
-import com.main.climbingdiary.controller.FragmentPager
 import com.main.climbingdiary.controller.FragmentPager.refreshAllFragments
-import com.main.climbingdiary.controller.slider.TimeRangeSlider
 import com.main.climbingdiary.database.entities.Route
 import com.main.climbingdiary.database.entities.RouteRepository
 
@@ -55,7 +53,7 @@ class AddRouteDialog(val title: String) : DialogFragment() {
                 if (taskState) {
                     refreshAllFragments()
                 } else {
-                    AlertManager.setErrorAlert(view.context)
+                    AlertFactory.getErrorAlert(view.context).show()
                 }
                 //close the dialog
                 dialog!!.cancel()

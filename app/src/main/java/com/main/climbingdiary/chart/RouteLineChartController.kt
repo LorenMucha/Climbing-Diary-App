@@ -22,7 +22,7 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity
-import com.main.climbingdiary.common.AlertManager.setErrorAlert
+import com.main.climbingdiary.common.AlertFactory.getErrorAlert
 import com.main.climbingdiary.database.TaskRepository
 import com.main.climbingdiary.models.Colors
 import com.main.climbingdiary.models.Levels
@@ -134,7 +134,7 @@ class RouteLineChartController(val view:View) : RouteChartController() {
                 override fun onNothingSelected() {}
             })
         } catch (ex: Exception) {
-            setErrorAlert(context)
+            getErrorAlert(context).show()
             Log.d("Erstellung Line chart:", ex.localizedMessage)
         }
     }

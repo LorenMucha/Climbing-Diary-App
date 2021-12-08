@@ -16,6 +16,9 @@ import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assert
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.adevinta.android.barista.interaction.BaristaListInteractions.clickListItemChild
+import com.adevinta.android.barista.interaction.BaristaListInteractions.scrollListToPosition
+import com.adevinta.android.barista.interaction.BaristaScrollInteractions.scrollTo
+import com.adevinta.android.barista.interaction.BaristaSleepInteractions.sleep
 import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity
 import com.main.climbingdiary.adapter.RoutesAdapter.Companion.getRoutStyleIcon
@@ -33,6 +36,7 @@ import com.main.climbingdiary.models.Tabs
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import java.time.LocalDate
 import kotlin.random.Random.Default.nextInt
 
 
@@ -62,7 +66,6 @@ internal class RouteDoneFragmentTest {
     }
 
     @Test
-    //Fix test, leaks in update area and sector
     fun updateRouteShouldUpdateAllFields() {
         val pos = nextInt(maxRoutes)
         val updateRoute = getRandomRoute()
@@ -110,6 +113,7 @@ internal class RouteDoneFragmentTest {
     fun createNewRouteOk() {
         val routeSet = getRandomRoute()
         routeSet.level = "8a"
+        routeSet.date = "${LocalDate.now().year}-12-12"
         //open add Project Button
         onView(withId(R.id.floating_action_btn_add)).perform(click())
         changeInputTest(R.id.input_route_name, routeSet.name!!)

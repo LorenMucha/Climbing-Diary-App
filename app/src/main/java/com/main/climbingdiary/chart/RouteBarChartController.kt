@@ -13,7 +13,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.main.climbingdiary.R
-import com.main.climbingdiary.common.AlertManager.setErrorAlert
+import com.main.climbingdiary.common.AlertFactory.getErrorAlert
 import com.main.climbingdiary.database.TaskRepository
 import com.main.climbingdiary.models.Colors
 import java.util.*
@@ -92,7 +92,7 @@ class RouteBarChartController(val view: View) : RouteChartController() {
                 override fun onNothingSelected() {}
             })
         } catch (ex: Exception) {
-            setErrorAlert(context)
+            getErrorAlert(context).show()
             Log.d("Erstellung Barchart:", ex.localizedMessage)
         }
     }

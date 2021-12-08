@@ -65,6 +65,8 @@ dependencies {
     implementation('org.chalup.microorm:microorm:0.8.0')
     //easypermission: https://github.com/googlesamples/easypermissions
     implementation 'pub.devrel:easypermissions:3.0.0'
+    //doku: https://github.com/skyfishjy/android-ripple-background
+    implementation 'com.skyfishjy.ripplebackground:library:1.0.1'
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'androidx.test:core:1.4.0'

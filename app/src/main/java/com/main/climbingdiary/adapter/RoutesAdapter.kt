@@ -1,5 +1,6 @@
 package com.main.climbingdiary.adapter
 
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.text.Html
 import android.util.Log
@@ -11,7 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.main.climbingdiary.R
-import com.main.climbingdiary.common.AlertManager
+import com.main.climbingdiary.common.AlertFactory
 import com.main.climbingdiary.controller.FragmentPager.refreshAllFragments
 import com.main.climbingdiary.controller.button.AppFloatingActionButton
 import com.main.climbingdiary.database.entities.Route
@@ -21,21 +22,19 @@ import com.main.climbingdiary.models.Colors
 import com.main.climbingdiary.models.Tabs
 import java.util.*
 
-class RoutesAdapter(private val routes: List<Route>) : Filterable,
+
+class RoutesAdapter(routes: List<Route>) : Filterable,
     RecyclerView.Adapter<RoutesAdapter.ViewHolder>() {
 
+    private lateinit var context: Context
     private var mRoutes: List<Route> = routes
     private val mroutesFiltered: List<Route> = routes
     private val routeRepository: RouteRepository<*> = RouteRepository(Route::class)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val context = parent.context
+        context = parent.context
         val inflater = LayoutInflater.from(context)
-
-        // Inflate the custom layout
         val contactView = inflater.inflate(R.layout.item_route, parent, false)
-
-        // Return a new holder instance
         return ViewHolder(contactView)
     }
 
@@ -50,7 +49,7 @@ class RoutesAdapter(private val routes: List<Route>) : Filterable,
         val commentString = route.comment
 
         //create the html string for the route and sector
-        val routeHtml = getRouteAndSectorString(areaText!!,sectorText!!)
+        val routeHtml = getRouteAndSectorString(areaText!!, sectorText!!)
         val commentHtml = "<b>Kommentar</b><br/>$commentString"
 
         // Set item views
@@ -119,7 +118,7 @@ class RoutesAdapter(private val routes: List<Route>) : Filterable,
                             .setTitleText("Gelöscht")
                             .show()
                     } else {
-                        AlertManager.setErrorAlert(v.context)
+                        AlertFactory.getErrorAlert(v.context).show()
                     }
                 }
                 .setCancelButton(
@@ -198,7 +197,7 @@ class RoutesAdapter(private val routes: List<Route>) : Filterable,
             return 0
         }
 
-        fun getRouteAndSectorString(areaText:String, sectorText:String):String{
+        fun getRouteAndSectorString(areaText: String, sectorText: String): String {
             return "$areaText &#9679; $sectorText"
         }
     }
