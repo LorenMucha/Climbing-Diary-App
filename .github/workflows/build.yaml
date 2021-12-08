@@ -58,8 +58,6 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Run detekt
-        run: ./gradlew detektCheck
 
       - name: Run unit tests
         run: ./gradlew test --stacktrace
@@ -74,7 +72,7 @@ jobs:
           script: ./gradlew connectedCheck --stacktrace
   release:
     name: Release APK
-    needs: build
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Download APK from build
