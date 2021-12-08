@@ -19,13 +19,6 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - uses: actions/cache@v2
-        with:
-          path: |
-              ~/.gradle/caches
-              ~/.gradle/wrapper
-          key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
-
       - name: build signed APK
         uses: victorbnl/build-signed-apk@main
         with:
@@ -33,7 +26,6 @@ jobs:
           keystore_password: ${{ secrets.KEY_STORE_PASSWORD }}
           key_alias: ${{ secrets.ALIAS }}
           key_password: ${{ secrets.KEY_PASSWORD}}
-
       - name: Upload APK
         uses: actions/upload-artifact@v1
         with:
