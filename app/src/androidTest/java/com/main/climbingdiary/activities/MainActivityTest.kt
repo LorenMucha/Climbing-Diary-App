@@ -13,6 +13,7 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
+import com.adevinta.android.barista.interaction.BaristaMenuClickInteractions
 import com.main.climbingdiary.R
 import com.main.climbingdiary.fragments.StatisticFragment
 import org.junit.After
@@ -43,8 +44,7 @@ internal class MainActivityTest {
 
     @Test
     fun shouldOpenSettingsFragmentOnSettingsClick() {
-        Espresso.openActionBarOverflowOrOptionsMenu(getInstrumentation().targetContext)
-        onView(withText(R.string.settings_title)).perform(click())
+        BaristaMenuClickInteractions.clickMenu(R.id.app_settings)
         intended(hasComponent(hasClassName(SettingsActivity::class.java.name)))
     }
 }

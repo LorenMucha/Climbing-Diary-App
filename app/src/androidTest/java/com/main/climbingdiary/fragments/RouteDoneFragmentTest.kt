@@ -28,18 +28,22 @@ import com.main.climbingdiary.helper.TestHelper.clickOnViewChild
 import com.main.climbingdiary.helper.TestHelper.getRandomRoute
 import com.main.climbingdiary.helper.TestHelper.getRandomRouteList
 import com.main.climbingdiary.helper.TestHelper.translateDate
+import com.main.climbingdiary.helper.TestProvider
 import com.main.climbingdiary.helper.TestProvider.changeInputTest
 import com.main.climbingdiary.helper.TestProvider.openTab
 import com.main.climbingdiary.helper.TestProvider.setSpinnerSelect
 import com.main.climbingdiary.helper.TestSqliteHelper.cleanAllTables
+import com.main.climbingdiary.models.SportType
 import com.main.climbingdiary.models.Tabs
 import org.junit.After
 import org.junit.Before
+import org.junit.FixMethodOrder
 import org.junit.Test
+import org.junit.runners.MethodSorters
 import java.time.LocalDate
 import kotlin.random.Random.Default.nextInt
 
-
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 internal class RouteDoneFragmentTest {
     private lateinit var activityScenario: ActivityScenario<MainActivity>
 
@@ -62,6 +66,7 @@ internal class RouteDoneFragmentTest {
         repo.insertRoute(route)
         routeList = getRandomRouteList(maxRoutes)
         routeList.forEach { repo.insertRoute(it) }
+        TestProvider.openSportView(SportType.KLETTERN)
         openTab(Tabs.ROUTEN)
     }
 

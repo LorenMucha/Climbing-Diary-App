@@ -10,9 +10,12 @@ import androidx.test.filters.MediumTest
 import androidx.test.filters.SmallTest
 import com.adevinta.android.barista.assertion.BaristaListAssertions
 import com.adevinta.android.barista.assertion.BaristaRecyclerViewAssertions
+import com.adevinta.android.barista.assertion.BaristaRecyclerViewAssertions.assertRecyclerViewItemCount
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions
 import com.adevinta.android.barista.interaction.BaristaClickInteractions
+import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.adevinta.android.barista.interaction.BaristaListInteractions
+import com.adevinta.android.barista.interaction.BaristaListInteractions.clickListItemChild
 import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity
 import com.main.climbingdiary.adapter.RoutesAdapter
@@ -23,14 +26,18 @@ import com.main.climbingdiary.helper.TestProvider
 import com.main.climbingdiary.helper.TestProvider.openSportView
 import com.main.climbingdiary.helper.TestProvider.openTab
 import com.main.climbingdiary.helper.TestSqliteHelper
+import com.main.climbingdiary.helper.TestSqliteHelper.cleanAllTables
 import com.main.climbingdiary.models.SportType
 import com.main.climbingdiary.models.Tabs
 import org.junit.After
 import org.junit.Before
+import org.junit.FixMethodOrder
 import org.junit.Test
+import org.junit.runners.MethodSorters
 import java.time.LocalDate
 import kotlin.random.Random
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 internal class BoulderDoneFragementTest {
     private lateinit var activityScenario: ActivityScenario<MainActivity>
 
@@ -41,7 +48,7 @@ internal class BoulderDoneFragementTest {
 
     @After
     fun cleanUp() {
-        TestSqliteHelper.cleanAllTables()
+        cleanAllTables()
         activityScenario.close()
     }
 
@@ -142,10 +149,10 @@ internal class BoulderDoneFragementTest {
     @SmallTest
     fun deleteBoulderOk() {
         val pos = 4
-        BaristaRecyclerViewAssertions.assertRecyclerViewItemCount(R.id.rvRoutes, 6)
-        BaristaListInteractions.clickListItemChild(R.id.rvRoutes, pos, R.id.route_delete)
-        BaristaClickInteractions.clickOn("Ok")
-        BaristaClickInteractions.clickOn("Ok")
-        BaristaRecyclerViewAssertions.assertRecyclerViewItemCount(R.id.rvRoutes, 5)
+        assertRecyclerViewItemCount(R.id.rvRoutes, 6)
+        clickListItemChild(R.id.rvRoutes, pos, R.id.route_delete)
+        clickOn("Ok")
+        clickOn("Ok")
+        assertRecyclerViewItemCount(R.id.rvRoutes, 5)
     }
 }
