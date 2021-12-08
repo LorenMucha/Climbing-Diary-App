@@ -1,23 +1,7 @@
 package com.main.climbingdiary.fragments
 
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-import android.app.Activity
-import android.app.Instrumentation
-import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import android.net.Uri
-import androidx.core.app.ActivityCompat
-import androidx.test.InstrumentationRegistry.getContext
 import androidx.test.core.app.ActivityScenario
-import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.intent.Intents.intending
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasData
-import androidx.test.filters.LargeTest
 import androidx.test.filters.SmallTest
-import androidx.test.rule.GrantPermissionRule
-import com.adevinta.android.barista.assertion.BaristaListAssertions.assertListItemCount
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickBack
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
@@ -25,18 +9,19 @@ import com.adevinta.android.barista.interaction.BaristaMenuClickInteractions.cli
 import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity
 import com.main.climbingdiary.common.preferences.AppPreferenceManager
-import com.main.climbingdiary.controller.FragmentPager
 import com.main.climbingdiary.database.entities.Projekt
 import com.main.climbingdiary.database.entities.Route
 import com.main.climbingdiary.database.entities.RouteRepository
 import com.main.climbingdiary.helper.TestHelper.getRandomProjektList
 import com.main.climbingdiary.helper.TestHelper.getRandomRouteList
-import com.main.climbingdiary.helper.TestProvider.grantPermission
 import com.main.climbingdiary.helper.TestProvider.openTab
 import com.main.climbingdiary.helper.TestSqliteHelper.cleanAllTables
 import com.main.climbingdiary.models.Tabs
-import org.hamcrest.Matchers.allOf
-import org.junit.*
+import com.main.climbingdiary.models.TimeRange
+import org.junit.After
+import org.junit.Before
+import org.junit.Ignore
+import org.junit.Test
 
 
 internal class SettingsFragmentTest {
@@ -49,6 +34,7 @@ internal class SettingsFragmentTest {
     @After
     fun cleanUp() {
         cleanAllTables()
+        AppPreferenceManager.setTimeSliderView(TimeRange.YEAR)
         activityScenario.close()
     }
 
@@ -76,8 +62,32 @@ internal class SettingsFragmentTest {
     @Ignore("Needs to be implemented")
     @Test
     @SmallTest
-    fun restoreDataBaseOk(){
+    fun restoreDataBaseOk() {
         clickOn("Datenbank wiederherstellen")
         TODO()
+    }
+
+    @Test
+    @SmallTest
+    fun changeToTimeRangeOk() {
+        AppPreferenceManager.setTimeSliderView(TimeRange.YEAR)
+        clickOn("Time-Slider")
+        clickOn("Zeitraum")
+        clickBack()
+        openTab(Tabs.ROUTEN)
+        clickOn(R.id.showTimeSlider)
+        assertDisplayed(R.id.timerange)
+    }
+
+    @Test
+    @SmallTest
+    fun changeToYearOk() {
+        AppPreferenceManager.setTimeSliderView(TimeRange.RANGE)
+        clickOn("Time-Slider")
+        clickOn("Jahr")
+        clickBack()
+        openTab(Tabs.ROUTEN)
+        clickOn(R.id.showTimeSlider)
+        assertDisplayed(R.id.timeslider)
     }
 }
