@@ -9,7 +9,7 @@ enum class Tabs {
         fun stringToTabs(type: String?): Tabs? {
             var result: Tabs? = null
             try {
-                result = valueOf(type!!.toUpperCase(Locale.ROOT))
+                result = valueOf(type!!.uppercase(Locale.ROOT))
             } catch (ignored: Exception) {
             }
             return result
@@ -19,7 +19,7 @@ enum class Tabs {
     open fun typeToString(): String? {
         var result: String? = null
         try {
-            result = this.toString().toLowerCase(Locale.ROOT)
+            result = this.toString().lowercase(Locale.ROOT)
         } catch (ignored: java.lang.Exception) {
         }
         return result

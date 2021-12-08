@@ -7,14 +7,15 @@ enum class SportType {
     
     companion object{
         fun stringToSportType(type: String?): SportType {
-            return valueOf(type!!.toUpperCase(Locale.ROOT))
+            return valueOf(type!!.uppercase(Locale.ROOT))
         }
     }
 
     fun typeToString(): String {
-        return this.toString().toLowerCase(Locale.ROOT)
+        return this.toString().lowercase(Locale.ROOT)
     }
 
+    //Fixme: gehört nicht hierher
     fun getRouteName(): String {
         return if (this == KLETTERN) "Routen" else "Boulder"
     }

@@ -65,6 +65,7 @@ internal class RouteDoneFragmentTest {
         openTab(Tabs.ROUTEN)
     }
 
+
     @Test
     fun updateRouteShouldUpdateAllFields() {
         val pos = nextInt(maxRoutes)

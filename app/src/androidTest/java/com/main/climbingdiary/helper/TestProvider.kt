@@ -1,8 +1,6 @@
 package com.main.climbingdiary.helper
 
-import android.os.Build
 import android.view.View
-import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.PerformException
@@ -11,11 +9,11 @@ import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.uiautomator.UiDevice
-import androidx.test.uiautomator.UiSelector
+import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
+import com.adevinta.android.barista.interaction.BaristaDrawerInteractions
 import com.google.android.material.tabs.TabLayout
 import com.main.climbingdiary.R
+import com.main.climbingdiary.models.SportType
 import com.main.climbingdiary.models.Tabs
 import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.`is`
@@ -25,10 +23,11 @@ import org.hamcrest.core.AllOf
 
 object TestProvider {
     fun openTab(tabvalue: Tabs) {
+        val setter = if (tabvalue == Tabs.BOULDER) Tabs.ROUTEN else tabvalue
         val tabMap = mapOf(Tabs.PROJEKTE to 2, Tabs.STATISTIK to 0, Tabs.ROUTEN to 1)
         onView(ViewMatchers.withId(R.id.tabLayout)).perform(
             selectTabAtPosition(
-                tabMap.get(tabvalue)
+                tabMap.get(setter)
             )
         )
     }
@@ -73,22 +72,12 @@ object TestProvider {
             .inRoot(RootMatchers.isPlatformPopup())
             .perform(ViewActions.click())
     }
-    fun grantPermission() {
-        val instrumentation = InstrumentationRegistry.getInstrumentation()
-        if (Build.VERSION.SDK_INT >= 23) {
-            val allowPermission = UiDevice.getInstance(instrumentation).findObject(
-                UiSelector().text(
-                    when {
-                        Build.VERSION.SDK_INT == 23 -> "Allow"
-                        Build.VERSION.SDK_INT <= 28 -> "ALLOW"
-                        Build.VERSION.SDK_INT == 29 -> "Allow only while using the app"
-                        else -> "While using the app"
-                    }
-                )
-            )
-            if (allowPermission.exists()) {
-                allowPermission.click()
-            }
+
+    fun openSportView(sportType: SportType) {
+        BaristaDrawerInteractions.openDrawer()
+        when (sportType) {
+            SportType.BOULDERN -> clickOn("Bouldern")
+            SportType.KLETTERN -> clickOn("Klettern")
         }
     }
 }
