@@ -52,28 +52,20 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Unit Tests
-      run: bash ./gradlew test --stacktrace
-    - uses: malinskiy/action-android/emulator-run-cmd@release/0.1.2
-      with:
-        cmd: ./gradlew integrationTest
-        api: 29
-        tag: default
-        abi: x86
-    - name: Run detekt
-      run: ./gradlew detektCheck
+      - name: Run detekt
+        run: ./gradlew detektCheck
 
-    - name: Run unit tests
-      run: ./gradlew test --stacktrace
+      - name: Run unit tests
+        run: ./gradlew test --stacktrace
 
-    - name: Instrumentation Tests
-      uses: reactivecircus/android-emulator-runner@v2
-      with:
-        api-level: ${{ matrix.api-level }}
-        target: ${{ matrix.target }}
-        arch: x86
-        profile: Nexus 6
-        script: ./gradlew connectedCheck --stacktrace
+      - name: Instrumentation Tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          target: ${{ matrix.target }}
+          arch: x86
+          profile: Nexus 6
+          script: ./gradlew connectedCheck --stacktrace
   release:
     name: Release APK
     needs: build
