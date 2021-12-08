@@ -12,8 +12,10 @@ import org.junit.Test
 class TimeRangeTest {
 
     private lateinit var activityScenario: ActivityScenario<MainActivity>
-    private val ressourceArray: Array<String> by lazy {MainActivity.getMainActivity()
-        .resources.getStringArray(R.array.entries_time_slider)}
+    private val ressourceArray: Array<String> by lazy {
+        MainActivity.getMainActivity()
+            .resources.getStringArray(R.array.entries_time_slider)
+    }
 
     @After
     fun cleanUp() {
@@ -21,23 +23,19 @@ class TimeRangeTest {
     }
 
     @Before
-    fun setUp(){
+    fun setUp() {
         activityScenario = launch(MainActivity::class.java)
     }
 
     @Test
     fun shouldtranslateValidTimeRange() {
-        activityScenario.onActivity {
-            assertEquals(TimeRange.YEAR, TimeRange.translate(ressourceArray[0]))
-            assertEquals(TimeRange.RANGE, TimeRange.translate(ressourceArray[1]))
-        }
+        assertEquals(TimeRange.YEAR, TimeRange.translate(ressourceArray[0]))
+        assertEquals(TimeRange.RANGE, TimeRange.translate(ressourceArray[1]))
     }
 
     @Test
     fun shouldtranslateValidString() {
-        activityScenario.onActivity {
-            assertEquals(ressourceArray[0], TimeRange.translate(TimeRange.YEAR))
-            assertEquals(ressourceArray[1], TimeRange.translate(TimeRange.RANGE))
-        }
+        assertEquals(ressourceArray[0], TimeRange.translate(TimeRange.YEAR))
+        assertEquals(ressourceArray[1], TimeRange.translate(TimeRange.RANGE))
     }
 }

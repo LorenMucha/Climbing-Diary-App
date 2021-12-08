@@ -78,7 +78,7 @@ object FragmentPager : TabLayout.OnTabSelectedListener {
     override fun onTabReselected(tab: TabLayout.Tab?) {}
 
     fun setPosition(pos: Int) {
-        Objects.requireNonNull(tabLayout.getTabAt(pos))!!.select()
+        tabLayout.getTabAt(pos)!!.select()
     }
 
     fun refreshSelectedFragment() {
@@ -94,14 +94,14 @@ object FragmentPager : TabLayout.OnTabSelectedListener {
     fun initializeSportType() {
         val type = getSportType()
         refreshAllFragments()
-        Objects.requireNonNull(tabLayout.getTabAt(1))!!.text = type.getRouteName()
+        tabLayout.getTabAt(1)!!.text = type.getRouteName()
     }
 
     private fun refreshFragment(frg: RouteFragment?) {
         try {
             frg!!.refreshData()
         } catch (ex: Exception) {
-            Log.d("refreshFragment:", ex.localizedMessage)
+            Log.d("refreshFragment:", ex.localizedMessage!!)
         }
     }
 }

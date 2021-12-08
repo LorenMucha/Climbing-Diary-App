@@ -8,27 +8,77 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         api-level: [ 29 ]
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - name: setuo JDK
+      - name: setup JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - uses: actions/cache@v2
+        with:
+          path: |
+              ~/.gradle/caches
+              ~/.gradle/wrapper
+          key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
+      - name: Upload APK
+        uses: actions/upload-artifact@v1
+        with:
+          name: apk
+          path: app/build/outputs/apk/release/app-release.apk
+  test:
+    runs-on: macos-latest
+    needs: build
+    strategy:
+       matrix:
+          api-level: [ 21, 23, 29 ]
+          target: [ default ]
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
+      - name: Copy  gradle properties file
+        run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
+      - name: setup JDK
         uses: actions/setup-java@v1
         with:
           java-version: 11
       - name: Unit Tests
-        run: bash ./gradlew test --stacktrace
-      - name: Instrumentation Tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-         api-level: 29
-         target: default
-         arch: x86
-         profile: Nexus 6
-         script: ./gradlew connectedCheck --stacktrace
+      run: bash ./gradlew test --stacktrace
+    - uses: malinskiy/action-android/emulator-run-cmd@release/0.1.2
+      with:
+        cmd: ./gradlew integrationTest
+        api: 29
+        tag: default
+        abi: x86
+    - name: Run detekt
+      run: ./gradlew detektCheck
+
+    - name: Run unit tests
+      run: ./gradlew test --stacktrace
+
+    - name: Instrumentation Tests
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: ${{ matrix.api-level }}
+        target: ${{ matrix.target }}
+        arch: x86
+        profile: Nexus 6
+        script: ./gradlew connectedCheck --stacktrace
+  release:
+    name: Release APK
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
       - name: build signed APK
         uses: victorbnl/build-signed-apk@main
         with:
@@ -36,16 +86,6 @@ jobs:
           keystore_password: ${{ secrets.KEY_STORE_PASSWORD }}
           key_alias: ${{ secrets.ALIAS }}
           key_password: ${{ secrets.KEY_PASSWORD}}
-      - name: Upload APK
-        uses: actions/upload-artifact@v1
-        with:
-          name: apk
-          path: app/build/outputs/apk/release/app-release.apk
-  release:
-    name: Release APK
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
       - name: Download APK from build
         uses: actions/download-artifact@v1
         with:
