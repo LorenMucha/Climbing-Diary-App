@@ -69,6 +69,7 @@ internal class RouteProjectFragmentTest {
             )
         //click update to setup the tick
         clickOn("Ticken")
+        assertDisplayed("Stark!")
         clickOn("Ok")
 
         //check if the route is included in the List for route done

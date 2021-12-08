@@ -9,7 +9,7 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.main.climbingdiary.R
-import com.main.climbingdiary.common.AlertManager
+import com.main.climbingdiary.common.AlertFactory
 import com.main.climbingdiary.controller.FragmentPager.refreshSelectedFragment
 import com.main.climbingdiary.controller.button.AppFloatingActionButton
 import com.main.climbingdiary.database.entities.Projekt
@@ -115,7 +115,7 @@ class ProjektAdapter(projekts: List<Projekt>) : Filterable,
                             .setTitleText("Gelöscht")
                             .show()
                     } else {
-                        AlertManager.setErrorAlert(v.context)
+                        AlertFactory.getErrorAlert(v.context).show()
                     }
                 }
                 .setCancelButton(

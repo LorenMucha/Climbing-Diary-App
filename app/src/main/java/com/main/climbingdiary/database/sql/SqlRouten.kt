@@ -1,16 +1,10 @@
 package com.main.climbingdiary.database.sql
 
-import com.main.climbingdiary.activities.MainActivity
-import com.main.climbingdiary.common.AlertManager
 import com.main.climbingdiary.common.preferences.AppPreferenceManager
-import com.main.climbingdiary.database.TaskRepository
-import com.main.climbingdiary.database.entities.AreaRepository
 import com.main.climbingdiary.database.entities.Projekt
 import com.main.climbingdiary.database.entities.Route
-import com.main.climbingdiary.database.entities.SectorRepository
 import com.main.climbingdiary.models.RouteSort
 import com.main.climbingdiary.models.RouteType
-import java.lang.RuntimeException
 import java.util.*
 
 object SqlRouten {

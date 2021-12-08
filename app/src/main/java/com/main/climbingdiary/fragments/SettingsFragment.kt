@@ -13,7 +13,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.main.climbingdiary.R
-import com.main.climbingdiary.common.AlertManager.setAlert
+import com.main.climbingdiary.common.AlertFactory.getAlert
 import com.main.climbingdiary.common.AppFileProvider
 import com.main.climbingdiary.common.RessourceFinder
 import com.main.climbingdiary.common.preferences.AppPreferenceManager
@@ -121,18 +121,18 @@ class SettingsFragment : PreferenceFragmentCompat() {
         try {
             AppFileProvider().exportDBtoPreferencePath()
             this.context?.let {
-                setAlert(
+                getAlert(
                     it,
                     Alert(dialogType = SweetAlertDialog.SUCCESS_TYPE, title = "Die Datenbank wurde exportiert !")
-                )
+                ).show()
             }
         } catch (e: IOException) {
             Log.e("exportDb", e.localizedMessage)
             this.context?.let {
-                setAlert(
+                getAlert(
                     it,
                     Alert(dialogType = SweetAlertDialog.ERROR_TYPE, title = "Der Export ist Schiefgelaufen 😓")
-                )
+                ).show()
             }
         }
     }
@@ -158,9 +158,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
         } catch (e: IOException) {
             Log.d("restoreDb", e.localizedMessage as String)
             this.context?.let {
-                setAlert(
+                getAlert(
                     it,
-                    Alert(dialogType =SweetAlertDialog.ERROR_TYPE, title="Der Restore ist Schiefgelaufen \uD83D\uDE13"))
+                    Alert(dialogType =SweetAlertDialog.ERROR_TYPE,
+                        title="Der Restore ist Schiefgelaufen \uD83D\uDE13")).show()
             }
         }
     }
