@@ -11,11 +11,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import com.erkutaras.showcaseview.ShowcaseManager
 import com.main.climbingdiary.R
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.removeAllFilterPrefs
 import com.main.climbingdiary.controller.FragmentPager.createViewPager
 import com.main.climbingdiary.controller.NavDrawerController
+import com.main.climbingdiary.showcase.ShowCaseProvider
 
 
 @SuppressLint("StaticFieldLeak")
@@ -51,21 +51,7 @@ class MainActivity : AppCompatActivity() {
         createViewPager()
         //navigation View
         NavDrawerController(this)
-
-        /*
-        Todo
-        val builder = ShowcaseManager.Builder()
-        builder.context(this)
-            .view(window.decorView)
-            .descriptionImageRes(com.main.climbingdiary.R.mipmap.ic_launcher)
-            .descriptionTitle("LOREM IPSUM")
-            .descriptionText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
-            .buttonText("Done")
-            .buttonVisibility(true)
-            .cancelButtonVisibility(true)
-            .add()
-            .build()
-            .show()*/
+        ShowCaseProvider.createShowCase()
     }
 
     override fun onBackPressed() {
