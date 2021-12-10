@@ -76,11 +76,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v1.0.34
-          release_name: Release v1.0.34
+          tag_name: v1.0.35
+          release_name: Release v1.0.35
           body: |
             - fix Update Route and Project Bug
-            - add animation if you tick a route :smile:
+            - add animation if you tick a route
       - name: Upload Release APK
         id: upload_release_asset
         uses: actions/upload-release-asset@v1.0.1

@@ -51,21 +51,6 @@ class MainActivity : AppCompatActivity() {
         createViewPager()
         //navigation View
         NavDrawerController(this)
-
-        /*
-        Todo
-        val builder = ShowcaseManager.Builder()
-        builder.context(this)
-            .view(window.decorView)
-            .descriptionImageRes(com.main.climbingdiary.R.mipmap.ic_launcher)
-            .descriptionTitle("LOREM IPSUM")
-            .descriptionText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
-            .buttonText("Done")
-            .buttonVisibility(true)
-            .cancelButtonVisibility(true)
-            .add()
-            .build()
-            .show()*/
     }
 
     override fun onBackPressed() {
