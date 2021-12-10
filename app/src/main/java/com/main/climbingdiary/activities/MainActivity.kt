@@ -11,21 +11,22 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.erkutaras.showcaseview.ShowcaseManager
 import com.main.climbingdiary.R
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.removeAllFilterPrefs
-import com.main.climbingdiary.controller.FragmentPager
 import com.main.climbingdiary.controller.FragmentPager.createViewPager
 import com.main.climbingdiary.controller.NavDrawerController
 
+
 @SuppressLint("StaticFieldLeak")
-class MainActivity: AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     private val layoutId: Int = R.layout.activity_main
 
-    companion object{
+    companion object {
         lateinit var mInstance: MainActivity
 
-        fun getMainAppContext(): Context{
+        fun getMainAppContext(): Context {
             return mInstance.applicationContext
         }
 
@@ -33,7 +34,7 @@ class MainActivity: AppCompatActivity() {
             return mInstance
         }
 
-        fun getMainComponentName(): ComponentName?{
+        fun getMainComponentName(): ComponentName? {
             return mInstance.componentName
         }
     }
@@ -50,6 +51,21 @@ class MainActivity: AppCompatActivity() {
         createViewPager()
         //navigation View
         NavDrawerController(this)
+
+        /*
+        Todo
+        val builder = ShowcaseManager.Builder()
+        builder.context(this)
+            .view(window.decorView)
+            .descriptionImageRes(com.main.climbingdiary.R.mipmap.ic_launcher)
+            .descriptionTitle("LOREM IPSUM")
+            .descriptionText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
+            .buttonText("Done")
+            .buttonVisibility(true)
+            .cancelButtonVisibility(true)
+            .add()
+            .build()
+            .show()*/
     }
 
     override fun onBackPressed() {

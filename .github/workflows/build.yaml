@@ -39,7 +39,8 @@ jobs:
           name: apk
           path: app/build/outputs/apk/release/app-release.apk
   test:
-    runs-on: macos-latest
+    #runs-on: macos-latest
+    runs-on: ubuntu-latest
     needs: build
     steps:
       - name: Checkout the code
@@ -52,12 +53,12 @@ jobs:
       - name: Run unit tests
         run: ./gradlew test --stacktrace
 
-      - name: Instrumentation Tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 31
-          profile: Nexus 6
-          script: ./gradlew connectedCheck
+      #- name: Instrumentation Tests
+      #  uses: reactivecircus/android-emulator-runner@v2
+      #  with:
+      #   api-level: 29
+      #   profile: Nexus 6
+      #   script: ./gradlew connectedCheck
   release:
     name: Release APK
     needs: test
