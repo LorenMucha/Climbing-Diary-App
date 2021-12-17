@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.main.climbingdiary.R
@@ -51,7 +52,6 @@ class MainActivity : AppCompatActivity() {
         createViewPager()
         //navigation View
         NavDrawerController(this)
-        ShowCaseProvider.createShowCase()
     }
 
     override fun onBackPressed() {
@@ -75,5 +75,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         return false
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        ShowCaseProvider.createShowCase(this)
     }
 }
