@@ -19,6 +19,15 @@ object AppPreferenceManager {
         EDITOR.apply()
     }
 
+    fun isUsedFirstTime(): Boolean{
+        return PREFS.getBoolean(PreferenceKeys.FIRST_TIME, false)
+    }
+
+    fun setIsUsedFirstTime(isUsed:Boolean){
+        EDITOR.putBoolean(PreferenceKeys.FIRST_TIME, isUsed)
+        EDITOR.apply()
+    }
+
     fun getSportType(): SportType {
         return SportType.stringToSportType(
             PREFS.getString(

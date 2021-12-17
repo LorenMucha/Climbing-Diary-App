@@ -13,4 +13,5 @@ object PreferenceKeys {
     var SORT = "sort"
     var TAB = "tab"
     var TIME_SLIDER_RANGE = "time_slider"
+    val FIRST_TIME ="first_time"
 }

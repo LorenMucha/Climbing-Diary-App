@@ -14,6 +14,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import com.adevinta.android.barista.interaction.BaristaMenuClickInteractions
+import com.adevinta.android.barista.interaction.BaristaMenuClickInteractions.clickMenu
 import com.main.climbingdiary.R
 import com.main.climbingdiary.fragments.StatisticFragment
 import org.junit.After
@@ -40,11 +41,5 @@ internal class MainActivityTest {
     @Test
     fun onCreate() {
         activityScenario.moveToState(Lifecycle.State.CREATED)
-    }
-
-    @Test
-    fun shouldOpenSettingsFragmentOnSettingsClick() {
-        BaristaMenuClickInteractions.clickMenu(R.id.app_settings)
-        intended(hasComponent(hasClassName(SettingsActivity::class.java.name)))
     }
 }

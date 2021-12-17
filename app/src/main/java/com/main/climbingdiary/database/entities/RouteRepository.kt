@@ -2,7 +2,6 @@ package com.main.climbingdiary.database.entities
 
 import android.database.Cursor
 import com.main.climbingdiary.common.preferences.AppPreferenceManager
-import com.main.climbingdiary.database.DatabaseHelper.Companion.checkIfNumeric
 import com.main.climbingdiary.database.TaskRepository
 import com.main.climbingdiary.models.MenuValues
 import org.chalup.microorm.MicroOrm
@@ -71,9 +70,9 @@ class RouteRepository<T : RouteElement>(private val klass: KClass<T>) {
         var area = Area(name = toUpdate.area!!)
         // check if area exists
         //Fixme update sector
-        AreaRepository.getAreaByName(area.name)?.let{
+        AreaRepository.getAreaByName(area.name)?.let {
             toUpdate.area = it.id.toString()
-        }?:run{
+        } ?: run {
             AreaRepository.insertArea(area)
             area = AreaRepository.getAreaByName(area.name)!!
             toUpdate.area = area.id.toString()
@@ -82,9 +81,9 @@ class RouteRepository<T : RouteElement>(private val klass: KClass<T>) {
         SectorRepository.getSectorByAreaNameAndSectorName(
             sectorName = toUpdate.sector!!,
             areaName = area.name
-        )?.let{
+        )?.let {
             toUpdate.sector = it.id.toString()
-        }?:run{
+        } ?: run {
             val sector = Sector(name = toUpdate.sector!!, area = area.id)
             SectorRepository.insertSector(sector)
             toUpdate.sector = SectorRepository.getSectorByAreaNameAndSectorName(

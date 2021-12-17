@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity() {
         createViewPager()
         //navigation View
         NavDrawerController(this)
+        ShowCaseProvider(this).createShowCase()
     }
 
     override fun onBackPressed() {
@@ -75,10 +76,5 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         return false
-    }
-
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        ShowCaseProvider.createShowCase(this)
     }
 }

@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_welcome">Wilkommen</string>
+    <string name="question_text_show_case">Möchtest du eine kleine Info Tour durch die App unternehmen ?</string>
+    <string name="showcase_header">Climbing Diary</string>
+    <string name="showcase_info">Eine App um deine Boulder und Routen zu tracken und auszuwerten</string>
+</resources>

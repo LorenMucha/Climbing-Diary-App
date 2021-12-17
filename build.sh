@@ -1,3 +1,9 @@
-cd app/src/main/assets/
-rm touren.db
-mv touren_empty.db touren.db
+#!/bin/bash
+branchName=$(git name-rev --name-only HEAD)
+if [ "$branchName" = "feature/welcomeSplashScreen" ];
+then
+      ./gradlew connectedCheck
+       #todo git push
+else
+  echo "branch is not master branch is ${branchName}"
+fi
