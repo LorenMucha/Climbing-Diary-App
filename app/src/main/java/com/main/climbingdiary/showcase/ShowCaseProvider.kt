@@ -1,46 +1,63 @@
 package com.main.climbingdiary.showcase
 
 import android.content.Context
-import android.view.View
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.erkutaras.showcaseview.ShowcaseManager
+import com.google.android.material.tabs.TabLayout
 import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity
 import com.main.climbingdiary.common.AlertFactory
-import com.main.climbingdiary.common.StringProvider
 import com.main.climbingdiary.common.StringProvider.getString
 import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.models.Alert
 
 class ShowCaseProvider(private val context: Context) {
 
+    private val mainView by lazy {
+        MainActivity.getMainActivity().window
+    }
+
+    init {
+        val tabLayout = mainView.findViewById<TabLayout>(R.id.tabLayout)
+        val tab = tabLayout.getTabAt(1)
+        tab!!.select()
+    }
+
     fun createShowCase() {
         AppPreferenceManager
             .isUsedFirstTime()
             .run {
-                if (!this) {
-                    setAlert()
-                }
+                //if (!this) {
+                setAlert()
+                //}
             }.also {
                 AppPreferenceManager.setIsUsedFirstTime(true)
             }
     }
 
-    private fun createBuilder(view: View): ShowcaseManager.Builder {
-        return ShowcaseManager.Builder().context(context)
-            .view(view)
+    private fun viewWelcomeScreen() {
+        ShowcaseManager.Builder()
+            .context(context)
+            .view(mainView.findViewById(R.id.toolbar))
+            .developerMode(true)
             .descriptionImageRes(R.mipmap.ic_launcher_round)
             .descriptionTitle(getString(R.string.showcase_header))
             .descriptionText(getString(R.string.showcase_info))
-            .buttonText("DONE")
+            .buttonText(getString(R.string.weiter))
             .key("Welcome")
-            .developerMode(true)
-            .marginFocusArea(0)
-            .gradientFocusEnabled(true)
             .add()
+            .view(mainView.findViewById(R.id.floating_action_btn_add))
+            .descriptionTitle(getString(R.string.showcase_header))
+            .descriptionTitle(getString(R.string.addNewRouteHeader))
+            .descriptionText(getString(R.string.addNewRouteText))
+            .buttonText(getString(R.string.weiter))
+            .key("addRoute")
+            .add()
+            .build()
+            .show()
     }
 
-    private fun setAlert(){
+    private fun setAlert() {
         val alert = AlertFactory.getAlert(
             context, Alert(
                 title = getString(R.string.app_welcome),
@@ -49,12 +66,11 @@ class ShowCaseProvider(private val context: Context) {
             )
         )
         alert.setCustomImage(R.drawable.waving_hand)
-            .setConfirmText("Gerne")
+            .setConfirmText(getString(R.string.gerne))
             .setConfirmClickListener {
                 it.let {
-                    val showcase = createBuilder(it.window!!.decorView).build()
-                    showcase.show()
                     it.cancel()
+                    viewWelcomeScreen()
                 }
             }
             .setCancelButton("Nein", { it.cancel() })
