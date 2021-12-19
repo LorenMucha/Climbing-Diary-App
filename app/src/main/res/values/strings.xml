@@ -25,5 +25,4 @@
     <string name="menu_datum">Datum</string>
     <string name="settings_ui_header">Bedienung</string>
     <string name="settings_title">Einstellungen</string>
-    <string name="searchBarText">Suche nach Routen, Sektoren, Gebiete und Graden</string>
 </resources>

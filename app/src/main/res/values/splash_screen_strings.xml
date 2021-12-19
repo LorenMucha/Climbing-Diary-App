@@ -9,4 +9,7 @@
     <string name="addNewRouteHeader">Neue Routen hinzufügen</string>
     <string name="addNewRouteText">Durch Klicken können neue Routen hinzugefügt werden</string>
     <string name="searchBarHeader">Suche</string>
+    <string name="searchBarText">Suche nach Routen, Sektoren, Gebiete und Graden</string>
+    <string name="filterBarHeader">Filter</string>
+    <string name="filterBarText">"Filter nach Gebieten "</string>
 </resources>

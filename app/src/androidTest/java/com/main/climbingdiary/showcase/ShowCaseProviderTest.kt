@@ -1,6 +1,8 @@
 package com.main.climbingdiary.showcase
 
 import androidx.test.core.app.ActivityScenario
+import com.adevinta.android.barista.assertion.BaristaImageViewAssertions
+import com.adevinta.android.barista.assertion.BaristaImageViewAssertions.assertHasAnyDrawable
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertContains
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertNotContains
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertNotDisplayed
@@ -42,6 +44,10 @@ internal class ShowCaseProviderTest {
         clickOn(getString(R.string.weiter))
         assertContains(getString(R.string.searchBarHeader))
         assertContains(getString(R.string.searchBarText))
+        clickOn(getString(R.string.weiter))
+        assertContains(getString(R.string.filterBarHeader))
+        assertContains(getString(R.string.filterBarText))
+        clickOn(getString(R.string.weiter))
     }
 
     @Test
