@@ -1,20 +1,28 @@
 package com.main.climbingdiary.fragments
 
+import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.provider.Settings
 import android.util.Log
+import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import cn.pedant.SweetAlert.SweetAlertDialog
+import com.main.climbingdiary.BuildConfig
 import com.main.climbingdiary.R
+import com.main.climbingdiary.activities.MainActivity
 import com.main.climbingdiary.common.AlertFactory.getAlert
 import com.main.climbingdiary.common.AppFileProvider
+import com.main.climbingdiary.common.AppPermissions
 import com.main.climbingdiary.common.RessourceFinder
 import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.getOutputPath
@@ -123,16 +131,25 @@ class SettingsFragment : PreferenceFragmentCompat() {
             this.context?.let {
                 getAlert(
                     it,
-                    Alert(dialogType = SweetAlertDialog.SUCCESS_TYPE, title = "Die Datenbank wurde exportiert !")
+                    Alert(
+                        dialogType = SweetAlertDialog.SUCCESS_TYPE,
+                        title = "Die Datenbank wurde exportiert !"
+                    )
                 ).show()
             }
         } catch (e: IOException) {
-            Log.e("exportDb", e.localizedMessage)
-            this.context?.let {
-                getAlert(
+            this.context?.let { it ->
+                val errorAlert =  getAlert(
                     it,
-                    Alert(dialogType = SweetAlertDialog.ERROR_TYPE, title = "Der Export ist Schiefgelaufen 😓")
-                ).show()
+                    Alert(
+                        dialogType = SweetAlertDialog.ERROR_TYPE,
+                        title = "Der Export ist Schiefgelaufen 😓"
+                    )
+                )
+                errorAlert.setConfirmClickListener {
+                    AppPermissions.checkFileManagementPermission(this.context)
+                    it.cancel()
+                }.show()
             }
         }
     }
@@ -160,8 +177,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
             this.context?.let {
                 getAlert(
                     it,
-                    Alert(dialogType =SweetAlertDialog.ERROR_TYPE,
-                        title="Der Restore ist Schiefgelaufen \uD83D\uDE13")).show()
+                    Alert(
+                        dialogType = SweetAlertDialog.ERROR_TYPE,
+                        title = "Der Restore ist Schiefgelaufen \uD83D\uDE13"
+                    )
+                ).show()
             }
         }
     }

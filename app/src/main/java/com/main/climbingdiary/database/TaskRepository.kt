@@ -19,6 +19,7 @@ import com.main.climbingdiary.database.sql.SqlRouten.getInsertRouteTasks
 import com.main.climbingdiary.database.sql.SqlRouten.getRouteList
 import com.main.climbingdiary.database.sql.SqlStatistic
 import com.main.climbingdiary.models.RouteType
+import java.nio.charset.StandardCharsets
 
 object TaskRepository {
     private val TAG = "DataAdapter"
@@ -63,7 +64,7 @@ object TaskRepository {
         return getCursor(SqlAreaSektoren.getAreaIdBySectorNameAndAreaName(sectorName, areaName))
     }
 
-    fun getAreaByAreaName(areaName: String?):Cursor{
+    fun getAreaByAreaName(areaName: String?): Cursor {
         return getCursor(SqlAreaSektoren.getAreaByName(areaName))
     }
 
@@ -88,12 +89,12 @@ object TaskRepository {
         return executeSqlTasks(getInsertRouteTasks(route))
     }
 
-    fun insertArea(area: Area):Boolean{
+    fun insertArea(area: Area): Boolean {
         return executeSqlTasks(arrayOf(SqlAreaSektoren.insertArea(area)))
     }
 
-    fun insertSector(sector: Sector):Boolean{
-       return executeSqlTasks(arrayOf(SqlAreaSektoren.insertSector(sector)))
+    fun insertSector(sector: Sector): Boolean {
+        return executeSqlTasks(arrayOf(SqlAreaSektoren.insertSector(sector)))
     }
 
     fun insertProjekt(projekt: Projekt): Boolean {
@@ -129,7 +130,7 @@ object TaskRepository {
         return try {
             for (x in tasks) {
                 Log.d("Execute", x)
-                mDb.execSQL(x)
+                mDb.execSQL(String(x.toByteArray(), StandardCharsets.UTF_8))
             }
             mDb.setTransactionSuccessful()
             true
