@@ -48,9 +48,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: v1.0.36
-          release_name: Release v1.0.32
+          release_name: Release v1.0.33
           body: |
             - Bugfixes
+              - Permission check to export db for Android 11
+              - French characters
       - name: Upload Release APK
         id: upload_release_asset
         uses: actions/upload-release-asset@v1.0.1
