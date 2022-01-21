@@ -1,11 +1,14 @@
 package com.main.climbingdiary.fragments
 
+import android.Manifest
 import androidx.test.core.app.ActivityScenario
 import androidx.test.filters.SmallTest
+import androidx.test.rule.GrantPermissionRule
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickBack
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.adevinta.android.barista.interaction.BaristaMenuClickInteractions.clickMenu
+import com.adevinta.android.barista.interaction.PermissionGranter
 import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity
 import com.main.climbingdiary.common.preferences.AppPreferenceManager
@@ -18,13 +21,12 @@ import com.main.climbingdiary.helper.TestProvider.openTab
 import com.main.climbingdiary.helper.TestSqliteHelper.cleanAllTables
 import com.main.climbingdiary.models.Tabs
 import com.main.climbingdiary.models.TimeRange
-import org.junit.After
-import org.junit.Before
-import org.junit.Ignore
-import org.junit.Test
+import org.junit.*
 
 
 internal class SettingsFragmentTest {
+
+
     private lateinit var activityScenario: ActivityScenario<MainActivity>
 
     private val routeRepo = RouteRepository(Route::class)
@@ -40,13 +42,16 @@ internal class SettingsFragmentTest {
 
     @Before
     fun setUp() {
+        PermissionGranter.allowPermissionsIfNeeded(Manifest.permission.MANAGE_EXTERNAL_STORAGE)
+        PermissionGranter.allowPermissionsIfNeeded(Manifest.permission.READ_EXTERNAL_STORAGE)
+        PermissionGranter.allowPermissionsIfNeeded(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         activityScenario =
             ActivityScenario.launch(MainActivity::class.java)
         cleanAllTables()
         AppPreferenceManager.setOutputPath(dbOutputPath)
         //init
-        getRandomRouteList(50).forEach { routeRepo.insertRoute(it) }
-        getRandomProjektList(10).forEach { projektRepo.insertRoute(it) }
+        getRandomRouteList(15).forEach { routeRepo.insertRoute(it) }
+        getRandomProjektList(5).forEach { projektRepo.insertRoute(it) }
         clickMenu(R.id.app_settings)
 
     }

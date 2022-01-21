@@ -118,6 +118,7 @@ internal class RouteDoneFragmentTest {
     @MediumTest
     fun createNewRouteOk() {
         val routeSet = getRandomRoute()
+        routeSet.name="Mi Puó Fare Accendere "
         routeSet.level = "8a"
         routeSet.date = "${LocalDate.now().year}-12-12"
         //open add Project Button

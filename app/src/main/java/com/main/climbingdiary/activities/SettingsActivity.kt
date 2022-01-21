@@ -20,11 +20,16 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         mInstance = this
         supportFragmentManager.beginTransaction().replace(R.id.content, SettingsFragment()).commit()
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        AppPermissions.checkPermissions(applicationContext)
+        Thread(Runnable {
+            this@SettingsActivity.runOnUiThread(java.lang.Runnable {
+                AppPermissions.checkPermissions(this)
+            })
+        }).start()
     }
 
     override fun onBackPressed() {
