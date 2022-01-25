@@ -13,6 +13,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.erkutaras.showcaseview.ShowcaseManager
 import com.main.climbingdiary.R
+import com.main.climbingdiary.common.parser.EightAparser
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.removeAllFilterPrefs
 import com.main.climbingdiary.controller.FragmentPager.createViewPager
 import com.main.climbingdiary.controller.NavDrawerController
@@ -51,6 +52,7 @@ class MainActivity : AppCompatActivity() {
         createViewPager()
         //navigation View
         NavDrawerController(this)
+        EightAparser(this).login()
     }
 
     override fun onBackPressed() {

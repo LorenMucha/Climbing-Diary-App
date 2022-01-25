@@ -18,7 +18,7 @@ gen/
 out/
 
 # Gradle files
-.gradle
+.gradle/**
 **/build/
 !src/**/build/
 
@@ -30,6 +30,10 @@ proguard/
 
 # Log Files
 *.log
+
+# lock files
+*.lock
+*.bin
 
 # Android Studio Navigation editor temp files
 .navigation/

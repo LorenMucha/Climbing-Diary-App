@@ -12,6 +12,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [appAuthRedirectScheme: 'com.redirectScheme.comm']
     }
     buildTypes {
         release {
@@ -69,6 +70,7 @@ dependencies {
     implementation 'com.skyfishjy.ripplebackground:library:1.0.1'
     //doku: https://github.com/erkutaras/ShowcaseView
     implementation 'com.github.erkutaras:ShowcaseView:1.5.0'
+    implementation 'net.openid:appauth:0.11.1'
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'androidx.test:core:1.4.0'
