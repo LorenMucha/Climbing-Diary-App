@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <!-- A CardView that contains a TextView -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="4dp">
+
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/backgroundColorDark"
+            android:stretchColumns="*"
+            android:shrinkColumns="*">
+            <TableRow
+                android:layout_width="0dp"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="@dimen/route_name"
+                    android:textColor="@color/black"
+                    android:id="@+id/route_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_span="6"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="5dp"
+                    tools:ignore="SpUsage" />
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="@dimen/route_content"
+                    android:textColor="@color/black"
+                    android:id="@+id/route_level"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    tools:ignore="SpUsage" />
+                <ImageView
+                    android:id="@+id/route_style"
+                    android:layout_height="25dp"
+                    android:layout_width="wrap_content"
+                    android:padding="4dp"
+                    android:layout_gravity="end"
+                    android:paddingEnd="10dp"
+                    />
+            </TableRow>
+
+
+            <View
+                android:layout_height="2dip"
+                android:background="@color/backgroundColorPrimary" />
+
+            <TableRow
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:text="Gebiet Sektor und noch mehr Sektoren"
+                    android:layout_span="7"
+                    android:textSize="@dimen/route_content"
+                    android:textColor="@color/coveredFontColor"
+                    android:id="@+id/route_area"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="5dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    tools:ignore="SpUsage" />
+
+                <TextView
+                    android:id="@+id/route_date"
+                    android:layout_span="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="5dp"
+                    android:paddingEnd="10dp"
+                    android:text="01.04.2019"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/route_date"
+                    tools:ignore="SpUsage" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/route_hidden"
+                android:background="@color/backgroundColorDark"
+                android:visibility="gone"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" >
+
+                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/route_layout_hidden"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_span="8"
+                    android:layout_marginTop="5dp">
+
+                    <View
+                        android:layout_height="2dip"
+                        android:id="@+id/edit_hr"
+                        android:layout_width="wrap_content" />
+
+                    <RatingBar
+                        android:theme="@style/RatingBar"
+                        android:id="@+id/route_rating"
+                        android:layout_below="@id/edit_hr"
+                        style="@style/Widget.AppCompat.RatingBar.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:numStars="5"
+                        android:stepSize="1" />
+
+                    <View
+                        android:layout_below="@+id/route_rating"
+                        android:layout_height="2dip"
+                        android:id="@+id/edit_hr1"
+                        android:layout_width="wrap_content" />
+
+                    <TextView
+                        android:textSize="@dimen/route_name"
+                        android:layout_below="@id/edit_hr1"
+                        android:textColor="@color/black"
+                        android:id="@+id/route_comment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_margin="5dp"
+                        tools:ignore="SpUsage" />
+
+                    <View
+                        android:layout_below="@+id/route_comment"
+                        android:layout_height="2dip"
+                        android:background="@color/backgroundColorPrimary"
+                        android:id="@+id/edit_hr2"
+                        android:layout_width="wrap_content" />
+
+                    <ImageButton
+                        android:layout_marginTop="5dp"
+                        android:layout_below="@+id/edit_hr2"
+                        android:id="@+id/route_edit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:background="@color/buttonColor"
+                        android:src="@drawable/ic_pen"
+                        android:paddingEnd="30dp"
+                        android:layout_toStartOf="@id/route_delete"
+                        tools:ignore="RtlSymmetry" />
+
+                    <ImageButton
+                        android:layout_marginTop="5dp"
+                        android:layout_below="@+id/edit_hr2"
+                        android:id="@+id/route_delete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:background="@color/buttonColor"
+                        android:src="@drawable/ic_trash"
+                        android:layout_alignParentEnd="true" />
+
+                </RelativeLayout>
+            </TableRow>
+
+        </TableLayout>
+
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>
