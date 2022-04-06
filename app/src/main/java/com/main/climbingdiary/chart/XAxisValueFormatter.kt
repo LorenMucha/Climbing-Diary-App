@@ -2,7 +2,6 @@ package com.main.climbingdiary.chart
 
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.formatter.ValueFormatter
-import java.util.*
 
 class XAxisValueFormatter(private val values: ArrayList<String>) : ValueFormatter() {
     

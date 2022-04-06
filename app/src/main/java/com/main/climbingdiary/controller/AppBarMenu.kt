@@ -2,7 +2,6 @@ package com.main.climbingdiary.controller
 
 import android.app.SearchManager
 import android.content.Context
-import android.util.Log
 import android.view.Menu
 import android.widget.SearchView
 import com.main.climbingdiary.R
@@ -13,7 +12,6 @@ import com.main.climbingdiary.fragments.RouteDoneFragment
 import com.main.climbingdiary.fragments.RouteProjectFragment
 import com.main.climbingdiary.models.MenuValues
 import com.main.climbingdiary.models.Tabs
-import java.util.*
 
 class AppBarMenu(val menu: Menu) : SearchView.OnQueryTextListener {
     private val searchId: Int = R.id.action_search

@@ -14,7 +14,6 @@ import com.main.climbingdiary.controller.FilterHeader
 import com.main.climbingdiary.database.entities.Projekt
 import com.main.climbingdiary.database.entities.RouteRepository
 import com.main.climbingdiary.models.RouteSort
-import java.util.ArrayList
 
 @SuppressLint("StaticFieldLeak", "ValidFragment")
 object RouteProjectFragment : Fragment(), RouteFragment {

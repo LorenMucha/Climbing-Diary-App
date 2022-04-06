@@ -1,4 +1,4 @@
-package com.main.climbingdiary.common
+package com.main.climbingdiary.provider
 
 import android.content.Context
 import android.view.View

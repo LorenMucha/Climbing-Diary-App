@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="db_output_path">db_output_path</string>
-    <string name="safty_copy">safty_copy</string>
-    <string name="share_copy">share_copy</string>
-    <string name="safty_restore">safty_restore</string>
-    <string name="time_slider">time_slider</string>
+    <string name="db_output_path" translatable="false">db_output_path</string>
+    <string name="safty_copy" translatable="false">safty_copy</string>
+    <string name="share_copy" translatable="false">share_copy</string>
+    <string name="safty_restore" translatable="false">safty_restore</string>
+    <string name="time_slider" translatable="false">time_slider</string>
+    <string name="language" translatable="false">language</string>
     <array name="entries_time_slider">
         <item>Jahr</item>
         <item>Zeitraum</item>

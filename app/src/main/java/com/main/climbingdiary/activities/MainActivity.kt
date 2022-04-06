@@ -1,6 +1,5 @@
 package com.main.climbingdiary.activities
 
-import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -9,17 +8,14 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.main.climbingdiary.R
+import com.main.climbingdiary.common.LanguageManager
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.removeAllFilterPrefs
 import com.main.climbingdiary.controller.FragmentPager.createViewPager
 import com.main.climbingdiary.controller.NavDrawerController
-import com.main.climbingdiary.showcase.ShowCaseProvider
 
-
-@SuppressLint("StaticFieldLeak")
 class MainActivity : AppCompatActivity() {
 
     private val layoutId: Int = R.layout.activity_main
@@ -27,14 +23,17 @@ class MainActivity : AppCompatActivity() {
     companion object {
         lateinit var mInstance: MainActivity
 
+        @Synchronized
         fun getMainAppContext(): Context {
             return mInstance.applicationContext
         }
 
+        @Synchronized
         fun getMainActivity(): AppCompatActivity {
             return mInstance
         }
 
+        @Synchronized
         fun getMainComponentName(): ComponentName? {
             return mInstance.componentName
         }
@@ -42,17 +41,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mInstance = this
+        //must be before set content view to get the right view
+        LanguageManager(this).setLanguage()
         setContentView(layoutId)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-
-        mInstance = this
-
         removeAllFilterPrefs()
         createViewPager()
         //navigation View
         NavDrawerController(this)
-        ShowCaseProvider(this).createShowCase()
+       // ShowCaseProvider(this).createShowCase()
     }
 
     override fun onBackPressed() {

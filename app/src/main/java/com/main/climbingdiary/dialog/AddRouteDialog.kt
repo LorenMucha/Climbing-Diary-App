@@ -1,6 +1,5 @@
 package com.main.climbingdiary.dialog
 
-import com.main.climbingdiary.R
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import com.main.climbingdiary.R
 import com.main.climbingdiary.common.AlertFactory
 import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.controller.FragmentPager.refreshAllFragments

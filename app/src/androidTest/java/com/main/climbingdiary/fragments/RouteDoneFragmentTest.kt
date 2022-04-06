@@ -27,6 +27,7 @@ import com.main.climbingdiary.database.entities.RouteRepository
 import com.main.climbingdiary.helper.TestHelper.clickOnViewChild
 import com.main.climbingdiary.helper.TestHelper.getRandomRoute
 import com.main.climbingdiary.helper.TestHelper.getRandomRouteList
+import com.main.climbingdiary.helper.TestHelper.initDefaultScenario
 import com.main.climbingdiary.helper.TestHelper.translateDate
 import com.main.climbingdiary.helper.TestProvider
 import com.main.climbingdiary.helper.TestProvider.changeInputTest
@@ -60,8 +61,7 @@ internal class RouteDoneFragmentTest {
 
     @Before
     fun setUp() {
-        activityScenario =
-            ActivityScenario.launch(MainActivity::class.java)
+        activityScenario = initDefaultScenario()
         route = getRandomRoute()
         repo.insertRoute(route)
         routeList = getRandomRouteList(maxRoutes)
@@ -118,6 +118,7 @@ internal class RouteDoneFragmentTest {
     @MediumTest
     fun createNewRouteOk() {
         val routeSet = getRandomRoute()
+        routeSet.name="Mi Puó Fare Accendere "
         routeSet.level = "8a"
         routeSet.date = "${LocalDate.now().year}-12-12"
         //open add Project Button

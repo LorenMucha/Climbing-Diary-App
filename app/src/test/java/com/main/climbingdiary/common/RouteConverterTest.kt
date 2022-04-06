@@ -1,10 +1,9 @@
 package com.main.climbingdiary.common
 
-import com.main.climbingdiary.database.entities.Projekt
 import com.main.climbingdiary.database.entities.Route
 import com.main.climbingdiary.models.Styles
-import org.junit.jupiter.api.Assertions.*
-
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Test
 
 internal class RouteConverterTest {

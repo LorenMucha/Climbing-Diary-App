@@ -22,6 +22,7 @@ import com.main.climbingdiary.adapter.RoutesAdapter
 import com.main.climbingdiary.database.entities.Route
 import com.main.climbingdiary.database.entities.RouteRepository
 import com.main.climbingdiary.helper.TestHelper
+import com.main.climbingdiary.helper.TestHelper.initDefaultScenario
 import com.main.climbingdiary.helper.TestProvider
 import com.main.climbingdiary.helper.TestProvider.openSportView
 import com.main.climbingdiary.helper.TestProvider.openTab
@@ -54,8 +55,7 @@ internal class BoulderDoneFragementTest {
 
     @Before
     fun setUp() {
-        activityScenario =
-            ActivityScenario.launch(MainActivity::class.java)
+        activityScenario = initDefaultScenario()
         route = TestHelper.getRandomRoute()
         repo.insertRoute(route)
         boulderList = TestHelper.getRandomRouteList(maxBoulders)
@@ -90,7 +90,7 @@ internal class BoulderDoneFragementTest {
         TestProvider.setSpinnerSelect(R.id.input_route_level, updateBoulder.level)
         TestProvider.setSpinnerSelect(R.id.input_route_stil, updateBoulder.style)
 
-        BaristaClickInteractions.clickOn("Update")
+        clickOn("Update")
 
         //check that updated values exists
         BaristaListAssertions.assertDisplayedAtPosition(
@@ -135,7 +135,7 @@ internal class BoulderDoneFragementTest {
         TestProvider.setSpinnerSelect(R.id.input_route_level, boulderSet.level)
 
         //select save
-        BaristaClickInteractions.clickOn("Speichern")
+        clickOn("Speichern")
 
         //check if List contains new project
         BaristaVisibilityAssertions.assertDisplayed(boulderSet.name!!)

@@ -2,8 +2,8 @@ package com.main.climbingdiary.common.preferences
 
 import androidx.preference.PreferenceManager
 import com.main.climbingdiary.activities.MainActivity
+import com.main.climbingdiary.common.LanguageManager
 import com.main.climbingdiary.models.*
-import com.main.climbingdiary.models.Tabs.Companion.stringToTabs
 
 object AppPreferenceManager {
     private val PREFS =
@@ -19,7 +19,7 @@ object AppPreferenceManager {
         EDITOR.apply()
     }
 
-    fun isUsedFirstTime(): Boolean{
+    fun getUsedFirstTime(): Boolean{
         return PREFS.getBoolean(PreferenceKeys.FIRST_TIME, false)
     }
 
@@ -27,6 +27,16 @@ object AppPreferenceManager {
         EDITOR.putBoolean(PreferenceKeys.FIRST_TIME, isUsed)
         EDITOR.apply()
     }
+
+    fun setLanguageFirstTime(isUsed:Boolean){
+        EDITOR.putBoolean(PreferenceKeys.FIRST_TIME_LANGUAGE, isUsed)
+        EDITOR.apply()
+    }
+
+    fun getLanguageFirstTime(): Boolean{
+        return PREFS.getBoolean(PreferenceKeys.FIRST_TIME_LANGUAGE, true)
+    }
+
 
     fun getSportType(): SportType {
         return SportType.stringToSportType(
@@ -85,8 +95,8 @@ object AppPreferenceManager {
         PREFS.edit().remove(PreferenceKeys.FILTER_MENU).apply()
     }
 
-    fun getSelectedTabsTitle(): Tabs? {
-        return stringToTabs(PREFS.getString(PreferenceKeys.TAB, ""))
+    fun getSelectedTabsTitle(): Tabs {
+        return Tabs.stringToTabs(PREFS.getString(PreferenceKeys.TAB, ""))
     }
 
     fun setSelectedTabsTitle(tab: Tabs) {
@@ -102,5 +112,14 @@ object AppPreferenceManager {
     fun getTimeSliderView(): TimeRange{
         val value : String? = PREFS.getString(PreferenceKeys.TIME_SLIDER_RANGE, TimeRange.YEAR.toString())
         return TimeRange.valueOf(value!!)
+    }
+
+    fun getLanguage(): String? {
+        return PREFS.getString(PreferenceKeys.LANGUAGE, LanguageManager.DE)
+    }
+
+    fun setLanguage(language: String?) {
+        EDITOR.putString(PreferenceKeys.LANGUAGE, language)
+        EDITOR.apply()
     }
 }

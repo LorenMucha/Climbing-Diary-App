@@ -2,6 +2,7 @@ package com.main.climbingdiary.common
 
 import android.content.Context
 import cn.pedant.SweetAlert.SweetAlertDialog
+import com.main.climbingdiary.R
 import com.main.climbingdiary.models.Alert
 
 object AlertFactory {
@@ -24,6 +25,6 @@ object AlertFactory {
     fun getErrorAlert(context: Context):SweetAlertDialog {
           return SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
               .setTitleText("Oops...")
-              .setContentText("Es ist ein Fehler aufgetreten.")
+              .setContentText(context.getString(R.string.alert_error_text))
       }
 }

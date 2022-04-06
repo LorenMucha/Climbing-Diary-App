@@ -16,7 +16,6 @@ import com.main.climbingdiary.R
 import com.main.climbingdiary.common.AlertFactory.getErrorAlert
 import com.main.climbingdiary.database.TaskRepository
 import com.main.climbingdiary.models.Colors
-import java.util.*
 
 class RouteBarChartController(val view: View) : RouteChartController() {
 

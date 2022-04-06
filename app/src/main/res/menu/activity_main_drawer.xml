@@ -11,10 +11,17 @@
         <item
             android:id="@+id/nav_climbing"
             android:icon="@drawable/ic_rope"
-            android:title="Klettern" />
+            android:title="@string/nav_title_climbing" />
         <item
             android:id="@+id/nav_bouldern"
             android:icon="@drawable/ic_climbing"
-            android:title="Bouldern" />
+            android:title="@string/nav_title_bouldern" />
+    </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:icon="@drawable/ic_settings"
+            android:id="@+id/nav_settings"
+            android:title="@string/nav_title_settings"
+            />
     </group>
 </menu>

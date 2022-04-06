@@ -1,10 +1,6 @@
 package com.main.climbingdiary.database.entities
 
-import android.annotation.SuppressLint
-import com.main.climbingdiary.models.Styles
 import org.chalup.microorm.annotations.Column
-import java.text.SimpleDateFormat
-import java.util.*
 
 data class Projekt(
     @Column("id") var id: Int = 0,

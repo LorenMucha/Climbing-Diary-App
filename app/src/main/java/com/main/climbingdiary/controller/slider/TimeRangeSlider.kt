@@ -10,7 +10,6 @@ import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListen
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
 import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity
-import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.setFilter
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.setFilterSetter
 import com.main.climbingdiary.controller.FragmentPager.refreshSelectedFragment
@@ -18,7 +17,6 @@ import com.main.climbingdiary.controller.button.ShowTimeSlider.hideButton
 import com.main.climbingdiary.database.TaskRepository.getYears
 import com.main.climbingdiary.models.MenuValues
 import java.util.*
-import kotlin.collections.ArrayList
 
 class TimeRangeSlider : OnRangeSeekbarChangeListener, OnRangeSeekbarFinalValueListener, Slider {
     private val activity: AppCompatActivity by lazy { MainActivity.getMainActivity() }

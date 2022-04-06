@@ -1,21 +1,32 @@
 package com.main.climbingdiary.helper
 
+import android.Manifest
+import android.content.Context
+import android.content.res.Configuration
+import android.content.res.Resources
+import android.os.Build
 import android.view.View
-import androidx.recyclerview.widget.RecyclerView
+import androidx.preference.PreferenceManager
+import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.matcher.BoundedMatcher
+import androidx.test.platform.app.InstrumentationRegistry
+import com.adevinta.android.barista.interaction.PermissionGranter
+import com.main.climbingdiary.activities.MainActivity
+import com.main.climbingdiary.common.LanguageManager
+import com.main.climbingdiary.common.preferences.AppPreferenceManager
+import com.main.climbingdiary.common.preferences.PreferenceKeys
 import com.main.climbingdiary.database.entities.Projekt
 import com.main.climbingdiary.database.entities.Route
 import com.main.climbingdiary.models.Levels
 import com.main.climbingdiary.models.Styles
 import org.apache.commons.lang3.RandomStringUtils
-import org.hamcrest.Description
-import org.hamcrest.Matcher
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.*
 import java.util.concurrent.ThreadLocalRandom
+import kotlin.collections.ArrayList
 import kotlin.random.Random.Default.nextInt
 
 
@@ -28,28 +39,6 @@ object TestHelper {
 
         override fun perform(uiController: UiController, view: View) =
             click().perform(uiController, view.findViewById<View>(viewId))
-    }
-
-    fun hasItem(matcher: Matcher<View?>): Matcher<View?> {
-        return object : BoundedMatcher<View?, RecyclerView>(RecyclerView::class.java) {
-            override fun describeTo(description: Description) {
-                description.appendText("has item: ")
-                matcher.describeTo(description)
-            }
-
-            override fun matchesSafely(view: RecyclerView): Boolean {
-                val adapter = view.adapter
-                for (position in 0 until adapter!!.itemCount) {
-                    val type = adapter.getItemViewType(position)
-                    val holder = adapter.createViewHolder(view, type)
-                    adapter.onBindViewHolder(holder, position)
-                    if (matcher.matches(holder.itemView)) {
-                        return true
-                    }
-                }
-                return false
-            }
-        }
     }
 
     fun getRandomString(length: Int): String {
@@ -98,7 +87,7 @@ object TestHelper {
     }
 
     fun getRandomRouteList(max: Int = 500): List<Route> {
-        val routeArray:MutableList<Route> = ArrayList()
+        val routeArray: MutableList<Route> = ArrayList()
         for (i in 1..max) {
             val route = getRandomRoute()
             routeArray.add(route)
@@ -107,7 +96,7 @@ object TestHelper {
     }
 
     fun getRandomProjektList(max: Int = 500): List<Projekt> {
-        val routeArray:MutableList<Projekt> = ArrayList()
+        val routeArray: MutableList<Projekt> = ArrayList()
         for (i in 1..max) {
             val projekt = getRandomProjekt()
             routeArray.add(projekt)
@@ -115,8 +104,39 @@ object TestHelper {
         return routeArray
     }
 
-    fun translateDate(date:String?):String{
-        val dateList= date!!.split("-")
+    fun translateDate(date: String?): String {
+        val dateList = date!!.split("-")
         return "${dateList[2]}.${dateList[1]}.${dateList[0]}"
+    }
+
+    fun setPreferenceString(prefKey: String, preference: Any) {
+        val prefs =
+            PreferenceManager.getDefaultSharedPreferences(InstrumentationRegistry.getInstrumentation().targetContext)
+        val editor = prefs.edit()
+        preference.let {
+            if (preference is String) {
+                editor.putString(prefKey, it as String)
+            } else {
+                editor.putBoolean(prefKey, it as Boolean)
+            }
+        }
+        editor.apply()
+    }
+
+    fun cleanAllPreferences(){
+        PreferenceManager.getDefaultSharedPreferences(InstrumentationRegistry.getInstrumentation().targetContext).edit().clear().apply()
+    }
+
+    fun getContext():Context{
+        return InstrumentationRegistry.getInstrumentation().targetContext
+    }
+
+    fun initDefaultScenario():ActivityScenario<MainActivity>{
+        PermissionGranter.allowPermissionsIfNeeded(Manifest.permission.MANAGE_EXTERNAL_STORAGE)
+        PermissionGranter.allowPermissionsIfNeeded(Manifest.permission.READ_EXTERNAL_STORAGE)
+        PermissionGranter.allowPermissionsIfNeeded(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        setPreferenceString(PreferenceKeys.FIRST_TIME_LANGUAGE, false)
+        setPreferenceString(PreferenceKeys.LANGUAGE, LanguageManager.DE)
+        return ActivityScenario.launch(MainActivity::class.java)
     }
 }

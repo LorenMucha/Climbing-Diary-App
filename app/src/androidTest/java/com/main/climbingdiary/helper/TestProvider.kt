@@ -1,5 +1,9 @@
 package com.main.climbingdiary.helper
 
+import android.content.Context
+import android.content.res.Configuration
+import android.content.res.Resources
+import android.os.Build
 import android.view.View
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
@@ -9,16 +13,19 @@ import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.platform.app.InstrumentationRegistry
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.adevinta.android.barista.interaction.BaristaDrawerInteractions
 import com.google.android.material.tabs.TabLayout
 import com.main.climbingdiary.R
+import com.main.climbingdiary.common.StringProvider.getString
 import com.main.climbingdiary.models.SportType
 import com.main.climbingdiary.models.Tabs
 import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.core.AllOf
+import java.util.*
 
 
 object TestProvider {
@@ -76,8 +83,35 @@ object TestProvider {
     fun openSportView(sportType: SportType) {
         BaristaDrawerInteractions.openDrawer()
         when (sportType) {
-            SportType.BOULDERN -> clickOn("Bouldern")
-            SportType.KLETTERN -> clickOn("Klettern")
+            SportType.BOULDERN -> clickOn(R.string.nav_title_bouldern)
+            SportType.KLETTERN -> clickOn(R.string.nav_title_climbing)
         }
+    }
+
+    fun getLocaleStringResource(
+        requestedLocale: Locale,
+        resourceId: Int
+    ): String {
+        val result: String
+        val context:Context = InstrumentationRegistry.getInstrumentation().targetContext
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) { // use latest api
+            val config = Configuration(context.resources.configuration)
+            config.setLocale(requestedLocale)
+            result = context.createConfigurationContext(config).getText(resourceId).toString()
+        } else { // support older android versions
+            val resources: Resources = context.resources
+            val conf: Configuration = resources.configuration
+            val savedLocale: Locale = conf.locale
+            conf.locale = requestedLocale
+            resources.updateConfiguration(conf, null)
+
+            // retrieve resources from desired locale
+            result = resources.getString(resourceId)
+
+            // restore original locale
+            conf.locale = savedLocale
+            resources.updateConfiguration(conf, null)
+        }
+        return result
     }
 }

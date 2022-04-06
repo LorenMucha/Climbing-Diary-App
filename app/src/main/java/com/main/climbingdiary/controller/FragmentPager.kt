@@ -9,6 +9,7 @@ import com.google.android.material.tabs.TabLayout
 import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity
 import com.main.climbingdiary.adapter.TabAdapter
+import com.main.climbingdiary.common.AlertFactory
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.getSelectedTabsTitle
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.getSportType
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.setFilter
@@ -16,6 +17,7 @@ import com.main.climbingdiary.common.preferences.AppPreferenceManager.setSelecte
 import com.main.climbingdiary.controller.button.AppFloatingActionButton
 import com.main.climbingdiary.controller.button.ShowTimeSlider
 import com.main.climbingdiary.controller.slider.TimeSliderFactory
+import com.main.climbingdiary.error.TabsNotSupportedException
 import com.main.climbingdiary.fragments.RouteDoneFragment
 import com.main.climbingdiary.fragments.RouteFragment
 import com.main.climbingdiary.fragments.RouteProjectFragment
@@ -42,9 +44,8 @@ object FragmentPager : TabLayout.OnTabSelectedListener {
         val fragmentManager: FragmentManager = activity.supportFragmentManager
         val adapter = TabAdapter(fragmentManager)
         //init the fragments
-        //init the fragments
         for ((key, value) in fragmentMap) {
-            key.typeToString()?.let { adapter.addFragment(value as Fragment, it) }
+            key.typeToString().let { adapter.addFragment(value as Fragment, it) }
         }
         viewPager.adapter = adapter
         tabLayout.setupWithViewPager(viewPager)
@@ -52,24 +53,28 @@ object FragmentPager : TabLayout.OnTabSelectedListener {
     }
 
     override fun onTabSelected(tab: TabLayout.Tab) {
-        val tabSelected =
-            stringToTabs(Objects.requireNonNull(tab.text).toString())!!
-        setSelectedTabsTitle(tabSelected)
-        when (tabSelected) {
-            Tabs.STATISTIK -> {
-                ShowTimeSlider.hide()
-                AppFloatingActionButton.hide()
-                setFilter("")
+        try {
+            val tabSelected =
+                stringToTabs(Objects.requireNonNull(tab.text).toString())
+            setSelectedTabsTitle(tabSelected)
+            when (tabSelected) {
+                Tabs.STATISTIK -> {
+                    ShowTimeSlider.hide()
+                    AppFloatingActionButton.hide()
+                    setFilter("")
+                }
+                Tabs.ROUTEN, Tabs.BOULDER -> {
+                    ShowTimeSlider.show()
+                    AppFloatingActionButton.show()
+                    TimeSliderFactory.setSlider()
+                }
+                Tabs.PROJEKTE -> {
+                    ShowTimeSlider.hide()
+                    AppFloatingActionButton.show()
+                }
             }
-            Tabs.ROUTEN, Tabs.BOULDER -> {
-                ShowTimeSlider.show()
-                AppFloatingActionButton.show()
-                TimeSliderFactory.setSlider()
-            }
-            Tabs.PROJEKTE -> {
-                ShowTimeSlider.hide()
-                AppFloatingActionButton.show()
-            }
+        }catch(e: TabsNotSupportedException){
+            AlertFactory.getErrorAlert(context = activity.baseContext)
         }
     }
 

@@ -2,7 +2,6 @@ package com.main.climbingdiary.dialog
 
 import androidx.fragment.app.FragmentManager
 import com.main.climbingdiary.activities.MainActivity
-import com.main.climbingdiary.database.entities.Route
 import com.main.climbingdiary.models.Tabs
 
 object DialogFactory {

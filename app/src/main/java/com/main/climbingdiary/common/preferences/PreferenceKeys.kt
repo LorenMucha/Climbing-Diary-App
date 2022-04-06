@@ -1,7 +1,5 @@
 package com.main.climbingdiary.common.preferences
 
-import com.main.climbingdiary.R
-import com.main.climbingdiary.activities.MainActivity
 
 object PreferenceKeys {
     val FILE_CHOOOSER_REQUEST_SAFTY_COPY = 12345
@@ -13,5 +11,7 @@ object PreferenceKeys {
     var SORT = "sort"
     var TAB = "tab"
     var TIME_SLIDER_RANGE = "time_slider"
+    var LANGUAGE = "language"
     val FIRST_TIME ="first_time"
+    val FIRST_TIME_LANGUAGE = "first_time_language"
 }

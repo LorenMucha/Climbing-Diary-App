@@ -2,6 +2,7 @@ package com.main.climbingdiary.common.preferences
 
 import androidx.test.core.app.ActivityScenario
 import com.main.climbingdiary.activities.MainActivity
+import com.main.climbingdiary.helper.TestHelper
 import com.main.climbingdiary.models.TimeRange
 import junit.framework.Assert.assertEquals
 import org.junit.After
@@ -19,7 +20,7 @@ class AppPreferenceManagerTest {
 
     @Before
     fun setUp() {
-        activityScenario = ActivityScenario.launch(MainActivity::class.java)
+        activityScenario = TestHelper.initDefaultScenario()
     }
 
     @Test

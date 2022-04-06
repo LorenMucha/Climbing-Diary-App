@@ -225,8 +225,7 @@ class RouteDialogCreator(
     }
 
     private fun setRouteNameHeaderText() {
-        val header = getSportType().getRouteName() + "name"
-        nameHeader.text = header
+        nameHeader.text = "Name"
     }
 
     fun getRoute(id: Boolean): Route {

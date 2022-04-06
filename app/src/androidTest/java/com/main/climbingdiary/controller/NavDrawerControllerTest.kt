@@ -5,10 +5,17 @@ import androidx.test.espresso.intent.Intents
 import androidx.test.filters.SmallTest
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.adevinta.android.barista.interaction.BaristaDrawerInteractions.openDrawer
+import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity
+import com.main.climbingdiary.common.StringProvider.getString
+import com.main.climbingdiary.helper.TestHelper
+import com.main.climbingdiary.helper.TestHelper.initDefaultScenario
+import com.main.climbingdiary.helper.TestProvider
+import com.main.climbingdiary.models.Tabs
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import java.util.*
 
 class NavDrawerControllerTest{
     private lateinit var activityScenario: ActivityScenario<MainActivity>
@@ -21,7 +28,7 @@ class NavDrawerControllerTest{
 
     @Before
     fun setUp(){
-        activityScenario = ActivityScenario.launch(MainActivity::class.java)
+        activityScenario = initDefaultScenario()
         Intents.init()
     }
 
@@ -29,15 +36,23 @@ class NavDrawerControllerTest{
     @SmallTest
     fun openDrawerAndNavigateToBouldernOk(){
         openDrawer()
-        clickOn("Bouldern")
-        clickOn("Boulder")
+        clickOn(R.string.nav_title_bouldern)
+        clickOn(Tabs.BOULDER.typeToString())
     }
 
     @Test
     @SmallTest
     fun openDrawerAndNavigateToClimbingOk(){
         openDrawer()
-        clickOn("Klettern")
-        clickOn("Routen")
+        clickOn(R.string.nav_title_climbing)
+        clickOn(Tabs.ROUTEN.typeToString())
+    }
+
+    @Test
+    @SmallTest
+    fun openDrawerAndNavigateToSettingsOk(){
+        openDrawer()
+        clickOn(TestProvider.getLocaleStringResource(Locale.GERMAN,R.string.nav_title_settings))
+        clickOn(TestProvider.getLocaleStringResource(Locale.GERMAN,R.string.language_switch_title))
     }
 }

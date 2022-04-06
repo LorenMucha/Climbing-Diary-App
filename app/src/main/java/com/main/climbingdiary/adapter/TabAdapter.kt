@@ -3,7 +3,6 @@ package com.main.climbingdiary.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import java.util.*
 
 class TabAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 

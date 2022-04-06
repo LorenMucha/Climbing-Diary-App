@@ -28,7 +28,6 @@ import com.main.climbingdiary.models.Colors
 import com.main.climbingdiary.models.Levels
 import com.main.climbingdiary.models.Styles
 import java.util.*
-import kotlin.collections.LinkedHashMap
 
 class RouteLineChartController(val view:View) : RouteChartController() {
 

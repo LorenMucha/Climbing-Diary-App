@@ -4,7 +4,6 @@ import android.database.Cursor
 import android.database.CursorIndexOutOfBoundsException
 import com.main.climbingdiary.database.TaskRepository
 import org.chalup.microorm.MicroOrm
-import java.util.*
 
 object AreaRepository {
 

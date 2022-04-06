@@ -1,27 +1,38 @@
 package com.main.climbingdiary.models
 
-import java.util.*
+import com.main.climbingdiary.R
+import com.main.climbingdiary.common.StringManager.getStringForId
+import com.main.climbingdiary.common.preferences.AppPreferenceManager
+import com.main.climbingdiary.error.TabsNotSupportedException
 
-enum class Tabs {
-    STATISTIK, ROUTEN, BOULDER, PROJEKTE;
+enum class Tabs(val s: String) {
+    STATISTIK("S"), ROUTEN("R"), BOULDER("B"), PROJEKTE("P");
 
     companion object{
-        fun stringToTabs(type: String?): Tabs? {
-            var result: Tabs? = null
-            try {
-                result = valueOf(type!!.uppercase(Locale.ROOT))
-            } catch (ignored: Exception) {
+        fun stringToTabs(tabName: String?): Tabs {
+            val firstLetter = tabName!!.uppercase()[0].toString()
+            values().forEach {
+                if(it.s == firstLetter){
+                    return it
+                }
             }
-            return result
+            throw TabsNotSupportedException("$tabName not supported")
         }
     }
 
-    open fun typeToString(): String? {
-        var result: String? = null
-        try {
-            result = this.toString().lowercase(Locale.ROOT)
-        } catch (ignored: java.lang.Exception) {
+    fun typeToString(): String {
+       return when(this){
+            STATISTIK -> getStringForId(R.string.tab_statistic)
+            ROUTEN -> {
+                //needed for initialize start of the app
+                if(AppPreferenceManager.getSportType() == SportType.BOULDERN){
+                    getStringForId(R.string.tabs_boulder)
+                }else {
+                    getStringForId(R.string.tabs_routen)
+                }
+            }
+            BOULDER -> getStringForId(R.string.tabs_boulder)
+            PROJEKTE -> getStringForId(R.string.tabs_projects)
         }
-        return result
     }
 }

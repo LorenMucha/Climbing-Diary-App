@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:background="@color/buttonColor"
-            android:text="Statistik"
+            android:text="@string/statistik"
             android:textColor="@color/white" />
 
         <Button
@@ -31,7 +31,7 @@
             android:layout_marginLeft="2dp"
             android:layout_toRightOf="@id/btn_stat"
             android:background="@color/buttonColor"
-            android:text="Verlauf"
+            android:text="@string/verlauf"
             android:textColor="@color/white" />
 
         <Button
@@ -42,7 +42,7 @@
             android:layout_marginLeft="2dp"
             android:layout_toRightOf="@id/btn_dev"
             android:background="@color/buttonColor"
-            android:text="Tabelle"
+            android:text="@string/tabelle"
             android:textColor="@color/white" />
 
     </RelativeLayout>

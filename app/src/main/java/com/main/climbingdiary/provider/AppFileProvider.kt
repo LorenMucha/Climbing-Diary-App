@@ -1,10 +1,10 @@
-package com.main.climbingdiary.common
+package com.main.climbingdiary.provider
 
 import android.content.Context
-import android.content.ContextWrapper
 import android.net.Uri
 import android.os.Environment
 import com.main.climbingdiary.activities.MainActivity
+import com.main.climbingdiary.common.EnvironmentParamter
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.getOutputPath
 import java.io.*
 import java.nio.channels.FileChannel

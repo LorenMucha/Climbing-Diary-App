@@ -2,7 +2,6 @@ package com.main.climbingdiary.models
 
 import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity
-import java.lang.RuntimeException
 
 enum class TimeRange {
     YEAR, RANGE;

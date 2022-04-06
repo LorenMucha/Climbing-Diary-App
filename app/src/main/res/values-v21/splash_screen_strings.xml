@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="addNewRouteHeader">Neue Routen hinzufügen</string>
+    <string name="showcase_addNewRouteHeader">Neue Routen hinzufügen</string>
 </resources>

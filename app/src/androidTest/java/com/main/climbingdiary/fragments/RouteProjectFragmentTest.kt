@@ -27,6 +27,7 @@ import com.main.climbingdiary.database.entities.RouteRepository
 import com.main.climbingdiary.helper.TestHelper.clickOnViewChild
 import com.main.climbingdiary.helper.TestHelper.getRandomProjekt
 import com.main.climbingdiary.helper.TestHelper.getRandomProjektList
+import com.main.climbingdiary.helper.TestHelper.initDefaultScenario
 import com.main.climbingdiary.helper.TestProvider
 import com.main.climbingdiary.helper.TestProvider.changeInputTest
 import com.main.climbingdiary.helper.TestProvider.setSpinnerSelect
@@ -51,8 +52,7 @@ internal class RouteProjectFragmentTest {
 
     @Before
     fun setUp() {
-        activityScenario =
-            ActivityScenario.launch(MainActivity::class.java)
+        activityScenario = initDefaultScenario()
         project = getRandomProjekt()
         repo.insertRoute(project)
         TestProvider.openTab(Tabs.PROJEKTE)
