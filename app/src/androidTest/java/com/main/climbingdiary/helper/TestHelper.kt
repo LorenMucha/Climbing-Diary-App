@@ -127,15 +127,12 @@ object TestHelper {
         PreferenceManager.getDefaultSharedPreferences(InstrumentationRegistry.getInstrumentation().targetContext).edit().clear().apply()
     }
 
-    fun getContext():Context{
-        return InstrumentationRegistry.getInstrumentation().targetContext
-    }
-
-    fun initDefaultScenario():ActivityScenario<MainActivity>{
+    fun initDefaultScenario(languageFirstTime:Boolean=false):ActivityScenario<MainActivity>{
+        //Fixme: PermissionGranter Not Working
         PermissionGranter.allowPermissionsIfNeeded(Manifest.permission.MANAGE_EXTERNAL_STORAGE)
         PermissionGranter.allowPermissionsIfNeeded(Manifest.permission.READ_EXTERNAL_STORAGE)
         PermissionGranter.allowPermissionsIfNeeded(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        setPreferenceString(PreferenceKeys.FIRST_TIME_LANGUAGE, false)
+        setPreferenceString(PreferenceKeys.FIRST_TIME_LANGUAGE, languageFirstTime)
         setPreferenceString(PreferenceKeys.LANGUAGE, LanguageManager.DE)
         return ActivityScenario.launch(MainActivity::class.java)
     }

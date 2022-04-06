@@ -34,12 +34,18 @@ internal class LanguageManagerTest {
     }
 
     @Test
-    fun setLanguageFirstTime() {
-        TestHelper.setPreferenceString(PreferenceKeys.FIRST_TIME_LANGUAGE, true)
-        activityScenario = ActivityScenario
-            .launch(MainActivity::class.java)
+    fun setLanguageFirstTimeDE() {
+        activityScenario = TestHelper.initDefaultScenario(languageFirstTime = true)
         clickOn(R.id.btn_welcome_de)
         assertContains(TestProvider.getLocaleStringResource(Locale.GERMAN,R.string.app_will_restart))
+        assertContains(getString(R.string.app_ok))
+    }
+
+    @Test
+    fun setLanguageFirstTimeEN() {
+        activityScenario = TestHelper.initDefaultScenario(languageFirstTime = true)
+        clickOn(R.id.btn_welcome_en)
+        assertContains(TestProvider.getLocaleStringResource(Locale.ENGLISH,R.string.app_will_restart))
         assertContains(getString(R.string.app_ok))
     }
 

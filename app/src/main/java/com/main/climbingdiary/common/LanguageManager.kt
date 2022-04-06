@@ -74,15 +74,18 @@ class LanguageManager(private val context: Context) {
         val germanBtn: ImageButton = dialog.findViewById(R.id.btn_welcome_de)
         val englishBtn: ImageButton = dialog.findViewById(R.id.btn_welcome_en)
         germanBtn.setOnClickListener {
-            AppPreferenceManager.setLanguage(EN)
-            LanguageManager(context).switchLanguage(true)
+            onLanguageBtnClick(EN)
         }
         englishBtn.setOnClickListener {
-            AppPreferenceManager.setLanguage(DE)
-            LanguageManager(context).switchLanguage(true)
+           onLanguageBtnClick()
         }
         dialog
             .show()
-            .also { AppPreferenceManager.setLanguageFirstTime(true) }
+    }
+
+    private fun onLanguageBtnClick(lang:String= DE){
+        AppPreferenceManager.setLanguage(lang)
+        AppPreferenceManager.setLanguageFirstTime(isUsed = false)
+        LanguageManager(context).switchLanguage(true)
     }
 }
