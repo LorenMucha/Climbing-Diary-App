@@ -3,8 +3,12 @@ package com.main.climbingdiary.controller
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.intent.Intents
 import androidx.test.filters.SmallTest
+import com.adevinta.android.barista.assertion.BaristaAssertions
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertContains
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
+import com.adevinta.android.barista.interaction.BaristaDialogInteractions
 import com.adevinta.android.barista.interaction.BaristaDrawerInteractions.openDrawer
+import com.adevinta.android.barista.interaction.BaristaScrollInteractions
 import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity
 import com.main.climbingdiary.common.StringProvider.getString
@@ -53,6 +57,6 @@ class NavDrawerControllerTest{
     fun openDrawerAndNavigateToSettingsOk(){
         openDrawer()
         clickOn(TestProvider.getLocaleStringResource(Locale.GERMAN,R.string.nav_title_settings))
-        clickOn(TestProvider.getLocaleStringResource(Locale.GERMAN,R.string.language_switch_title))
+        assertContains(TestProvider.getLocaleStringResource(Locale.GERMAN,R.string.safty_copy_pref_header))
     }
 }

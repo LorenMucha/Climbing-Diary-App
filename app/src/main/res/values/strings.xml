@@ -29,10 +29,12 @@
     <string name="restore_db_summary">Choose a backup for recovery</string>
     <string name="time_range_summary">In years or period</string>
     <string name="language_switch_title">Change Language</string>
-    <string name="alert_db_restored_correctly">The database has been restored !</string>
+    <string name="alert_db_restored_correctly">The database was restored !</string>
+    <string name="alert_db_export_correctly">The database was exported !</string>
     <string name="app_will_restart">The application will be restarted.</string>
     <string name="alert_language_change">The language was changed !</string>
     <string name="alert_restore_db_failure">The restore went wrong 😓</string>
+    <string name="alert_export_db_failure">The export went wrong 😓</string>
     <string name="tab_statistic">Statistic</string>
     <string name="tabs_routen">Routes</string>
     <string name="tabs_boulder">Boulder</string>

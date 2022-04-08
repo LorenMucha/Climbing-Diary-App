@@ -141,7 +141,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     it,
                     Alert(
                         dialogType = SweetAlertDialog.SUCCESS_TYPE,
-                        title = "Die Datenbank wurde exportiert !"
+                        title = getString(R.string.alert_db_export_correctly)
                     )
                 ).show()
             }
@@ -151,7 +151,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     it,
                     Alert(
                         dialogType = SweetAlertDialog.ERROR_TYPE,
-                        title = "Der Export ist Schiefgelaufen 😓"
+                        title = getString(R.string.alert_export_db_failure)
                     )
                 )
                 errorAlert.setConfirmClickListener {

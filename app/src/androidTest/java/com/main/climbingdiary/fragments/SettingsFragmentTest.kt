@@ -1,12 +1,17 @@
 package com.main.climbingdiary.fragments
 
 import androidx.test.core.app.ActivityScenario
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.swipeUp
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.filters.SmallTest
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertContains
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickBack
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.adevinta.android.barista.interaction.BaristaMenuClickInteractions.clickMenu
+import com.adevinta.android.barista.interaction.BaristaScrollInteractions.scrollTo
 import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity
 import com.main.climbingdiary.common.LanguageManager
@@ -63,7 +68,7 @@ internal class SettingsFragmentTest {
         activityScenario = initDefaultScenario()
         setUp()
         clickOn(TestProvider.getLocaleStringResource(Locale.GERMAN,R.string.backup_db_title))
-        assertDisplayed(TestProvider.getLocaleStringResource(Locale.GERMAN,R.string.alert_db_restored_correctly))
+        assertContains(TestProvider.getLocaleStringResource(Locale.GERMAN,R.string.alert_db_export_correctly))
         clickOn(TestProvider.getLocaleStringResource(Locale.GERMAN,R.string.app_ok))
     }
 
@@ -113,8 +118,10 @@ internal class SettingsFragmentTest {
         activityScenario = ActivityScenario
             .launch(MainActivity::class.java)
         clickMenu(R.id.app_settings)
+        onView(withText(R.string.pref_language))
+            .perform(swipeUp())
         clickOn(TestProvider.getLocaleStringResource(Locale.GERMAN,R.string.language_switch_title))
-        BaristaVisibilityAssertions.assertContains(
+        assertContains(
             TestProvider.getLocaleStringResource(
                 Locale.ENGLISH,
                 R.string.alert_language_change

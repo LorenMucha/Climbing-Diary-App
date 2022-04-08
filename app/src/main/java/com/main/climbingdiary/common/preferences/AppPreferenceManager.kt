@@ -20,7 +20,7 @@ object AppPreferenceManager {
     }
 
     fun getUsedFirstTime(): Boolean{
-        return PREFS.getBoolean(PreferenceKeys.FIRST_TIME, false)
+        return PREFS.getBoolean(PreferenceKeys.FIRST_TIME, true)
     }
 
     fun setIsUsedFirstTime(isUsed:Boolean){

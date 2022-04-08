@@ -28,11 +28,11 @@ class ShowCaseProvider(private val context: Context) {
         AppPreferenceManager
             .getUsedFirstTime()
             .run {
-                //if (!this) {
-                setAlert()
-                //}
+                if (this) {
+                    setAlert()
+                }
             }.also {
-                AppPreferenceManager.setIsUsedFirstTime(true)
+                AppPreferenceManager.setIsUsedFirstTime(false)
             }
     }
 
@@ -76,7 +76,6 @@ class ShowCaseProvider(private val context: Context) {
             .marginFocusArea(0)
             .gradientFocusEnabled(true)
             .add()
-
             .build()
             .show()
     }
@@ -98,7 +97,7 @@ class ShowCaseProvider(private val context: Context) {
                     viewWelcomeScreen()
                 }
             }
-            .setCancelButton("Nein", { it.cancel() })
-            //.show()
+            .setCancelButton("Nein") { it.cancel() }
+            .show()
     }
 }

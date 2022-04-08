@@ -12,9 +12,11 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.main.climbingdiary.R
 import com.main.climbingdiary.common.LanguageManager
+import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.removeAllFilterPrefs
 import com.main.climbingdiary.controller.FragmentPager.createViewPager
 import com.main.climbingdiary.controller.NavDrawerController
+import com.main.climbingdiary.showcase.ShowCaseProvider
 
 class MainActivity : AppCompatActivity() {
 
@@ -51,7 +53,9 @@ class MainActivity : AppCompatActivity() {
         createViewPager()
         //navigation View
         NavDrawerController(this)
-       // ShowCaseProvider(this).createShowCase()
+        if(!AppPreferenceManager.getLanguageFirstTime()) {
+            ShowCaseProvider(this).createShowCase()
+        }
     }
 
     override fun onBackPressed() {

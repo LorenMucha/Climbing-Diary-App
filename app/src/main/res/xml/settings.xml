@@ -29,6 +29,7 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_language">
         <Preference
+            android:id="@+id/pref_language"
             android:key="@string/language"
             android:icon="@drawable/en"
             android:selectable="true"

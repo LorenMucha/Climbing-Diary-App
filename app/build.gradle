@@ -13,7 +13,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [appAuthRedirectScheme: 'com.redirectScheme.comm']
-        resConfigs "de", "en"
+        resConfigs 'de', 'en'
     }
     buildTypes {
         release {
