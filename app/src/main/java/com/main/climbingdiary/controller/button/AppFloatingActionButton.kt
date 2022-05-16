@@ -15,12 +15,9 @@ object AppFloatingActionButton : View.OnClickListener {
     val activity: AppCompatActivity by lazy { MainActivity.getMainActivity() }
     private val floatingActionButtonAdd: FloatingActionButton = activity
         .findViewById(R.id.floating_action_btn_add)
-    private val floatingActionButtonLocate: FloatingActionButton = activity
-        .findViewById(R.id.floating_action_btn_locate)
 
     init {
         floatingActionButtonAdd.setOnClickListener(this)
-        floatingActionButtonLocate.setOnClickListener(this)
     }
 
     fun show() {
@@ -30,11 +27,10 @@ object AppFloatingActionButton : View.OnClickListener {
 
     fun hide() {
         floatingActionButtonAdd.hide()
-        floatingActionButtonLocate.hide()
     }
 
 
     override fun onClick(v: View?) {
-        getSelectedTabsTitle()?.let { DialogFactory.openAddRouteDialog(it) }
+        getSelectedTabsTitle().let { DialogFactory.openAddRouteDialog(it) }
     }
 }

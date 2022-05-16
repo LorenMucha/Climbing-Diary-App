@@ -28,9 +28,9 @@ class ShowCaseProvider(private val context: Context) {
         AppPreferenceManager
             .getUsedFirstTime()
             .run {
-                if (this) {
-                    setAlert()
-                }
+                //if (this) {
+                setAlert()
+                //}
             }.also {
                 AppPreferenceManager.setIsUsedFirstTime(false)
             }
@@ -46,6 +46,15 @@ class ShowCaseProvider(private val context: Context) {
             .descriptionText(getString(R.string.showcase_info))
             .buttonText(getString(R.string.showcase_further))
             .key("Welcome")
+            .marginFocusArea(0)
+            .gradientFocusEnabled(true)
+            .add()
+            .view(mainView.findViewById(R.id.tabLayout))
+            .descriptionImageRes(R.drawable.tabkey)
+            .descriptionTitle("Auswahl Menü")
+            .descriptionText("Zeige dir deine Statistik an, verwalte deine gekletterten Touren und füge Projekte hinzu.")
+            .buttonText(getString(R.string.showcase_further))
+            .key("Statistik")
             .marginFocusArea(0)
             .gradientFocusEnabled(true)
             .add()
@@ -73,6 +82,16 @@ class ShowCaseProvider(private val context: Context) {
             .descriptionText(getString(R.string.showcase_filterBarText))
             .buttonText(getString(R.string.showcase_further))
             .key("filterRoute")
+            .marginFocusArea(0)
+            .gradientFocusEnabled(true)
+            .add()
+            //Fixme
+            .view(mainView.findViewById(R.id.app_settings))
+            .descriptionImageRes(R.drawable.ellipsis)
+            .descriptionTitle("Einstellungen")
+            .descriptionText("Exportiere deine Routen oder stelle Sie wieder her, ein Wechsel der Sprache ist auch möglich.")
+            .buttonText(getString(R.string.showcase_further))
+            .key("Statistik")
             .marginFocusArea(0)
             .gradientFocusEnabled(true)
             .add()
