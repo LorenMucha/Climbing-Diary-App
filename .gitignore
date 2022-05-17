@@ -1,7 +1,7 @@
 # Gradle files
 .gradle/
-gradle/
 build/
+gradle/
 **/build/
 !src/**/build/
 
