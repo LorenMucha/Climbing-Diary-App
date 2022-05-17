@@ -6,7 +6,7 @@ on:
     tags:
       - 'v*'
 env:
-  app_version: v1.0.37
+  version: v1.0.37
 
 jobs:
   apk:
@@ -23,7 +23,7 @@ jobs:
       - name: Build Signed APK
         uses: victorbnl/build-signed-apk@main
         with:
-          keystore_file: ${{ secrets.SIGNING_KEY }}
+          keystore: ${{ secrets.SIGNING_KEY }}
           keystore_password: ${{ secrets.KEY_STORE_PASSWORD }}
           key_alias: ${{ secrets.ALIAS }}
           key_password: ${{ secrets.KEY_PASSWORD}}
@@ -49,8 +49,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: $app_version
-          release_name: Release $app_version
+          tag_name: $version
+          release_name: Release $version
           body: |
             - Language Support
             - Welcome Tour
