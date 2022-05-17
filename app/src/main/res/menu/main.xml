@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_search"
+        android:title="@string/menu_suche"
+        android:visible="false"
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="ifRoom|withText" />
+    <item
+        android:id="@+id/action_filter"
+        android:icon="@drawable/ic_filter"
+        android:title="@string/menu_filter"
+        android:visible="false"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/filter_area"
+                android:title="@string/menu_gebiete">
+                <menu />
+            </item>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/action_sort"
+        android:icon="@drawable/ic_sort"
+        android:title="@string/menu_sortieren"
+        android:visible="false"
+        app:showAsAction="ifRoom">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/sort_level"
+                    android:title="@string/menu_schwierigkeit" />
+                <item
+                    android:id="@+id/sort_area"
+                    android:title="@string/menu_gebiet" />
+                <item
+                    android:id="@+id/sort_date"
+                    android:checked="true"
+                    android:title="@string/menu_datum" />
+            </group>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/app_settings"
+        android:title="@string/settings_title">
+    </item>
+</menu>
