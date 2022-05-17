@@ -5,7 +5,8 @@ on:
       - master
     tags:
       - 'v*'
-
+env:
+  version: v1.0.37
 jobs:
   apk:
     runs-on: ubuntu-latest
@@ -47,8 +48,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v1.0.37
-          release_name: Release v1.0.37
+          tag_name: $version
+          release_name: Release $version
           body: |
             - Language Support
             - Welcome Tour
