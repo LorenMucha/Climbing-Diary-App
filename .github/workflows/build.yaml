@@ -7,6 +7,7 @@ on:
       - 'v*'
 env:
   version: v1.0.37
+
 jobs:
   apk:
     runs-on: ubuntu-latest
@@ -22,7 +23,7 @@ jobs:
       - name: Build Signed APK
         uses: victorbnl/build-signed-apk@main
         with:
-          keystore: ${{ secrets.SIGNING_KEY }}
+          keystore_file: ${{ secrets.SIGNING_KEY }}
           keystore_password: ${{ secrets.KEY_STORE_PASSWORD }}
           key_alias: ${{ secrets.ALIAS }}
           key_password: ${{ secrets.KEY_PASSWORD}}
