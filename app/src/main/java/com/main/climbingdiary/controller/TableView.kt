@@ -2,6 +2,7 @@ package com.main.climbingdiary.controller
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.View
 import android.widget.ScrollView
 import android.widget.TableLayout
@@ -31,8 +32,6 @@ class TableView(val context: Context, val view: View) {
         val styles = getStyle(true)
         //tree et because this sort the values
         val stk = view.findViewById<TableLayout>(R.id.route_table)
-        //clear view
-        stk.removeAllViews()
         val tbrow0 = TableRow(context)
         val tv0 = TextView(context)
         with(tv0) {
@@ -108,9 +107,5 @@ class TableView(val context: Context, val view: View) {
             stk.addView(tbrow)
             tableCursor.moveToNext()
         }
-    }
-
-    private fun createLevelColumn(){
-
     }
 }
