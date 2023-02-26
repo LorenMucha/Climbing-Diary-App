@@ -68,7 +68,7 @@ class RouteRepository<T : RouteElement>(private val klass: KClass<T>) {
 
         var area = Area(name = toUpdate.area!!)
         // check if area exists
-        //Fixme update sector
+        //Fixme: update sector
         AreaRepository.getAreaByName(area.name)?.let {
             toUpdate.area = it.id.toString()
         } ?: run {
