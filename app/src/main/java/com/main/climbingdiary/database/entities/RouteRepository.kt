@@ -38,14 +38,6 @@ class RouteRepository<T : RouteElement>(private val klass: KClass<T>) {
         return routes
     }
 
-    fun getListByArea(areaId: Int): ArrayList<T> {
-        AppPreferenceManager.setFilterSetter(MenuValues.FILTER)
-        AppPreferenceManager.setFilter(String.format("g.id = %s", areaId))
-        val routes = getRouteList()
-        AppPreferenceManager.removeAllFilterPrefs()
-        return routes
-    }
-
     fun deleteRoute(routeElement: RouteElement): Boolean {
         return if (routeElement is Projekt) {
             TaskRepository.deleteProjekt(routeElement.id)

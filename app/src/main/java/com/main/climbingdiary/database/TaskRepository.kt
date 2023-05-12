@@ -130,7 +130,8 @@ object TaskRepository {
         return try {
             for (x in tasks) {
                 Log.d("Execute", x)
-                mDb.execSQL(String(x.toByteArray(), StandardCharsets.UTF_8))
+                val query = x.trim()
+                mDb.execSQL(String(query.toByteArray(), StandardCharsets.UTF_8))
             }
             mDb.setTransactionSuccessful()
             true
