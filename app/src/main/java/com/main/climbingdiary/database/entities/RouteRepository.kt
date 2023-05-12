@@ -56,6 +56,7 @@ class RouteRepository<T : RouteElement>(private val klass: KClass<T>) {
         }
     }
 
+    //Fixme: Method is to big
     fun updateRoute(toUpdate: RouteElement): Boolean {
 
         var area = Area(name = toUpdate.area!!)
@@ -83,12 +84,18 @@ class RouteRepository<T : RouteElement>(private val klass: KClass<T>) {
             )!!.id.toString()
         }
 
-        return if (toUpdate is Route) {
-            TaskRepository.updateRoute(toUpdate)
-        } else if (toUpdate is Projekt) {
-            TaskRepository.insertProjekt(toUpdate)
-        } else {
-            false
+        return when (toUpdate) {
+            is Route -> {
+                TaskRepository.updateRoute(toUpdate)
+            }
+
+            is Projekt -> {
+                TaskRepository.insertProjekt(toUpdate)
+            }
+
+            else -> {
+                false
+            }
         }
     }
 }
