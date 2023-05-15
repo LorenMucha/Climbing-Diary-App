@@ -30,31 +30,30 @@ class TableView(val context: Context, val view: View) {
         //Variables
         val styles = getStyle(true)
         //tree et because this sort the values
-        val stk = view.findViewById<TableLayout>(R.id.route_table)
-        //clear view
-        stk.removeAllViews()
-        val tbrow0 = TableRow(context)
+        val tableView = view.findViewById<TableLayout>(R.id.route_table)
+        val tableRow = TableRow(context)
+        tableRow.removeAllViews()
         val tv0 = TextView(context)
         with(tv0) {
             this.text = context.getString(R.string.table_level_header)
             text = context.getString(R.string.table_level_header)
             setTextAppearance(view.context, R.style.TableHeader)
         }
-        tbrow0.addView(tv0)
+        tableRow.addView(tv0)
         for (element in styles) {
             val tvStyle = TextView(context)
             tvStyle.text = element
             tvStyle.setPadding(20, 10, 20, 10)
             tvStyle.setTextAppearance(view.context, R.style.TableHeader)
-            tbrow0.addView(tvStyle)
+            tableRow.addView(tvStyle)
         }
         val tv3 = TextView(context)
         with(tv3) {
             this.text = context.getString(R.string.table_gesamt_header)
             setTextAppearance(view.context, R.style.TableHeader)
         }
-        tbrow0.addView(tv3)
-        stk.addView(tbrow0)
+        tableRow.addView(tv3)
+        tableView.addView(tableRow)
         //variables
         while (!tableCursor.isAfterLast) {
             //get the values
@@ -105,12 +104,12 @@ class TableView(val context: Context, val view: View) {
                 setPadding(30, 10, 20, 10)
             }
             tbrow.addView(t5v)
-            stk.addView(tbrow)
+            tableView.addView(tbrow)
             tableCursor.moveToNext()
         }
     }
 
-    private fun createLevelColumn(){
+    private fun createLevelColumn() {
 
     }
 }

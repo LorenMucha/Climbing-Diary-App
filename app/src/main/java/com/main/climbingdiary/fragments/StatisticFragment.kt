@@ -14,8 +14,7 @@ import com.main.climbingdiary.controller.TableView
 import com.main.climbingdiary.models.Colors
 import com.main.climbingdiary.models.MenuValues
 
-@SuppressLint("StaticFieldLeak", "ValidFragment")
-object StatisticFragment: Fragment(), RouteFragment {
+class StatisticFragment: Fragment(), RouteFragment {
 
     private lateinit var setLineChartBtn: Button
     private lateinit var setBarChartBtn: Button

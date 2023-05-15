@@ -1,5 +1,6 @@
 package com.main.climbingdiary.controller
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -32,7 +33,7 @@ object FragmentPager : TabLayout.OnTabSelectedListener {
     private const val viewLayout: Int = R.id.viewPager
     private const val layoutTabs: Int = R.id.tabLayout
     private val fragmentMap: Map<Tabs, RouteFragment> = mapOf(
-        Tabs.STATISTIK to StatisticFragment,
+        Tabs.STATISTIK to StatisticFragment(),
         Tabs.ROUTEN to RouteDoneFragment,
         Tabs.PROJEKTE to RouteProjectFragment
     )
