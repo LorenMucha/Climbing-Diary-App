@@ -1,6 +1,5 @@
 package com.main.climbingdiary.controller
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
 import android.widget.ScrollView
@@ -25,7 +24,6 @@ class TableView(val context: Context, val view: View) {
         this.tableScrollView.visibility = View.GONE
     }
 
-    @SuppressLint("SetTextI18n")
     fun createTableView() {
         //Variables
         val styles = getStyle(true)
@@ -37,20 +35,20 @@ class TableView(val context: Context, val view: View) {
         with(tv0) {
             this.text = context.getString(R.string.table_level_header)
             text = context.getString(R.string.table_level_header)
-            setTextAppearance(view.context, R.style.TableHeader)
+            setTextAppearance(R.style.TableHeader)
         }
         tableRow.addView(tv0)
         for (element in styles) {
             val tvStyle = TextView(context)
             tvStyle.text = element
             tvStyle.setPadding(20, 10, 20, 10)
-            tvStyle.setTextAppearance(view.context, R.style.TableHeader)
+            tvStyle.setTextAppearance(R.style.TableHeader)
             tableRow.addView(tvStyle)
         }
         val tv3 = TextView(context)
         with(tv3) {
             this.text = context.getString(R.string.table_gesamt_header)
-            setTextAppearance(view.context, R.style.TableHeader)
+            setTextAppearance(R.style.TableHeader)
         }
         tableRow.addView(tv3)
         tableView.addView(tableRow)
@@ -62,54 +60,31 @@ class TableView(val context: Context, val view: View) {
             val rp = tableCursor.getString(2)
             val flash = tableCursor.getString(3)
             val gesamt = tableCursor.getString(4)
-            //append the text view rows
             val tbrow = TableRow(context)
-            val t1v = TextView(context)
-            with(t1v) {
-                this.text = level
-                setBackgroundColor(getGradeColor(level))
-                setTextAppearance(view.context, R.style.TableRow)
-                setPadding(30, 10, 20, 10)
-            }
+            //append the text view rows
+            val t1v = appendTableRow(level, level)
             tbrow.addView(t1v)
-            val t2v = TextView(context)
-            with(t2v) {
-                this.text = os
-                setBackgroundColor(getGradeColor(level))
-                setTextAppearance(view.context, R.style.TableRow)
-                setPadding(30, 10, 20, 10)
-            }
+            val t2v = appendTableRow(os, level)
             tbrow.addView(t2v)
-            val t3v = TextView(context)
-            with(t3v) {
-                this.text = rp
-                setBackgroundColor(getGradeColor(level))
-                setTextAppearance(view.context, R.style.TableRow)
-                setPadding(30, 10, 20, 10)
-            }
+            val t3v = appendTableRow(rp, level)
             tbrow.addView(t3v)
-            val t4v = TextView(context)
-            with(t4v) {
-                this.text = flash
-                setBackgroundColor(getGradeColor(level))
-                setTextAppearance(view.context, R.style.TableRow)
-                setPadding(30, 10, 20, 10)
-            }
+            val t4v = appendTableRow(flash, level)
             tbrow.addView(t4v)
-            val t5v = TextView(context)
-            with(t5v) {
-                this.text = gesamt
-                setBackgroundColor(getGradeColor(level))
-                setTextAppearance(view.context, R.style.TableRow)
-                setPadding(30, 10, 20, 10)
-            }
+            val t5v = appendTableRow(gesamt, level)
             tbrow.addView(t5v)
             tableView.addView(tbrow)
             tableCursor.moveToNext()
         }
     }
 
-    private fun createLevelColumn() {
-
+    private fun appendTableRow(text: String, level: String): TextView {
+        val textView = TextView(context)
+        with(textView) {
+            this.text = text
+            setBackgroundColor(getGradeColor(level))
+            setTextAppearance(R.style.TableRow)
+            setPadding(30, 10, 20, 10)
+        }
+        return textView
     }
 }
