@@ -1,8 +1,10 @@
 package com.main.climbingdiary.database
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import com.main.climbingdiary.common.EnvironmentParamter
 import java.io.File
 import java.io.FileOutputStream
@@ -18,9 +20,11 @@ class DatabaseHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     ) {
 
     private val dbName: String = EnvironmentParamter.DB_NAME
-    private var dbPath = context.applicationInfo.dataDir + "/databases/"
+    private val dbPath = context.applicationInfo.dataDir + "/databases/"
+    private val initScript =
+        context.assets.open("update.sql").bufferedReader().use { it.readText() }
 
-    companion object{
+    companion object {
         fun checkIfNumeric(toCheck: String): Boolean {
             val regex = "-?\\d+(\\.\\d+)?".toRegex()
             return !regex.containsMatchIn(toCheck)
@@ -32,7 +36,7 @@ class DatabaseHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     private var mNeedUpdate = false
     private val mContext = context
 
-    init{
+    init {
         copyDataBase()
         this.readableDatabase
     }
@@ -51,6 +55,14 @@ class DatabaseHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
             } catch (mIOException: IOException) {
                 throw Error("ErrorCopyingDataBase")
             }
+        } else {
+            try {
+                val db = this.writableDatabase
+                initScript.split(";").toTypedArray().forEach { db.execSQL(it) }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error loading init SQL from raw", e)
+            }
+
         }
     }
 
