@@ -1,6 +1,5 @@
 package com.main.climbingdiary.fragments
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
@@ -10,7 +9,7 @@ import com.main.climbingdiary.R
 import com.main.climbingdiary.chart.RouteBarChartController
 import com.main.climbingdiary.chart.RouteLineChartController
 import com.main.climbingdiary.controller.AppBarMenu
-import com.main.climbingdiary.controller.TableView
+import com.main.climbingdiary.chart.TableView
 import com.main.climbingdiary.models.Colors
 import com.main.climbingdiary.models.MenuValues
 
