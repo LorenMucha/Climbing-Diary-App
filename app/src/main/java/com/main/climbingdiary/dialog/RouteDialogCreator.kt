@@ -17,6 +17,7 @@ import com.main.climbingdiary.R
 import com.main.climbingdiary.common.AlertFactory.getAlert
 import com.main.climbingdiary.common.GradeConverter.convertUiaaToFrench
 import com.main.climbingdiary.common.RouteConverter.cleanRoute
+import com.main.climbingdiary.common.StringManager
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.getSelectedTabsTitle
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.getSportType
 import com.main.climbingdiary.controller.FragmentPager.refreshSelectedFragment
@@ -51,6 +52,7 @@ class RouteDialogCreator(
     private var sector: AutoCompleteTextView = view.findViewById(R.id.input_route_sektor)
     private var comment: EditText =
         view.findViewById(R.id.input_route_comment)
+    private var tries: EditText = view.findViewById(R.id.input_route_tries)
 
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private var gradeSwitcher: Switch = view.findViewById(R.id.grade_system_switcher)
@@ -98,6 +100,18 @@ class RouteDialogCreator(
         area.setText(route.area)
         sector.setText(route.sector)
         comment.setText(route.comment)
+        tries.also {
+            val header:TextView = view.findViewById(R.id.input_route_tries_header)
+            if(route.tries != null){
+                it.visibility = View.VISIBLE
+                it.setText(route.tries.toString())
+                header.visibility = View.VISIBLE
+            }else{
+                val tries = if(route.style == "RP") StringManager.getStringForId(R.string.dialog_tries_not_set) else "1"
+                it.setText(tries)
+            }
+        }
+
         // set the Spinner
         setRatingSpinner(route.rating!! - 1)
         SetDate(date, context)
@@ -247,6 +261,7 @@ class RouteDialogCreator(
         newRoute.comment = this.comment.text.toString()
         newRoute.rating = this.rating.selectedItemPosition + 1
         newRoute.style = this.stil.selectedItem.toString()
+        newRoute.tries = this.tries.text.toString().toInt()
         return cleanRoute(newRoute) as Route
     }
 

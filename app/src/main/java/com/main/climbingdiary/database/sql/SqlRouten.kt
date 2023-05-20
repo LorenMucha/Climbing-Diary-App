@@ -80,7 +80,7 @@ object SqlRouten {
     }
 
     fun getRoute(id: Int): String {
-        return """SELECT r.id, r.name,g.name as gebiet,r.level,r.stil,r.rating, r.kommentar, r.tries
+        return """SELECT r.id, r.name,g.name as gebiet,r.level,r.stil,r.rating, r.kommentar, r.tries,
             | strftime('%d.%m.%Y',r.date) as date, k.name as sektor 
             | FROM ${getRoutenTableName()} r, 
             | ${SqlAreaSektoren.getAreaTableName()} g, 
@@ -121,9 +121,9 @@ object SqlRouten {
                     | WHERE name='${route.area}'""".trimMargin()
         val insertRoute =
             """INSERT OR IGNORE INTO ${getRoutenTableName()}
-                | (date,name,level,stil,rating,kommentar,gebiet,sektor,tries) 
+                | (date,name,level,stil,rating,kommentar,tries,gebiet,sektor) 
                 | SELECT '${route.date}','${route.name}','${route.level}',
-                | '${route.style}','${route.rating}','${route.comment}',a.id,s.id
+                | '${route.style}','${route.rating}','${route.comment}', '${route.tries}',a.id,s.id
                 | FROM ${SqlAreaSektoren.getAreaTableName()} a, ${SqlAreaSektoren.getSektorenTableName()} s
                 | WHERE a.name = '${route.area}'
                 | AND s.name='${route.sector}'""".trimMargin()
@@ -159,7 +159,7 @@ object SqlRouten {
                     | sektor = '${route.sector}',
                     | stil = '${route.style}',
                     | rating = '${route.rating}',
-                    | kommentar = '${route.comment}'
+                    | kommentar = '${route.comment}' ,
                     | tries = '${route.tries}'
                     | where id =${route.id}
                     """.trimMargin()

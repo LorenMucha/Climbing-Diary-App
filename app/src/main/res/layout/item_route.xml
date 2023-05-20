@@ -75,7 +75,6 @@
                     android:layout_span="7"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="Gebiet Sektor und noch mehr Sektoren"
                     android:textColor="@color/coveredFontColor"
                     android:textSize="@dimen/route_content"
                     tools:ignore="SpUsage" />
@@ -88,7 +87,6 @@
                     android:layout_marginEnd="5dp"
                     android:layout_span="1"
                     android:paddingEnd="10dp"
-                    android:text="01.04.2019"
                     android:textColor="@color/black"
                     android:textSize="@dimen/route_date"
                     tools:ignore="SpUsage" />
@@ -138,7 +136,6 @@
                         android:layout_alignParentEnd="true"
                         android:visibility="invisible"
                         android:id="@+id/route_tries"
-                        android:text="try_holder"
                         tools:ignore="SpUsage" />
 
                     <View

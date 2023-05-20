@@ -47,7 +47,7 @@ class RoutesAdapter(routes: List<Route>) : Filterable,
         val areaText = route.area
         val sectorText = route.sector
         val commentString = route.comment
-        //val tries = route.tries
+        val tries = route.tries
 
         //create the html string for the route and sector
         val routeHtml = getRouteAndSectorString(areaText!!, sectorText!!)
@@ -61,6 +61,7 @@ class RoutesAdapter(routes: List<Route>) : Filterable,
         val area = viewHolder.areaTextView
         val comment = viewHolder.commentTextView
         val hidden_layout = viewHolder.hiddenView
+        val routeTries = viewHolder.triesTextView
 
         //route manipulate buttons
         val edit = viewHolder.editButton
@@ -70,6 +71,9 @@ class RoutesAdapter(routes: List<Route>) : Filterable,
         date.text = route.date
         level.text = gradeText
         level.setTextColor(Colors.getGradeColor(gradeText))
+        routeTries.text = "${route.tries.toString()} Versuche"
+        routeTries.also { it.visibility = if(route.tries == null) View.INVISIBLE else View.VISIBLE }
+
         try {
             val drawable: Drawable? =
                 ContextCompat.getDrawable(viewHolder.itemView.context, getRoutStyleIcon(styleText))
@@ -77,8 +81,8 @@ class RoutesAdapter(routes: List<Route>) : Filterable,
         } catch (e: Exception) {
             Log.e("Error drawable loading", styleText)
         }
-        area.text = Html.fromHtml(routeHtml)
-        comment.text = Html.fromHtml(commentHtml)
+        area.text = Html.fromHtml(routeHtml, 0)
+        comment.text = Html.fromHtml(commentHtml, 0)
         rating.rating = route.rating!!.toFloat()
 
         //show comment on holder click
@@ -218,5 +222,6 @@ class RoutesAdapter(routes: List<Route>) : Filterable,
         var hiddenView: TableRow = itemView.findViewById(R.id.route_hidden)
         var editButton: ImageButton = itemView.findViewById(R.id.route_edit)
         var removeButton: ImageButton = itemView.findViewById(R.id.route_delete)
+        var triesTextView: TextView = itemView.findViewById(R.id.route_tries)
     }
 }

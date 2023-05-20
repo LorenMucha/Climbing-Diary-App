@@ -13,5 +13,5 @@ data class Route(
     @Column("rating") var rating: Int? = null,
     @Column("kommentar") var comment: String? = null,
     @Column("date") var date: String? = null,
-    @Column("tries") var tries: Int? = null
+    @Column("tries") var tries: Int? = 1
 ) : RouteElement
