@@ -12,5 +12,6 @@ data class Route(
     @Column("gebiet") override var area: String? = null,
     @Column("rating") var rating: Int? = null,
     @Column("kommentar") var comment: String? = null,
-    @Column("date") var date: String? = null
+    @Column("date") var date: String? = null,
+    @Column("tries") var tries: Int? = null
 ) : RouteElement

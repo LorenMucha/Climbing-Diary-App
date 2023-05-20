@@ -47,6 +47,7 @@ class RoutesAdapter(routes: List<Route>) : Filterable,
         val areaText = route.area
         val sectorText = route.sector
         val commentString = route.comment
+        //val tries = route.tries
 
         //create the html string for the route and sector
         val routeHtml = getRouteAndSectorString(areaText!!, sectorText!!)

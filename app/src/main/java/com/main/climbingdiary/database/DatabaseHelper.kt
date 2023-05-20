@@ -55,15 +55,7 @@ class DatabaseHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
             } catch (mIOException: IOException) {
                 throw Error("ErrorCopyingDataBase")
             }
-        } else {
-            try {
-                val db = this.writableDatabase
-                initScript.split(";").toTypedArray().forEach { db.execSQL(it) }
-            } catch (e: Exception) {
-                Log.e(TAG, "Error loading init SQL from raw", e)
-            }
-
-        }
+        } 
     }
 
     private fun copyDBFile() {
