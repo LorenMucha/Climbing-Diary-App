@@ -47,6 +47,11 @@
     <string name="nav_title_bouldern">Bouldern</string>
     <string name="nav_title_settings">Einstellungen</string>
     <string name="app_ok">Ok</string>
+    <string name="app_save">Speichern</string>
+    <string name="app_close">Schließen</string>
+    <string name="app_cancel">Abbrechen</string>
+    <string name="app_deleted">Gelöscht</string>
+    <string name="app_no">Nein</string>
     <string name="dialog_langoage_choose_header">Welche Sprache ? Which language ?</string>
     <string name="showcase_gerne">Gerne</string>
     <string name="showcase_further">Weiter</string>
@@ -71,6 +76,6 @@
     <string name="dialog_tries_header">Versuche</string>
     <string name="dialog_tries_not_set">Noch nicht gesetzt</string>
     <string name="line_chart_dialog_hardest_routes">Die 10 schwersten Routen</string>
-    <string name="app_save">Speichern</string>
-    <string name="app_close">Schließen</string>
+    <string name="route_item_comment">Kommentar</string>
+    <string name="route_item_dialog_delete">Bist du sicher ?</string>
 </resources>

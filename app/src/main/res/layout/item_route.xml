@@ -52,7 +52,8 @@
                     android:layout_height="25dp"
                     android:layout_gravity="end"
                     android:padding="4dp"
-                    android:paddingEnd="10dp" />
+                    android:paddingEnd="10dp"
+                    tools:ignore="RtlSymmetry" />
             </TableRow>
 
 
@@ -89,7 +90,7 @@
                     android:paddingEnd="10dp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/route_date"
-                    tools:ignore="SpUsage" />
+                    tools:ignore="RtlSymmetry,SpUsage" />
 
             </TableRow>
 

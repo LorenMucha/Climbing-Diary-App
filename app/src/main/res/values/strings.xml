@@ -48,7 +48,6 @@
     <string name="nav_title_climbing">Climbing</string>
     <string name="nav_title_bouldern">Bouldering</string>
     <string name="nav_title_settings">Settings</string>
-    <string name="app_ok">Ok</string>
     <string name="dialog_stil">Style</string>
     <string name="dialog_date">Date</string>
     <string name="dialog_area">Area</string>
@@ -59,9 +58,12 @@
     <string name="dialog_tries_header">Tries</string>
     <string name="dialog_tries_not_set">Not set</string>
     <string name="line_chart_dialog_hardest_routes">The 10 hardest routes</string>
+    <string name="app_ok">Ok</string>
     <string name="app_save">Save</string>
+    <string name="app_cancel">Cancel</string>
     <string name="app_close">Close</string>
-    <!--Todo translate-->
+    <string name="app_deleted">Deleted</string>
+    <string name="app_no">No</string>
     <string name="dialog_langoage_choose_header">Welche Sprache ? Which language ?</string>
     <string name="showcase_gerne">Happy to</string>
     <string name="showcase_further">Next</string>
@@ -69,11 +71,13 @@
     <string name="showcase_app_welcome">Welcome</string>
     <string name="showcase_question_text_show_case">Would you like to take a little info tour of the app ?</string>
     <string name="showcase_header">Climbing Diary</string>
-    <string name="showcase_info">An app to track and evaluate your bouldering and routes</string>
+    <string name="showcase_info">An app to track and evaluate your boulder and climbing routes</string>
     <string name="showcase_addNewRouteHeader">Add new routes</string>
     <string name="showcase_addNewRouteText">New routes can be added by clicking</string>
     <string name="showcase_searchBarHeader">Search</string>
     <string name="showcase_searchBarText">Search for routes, sectors, areas and grades</string>
     <string name="showcase_filterBarHeader">Filter</string>
     <string name="showcase_filterBarText">Filter by areas</string>
+    <string name="route_item_comment">Comment</string>
+    <string name="route_item_dialog_delete">Are you sure ?</string>
 </resources>

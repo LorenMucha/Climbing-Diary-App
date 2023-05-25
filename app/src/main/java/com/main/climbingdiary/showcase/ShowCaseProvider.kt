@@ -1,31 +1,32 @@
 package com.main.climbingdiary.showcase
 
 import android.content.Context
+import android.view.View
+import android.widget.LinearLayout
 import cn.pedant.SweetAlert.SweetAlertDialog
-import com.erkutaras.showcaseview.ShowcaseManager
 import com.google.android.material.tabs.TabLayout
 import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity
 import com.main.climbingdiary.common.AlertFactory
+import com.main.climbingdiary.common.StringManager
 import com.main.climbingdiary.common.StringProvider.getString
-import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.models.Alert
+import smartdevelop.ir.eram.showcaseviewlib.GuideView
+import smartdevelop.ir.eram.showcaseviewlib.config.DismissType
+import smartdevelop.ir.eram.showcaseviewlib.config.Gravity
 
 
 class ShowCaseProvider(private val context: Context) {
 
-    private val mainView by lazy {
-        MainActivity.getMainActivity().window
-    }
+    private val mainView by lazy { MainActivity.getMainActivity().window }
+    private var tabLayout: TabLayout = mainView.findViewById(R.id.tabLayout)
 
     init {
-        val tabLayout = mainView.findViewById<TabLayout>(R.id.tabLayout)
-        val tab = tabLayout.getTabAt(1)
-        tab!!.select()
+        tabLayout.getTabAt(1)!!.select()
     }
 
     fun createShowCase() {
-        AppPreferenceManager
+        /*AppPreferenceManager
             .getUsedFirstTime()
             .run {
                 if (this) {
@@ -33,55 +34,49 @@ class ShowCaseProvider(private val context: Context) {
                 }
             }.also {
                 AppPreferenceManager.setIsUsedFirstTime(false)
-            }
+            }*/
+        setAlert()
     }
 
-    private fun viewWelcomeScreen() {
-        ShowcaseManager.Builder()
-            .context(context)
-            .view(mainView.findViewById(R.id.toolbar))
-            .developerMode(true)
-            .descriptionImageRes(R.mipmap.ic_launcher_round)
-            .descriptionTitle(getString(R.string.showcase_header))
-            .descriptionText(getString(R.string.showcase_info))
-            .buttonText(getString(R.string.showcase_further))
-            .key("Welcome")
-            .marginFocusArea(0)
-            .gradientFocusEnabled(true)
-            .add()
-            .view(mainView.findViewById(R.id.floating_action_btn_add))
-            .descriptionImageRes(R.drawable.ic_plus)
-            .descriptionTitle(getString(R.string.showcase_addNewRouteHeader))
-            .descriptionText(getString(R.string.showcase_addNewRouteText))
-            .buttonText(getString(R.string.showcase_further))
-            .key("addRoute")
-            .marginFocusArea(0)
-            .gradientFocusEnabled(true)
-            .add()
-            .view(mainView.findViewById(R.id.action_search))
-            .descriptionImageRes(android.R.drawable.ic_menu_search)
-            .descriptionTitle(getString(R.string.showcase_searchBarHeader))
-            .descriptionText(getString(R.string.showcase_searchBarText))
-            .buttonText(getString(R.string.showcase_further))
-            .key("searchRoute")
-            .marginFocusArea(0)
-            .gradientFocusEnabled(true)
-            .add()
-            .view(mainView.findViewById(R.id.action_filter))
-            .descriptionImageRes(R.drawable.ic_filter)
-            .descriptionTitle(getString(R.string.showcase_filterBarHeader))
-            .descriptionText(getString(R.string.showcase_filterBarText))
-            .buttonText(getString(R.string.showcase_further))
-            .key("filterRoute")
-            .marginFocusArea(0)
-            .gradientFocusEnabled(true)
-            .add()
+    private fun showIntro(title: Int, text: Int, viewId: Int, type: Int = 0) {
+        GuideView.Builder(context)
+            .setTargetView(mainView.findViewById(viewId))
+            .setTitle(StringManager.getStringForId(title))
+            .setContentText(StringManager.getStringForId(text))
+            .setDismissType(DismissType.outside)
+            .setGuideListener {
+                when (type) {
+                    1 -> {
+                        showIntro(
+                            R.string.showcase_addNewRouteHeader,
+                            R.string.showcase_addNewRouteText,
+                            R.id.floating_action_btn_add,
+                            2
+                        )
+                    }
+                    2-> {
+                        showIntro(
+                            R.string.showcase_searchBarHeader,
+                            R.string.showcase_searchBarText,
+                            R.id.action_search,
+                            3
+                        )
+                    }
+                    3->{
+                        showIntro(
+                            R.string.showcase_filterBarHeader,
+                            R.string.showcase_filterBarText,
+                            R.id.action_filter,
+                            0
+                        )
+                    }
+                }
+            }
             .build()
             .show()
     }
 
     private fun setAlert() {
-
         val alert = AlertFactory.getAlert(
             context, Alert(
                 title = getString(R.string.showcase_app_welcome),
@@ -90,14 +85,19 @@ class ShowCaseProvider(private val context: Context) {
             )
         )
         alert.setCustomImage(R.drawable.waving_hand)
-            .setConfirmText(getString(R.string.showcase_gerne))
+            .setConfirmText(StringManager.getStringForId(R.string.showcase_gerne))
             .setConfirmClickListener {
                 it.let {
                     it.cancel()
-                    viewWelcomeScreen()
+                    showIntro(
+                        R.string.showcase_header,
+                        R.string.showcase_info,
+                        R.id.toolbar,
+                        1
+                    )
                 }
             }
-            .setCancelButton("Nein") { it.cancel() }
+            .setCancelButton(StringManager.getStringForId(R.string.app_no)) { it.cancel() }
             .show()
     }
 }

@@ -1,11 +1,10 @@
 package com.main.climbingdiary.database
 
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 import com.main.climbingdiary.common.EnvironmentParamter
+import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -23,13 +22,6 @@ class DatabaseHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     private val dbPath = context.applicationInfo.dataDir + "/databases/"
     private val initScript =
         context.assets.open("update.sql").bufferedReader().use { it.readText() }
-
-    companion object {
-        fun checkIfNumeric(toCheck: String): Boolean {
-            val regex = "-?\\d+(\\.\\d+)?".toRegex()
-            return !regex.containsMatchIn(toCheck)
-        }
-    }
 
     @Volatile
     private var mDataBase: SQLiteDatabase? = null
@@ -55,12 +47,6 @@ class DatabaseHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
             } catch (mIOException: IOException) {
                 throw Error("ErrorCopyingDataBase")
             }
-        } else {
-            try {
-                val db = this.writableDatabase
-                initScript.split(";").toTypedArray().forEach { db.execSQL(it) }
-            } catch (_: Exception) { }
-
         }
     }
 
@@ -78,6 +64,14 @@ class DatabaseHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     fun openDataBase() {
         mDataBase =
             SQLiteDatabase.openDatabase(dbPath + dbName, null, SQLiteDatabase.CREATE_IF_NECESSARY)
+    }
+
+    private fun updateDb(){
+        try {
+            val db = this.writableDatabase
+            initScript.split(";").toTypedArray().forEach { db.execSQL(it) }
+        } catch (_: Exception) {
+        }
     }
 
     @Synchronized

@@ -53,7 +53,6 @@ class TimeSlider : OnSeekbarChangeListener, OnSeekbarFinalValueListener, Slider 
 
     override fun setTimesRange() {
         try {
-            Log.d("Years set", TextUtils.join(",", times))
             val minYear = Collections.min(times).toFloat()
             val maxYear = Collections.max(times).toFloat()
             timeSeekbar.minValue = minYear

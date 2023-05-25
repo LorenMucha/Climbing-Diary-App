@@ -69,8 +69,8 @@ dependencies {
     implementation 'pub.devrel:easypermissions:3.0.0'
     //doku: https://github.com/skyfishjy/android-ripple-background
     implementation 'com.skyfishjy.ripplebackground:library:1.0.1'
-    //doku: https://github.com/erkutaras/ShowcaseView
-    implementation 'com.github.erkutaras:ShowcaseView:1.5.0'
+    //doku: https://github.com/mreram/ShowCaseView
+    implementation 'com.github.mreram:showcaseview:1.4.1'
     implementation 'net.openid:appauth:0.11.1'
 
     testImplementation 'junit:junit:4.13.2'

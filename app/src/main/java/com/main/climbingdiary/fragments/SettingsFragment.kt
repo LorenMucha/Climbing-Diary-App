@@ -87,7 +87,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+        super.startActivity(data)
         if (requestCode == fileChooserSafetyCopy && resultCode == RESULT_OK) {
             val selectedfile = data?.data!!
             val paths: List<String> = selectedfile.path!!.split(":")

@@ -110,7 +110,7 @@ object AppPreferenceManager {
     }
 
     fun getTimeSliderView(): TimeRange{
-        val value : String? = PREFS.getString(PreferenceKeys.TIME_SLIDER_RANGE, TimeRange.YEAR.toString())
+        val value : String? = PREFS.getString(PreferenceKeys.TIME_SLIDER_RANGE, TimeRange.RANGE.toString())
         return TimeRange.valueOf(value!!)
     }
 
