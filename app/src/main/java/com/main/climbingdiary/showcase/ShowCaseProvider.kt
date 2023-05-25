@@ -3,6 +3,7 @@ package com.main.climbingdiary.showcase
 import android.content.Context
 import android.view.View
 import android.widget.LinearLayout
+import androidx.core.view.get
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.google.android.material.tabs.TabLayout
 import com.main.climbingdiary.R
@@ -10,6 +11,7 @@ import com.main.climbingdiary.activities.MainActivity
 import com.main.climbingdiary.common.AlertFactory
 import com.main.climbingdiary.common.StringManager
 import com.main.climbingdiary.common.StringProvider.getString
+import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.models.Alert
 import smartdevelop.ir.eram.showcaseviewlib.GuideView
 import smartdevelop.ir.eram.showcaseviewlib.config.DismissType
@@ -26,7 +28,7 @@ class ShowCaseProvider(private val context: Context) {
     }
 
     fun createShowCase() {
-        /*AppPreferenceManager
+        AppPreferenceManager
             .getUsedFirstTime()
             .run {
                 if (this) {
@@ -34,8 +36,7 @@ class ShowCaseProvider(private val context: Context) {
                 }
             }.also {
                 AppPreferenceManager.setIsUsedFirstTime(false)
-            }*/
-        setAlert()
+            }
     }
 
     private fun showIntro(title: Int, text: Int, viewId: Int, type: Int = 0) {
@@ -44,6 +45,7 @@ class ShowCaseProvider(private val context: Context) {
             .setTitle(StringManager.getStringForId(title))
             .setContentText(StringManager.getStringForId(text))
             .setDismissType(DismissType.outside)
+            .setGravity(Gravity.center)
             .setGuideListener {
                 when (type) {
                     1 -> {
@@ -67,6 +69,15 @@ class ShowCaseProvider(private val context: Context) {
                             R.string.showcase_filterBarHeader,
                             R.string.showcase_filterBarText,
                             R.id.action_filter,
+                            4
+                        )
+                    }
+                    4->{
+                        tabLayout.getTabAt(2)!!.select()
+                        showIntro(
+                            R.string.showcase_filterBarHeader,
+                            R.string.showcase_filterBarText,
+                            R.id.floating_action_btn_add,
                             0
                         )
                     }

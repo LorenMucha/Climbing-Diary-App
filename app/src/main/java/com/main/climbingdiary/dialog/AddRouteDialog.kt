@@ -45,6 +45,9 @@ class AddRouteDialog(val title: String) : DialogFragment() {
         val title = requireArguments().getString("title", "Neue Kletterroute")
         creator.setForeGroundSpan(title)
 
+        //set tries to 1 if os or flash
+        creator.saveRoute
+
         //save the route
         creator.saveRoute.setOnClickListener { v: View? ->
             if (creator.checkDate()) {

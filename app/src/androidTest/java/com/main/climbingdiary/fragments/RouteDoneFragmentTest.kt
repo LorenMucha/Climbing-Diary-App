@@ -133,7 +133,7 @@ internal class RouteDoneFragmentTest {
         setSpinnerSelect(R.id.input_route_level, "IX+/X-")
 
         //select save
-        clickOn("Speichern")
+        clickOn(R.string.app_save)
 
         //check if List contains new project
         assertDisplayed(routeSet.name!!)

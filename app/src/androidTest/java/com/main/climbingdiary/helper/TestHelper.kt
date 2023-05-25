@@ -50,12 +50,12 @@ object TestHelper {
         val rating = nextInt(5)
         return Projekt(
             0,
-            levels.get(nextInt(levels.size)),
-            getRandomString(8),
-            getRandomString(12),
-            getRandomString(10),
+            levels[nextInt(levels.size)],
+            getRandomString(5),
+            getRandomString(5),
+            getRandomString(5),
             rating,
-            getRandomString(25)
+            getRandomString(5)
         )
     }
 
@@ -63,11 +63,11 @@ object TestHelper {
         val date = getRandomDate()
         val levels = Levels.getLevelsFrench()
         val rating = nextInt(5)
-        val styles = listOf<String>(Styles.getFLASH(), Styles.getRP(), Styles.getOS())
+        val styles = listOf(Styles.getFLASH(), Styles.getRP(), Styles.getOS())
         return Route(
             0,
-            styles.get(nextInt(styles.size)),
-            levels.get(nextInt(levels.size)),
+            styles[nextInt(styles.size)],
+            levels[nextInt(levels.size)],
             getRandomString(8),
             getRandomString(12),
             getRandomString(10),
@@ -124,7 +124,11 @@ object TestHelper {
     }
 
     fun cleanAllPreferences(){
-        PreferenceManager.getDefaultSharedPreferences(InstrumentationRegistry.getInstrumentation().targetContext).edit().clear().apply()
+        PreferenceManager.getDefaultSharedPreferences(InstrumentationRegistry.getInstrumentation()
+            .targetContext)
+            .edit()
+            .clear()
+            .apply()
     }
 
     fun initDefaultScenario(languageFirstTime:Boolean=false, isUsedFirstTime:Boolean=false):ActivityScenario<MainActivity>{

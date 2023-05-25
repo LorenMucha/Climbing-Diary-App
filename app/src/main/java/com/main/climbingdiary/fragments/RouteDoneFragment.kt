@@ -33,10 +33,6 @@ object RouteDoneFragment : Fragment(), RouteFragment {
         return adapter
     }
 
-    fun getRecyclerView():RecyclerView{
-        return rvRoutes
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

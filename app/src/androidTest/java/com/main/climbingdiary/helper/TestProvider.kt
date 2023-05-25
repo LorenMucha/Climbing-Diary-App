@@ -5,6 +5,8 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.PerformException
@@ -34,7 +36,7 @@ object TestProvider {
         val tabMap = mapOf(Tabs.PROJEKTE to 2, Tabs.STATISTIK to 0, Tabs.ROUTEN to 1)
         onView(ViewMatchers.withId(R.id.tabLayout)).perform(
             selectTabAtPosition(
-                tabMap.get(setter)
+                tabMap[setter]
             )
         )
     }
@@ -58,6 +60,20 @@ object TestProvider {
 
                 tabAtIndex.select()
             }
+        }
+    }
+
+    inline fun waitUntilLoaded(crossinline recyclerProvider: () -> RecyclerView) {
+        Espresso.onIdle()
+
+        lateinit var recycler: RecyclerView
+
+        InstrumentationRegistry.getInstrumentation().runOnMainSync {
+            recycler = recyclerProvider()
+        }
+
+        while (recycler.hasPendingAdapterUpdates()) {
+            Thread.sleep(10)
         }
     }
 

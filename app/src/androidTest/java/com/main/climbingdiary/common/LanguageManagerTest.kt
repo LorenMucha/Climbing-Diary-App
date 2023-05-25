@@ -1,27 +1,16 @@
 package com.main.climbingdiary.common
 
 import androidx.test.core.app.ActivityScenario
-import androidx.test.espresso.intent.Intents
-import androidx.test.platform.app.InstrumentationRegistry
-import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertContains
-import com.adevinta.android.barista.interaction.BaristaClickInteractions
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
-import com.adevinta.android.barista.interaction.BaristaDialogInteractions
-import com.adevinta.android.barista.interaction.BaristaMenuClickInteractions
-import com.adevinta.android.barista.interaction.BaristaMenuClickInteractions.clickMenu
-import com.adevinta.android.barista.interaction.BaristaSleepInteractions.sleep
 import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity
 import com.main.climbingdiary.common.StringProvider.getString
-import com.main.climbingdiary.common.preferences.PreferenceKeys
 import com.main.climbingdiary.helper.TestHelper
 import com.main.climbingdiary.helper.TestProvider
 import org.junit.After
-import org.junit.Before
 import org.junit.Test
-import java.util.*
-import kotlin.math.log
+import java.util.Locale
 
 internal class LanguageManagerTest {
 

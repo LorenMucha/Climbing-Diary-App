@@ -91,7 +91,7 @@ class RouteDialogCreator(
         name.setText(route?.name)
         setRouteNameHeaderText()
         // set Spinner for choosing the style
-        setStilSpinner(route!!.style.toUpperCase(Locale.ROOT))
+        setStilSpinner(route!!.style.uppercase(Locale.ROOT))
         // set Spinner for choosing the level
         setLevelSpinner(route.level, getLevelsFrench())
 
@@ -101,13 +101,14 @@ class RouteDialogCreator(
         sector.setText(route.sector)
         comment.setText(route.comment)
         tries.also {
-            val header:TextView = view.findViewById(R.id.input_route_tries_header)
-            if(route.tries != null){
+            val header: TextView = view.findViewById(R.id.input_route_tries_header)
+            if (route.tries != null) {
                 it.visibility = View.VISIBLE
                 it.setText(route.tries.toString())
                 header.visibility = View.VISIBLE
-            }else{
-                val tries = if(route.style == "RP") StringManager.getStringForId(R.string.dialog_tries_not_set) else "1"
+            } else {
+                val tries =
+                    if (route.style == "RP") StringManager.getStringForId(R.string.dialog_tries_not_set) else "1"
                 it.setText(tries)
             }
         }
@@ -205,11 +206,25 @@ class RouteDialogCreator(
             ArrayAdapter(context, android.R.layout.simple_spinner_item, getStyle(true))
         stilArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) // The drop down view
         stil.adapter = stilArrayAdapter
-        try {
-            stil.setSelection(stilArrayAdapter.getPosition(selection))
-        } catch (ex: Exception) {
-            Log.e("Style was unset", ex.localizedMessage)
+        stil.setSelection(stilArrayAdapter.getPosition(selection))
+        stil.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if (getStyle(true)[position] != "RP") {
+                    tries.setText("1")
+                    tries.isEnabled = false
+                } else {
+                    tries.isEnabled = true
+                }
+            }
+
         }
+
     }
 
     private fun setLevelSpinner(selection: String, levels: Array<String>) {
@@ -261,7 +276,7 @@ class RouteDialogCreator(
         newRoute.comment = this.comment.text.toString()
         newRoute.rating = this.rating.selectedItemPosition + 1
         newRoute.style = this.stil.selectedItem.toString()
-        newRoute.tries = this.tries.text.toString().toInt()
+        newRoute.tries = this.tries.text.toString().toIntOrNull()
         return cleanRoute(newRoute) as Route
     }
 
