@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -28,34 +29,72 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:stretchColumns="0,1">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:text="@string/dialog_stil"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        tools:ignore="RtlHardcoded" />
+
+                    <TextView
+                        android:id="@+id/input_route_tries_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:text="@string/dialog_tries_header"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        tools:ignore="RtlHardcoded" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Spinner
+                        android:id="@+id/input_route_stil"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <EditText
+                        android:id="@+id/input_route_tries"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        />
+
+                </TableRow>
+
+            </TableLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:text="Stil"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
-
-            <Spinner
-                android:id="@+id/input_route_stil"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:text="Datum"
+                android:text="@string/dialog_date"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/input_route_date"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:editable="false"
+                tools:ignore="LabelFor,TextFields" />
+
         </LinearLayout>
 
         <TextView
@@ -63,42 +102,44 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="Gebiet"
+            android:text="@string/dialog_area"
             android:textColor="@color/black"
             android:textStyle="bold" />
 
         <AutoCompleteTextView
             android:id="@+id/input_route_area"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:ignore="LabelFor" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="Sektor"
+            android:text="@string/dialog_sector"
             android:textColor="@color/black"
             android:textStyle="bold" />
 
         <AutoCompleteTextView
             android:id="@+id/input_route_sektor"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:ignore="LabelFor" />
 
         <RelativeLayout
             android:layout_width="292dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:text="Schwierigkeit"
+                android:text="@string/dialog_level"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
@@ -106,9 +147,9 @@
                 layout="@layout/content_gradesystem_switcher"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginTop="7dp"
-                android:layout_marginRight="15dp" />
+                android:layout_marginEnd="15dp" />
         </RelativeLayout>
 
         <Spinner
@@ -122,7 +163,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="Rating"
+            android:text="@string/dialog_rating"
             android:textColor="@color/black"
             android:textStyle="bold" />
 
@@ -136,7 +177,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="Kommentar"
+            android:text="@string/dialog_comment"
             android:textColor="@color/black"
             android:textStyle="bold" />
 
@@ -144,10 +185,13 @@
             android:id="@+id/input_route_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:lines="2" />
+            android:lines="2"
+            android:autofillHints=""
+            android:inputType="text"
+            tools:ignore="LabelFor" />
 
 
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="35dp"
@@ -157,10 +201,10 @@
                 android:id="@+id/input_route_save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:layout_toLeftOf="@id/input_route_close"
+                android:layout_marginEnd="20dp"
+                android:layout_toStartOf="@id/input_route_close"
                 android:background="@color/colorAccent"
-                android:text="Speichern"
+                android:text="@string/app_save"
                 android:textColor="@color/white" />
 
             <Button
@@ -169,7 +213,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:background="@color/black"
-                android:text="Schließen"
+                android:text="@string/app_close"
                 android:textColor="@color/white" />
         </RelativeLayout>
 

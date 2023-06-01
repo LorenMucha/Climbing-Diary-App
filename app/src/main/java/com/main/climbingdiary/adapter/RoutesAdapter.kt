@@ -1,5 +1,6 @@
 package com.main.climbingdiary.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.text.Html
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.main.climbingdiary.R
 import com.main.climbingdiary.common.AlertFactory
+import com.main.climbingdiary.common.StringManager
 import com.main.climbingdiary.controller.FragmentPager.refreshAllFragments
 import com.main.climbingdiary.controller.button.AppFloatingActionButton
 import com.main.climbingdiary.database.entities.Route
@@ -39,6 +41,7 @@ class RoutesAdapter(routes: List<Route>) : Filterable,
     }
 
     // Involves populating data into the item through holder
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         // Get the data model based on position
         val route = mRoutes[position]
@@ -47,10 +50,11 @@ class RoutesAdapter(routes: List<Route>) : Filterable,
         val areaText = route.area
         val sectorText = route.sector
         val commentString = route.comment
+        val tries = route.tries
 
         //create the html string for the route and sector
         val routeHtml = getRouteAndSectorString(areaText!!, sectorText!!)
-        val commentHtml = "<b>Kommentar</b><br/>$commentString"
+        val commentHtml = "<b>${StringManager.getStringForId(R.string.route_item_comment)}</b><br/>$commentString"
 
         // Set item views
         val routeName = viewHolder.nameTextView
@@ -60,6 +64,7 @@ class RoutesAdapter(routes: List<Route>) : Filterable,
         val area = viewHolder.areaTextView
         val comment = viewHolder.commentTextView
         val hidden_layout = viewHolder.hiddenView
+        val routeTries = viewHolder.triesTextView
 
         //route manipulate buttons
         val edit = viewHolder.editButton
@@ -69,6 +74,9 @@ class RoutesAdapter(routes: List<Route>) : Filterable,
         date.text = route.date
         level.text = gradeText
         level.setTextColor(Colors.getGradeColor(gradeText))
+        routeTries.text = "${route.tries.toString()} ${StringManager.getStringForId(R.string.dialog_tries_header)}"
+        routeTries.also { it.visibility = if(route.tries == null) View.INVISIBLE else View.VISIBLE }
+
         try {
             val drawable: Drawable? =
                 ContextCompat.getDrawable(viewHolder.itemView.context, getRoutStyleIcon(styleText))
@@ -76,8 +84,8 @@ class RoutesAdapter(routes: List<Route>) : Filterable,
         } catch (e: Exception) {
             Log.e("Error drawable loading", styleText)
         }
-        area.text = Html.fromHtml(routeHtml)
-        comment.text = Html.fromHtml(commentHtml)
+        area.text = Html.fromHtml(routeHtml, 0)
+        comment.text = Html.fromHtml(commentHtml, 0)
         rating.rating = route.rating!!.toFloat()
 
         //show comment on holder click
@@ -105,9 +113,9 @@ class RoutesAdapter(routes: List<Route>) : Filterable,
         //delete a route
         delete.setOnClickListener { v: View ->
             SweetAlertDialog(v.context, SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("Bist du sicher ?")
-                .setConfirmText("Ok")
-                .setCancelText("Abbrechen")
+                .setTitleText(StringManager.getStringForId(R.string.route_item_dialog_delete))
+                .setConfirmText(StringManager.getStringForId(R.string.app_ok))
+                .setCancelText(StringManager.getStringForId(R.string.app_cancel))
                 .setConfirmClickListener { sDialog: SweetAlertDialog ->
                     //delete the route by id
                     val taskState = routeRepository.deleteRoute(route)
@@ -115,20 +123,20 @@ class RoutesAdapter(routes: List<Route>) : Filterable,
                         refreshAllFragments()
                         sDialog.hide()
                         SweetAlertDialog(v.context, SweetAlertDialog.SUCCESS_TYPE)
-                            .setTitleText("Gelöscht")
+                            .setTitleText(StringManager.getStringForId(R.string.app_deleted))
                             .show()
                     } else {
                         AlertFactory.getErrorAlert(v.context).show()
                     }
                 }
                 .setCancelButton(
-                    "Cancel"
+                    StringManager.getStringForId(R.string.app_cancel)
                 ) { obj: SweetAlertDialog -> obj.cancel() }
                 .show()
         }
 
         //edit a route
-        edit.setOnClickListener { view: View? ->
+        edit.setOnClickListener {
             DialogFactory.openEditRouteDialog(
                 Tabs.ROUTEN,
                 route.id
@@ -151,19 +159,19 @@ class RoutesAdapter(routes: List<Route>) : Filterable,
                 } else {
                     val filteredList: MutableList<Route> = ArrayList()
                     for (row in mRoutes) {
-                        if (row.name!!.toLowerCase(Locale.ROOT).contains(
-                                charString.toLowerCase(
+                        if (row.name!!.lowercase(Locale.ROOT).contains(
+                                charString.lowercase(
                                     Locale.ROOT
                                 )
                             ) ||
                             row.level.contains(charString) ||
-                            row.area!!.toLowerCase(Locale.ROOT).contains(
-                                charString.toLowerCase(
+                            row.area!!.lowercase(Locale.ROOT).contains(
+                                charString.lowercase(
                                     Locale.ROOT
                                 )
                             ) ||
-                            row.sector!!.toLowerCase(Locale.ROOT).contains(
-                                charString.toLowerCase(
+                            row.sector!!.lowercase(Locale.ROOT).contains(
+                                charString.lowercase(
                                     Locale.ROOT
                                 )
                             ) ||
@@ -217,5 +225,6 @@ class RoutesAdapter(routes: List<Route>) : Filterable,
         var hiddenView: TableRow = itemView.findViewById(R.id.route_hidden)
         var editButton: ImageButton = itemView.findViewById(R.id.route_edit)
         var removeButton: ImageButton = itemView.findViewById(R.id.route_delete)
+        var triesTextView: TextView = itemView.findViewById(R.id.route_tries)
     }
 }

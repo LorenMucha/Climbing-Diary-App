@@ -76,7 +76,6 @@ class RouteBarChartController(val view: View) : RouteChartController() {
             //set the on click Listener
             barChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
                 override fun onValueSelected(e: Entry, h: Highlight) {
-                    //ToDo
                     val x = e.x
                     e.y.toInt()
                     val style = set.stackLabels[h.stackIndex]
@@ -84,7 +83,7 @@ class RouteBarChartController(val view: View) : RouteChartController() {
                     Toast.makeText(
                         context,
                         String.format("Stil: %s\nAnzahl: %s", style, sum),
-                        Toast.LENGTH_LONG
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
 

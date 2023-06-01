@@ -23,6 +23,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity
 import com.main.climbingdiary.common.AlertFactory.getErrorAlert
+import com.main.climbingdiary.common.StringManager
 import com.main.climbingdiary.database.TaskRepository
 import com.main.climbingdiary.models.Colors
 import com.main.climbingdiary.models.Levels
@@ -82,22 +83,14 @@ class RouteLineChartController(val view:View) : RouteChartController() {
             }
             labels.sort()
             val dataSet = LineDataSet(entries, "")
-            dataSet.color = R.color.main_blue_color
-            dataSet.circleHoleColor = Colors.activeColor
-            dataSet.setCircleColor(Colors.mainColor)
-            dataSet.highLightColor = Color.RED
-            dataSet.lineWidth = 5f
-            dataSet.circleRadius = 15f
-            dataSet.valueTextSize = 15f
             dataSet.mode = LineDataSet.Mode.HORIZONTAL_BEZIER
             //to enable the cubic density : if 1 then it will be sharp curve
-            dataSet.cubicIntensity = 0.2f
             //to fill the below of smooth line in graph
             dataSet.setDrawFilled(true)
             dataSet.fillColor = Color.BLACK
             //set the transparency
             dataSet.fillAlpha = 80
-
+            dataSet.setDrawValues(false)
             //set the gradiant then the above draw fill color will be replace
             val drawable: Drawable? = ContextCompat.getDrawable(
                 MainActivity.getMainAppContext(),
@@ -109,7 +102,6 @@ class RouteLineChartController(val view:View) : RouteChartController() {
             lineChart.data = data
             lineChart.description.isEnabled = false
             lineChart.legend.isEnabled = false
-            lineChart.moveViewToX(labels.size.toFloat())
             //set thex axis
             val xAxis = lineChart.xAxis
             xAxis.setDrawAxisLine(false)
@@ -122,7 +114,6 @@ class RouteLineChartController(val view:View) : RouteChartController() {
             yAxis.spaceTop = 5f
             yAxis.axisMaximum = data.yMax + 200
             //refresh
-            lineChart.zoom(+3f, 0f, 0f, 0f)
             lineChart.invalidate()
             lineChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
                 override fun onValueSelected(e: Entry, h: Highlight) {
@@ -142,10 +133,11 @@ class RouteLineChartController(val view:View) : RouteChartController() {
         val builder = AlertDialog.Builder(context)
         val dialogContext = builder.context
         val inflater = LayoutInflater.from(dialogContext)
+        val points: Int = objectList.sumOf { it.points!! }
         @SuppressLint("InflateParams") val alertView: View =
             inflater.inflate(R.layout.dialog_line_chart_top_ten, null)
         builder.setView(alertView)
-        builder.setTitle("Die 10 schwersten Touren - $year")
+        builder.setTitle("${StringManager.getStringForId(R.string.line_chart_dialog_hardest_routes)} - $year \nPunkte: $points")
         val tableLayout = alertView.findViewById<TableLayout>(R.id.tableLayoutTopTen)
         for (infoObject in objectList) {
             val tableRow = TableRow(dialogContext)

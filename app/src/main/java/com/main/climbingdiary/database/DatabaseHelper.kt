@@ -4,6 +4,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.main.climbingdiary.common.EnvironmentParamter
+import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -18,21 +19,16 @@ class DatabaseHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     ) {
 
     private val dbName: String = EnvironmentParamter.DB_NAME
-    private var dbPath = context.applicationInfo.dataDir + "/databases/"
-
-    companion object{
-        fun checkIfNumeric(toCheck: String): Boolean {
-            val regex = "-?\\d+(\\.\\d+)?".toRegex()
-            return !regex.containsMatchIn(toCheck)
-        }
-    }
+    private val dbPath = context.applicationInfo.dataDir + "/databases/"
+    private val initScript =
+        context.assets.open("update.sql").bufferedReader().use { it.readText() }
 
     @Volatile
     private var mDataBase: SQLiteDatabase? = null
     private var mNeedUpdate = false
     private val mContext = context
 
-    init{
+    init {
         copyDataBase()
         this.readableDatabase
     }
@@ -68,6 +64,14 @@ class DatabaseHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     fun openDataBase() {
         mDataBase =
             SQLiteDatabase.openDatabase(dbPath + dbName, null, SQLiteDatabase.CREATE_IF_NECESSARY)
+    }
+
+    private fun updateDb(){
+        try {
+            val db = this.writableDatabase
+            initScript.split(";").toTypedArray().forEach { db.execSQL(it) }
+        } catch (_: Exception) {
+        }
     }
 
     @Synchronized

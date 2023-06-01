@@ -7,7 +7,7 @@
     <string name="time_slider" translatable="false">time_slider</string>
     <string name="language" translatable="false">language</string>
     <array name="entries_time_slider">
-        <item>Jahr</item>
-        <item>Zeitraum</item>
+        <item>___📍___</item>
+        <item>📍_____📍</item>
     </array>
 </resources>

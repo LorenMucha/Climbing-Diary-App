@@ -1,6 +1,5 @@
 package com.main.climbingdiary.controller
 
-import android.annotation.SuppressLint
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -25,7 +24,7 @@ import com.main.climbingdiary.fragments.RouteProjectFragment
 import com.main.climbingdiary.fragments.StatisticFragment
 import com.main.climbingdiary.models.Tabs
 import com.main.climbingdiary.models.Tabs.Companion.stringToTabs
-import java.util.*
+import java.util.Objects
 
 object FragmentPager : TabLayout.OnTabSelectedListener {
 
