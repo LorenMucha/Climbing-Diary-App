@@ -257,6 +257,10 @@ class RouteDialogCreator(
         nameHeader.text = "Name"
     }
 
+    private fun hideTriesView(){
+
+    }
+
     fun getRoute(id: Boolean): Route {
         val newRoute = Route()
         if (id) {
