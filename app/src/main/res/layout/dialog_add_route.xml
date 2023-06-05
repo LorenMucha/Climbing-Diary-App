@@ -185,9 +185,9 @@
             android:id="@+id/input_route_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:lines="2"
+            android:inputType="textMultiLine"
+            android:ems="10"
             android:autofillHints=""
-            android:inputType="text"
             tools:ignore="LabelFor" />
 
 
