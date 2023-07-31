@@ -1,6 +1,7 @@
 package com.main.climbingdiary.showcase
 
 import android.content.Context
+import android.database.DatabaseUtils
 import android.view.View
 import android.widget.LinearLayout
 import androidx.core.view.get
@@ -9,9 +10,11 @@ import com.google.android.material.tabs.TabLayout
 import com.main.climbingdiary.R
 import com.main.climbingdiary.activities.MainActivity
 import com.main.climbingdiary.common.AlertFactory
+import com.main.climbingdiary.common.AppHelper
 import com.main.climbingdiary.common.StringManager
 import com.main.climbingdiary.common.StringProvider.getString
 import com.main.climbingdiary.common.preferences.AppPreferenceManager
+import com.main.climbingdiary.database.TaskRepository
 import com.main.climbingdiary.models.Alert
 import smartdevelop.ir.eram.showcaseviewlib.GuideView
 import smartdevelop.ir.eram.showcaseviewlib.config.DismissType
@@ -31,9 +34,10 @@ class ShowCaseProvider(private val context: Context) {
         AppPreferenceManager
             .getUsedFirstTime()
             .run {
-                if (this) {
+                /*if (this) {
                     setAlert()
-                }
+                }*/
+                setAlert()
             }.also {
                 AppPreferenceManager.setIsUsedFirstTime(false)
             }
@@ -73,6 +77,7 @@ class ShowCaseProvider(private val context: Context) {
                         )
                     }
                     4->{
+                        //TODO
                         tabLayout.getTabAt(2)!!.select()
                         showIntro(
                             R.string.showcase_filterBarHeader,
@@ -80,6 +85,15 @@ class ShowCaseProvider(private val context: Context) {
                             R.id.floating_action_btn_add,
                             0
                         )
+                    }
+                    2 -> {
+                        val alert = AlertFactory.getAlert(context, Alert(title="Viel Spaß !"))
+                            .setConfirmText(getString(R.string.app_ok))
+                            .setConfirmClickListener {
+                                TaskRepository.cleanDatabase()
+                                AppHelper(context).restartApp()
+                            }
+                        alert.show()
                     }
                 }
             }

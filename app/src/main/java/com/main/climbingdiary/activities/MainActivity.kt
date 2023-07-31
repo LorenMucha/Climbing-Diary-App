@@ -53,9 +53,9 @@ class MainActivity : AppCompatActivity() {
         createViewPager()
         //navigation View
         NavDrawerController(this)
-        if(!AppPreferenceManager.getLanguageFirstTime()) {
+       // if(!AppPreferenceManager.getLanguageFirstTime()) {
             ShowCaseProvider(this).createShowCase()
-        }
+        //}
     }
 
     override fun onBackPressed() {
