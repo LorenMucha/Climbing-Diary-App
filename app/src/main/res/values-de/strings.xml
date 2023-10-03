@@ -78,4 +78,8 @@
     <string name="line_chart_dialog_hardest_routes">Die 10 schwersten Routen</string>
     <string name="route_item_comment">Kommentar</string>
     <string name="route_item_dialog_delete">Bist du sicher ?</string>
+    <string name="export_excel_summary">Export Datenbank in Excel Datei</string>
+    <string name="import_excel_summary">Import Excel Datei zur existierenden Datenbank</string>
+    <string name="excel_export_title">Export Excel</string>
+    <string name="import_export_title">Import Excel</string>
 </resources>

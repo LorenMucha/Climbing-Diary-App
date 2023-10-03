@@ -17,6 +17,18 @@
             android:summary="@string/restore_db_summary"
             android:title="@string/restore_db_title" />
     </PreferenceCategory>
+    <PreferenceCategory android:title="Export">
+        <Preference
+            android:key="@string/excel_export"
+            android:selectable="true"
+            android:summary="@string/export_excel_summary"
+            android:title="@string/excel_export_title"/>
+        <Preference
+            android:key="@string/excel_import"
+            android:selectable="true"
+            android:summary="@string/import_excel_summary"
+            android:title="@string/import_export_title"/>
+    </PreferenceCategory>
     <PreferenceCategory android:title="@string/settings_ui_header">
         <ListPreference
             android:key="@string/pref_time_slider"

@@ -1,9 +1,7 @@
 package com.main.climbingdiary.fragments
 
 import android.app.Activity.RESULT_OK
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -13,22 +11,33 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.main.climbingdiary.R
-import com.main.climbingdiary.common.*
 import com.main.climbingdiary.common.AlertFactory.getAlert
+import com.main.climbingdiary.common.AppHelper
+import com.main.climbingdiary.common.AppPermissions
+import com.main.climbingdiary.common.LanguageManager
+import com.main.climbingdiary.common.RessourceFinder
 import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.getOutputPath
 import com.main.climbingdiary.common.preferences.PreferenceKeys
 import com.main.climbingdiary.controller.slider.TimeSliderFactory
+import com.main.climbingdiary.database.entities.Route
+import com.main.climbingdiary.database.entities.RouteRepository
 import com.main.climbingdiary.models.Alert
 import com.main.climbingdiary.models.TimeRange
 import com.main.climbingdiary.provider.AppFileProvider
+import org.apache.poi.ss.usermodel.Sheet
+import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.io.File
 import java.io.IOException
+
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
     private val dbOutputPath: Preference? by lazy {
         findPreference(RessourceFinder.getStringRessourceById(R.string.db_output_path))
+    }
+    private val exportToExcel: Preference? by lazy {
+        findPreference(RessourceFinder.getStringRessourceById(R.string.excel_export))
     }
     private val fileChooserRequestCopy =
         PreferenceKeys.FILE_CHOOOSER_REQUEST_RESTORE_COPY
@@ -36,7 +45,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private val timeSliderView: ListPreference? by lazy {
         findPreference(RessourceFinder.getStringRessourceById(R.string.pref_time_slider))
     }
-    private val languagePref:Preference? by lazy {
+    private val languagePref: Preference? by lazy {
         findPreference(RessourceFinder.getStringRessourceById(R.string.language))
     }
     private val languageSet by lazy { AppPreferenceManager.getLanguage() }
@@ -51,10 +60,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         //set the correct flag
         languagePref.let {
-            when(languageSet){
-                "de"-> it!!.setIcon(R.drawable.en)
-                "en"-> it!!.setIcon(R.drawable.de)
+            when (languageSet) {
+                "de" -> it!!.setIcon(R.drawable.en)
+                "en" -> it!!.setIcon(R.drawable.de)
             }
+        }
+
+        exportToExcel?.setOnPreferenceClickListener {
+            exportDbToExcel()
+            true
         }
 
         dbOutputPath?.setOnPreferenceClickListener {
@@ -162,16 +176,44 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
+    private fun exportDbToExcel() {
+        try {
+            val data = RouteRepository(Route::class).getRouteList()
+            // Creating excel workbook
+            val workbook = XSSFWorkbook()
+
+            //Creating first sheet inside workbook
+            //Constants.SHEET_NAME is a string value of sheet name
+            val sheet: Sheet = workbook.createSheet("routes")
+
+        } catch (e: IOException) {
+            Log.d("restoreDb", e.localizedMessage as String)
+            this.context?.let {
+                getAlert(
+                    it,
+                    Alert(
+                        dialogType = SweetAlertDialog.ERROR_TYPE,
+                        title = getString(R.string.alert_export_db_failure)
+                    )
+                ).show()
+            }
+        }
+    }
+
     private fun restoreDB(path: Uri?) {
         try {
             if (path?.let { AppFileProvider().restoreDBfromPreferencePath(it) } == true) {
-                val alert = getAlert(requireContext(),
-                    Alert(title=getString(R.string.alert_db_restored_correctly),
-                        message = getString(R.string.app_will_restart) ))
+                val alert = getAlert(
+                    requireContext(),
+                    Alert(
+                        title = getString(R.string.alert_db_restored_correctly),
+                        message = getString(R.string.app_will_restart)
+                    )
+                )
                     .setConfirmClickListener {
                         AppHelper(context).restartApp()
                     }
-                    alert.show()
+                alert.show()
             }
         } catch (e: IOException) {
             Log.d("restoreDb", e.localizedMessage as String)
@@ -187,7 +229,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
-    private fun changeLocale(){
+    private fun changeLocale() {
         LanguageManager(requireContext())
             .switchLanguage(true)
     }

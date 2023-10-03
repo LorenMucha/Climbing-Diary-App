@@ -3,6 +3,8 @@
     <string name="db_output_path" translatable="false">db_output_path</string>
     <string name="safty_copy" translatable="false">safty_copy</string>
     <string name="share_copy" translatable="false">share_copy</string>
+    <string name="excel_export" translatable="false">excel_export</string>
+    <string name="excel_import" translatable="false">excel_import</string>
     <string name="safty_restore" translatable="false">safty_restore</string>
     <string name="time_slider" translatable="false">time_slider</string>
     <string name="language" translatable="false">language</string>

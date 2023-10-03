@@ -72,6 +72,9 @@ dependencies {
     //doku: https://github.com/mreram/ShowCaseView
     implementation 'com.github.mreram:showcaseview:1.4.1'
     implementation 'net.openid:appauth:0.11.1'
+    //Apache POI for excel: https://medium.com/geekculture/a-simple-way-to-work-with-excel-in-android-app-94c727e9a138
+    implementation 'com.github.SUPERCILEX.poi-android:poi:3.17'
+    compileOnly 'org.apache.poi:poi-ooxml:3.17'
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'androidx.test:core:1.5.0'

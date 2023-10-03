@@ -45,7 +45,8 @@ internal class RepositoryTest {
         routeRepo.insertRoute(route)
 
         var list = SectorRepository.getSectorList("Vorarlberg")
-        assertEquals(list[0], route.sector)
+        assertEquals(list
+            [0], route.sector)
         //repo.getRoute(route.id)
     }
 }

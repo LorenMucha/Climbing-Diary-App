@@ -80,4 +80,8 @@
     <string name="showcase_filterBarText">Filter by areas</string>
     <string name="route_item_comment">Comment</string>
     <string name="route_item_dialog_delete">Are you sure ?</string>
+    <string name="export_excel_summary">Export Database to Excel File</string>
+    <string name="import_excel_summary">Import Excel File to Existing Database</string>
+    <string name="excel_export_title">Export Excel</string>
+    <string name="import_export_title">Import Excel</string>
 </resources>
