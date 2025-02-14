@@ -1,5 +1,6 @@
 package com.main.climbingdiary.activities
 
+//noinspection SuspiciousImport
 import android.R
 import android.content.Context
 import android.os.Bundle
@@ -25,13 +26,14 @@ class SettingsActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().replace(R.id.content, SettingsFragment()).commit()
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        Thread(Runnable {
-            this@SettingsActivity.runOnUiThread(java.lang.Runnable {
+        Thread {
+            this@SettingsActivity.runOnUiThread {
                 AppPermissions.checkPermissions(this)
-            })
-        }).start()
+            }
+        }.start()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         super.onBackPressed()
         finish()

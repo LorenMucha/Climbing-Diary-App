@@ -4,6 +4,10 @@
         <Preference
             android:key="@string/db_output_path"
             android:title="Ordner für Backups und Exports" />
+        <Preference
+            android:key="@string/eighta_import"
+            android:summary="bitte die CSV wählen"
+            android:title="Import der 8a Tourenliste als CSV" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/safty_copy_pref_header">
         <Preference

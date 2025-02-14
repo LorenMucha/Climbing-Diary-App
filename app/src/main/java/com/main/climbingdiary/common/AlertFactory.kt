@@ -7,7 +7,7 @@ import com.main.climbingdiary.models.Alert
 
 object AlertFactory {
 
-    fun getAlert(context: Context, alert: Alert):SweetAlertDialog {
+    fun getAlert(context: Context, alert: Alert): SweetAlertDialog {
         val dialog = SweetAlertDialog(context, alert.dialogType!!)
 
         alert.image?.let {
@@ -22,9 +22,16 @@ object AlertFactory {
         return dialog
     }
 
-    fun getErrorAlert(context: Context):SweetAlertDialog {
-          return SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
-              .setTitleText("Oops...")
-              .setContentText(context.getString(R.string.alert_error_text))
-      }
+    fun getLoadingAlert(context: Context): SweetAlertDialog {
+        val dialog = SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE)
+            .setTitleText("Loading")
+        dialog.setCancelable(false)
+        return dialog
+    }
+
+    fun getErrorAlert(context: Context): SweetAlertDialog {
+        return SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+            .setTitleText("Oops...")
+            .setContentText(context.getString(R.string.alert_error_text))
+    }
 }

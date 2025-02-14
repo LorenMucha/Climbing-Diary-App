@@ -6,25 +6,33 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.main.climbingdiary.R
+import com.main.climbingdiary.activities.MainActivity
+import com.main.climbingdiary.common.AlertFactory
 import com.main.climbingdiary.common.AlertFactory.getAlert
 import com.main.climbingdiary.common.AppHelper
 import com.main.climbingdiary.common.AppPermissions
 import com.main.climbingdiary.common.LanguageManager
 import com.main.climbingdiary.common.RessourceFinder
+import com.main.climbingdiary.common.parser.EightAparser
 import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.getOutputPath
+import com.main.climbingdiary.common.preferences.AppPreferenceManager.setSportType
 import com.main.climbingdiary.common.preferences.PreferenceKeys
 import com.main.climbingdiary.controller.slider.TimeSliderFactory
 import com.main.climbingdiary.database.entities.Route
 import com.main.climbingdiary.database.entities.RouteRepository
 import com.main.climbingdiary.models.Alert
+import com.main.climbingdiary.models.SportType
 import com.main.climbingdiary.models.TimeRange
 import com.main.climbingdiary.provider.AppFileProvider
+import kotlinx.coroutines.launch
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.io.File
@@ -33,6 +41,10 @@ import java.io.IOException
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
+    private lateinit var csvParser: EightAparser
+    private val loadingAlert: SweetAlertDialog? by lazy {
+        AlertFactory.getLoadingAlert(requireContext())
+    }
     private val dbOutputPath: Preference? by lazy {
         findPreference(RessourceFinder.getStringRessourceById(R.string.db_output_path))
     }
@@ -48,6 +60,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private val languagePref: Preference? by lazy {
         findPreference(RessourceFinder.getStringRessourceById(R.string.language))
     }
+
+    private val eightaImportPref: Preference? by lazy {
+        findPreference(RessourceFinder.getStringRessourceById(R.string.eighta_import))
+    }
+
     private val languageSet by lazy { AppPreferenceManager.getLanguage() }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -64,6 +81,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 "de" -> it!!.setIcon(R.drawable.en)
                 "en" -> it!!.setIcon(R.drawable.de)
             }
+        }
+
+        eightaImportPref?.setOnPreferenceClickListener {
+            csvParser = EightAparser(MainActivity.getMainAppContext())
+            selectCsvFile()
+            true
         }
 
 /*        exportToExcel?.setOnPreferenceClickListener {
@@ -232,5 +255,25 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private fun changeLocale() {
         LanguageManager(requireContext())
             .switchLanguage(true)
+    }
+
+    val filePickerLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                result.data?.data?.let { uri: Uri ->
+                    lifecycleScope.launch {
+                        loadingAlert?.show()
+                        csvParser.parseCsv(uri, SportType.KLETTERN)
+                        setSportType(SportType.BOULDERN)
+                        csvParser.parseCsv(uri, SportType.BOULDERN)
+                        setSportType(SportType.KLETTERN)
+                        AppHelper(MainActivity.getMainAppContext()).restartApp()
+                    }
+                }
+            }
+        }
+
+    private fun selectCsvFile() {
+        csvParser.selectCsvFile(filePickerLauncher)
     }
 }

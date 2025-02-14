@@ -3,20 +3,27 @@ package com.main.climbingdiary.activities
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
 import com.main.climbingdiary.R
+import com.main.climbingdiary.common.AppHelper
 import com.main.climbingdiary.common.LanguageManager
+import com.main.climbingdiary.common.parser.EightAparser
 import com.main.climbingdiary.common.preferences.AppPreferenceManager
 import com.main.climbingdiary.common.preferences.AppPreferenceManager.removeAllFilterPrefs
 import com.main.climbingdiary.controller.FragmentPager.createViewPager
 import com.main.climbingdiary.controller.NavDrawerController
+import com.main.climbingdiary.models.SportType
 import com.main.climbingdiary.showcase.ShowCaseProvider
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -53,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         createViewPager()
         //navigation View
         NavDrawerController(this)
-        if(!AppPreferenceManager.getLanguageFirstTime()) {
+        if (!AppPreferenceManager.getLanguageFirstTime()) {
             ShowCaseProvider(this).createShowCase()
         }
     }

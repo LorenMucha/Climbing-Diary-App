@@ -49,11 +49,11 @@ object Levels {
             "VII-",
             "VII",
             "VII+",
-            "VII+/VIII−",
+            "VII+/VIII-",
             "VIII-",
             "VIII",
             "VIII+",
-            "VIII+/IX−",
+            "VIII+/IX-",
             "IX-",
             "IX",
             "IX+",
@@ -67,10 +67,6 @@ object Levels {
         )
     }
 
-    /*
-    Method to build a weight for each grade, used in statistical overview
-    @see com.main.climbingdiary.chart.RouteLineChartController.class
-    */
     fun getLevelRating(level: String): Int {
         return listOf(*getLevelsFrench()).indexOf(level) * 5
     }

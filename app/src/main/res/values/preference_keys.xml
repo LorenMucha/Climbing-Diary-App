@@ -8,6 +8,7 @@
     <string name="safty_restore" translatable="false">safty_restore</string>
     <string name="time_slider" translatable="false">time_slider</string>
     <string name="language" translatable="false">language</string>
+    <string name="eighta_import" translatable="false">eighta_import</string>
     <array name="entries_time_slider">
         <item>___📍___</item>
         <item>📍_____📍</item>

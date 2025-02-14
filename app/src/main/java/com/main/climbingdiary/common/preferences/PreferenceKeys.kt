@@ -14,4 +14,5 @@ object PreferenceKeys {
     var LANGUAGE = "language"
     val FIRST_TIME ="first_time"
     val FIRST_TIME_LANGUAGE = "first_time_language"
+    val IMPORT_EIGHTA_CSV = "import_eighta_csv"
 }

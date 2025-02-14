@@ -1,33 +1,111 @@
 package com.main.climbingdiary.common.parser
 
-import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.net.Uri
-import net.openid.appauth.AuthorizationRequest
-import net.openid.appauth.AuthorizationService
-import net.openid.appauth.AuthorizationServiceConfiguration
-import net.openid.appauth.AuthorizationServiceConfiguration.RetrieveConfigurationCallback
-import net.openid.appauth.ResponseTypeValues
+import android.util.Log
+import androidx.activity.result.ActivityResultLauncher
+import com.fasterxml.jackson.dataformat.csv.CsvMapper
+import com.fasterxml.jackson.dataformat.csv.CsvParser
+import com.fasterxml.jackson.dataformat.csv.CsvSchema
+import com.main.climbingdiary.common.GradeConverter
+import com.main.climbingdiary.database.entities.Route
+import com.main.climbingdiary.database.entities.RouteRepository
+import com.main.climbingdiary.models.SportType
+import com.main.climbingdiary.models.Styles
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.io.InputStreamReader
+import java.text.SimpleDateFormat
+import java.util.Locale
+import java.util.TimeZone
 
+class EightAparser(
+    private val context: Context) {
 
-class EightAparser(val activity: Activity) {
+    fun selectCsvFile(launcher: ActivityResultLauncher<Intent>) {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "*/*"
+        }
+        launcher.launch(intent)
+    }
 
-    private lateinit var authConfig: AuthorizationServiceConfiguration
+    suspend fun parseCsv(uri: Uri, type: SportType) {
+        val routeRepository: RouteRepository<Route> = RouteRepository(Route::class)
 
-    fun login(){
-        val serviceConfig = AuthorizationServiceConfiguration(
-            Uri.parse("https://vlatka.vertical-life.info/auth/realms/Vertical-Life/protocol/openid-connect/auth?client_id=8a-nu&scope=openid%20email%20profile&response_type=code&redirect_uri=https%3A%2F%2Fwww.8a.nu%2Fcallback"), // authorization endpoint
-            Uri.parse("https://vlatka.vertical-life.info/token") // token endpoint
-        )
+        withContext(Dispatchers.IO) {
+            try {
+                context.contentResolver.takePersistableUriPermission(
+                    uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
 
-        val authRequest = AuthorizationRequest.Builder(
-            serviceConfig,
-            "8a-nu",  // Client ID
-            ResponseTypeValues.CODE,
-            Uri.parse("https%3A%2F%2Fwww.8a.nu%2Fcallback") // Redirect URI
-        ).setScopes("openid email profile").build()
+                context.contentResolver.openInputStream(uri)?.use { inputStream ->
+                    val reader = InputStreamReader(inputStream)
+                    val csvMapper = CsvMapper().apply {
+                        enable(CsvParser.Feature.TRIM_SPACES)
+                        enable(CsvParser.Feature.SKIP_EMPTY_LINES)
+                    }
+                    val schema = CsvSchema.emptySchema().withHeader()
+                    val csvParser = csvMapper.readerFor(Map::class.java)
+                        .with(schema.withSkipFirstDataRow(true))
 
-        val service = AuthorizationService(activity)
-        val intent = service.getAuthorizationRequestIntent(authRequest)
-        activity.startActivityForResult(intent, 123456)
+                    val rows: List<Map<String, String>> =
+                        csvParser.readValues<Map<String, String>>(reader).readAll()
+
+                    for (row in rows) {
+                        try {
+                            if (eightAtoRouteType(row["route_boulder"] ?: "", row) == type) {
+                                val route = Route(
+                                    name = row["name"] ?: "",
+                                    sector = row["sector_name"] ?: "",
+                                    area = row["location_name"] ?: "",
+                                    date = formatDate(row["date"] ?: ""),
+                                    style = eightAtoStyle(row["type"] ?: ""),
+                                    rating = row["rating"]?.toIntOrNull(),
+                                    tries = row["tries"]?.toIntOrNull(),
+                                    level = GradeConverter.convertAnyToFrench(row["difficulty"] ?: ""),
+                                    soft = row["perceived_hardness"]?.toIntOrNull(),
+                                    comment = row["comment"] ?: ""
+                                )
+                                routeRepository.insertRoute(route)
+                            }
+                        } catch (ex: Exception) {
+                            Log.d("EightAparser", "Fehler beim Parsen einer Zeile", ex)
+                        }
+                    }
+                }
+                Log.d("EightAparser", "CSV-Datei wurde vollständig verarbeitet.")
+            } catch (e: Exception) {
+                Log.e("EightAparser", "Fehler beim Parsen der CSV-Datei", e)
+            }
+        }
+    }
+
+    private fun eightAtoStyle(eightA: String): String {
+        return when (eightA.lowercase()) {
+            "rp" -> Styles.getRP()
+            "os" -> Styles.getOS()
+            "f" -> Styles.getFLASH()
+            else -> throw IllegalArgumentException("Ungültiger Stil: $eightA")
+        }
+    }
+
+    private fun eightAtoRouteType(eightA: String, row: Map<String, String>): SportType {
+        return when (eightA.trim().uppercase()) {
+            "ROUTE" -> SportType.KLETTERN
+            "BOULDER" -> SportType.BOULDERN
+            else -> throw IllegalArgumentException("Ungültiger Typ: $eightA, $row")
+        }
+    }
+
+    private fun formatDate(inputDate: String): String {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
+        inputFormat.timeZone = TimeZone.getTimeZone("UTC")
+        val outputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
+        val date = inputFormat.parse(inputDate)
+        return outputFormat.format(date!!)
     }
 }

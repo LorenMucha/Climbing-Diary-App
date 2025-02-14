@@ -19,4 +19,11 @@ class GradeConverterTest {
         val actualValue = GradeConverter.convertFrenchToUiaa(expected)
         assertEquals(input, actualValue)
     }
+
+    @ParameterizedTest
+    @CsvSource("8+/9-, 7b", "9+, 7c+", "7+/8-, 6c")
+    fun convertStringToCorrectScale(input: String, expected: String) {
+        val actualValue = GradeConverter.convertAnyToFrench(input)
+        assertEquals(actualValue, expected)
+    }
 }

@@ -11,7 +11,7 @@ enum class SportType {
     companion object{
         fun stringToSportType(type: String?): SportType {
             return when(type!!.uppercase()[0].toString()){
-                "K","C"-> KLETTERN
+                "K","C" -> KLETTERN
                 "B" -> BOULDERN
                 else -> {
                     throw SportTypeNotSupportedExeption("$type not supported")
