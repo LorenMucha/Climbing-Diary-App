@@ -47,34 +47,36 @@ class RouteLineChartController(val view:View) : RouteChartController() {
     override fun createChart() {
         val labels = ArrayList<String>()
         val entries = ArrayList<Entry>()
-        val yearCursor = TaskRepository.getYears(true)
         //transform the cursor to an array list
         val yearList = ArrayList<Int>()
         routeResults.clear()
         try {
-            var i = 0
-            while (!yearCursor.isAfterLast) {
-                yearList.add(yearCursor.getInt(0))
-                yearCursor.moveToNext()
+            TaskRepository.getYears(true).use { yearCursor ->
+                while (!yearCursor.isAfterLast) {
+                    yearList.add(yearCursor.getInt(0))
+                    yearCursor.moveToNext()
+                }
             }
             yearList.sort()
+            var i = 0
             for (yearVal in yearList) {
-                val cursor = TaskRepository.getTopTenRoutes(yearVal)
                 val routesYear: MutableList<InfoObject> = ArrayList()
                 var sum = 0
-                while (!cursor.isAfterLast) {
-                    val level = cursor.getString(0)
-                    val stil = cursor.getString(1)
-                    val points: Int =
-                        Levels.getLevelRating(level) + Styles.getStyleRatingFactor(stil)
-                    val route = InfoObject()
-                    route.points = points
-                    route.route_level = level
-                    route.routeStil = stil
-                    route.routeName = cursor.getString(2)
-                    routesYear.add(route)
-                    sum += points
-                    cursor.moveToNext()
+                TaskRepository.getTopTenRoutes(yearVal).use { cursor ->
+                    while (!cursor.isAfterLast) {
+                        val level = cursor.getString(0)
+                        val stil = cursor.getString(1)
+                        val points: Int =
+                            Levels.getLevelRating(level) + Styles.getStyleRatingFactor(stil)
+                        val route = InfoObject()
+                        route.points = points
+                        route.route_level = level
+                        route.routeStil = stil
+                        route.routeName = cursor.getString(2)
+                        routesYear.add(route)
+                        sum += points
+                        cursor.moveToNext()
+                    }
                 }
                 labels.add(yearVal.toString())
                 routeResults[yearVal] = routesYear

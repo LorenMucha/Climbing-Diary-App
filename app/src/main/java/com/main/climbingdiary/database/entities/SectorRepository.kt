@@ -16,9 +16,9 @@ object SectorRepository {
     fun getSectorByAreaNameAndSectorName(sectorName: String, areaName: String): Sector? {
         //Fixme: return null if not exists
         try {
-            val cursor: Cursor =
-                TaskRepository.getSectorIdByAreaNameAndSectorName(sectorName, areaName)
-            return uOrm.fromCursor(cursor, Sector::class.java)
+            return TaskRepository.getSectorIdByAreaNameAndSectorName(sectorName, areaName).use {
+                uOrm.fromCursor(it, Sector::class.java)
+            }
         } catch (ex: CursorIndexOutOfBoundsException) {
             return null
         }
@@ -26,8 +26,7 @@ object SectorRepository {
 
     fun getSectorList(_area_name: String): ArrayList<String> {
         val sectorList = ArrayList<String>()
-        val cursor: Cursor? = TaskRepository.getSectorListByAreaName(_area_name)
-        if (cursor != null) {
+        TaskRepository.getSectorListByAreaName(_area_name).use { cursor ->
             while (!cursor.isAfterLast) {
                 val name = cursor.getString(0)
                 sectorList.add(name)

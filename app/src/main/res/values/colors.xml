@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#A9C1D9</color>
-    <color name="colorPrimaryDark">#607890</color>
-    <color name="buttonColor">#CACCB6</color>
-    <color name="colorAccent">#8E9E82</color>
-    <color name="backgroundColorPrimary">#F2F0DF</color>
-    <color name="backgroundColorDark">#CACCB6</color>
-    <color name="white">#ffffff</color>
-    <color name="black">#000000</color>
-    <color name="coveredFontColor">#3D3D3D</color>
+    <color name="colorPrimary">#274A45</color>
+    <color name="colorPrimaryDark">#183330</color>
+    <color name="buttonColor">#D7CBB5</color>
+    <color name="colorAccent">#D66B3D</color>
+    <color name="backgroundColorPrimary">#F5F1E8</color>
+    <color name="backgroundColorDark">#E6DDCF</color>
+    <color name="surfaceColor">#FFFBF6</color>
+    <color name="surfaceVariantColor">#ECE4D8</color>
+    <color name="outlineColor">#C4B7A6</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#171816</color>
+    <color name="coveredFontColor">#5E625A</color>
+    <color name="chipTextColor">#33544F</color>
 </resources>

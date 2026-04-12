@@ -3,7 +3,6 @@ package com.main.climbingdiary.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -51,10 +50,9 @@ class RoutesAdapter(routes: List<Route>) : Filterable,
         val sectorText = route.sector
         val commentString = route.comment
 
-        //create the html string for the route and sector
-        val routeHtml = getRouteAndSectorString(areaText!!, sectorText!!)
-        val commentHtml =
-            "<b>${StringManager.getStringForId(R.string.route_item_comment)}</b><br/>$commentString"
+        val locationText = getRouteAndSectorString(areaText.orEmpty(), sectorText.orEmpty())
+        val commentText = commentString?.takeIf { it.isNotBlank() }
+            ?: StringManager.getStringForId(R.string.route_item_no_comment)
 
         // Set item views
         val routeName = viewHolder.nameTextView
@@ -82,9 +80,13 @@ class RoutesAdapter(routes: List<Route>) : Filterable,
 
         viewHolder.softHardText.also {
             if (route.soft == 1) {
-                it.text = "Soft";
+                it.text = StringManager.getStringForId(R.string.route_soft)
+                it.visibility = View.VISIBLE
             } else if (route.hard == 1) {
-                it.text = "Hard"
+                it.text = StringManager.getStringForId(R.string.route_hard)
+                it.visibility = View.VISIBLE
+            } else {
+                it.visibility = View.GONE
             }
         }
 
@@ -95,9 +97,9 @@ class RoutesAdapter(routes: List<Route>) : Filterable,
         } catch (e: Exception) {
             Log.e("Error drawable loading", styleText)
         }
-        area.text = Html.fromHtml(routeHtml, 0)
-        comment.text = Html.fromHtml(commentHtml, 0)
-        rating.rating = route.rating!!.toFloat()
+        area.text = locationText
+        comment.text = commentText
+        rating.rating = route.rating?.toFloat() ?: 0f
 
         //show comment on holder click
         viewHolder.itemView.setOnClickListener(object : View.OnClickListener {
@@ -169,7 +171,7 @@ class RoutesAdapter(routes: List<Route>) : Filterable,
                     mroutesFiltered
                 } else {
                     val filteredList: MutableList<Route> = ArrayList()
-                    for (row in mRoutes) {
+                    for (row in mroutesFiltered) {
                         if (row.name!!.lowercase(Locale.ROOT).contains(
                                 charString.lowercase(
                                     Locale.ROOT
@@ -217,7 +219,7 @@ class RoutesAdapter(routes: List<Route>) : Filterable,
         }
 
         fun getRouteAndSectorString(areaText: String, sectorText: String): String {
-            return "$areaText &#9679; $sectorText"
+            return "$areaText • $sectorText"
         }
     }
 
@@ -233,7 +235,7 @@ class RoutesAdapter(routes: List<Route>) : Filterable,
         var styleTextView: ImageView = itemView.findViewById(R.id.route_style)
         var ratingView: RatingBar = itemView.findViewById(R.id.route_rating)
         var commentTextView: TextView = itemView.findViewById(R.id.route_comment)
-        var hiddenView: TableRow = itemView.findViewById(R.id.route_hidden)
+        var hiddenView: LinearLayout = itemView.findViewById(R.id.route_hidden)
         var editButton: ImageButton = itemView.findViewById(R.id.route_edit)
         var removeButton: ImageButton = itemView.findViewById(R.id.route_delete)
         var triesTextView: TextView = itemView.findViewById(R.id.route_tries)

@@ -124,7 +124,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.startActivity(data)
+        super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == fileChooserSafetyCopy && resultCode == RESULT_OK) {
             val selectedfile = data?.data!!
             val paths: List<String> = selectedfile.path!!.split(":")
@@ -167,6 +167,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private fun openFileChooser() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "*/*"
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         startActivityForResult(intent, fileChooserRequestCopy)
     }
 

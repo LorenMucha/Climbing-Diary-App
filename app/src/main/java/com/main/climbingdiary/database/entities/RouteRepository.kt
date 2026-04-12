@@ -18,7 +18,9 @@ class RouteRepository<T : RouteElement>(private val klass: KClass<T>) {
         } else if (klass == Projekt::class) {
             cursor = TaskRepository.getProjekt(_id)
         }
-        return uOrm.fromCursor(cursor, klass.java)
+        return cursor!!.use {
+            uOrm.fromCursor(it, klass.java)
+        }
     }
 
     fun getRouteList(): ArrayList<T> {
@@ -29,10 +31,10 @@ class RouteRepository<T : RouteElement>(private val klass: KClass<T>) {
         } else if (klass == Projekt::class) {
             cursor = TaskRepository.getAllProjekts()
         }
-        if (cursor != null) {
-            while (!cursor.isAfterLast) {
-                routes.add(uOrm.fromCursor(cursor, klass.java))
-                cursor.moveToNext()
+        cursor?.use {
+            while (!it.isAfterLast) {
+                routes.add(uOrm.fromCursor(it, klass.java))
+                it.moveToNext()
             }
         }
         return routes

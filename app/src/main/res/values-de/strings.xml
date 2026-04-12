@@ -40,6 +40,16 @@
     <string name="statistik">Statistik</string>
     <string name="verlauf">Verlauf</string>
     <string name="tabelle">Tabelle</string>
+    <string name="stats_table_title">Leistung nach Grad</string>
+    <string name="stats_table_group_section_title">Übersicht nach Führungszahl</string>
+    <string name="stats_table_group_title">%1$ser</string>
+    <string name="stats_table_group_detail">%1$d Detailgrade zusammengefasst</string>
+    <string name="stats_table_section_title">Grade im Detail</string>
+    <string name="stats_table_empty">Für den aktuellen Filter sind keine Daten vorhanden.</string>
+    <string name="stats_table_summary_total">Alle Begehungen</string>
+    <string name="stats_table_summary_hardest">Schwerster Grad</string>
+    <string name="stats_table_summary_levels">Erfasste Grade</string>
+    <string name="stats_table_total_inline">Gesamt %1$d</string>
     <string name="table_level_header">GRAD</string>
     <string name="table_gesamt_header">GESAMT</string>
     <string name="alert_error_text">Es ist ein Fehler aufgetreten.</string>
@@ -67,6 +77,7 @@
     <string name="showcase_filterBarHeader">Filter</string>
     <string name="showcase_filterBarText">Filter nach Gebieten</string>
     <string name="dialog_stil">Stil</string>
+    <string name="dialog_name">Name</string>
     <string name="dialog_date">Datum</string>
     <string name="dialog_area">Gebiet</string>
     <string name="dialog_sector">Sektor</string>
@@ -78,6 +89,11 @@
     <string name="line_chart_dialog_hardest_routes">Die 10 schwersten Routen</string>
     <string name="route_item_comment">Kommentar</string>
     <string name="route_item_dialog_delete">Bist du sicher ?</string>
+    <string name="route_item_no_comment">Noch kein Kommentar hinterlegt</string>
+    <string name="route_soft">Soft</string>
+    <string name="route_hard">Hard</string>
+    <string name="action_edit">Eintrag bearbeiten</string>
+    <string name="action_delete">Eintrag löschen</string>
     <string name="export_excel_summary">Export Datenbank in Excel Datei</string>
     <string name="import_excel_summary">Import Excel Datei zur existierenden Datenbank</string>
     <string name="excel_export_title">Export Excel</string>

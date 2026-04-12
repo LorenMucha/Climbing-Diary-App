@@ -42,6 +42,16 @@
     <string name="statistik">Statistic</string>
     <string name="verlauf">Process</string>
     <string name="tabelle">Table</string>
+    <string name="stats_table_title">Performance by grade</string>
+    <string name="stats_table_group_section_title">Overview by leading number</string>
+    <string name="stats_table_group_title">%1$ss</string>
+    <string name="stats_table_group_detail">%1$d detailed grades combined</string>
+    <string name="stats_table_section_title">Grades in detail</string>
+    <string name="stats_table_empty">No data is available for the current filter.</string>
+    <string name="stats_table_summary_total">All ascents</string>
+    <string name="stats_table_summary_hardest">Hardest grade</string>
+    <string name="stats_table_summary_levels">Tracked grades</string>
+    <string name="stats_table_total_inline">Total %1$d</string>
     <string name="table_level_header">LEVEL</string>
     <string name="table_gesamt_header">ALL</string>
     <string name="alert_error_text">An error has occurred.</string>
@@ -49,6 +59,7 @@
     <string name="nav_title_bouldern">Bouldering</string>
     <string name="nav_title_settings">Settings</string>
     <string name="dialog_stil">Style</string>
+    <string name="dialog_name">Name</string>
     <string name="dialog_date">Date</string>
     <string name="dialog_area">Area</string>
     <string name="dialog_sector">Sector</string>
@@ -80,6 +91,11 @@
     <string name="showcase_filterBarText">Filter by areas</string>
     <string name="route_item_comment">Comment</string>
     <string name="route_item_dialog_delete">Are you sure ?</string>
+    <string name="route_item_no_comment">No comment added yet</string>
+    <string name="route_soft">Soft</string>
+    <string name="route_hard">Hard</string>
+    <string name="action_edit">Edit entry</string>
+    <string name="action_delete">Delete entry</string>
     <string name="export_excel_summary">Export Database to Excel File</string>
     <string name="import_excel_summary">Import Excel File to Existing Database</string>
     <string name="excel_export_title">Export Excel</string>

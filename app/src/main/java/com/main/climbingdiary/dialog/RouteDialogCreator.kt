@@ -1,6 +1,7 @@
 package com.main.climbingdiary.dialog
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.content.Context
 import android.graphics.Color
 import android.text.Editable
@@ -11,6 +12,7 @@ import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.main.climbingdiary.R
@@ -68,14 +70,20 @@ class RouteDialogCreator(
     var saveRoute: Button = view.findViewById(R.id.input_route_save)
 
     init {
+        closeDialog.backgroundTintList = ColorStateList.valueOf(
+            ContextCompat.getColor(context, R.color.colorPrimaryDark)
+        )
+        closeDialog.setTextColor(ContextCompat.getColor(context, R.color.white))
+        updateSelectionButton(softBtn, false)
+        updateSelectionButton(hardBtn, false)
         setOnCloseButton()
         softBtn.setOnClickListener {
             softSelected = if (softSelected) {
-                it.setBackgroundResource(R.drawable.button_border)
+                updateSelectionButton(softBtn, false)
                 false
             } else {
-                hardBtn.setBackgroundResource(R.drawable.button_border)
-                it.setBackgroundColor(R.color.colorPrimary)
+                updateSelectionButton(hardBtn, false)
+                updateSelectionButton(softBtn, true)
                 true
             }
             hardSelected = false
@@ -83,11 +91,11 @@ class RouteDialogCreator(
 
         hardBtn.setOnClickListener {
             hardSelected = if (hardSelected) {
-                it.setBackgroundResource(R.drawable.button_border)
+                updateSelectionButton(hardBtn, false)
                 false
             } else {
-                softBtn.setBackgroundResource(R.drawable.button_border)
-                it.setBackgroundColor(R.color.colorPrimary)
+                updateSelectionButton(softBtn, false)
+                updateSelectionButton(hardBtn, true)
                 true
             }
             softSelected = false
@@ -145,11 +153,15 @@ class RouteDialogCreator(
         }
 
         if (route.hard == 1) {
-            hardBtn.setBackgroundColor(R.color.colorPrimary)
+            hardSelected = true
+            softSelected = false
+            updateSelectionButton(hardBtn, true)
         }
 
         if (route.soft == 1) {
-            softBtn.setBackgroundColor(R.color.colorPrimary)
+            softSelected = true
+            hardSelected = false
+            updateSelectionButton(softBtn, true)
         }
 
         // set the Spinner
@@ -295,7 +307,7 @@ class RouteDialogCreator(
     }
 
     private fun setRouteNameHeaderText() {
-        nameHeader.text = "Name"
+        nameHeader.text = StringManager.getStringForId(R.string.dialog_name)
     }
 
     private fun hideTriesView() {
@@ -355,6 +367,15 @@ class RouteDialogCreator(
         } else {
             true
         }
+    }
+
+    private fun updateSelectionButton(button: Button, selected: Boolean) {
+        val backgroundColor = ContextCompat.getColor(
+            context,
+            if (selected) R.color.colorAccent else R.color.colorPrimaryDark
+        )
+        button.backgroundTintList = ColorStateList.valueOf(backgroundColor)
+        button.setTextColor(ContextCompat.getColor(context, R.color.white))
     }
 
 }

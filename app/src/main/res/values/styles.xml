@@ -1,21 +1,34 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/colorPrimaryDark</item>
+        <item name="colorOnPrimaryContainer">@color/white</item>
+        <item name="colorSecondary">@color/colorAccent</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondaryContainer">@color/backgroundColorDark</item>
+        <item name="colorOnSecondaryContainer">@color/black</item>
+        <item name="colorSurface">@color/surfaceColor</item>
+        <item name="colorSurfaceVariant">@color/surfaceVariantColor</item>
+        <item name="colorOnSurface">@color/black</item>
+        <item name="android:colorBackground">@color/backgroundColorPrimary</item>
+        <item name="android:windowBackground">@color/backgroundColorPrimary</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="android:navigationBarColor">@color/backgroundColorPrimary</item>
+        <item name="android:windowLightStatusBar">false</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.Material3.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.Material3.Light" />
 
     <style name="TableHeader" parent="@android:style/Widget.TextView">
         <item name="android:textSize">@dimen/route_name</item>
@@ -24,14 +37,14 @@
     </style>
 
     <style name="TableRow" parent="@android:style/Widget.TextView">
-        <item name="android:textSize">@dimen/route_name</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/route_content</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:gravity">center_vertical</item>
     </style>
 
-    <style name="RatingBar" parent="Theme.MaterialComponents">
-        <item name="colorControlNormal">@color/black</item>
-        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+    <style name="RatingBar" parent="Theme.Material3.Light">
+        <item name="colorControlNormal">@color/outlineColor</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
     </style>
 
 </resources>

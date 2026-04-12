@@ -39,10 +39,11 @@ class TimeRangeSlider : ISlider, OnSliderTouchListener {
 
     override fun initTimes(): ArrayList<Int> {
         val years = ArrayList<Int>()
-        val cursor = getYears(false)
-        while (!cursor.isAfterLast) {
-            years.add(cursor.getInt(0))
-            cursor.moveToNext()
+        getYears(false).use { cursor ->
+            while (!cursor.isAfterLast) {
+                years.add(cursor.getInt(0))
+                cursor.moveToNext()
+            }
         }
         return years
     }

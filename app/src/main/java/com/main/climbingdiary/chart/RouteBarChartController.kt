@@ -36,17 +36,18 @@ class RouteBarChartController(val view: View) : RouteChartController() {
             val labels = ArrayList<String>()
             //get the cjart entries
             //String Sort = (Menu) getA
-            val cursor = TaskRepository.getBarChartValues()
             var i = 0
-            while (!cursor.isAfterLast) {
-                val level = cursor.getString(0)
-                val sumRp = cursor.getFloat(1)
-                val sumOs = cursor.getFloat(2)
-                val sumFlash = cursor.getFloat(3)
-                labels.add(level)
-                entriesGroup.add(BarEntry(i.toFloat(), floatArrayOf(sumFlash, sumOs, sumRp)))
-                cursor.moveToNext()
-                i++
+            TaskRepository.getBarChartValues().use { cursor ->
+                while (!cursor.isAfterLast) {
+                    val level = cursor.getString(0)
+                    val sumRp = cursor.getFloat(1)
+                    val sumOs = cursor.getFloat(2)
+                    val sumFlash = cursor.getFloat(3)
+                    labels.add(level)
+                    entriesGroup.add(BarEntry(i.toFloat(), floatArrayOf(sumFlash, sumOs, sumRp)))
+                    cursor.moveToNext()
+                    i++
+                }
             }
             val set = BarDataSet(entriesGroup, "")
             set.setColors(

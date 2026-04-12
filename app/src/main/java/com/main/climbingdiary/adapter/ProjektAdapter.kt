@@ -1,7 +1,6 @@
 package com.main.climbingdiary.adapter
 
 import android.annotation.SuppressLint
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.main.climbingdiary.R
 import com.main.climbingdiary.common.AlertFactory
+import com.main.climbingdiary.common.StringManager
 import com.main.climbingdiary.controller.FragmentPager.refreshSelectedFragment
 import com.main.climbingdiary.controller.button.AppFloatingActionButton
 import com.main.climbingdiary.database.entities.Projekt
@@ -54,16 +54,16 @@ class ProjektAdapter(projekts: List<Projekt>) : Filterable,
         val sectorText = projekt.sector
         val commentString = projekt.comment
 
-        //create the html string for the route and sector
-        val routeHtml = "$areaText &#9679; $sectorText"
-        val commentHtml = "<b>Kommentar</b><br/>$commentString"
+        val routeText = "$areaText • $sectorText"
+        val commentText = commentString?.takeIf { it.isNotBlank() }
+            ?: StringManager.getStringForId(R.string.route_item_no_comment)
 
         // Set item views
         val routeName: TextView = viewHolder.nameTextView
         val level: TextView = viewHolder.levelTextView
         val area: TextView = viewHolder.areaTextView
         val comment: TextView = viewHolder.commentTextView
-        val hiddenLayout: TableRow = viewHolder.hiddenView
+        val hiddenLayout: LinearLayout = viewHolder.hiddenView
 
         //route manipulate buttons
         val edit: ImageButton = viewHolder.editButton
@@ -73,9 +73,9 @@ class ProjektAdapter(projekts: List<Projekt>) : Filterable,
         routeName.text = projekt.name
         level.text = gradeText
         level.setTextColor(Colors.getGradeColor(gradeText))
-        area.text = Html.fromHtml(routeHtml)
-        comment.text = Html.fromHtml(commentHtml)
-        rating.rating = projekt.rating!!.toFloat()
+        area.text = routeText
+        comment.text = commentText
+        rating.rating = projekt.rating?.toFloat() ?: 0f
 
         //show comment on holder click
         viewHolder.itemView.setOnClickListener(object : View.OnClickListener {
@@ -102,9 +102,9 @@ class ProjektAdapter(projekts: List<Projekt>) : Filterable,
         //delete a route
         delete.setOnClickListener { v: View ->
             SweetAlertDialog(v.context, SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("Bist du sicher ?")
-                .setConfirmText("Ok")
-                .setCancelText("Abbrechen")
+                .setTitleText(StringManager.getStringForId(R.string.route_item_dialog_delete))
+                .setConfirmText(StringManager.getStringForId(R.string.app_ok))
+                .setCancelText(StringManager.getStringForId(R.string.app_cancel))
                 .setConfirmClickListener { sDialog: SweetAlertDialog ->
                     //delete the route by id
                     val taskState = routeRepository.deleteRoute(projekt)
@@ -112,14 +112,14 @@ class ProjektAdapter(projekts: List<Projekt>) : Filterable,
                         refreshSelectedFragment()
                         sDialog.hide()
                         SweetAlertDialog(v.context, SweetAlertDialog.SUCCESS_TYPE)
-                            .setTitleText("Gelöscht")
+                            .setTitleText(StringManager.getStringForId(R.string.app_deleted))
                             .show()
                     } else {
                         AlertFactory.getErrorAlert(v.context).show()
                     }
                 }
                 .setCancelButton(
-                    "Cancel"
+                    StringManager.getStringForId(R.string.app_cancel)
                 ) { sDialog: SweetAlertDialog -> sDialog.cancel() }
                 .show()
         }
@@ -151,7 +151,7 @@ class ProjektAdapter(projekts: List<Projekt>) : Filterable,
                     mprojektsFiltered
                 } else {
                     val filteredList: MutableList<Projekt> = ArrayList()
-                    for (row in mProjekts) {
+                    for (row in mprojektsFiltered) {
                         if (row.name!!.toLowerCase(Locale.ROOT)
                                 .contains(charString.toLowerCase(Locale.ROOT)) ||
                             row.level.contains(charString) ||
@@ -190,7 +190,7 @@ class ProjektAdapter(projekts: List<Projekt>) : Filterable,
         var areaTextView: TextView = itemView.findViewById(R.id.route_area)
         var ratingView: RatingBar = itemView.findViewById(R.id.route_rating)
         var commentTextView: TextView = itemView.findViewById(R.id.route_comment)
-        var hiddenView: TableRow = itemView.findViewById(R.id.route_hidden)
+        var hiddenView: LinearLayout = itemView.findViewById(R.id.route_hidden)
         var editButton: ImageButton = itemView.findViewById(R.id.route_edit)
         var removeButton: ImageButton = itemView.findViewById(R.id.route_delete)
         var checkProject: CheckBox = itemView.findViewById(R.id.tick_project)

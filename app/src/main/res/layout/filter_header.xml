@@ -3,37 +3,44 @@
     android:id="@+id/filter_header"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="1dp"
-    android:background="@color/colorPrimary"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="12dp"
+    android:layout_marginEnd="16dp"
+    android:background="@drawable/bg_filter_header"
+    android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="5dp"
+    android:paddingStart="14dp"
+    android:paddingTop="10dp"
+    android:paddingEnd="14dp"
+    android:paddingBottom="10dp"
     android:visibility="gone">
 
     <ImageView
         android:id="@+id/filter_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:adjustViewBounds="true"
-        android:maxWidth="25dp"
-        android:maxHeight="25dp"
+        android:maxHeight="20dp"
+        android:maxWidth="20dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_filter" />
+        android:src="@drawable/ic_filter"
+        android:tint="@color/chipTextColor" />
 
     <TextView
         android:id="@+id/filter_header_txt"
         style="@style/TableRow"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:gravity="center"
-        android:textColor="@color/colorPrimaryDark" />
+        android:layout_marginStart="10dp"
+        android:layout_weight="1"
+        android:textColor="@color/chipTextColor"
+        android:textStyle="bold" />
 
     <TextView
         style="@style/TableRow"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="right"
-        android:text="X"
-        android:textColor="@color/colorPrimaryDark" />
+        android:text="@string/app_close"
+        android:textColor="@color/chipTextColor"
+        android:textStyle="bold" />
 </LinearLayout>

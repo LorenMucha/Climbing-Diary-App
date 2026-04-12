@@ -23,13 +23,32 @@ import java.nio.charset.StandardCharsets
 
 object TaskRepository {
     private val TAG = "DataAdapter"
-    private val mDb: SQLiteDatabase
     private val context: Context by lazy { MainActivity.getMainAppContext() }
+    private var dbHelper: DatabaseHelper? = null
+    private var mDb: SQLiteDatabase? = null
 
     init {
-        val mDbHelper = DatabaseHelper(context, null)
-        mDbHelper.openDataBase()
-        mDb = mDbHelper.writableDatabase
+        ensureDatabase()
+    }
+
+    @Synchronized
+    private fun ensureDatabase(): SQLiteDatabase {
+        if (mDb?.isOpen == true) {
+            return mDb!!
+        }
+        val helper = DatabaseHelper(context, null)
+        helper.openDataBase()
+        dbHelper = helper
+        mDb = helper.writableDatabase
+        return mDb!!
+    }
+
+    @Synchronized
+    fun close() {
+        mDb?.close()
+        mDb = null
+        dbHelper?.close()
+        dbHelper = null
     }
 
     fun getAllRoutes(): Cursor {
@@ -130,7 +149,7 @@ object TaskRepository {
     @SuppressLint("Recycle")
     fun getCursor(sql: String): Cursor {
         return try {
-            val mCur = mDb.rawQuery(sql, null)
+            val mCur = ensureDatabase().rawQuery(sql, null)
             mCur.moveToNext()
             mCur
         } catch (mSQLExeption: SQLException) {
@@ -140,20 +159,21 @@ object TaskRepository {
     }
 
     fun executeSqlTasks(tasks: Array<String>): Boolean {
-        mDb.beginTransaction()
+        val database = ensureDatabase()
+        database.beginTransaction()
         return try {
             for (x in tasks) {
                 Log.d("Execute", x)
                 val query = x.trimIndent()
-                mDb.execSQL(String(query.toByteArray(), StandardCharsets.UTF_8))
+                database.execSQL(String(query.toByteArray(), StandardCharsets.UTF_8))
             }
-            mDb.setTransactionSuccessful()
+            database.setTransactionSuccessful()
             true
         } catch (exception: SQLiteException) {
             Log.e(TAG, "Error >>$exception")
             false
         } finally {
-            mDb.endTransaction()
+            database.endTransaction()
         }
     }
 }

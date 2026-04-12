@@ -2,57 +2,59 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/statistic_fragment_linear_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="50dp"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColorPrimary"
     android:orientation="vertical">
 
     <include layout="@layout/filter_header" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/control_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal">
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_dialog_section"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="8dp">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_stat"
-            android:layout_width="wrap_content"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@color/buttonColor"
-            android:text="@string/statistik"
-            android:textColor="@color/white" />
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
+            android:text="@string/statistik" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_dev"
-            android:layout_width="wrap_content"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="2dp"
-            android:layout_toEndOf="@id/btn_stat"
-            android:background="@color/buttonColor"
-            android:text="@string/verlauf"
-            android:textColor="@color/white" />
+            android:layout_marginHorizontal="6dp"
+            android:layout_weight="1"
+            android:text="@string/verlauf" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_table"
-            android:layout_width="wrap_content"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="2dp"
-            android:layout_toRightOf="@id/btn_dev"
-            android:background="@color/buttonColor"
-            android:text="@string/tabelle"
-            android:textColor="@color/white" />
+            android:layout_marginStart="6dp"
+            android:layout_weight="1"
+            android:text="@string/tabelle" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="30dp"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_dialog_section"
+        android:padding="14dp">
 
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/route_bar_chart"
@@ -70,30 +72,50 @@
             android:id="@+id/table_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
             android:visibility="gone">
 
-            <HorizontalScrollView
-                android:id="@+id/HorizontalTableView"
+            <LinearLayout
+                android:id="@+id/table_content_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="8dp">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:layout_gravity="center"
-                    android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/table_summary_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
 
-                    <TableLayout
-                        android:id="@+id/route_table"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_centerHorizontal="true"
-                        android:padding="5dp" />
-                </RelativeLayout>
-            </HorizontalScrollView>
+                <LinearLayout
+                    android:id="@+id/table_group_summary_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical" />
+
+                <TextView
+                    android:id="@+id/table_empty_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_action_surface"
+                    android:gravity="center"
+                    android:padding="24dp"
+                    android:text="@string/stats_table_empty"
+                    android:textColor="@color/coveredFontColor"
+                    android:textSize="15sp"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/table_card_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical" />
+            </LinearLayout>
         </ScrollView>
-    </LinearLayout>
+
+    </FrameLayout>
 
 </LinearLayout>
-

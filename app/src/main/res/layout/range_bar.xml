@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimaryDark"
-    android:padding="10dp">
+    android:background="@drawable/bg_toolbar"
+    android:padding="14dp">
 
     <LinearLayout
         android:id="@+id/sliderLinearLayout"
@@ -18,14 +18,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:stepSize="1"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:haloColor="@color/colorAccent"
+            app:thumbColor="@color/colorAccent"
+            app:trackColorActive="@color/colorAccent"
+            app:trackColorInactive="@color/backgroundColorDark" />
 
         <com.google.android.material.slider.Slider
             android:id="@+id/time_slider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:stepSize="1"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:haloColor="@color/colorAccent"
+            app:thumbColor="@color/colorAccent"
+            app:trackColorActive="@color/colorAccent"
+            app:trackColorInactive="@color/backgroundColorDark" />
     </LinearLayout>
 
     <TextView
@@ -43,8 +51,8 @@
         android:id="@+id/textMax"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/sliderLinearLayout"
         android:layout_alignParentEnd="true"
+        android:layout_below="@id/sliderLinearLayout"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
         android:textColor="@color/white"

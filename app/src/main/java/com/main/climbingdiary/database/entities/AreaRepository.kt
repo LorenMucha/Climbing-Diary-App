@@ -11,9 +11,9 @@ object AreaRepository {
 
     fun getAreaByAreaNameAndSectorName(sectorName: String?, areaName: String?): Area? {
         try {
-            val cursor: Cursor =
-                TaskRepository.getAreaIdByAreaNameAndSectorName(sectorName, areaName)
-            return uOrm.fromCursor(cursor, Area::class.java)
+            return TaskRepository.getAreaIdByAreaNameAndSectorName(sectorName, areaName).use {
+                uOrm.fromCursor(it, Area::class.java)
+            }
         } catch (ex: CursorIndexOutOfBoundsException) {
             return null
         }
@@ -26,8 +26,9 @@ object AreaRepository {
     fun getAreaByName(name: String): Area? {
         //Fixme: return null if not exists
         try {
-            val cursor: Cursor = TaskRepository.getAreaByAreaName(name)
-            return uOrm.fromCursor(cursor, Area::class.java)
+            return TaskRepository.getAreaByAreaName(name).use {
+                uOrm.fromCursor(it, Area::class.java)
+            }
         } catch (ex: CursorIndexOutOfBoundsException) {
             return null
         }
@@ -35,25 +36,27 @@ object AreaRepository {
 
     fun getAreaList(): ArrayList<Area> {
         val area_list = ArrayList<Area>()
-        val cursor: Cursor = TaskRepository.getAllAreas()
-        while (cursor.moveToNext()) {
-            area_list.add(
-                uOrm.fromCursor(
-                    cursor,
-                    Area::class.java
+        TaskRepository.getAllAreas().use { cursor ->
+            while (cursor.moveToNext()) {
+                area_list.add(
+                    uOrm.fromCursor(
+                        cursor,
+                        Area::class.java
+                    )
                 )
-            )
+            }
         }
         return area_list
     }
 
     fun getAreaNameList(): ArrayList<String> {
         val area_list = ArrayList<String>()
-        val cursor: Cursor = TaskRepository.getAllAreas()
-        while (!cursor.isAfterLast) {
-            val name = cursor.getString(1)
-            area_list.add(name)
-            cursor.moveToNext()
+        TaskRepository.getAllAreas().use { cursor ->
+            while (!cursor.isAfterLast) {
+                val name = cursor.getString(1)
+                area_list.add(name)
+                cursor.moveToNext()
+            }
         }
         return area_list
     }

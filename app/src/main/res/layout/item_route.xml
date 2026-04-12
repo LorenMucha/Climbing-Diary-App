@@ -1,211 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    app:cardBackgroundColor="@color/surfaceColor"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="1dp"
+    app:strokeColor="@color/outlineColor"
+    app:strokeWidth="1dp">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_view"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        card_view:cardCornerRadius="4dp">
+        android:orientation="vertical"
+        android:padding="18dp">
 
-        <TableLayout
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/backgroundColorDark"
-            android:shrinkColumns="*"
-            android:stretchColumns="*">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            <TableRow
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/route_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginStart="5dp"
-                    android:layout_span="6"
                     android:textColor="@color/black"
                     android:textSize="@dimen/route_name"
-                    android:textStyle="bold"
-                    tools:ignore="SpUsage" />
-
-                <TextView
-                    android:id="@+id/route_level"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/route_content"
-                    android:textStyle="bold"
-                    tools:ignore="SpUsage" />
-
-                <TextView
-                    android:id="@+id/route_soft_hard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/route_content"
-                    android:textStyle="bold"
-                    android:text=" "
-                    tools:ignore="HardcodedText,SpUsage" />
-
-
-                <ImageView
-                    android:id="@+id/route_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_gravity="end"
-                    android:padding="4dp"
-                    android:paddingEnd="10dp"
-                    tools:ignore="RtlSymmetry" />
-            </TableRow>
-
-
-            <View
-                android:layout_height="2dip"
-                android:background="@color/backgroundColorPrimary" />
-
-            <TableRow
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp">
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/route_area"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginStart="5dp"
-                    android:layout_span="8"
+                    android:layout_marginTop="6dp"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:textColor="@color/coveredFontColor"
+                    android:textSize="@dimen/route_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/route_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_badge"
+                    android:paddingStart="10dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="6dp"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/route_content"
-                    tools:ignore="SpUsage" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/route_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:layout_marginEnd="5dp"
-                    android:layout_span="1"
-                    android:paddingEnd="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/route_date"
-                    tools:ignore="RtlSymmetry,SpUsage" />
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/coveredFontColor"
+                    android:textSize="@dimen/route_date" />
+            </LinearLayout>
 
-            </TableRow>
+        </LinearLayout>
 
-            <TableRow
-                android:id="@+id/route_hidden"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:background="@color/backgroundColorDark"
-                android:visibility="gone">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:id="@+id/route_layout_hidden"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_span="9"
-                    tools:ignore="UselessParent">
+            <ImageView
+                android:id="@+id/route_style"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:background="@drawable/bg_badge"
+                android:padding="7dp" />
 
-                    <View
-                        android:id="@+id/edit_hr"
-                        android:layout_width="wrap_content"
-                        android:layout_height="2dip" />
+            <TextView
+                android:id="@+id/route_soft_hard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/bg_badge"
+                android:paddingStart="10dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="6dp"
+                android:textColor="@color/chipTextColor"
+                android:textStyle="bold"
+                android:visibility="gone" />
 
-                    <RatingBar
-                        android:id="@+id/route_rating"
-                        style="@style/Widget.AppCompat.RatingBar.Small"
-                        android:layout_width="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/edit_hr"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="5dp"
-                        android:numStars="5"
-                        android:stepSize="1"
-                        android:theme="@style/RatingBar" />
+            <TextView
+                android:id="@+id/route_tries"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/coveredFontColor"
+                android:textSize="@dimen/route_date"
+                android:textStyle="bold"
+                android:visibility="gone" />
+        </LinearLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/route_date"
-                        android:textStyle="bold"
-                        android:layout_alignParentEnd="true"
-                        android:visibility="invisible"
-                        android:id="@+id/route_tries"
-                        tools:ignore="SpUsage" />
+        <LinearLayout
+            android:id="@+id/route_hidden"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_filter_header"
+            android:orientation="vertical"
+            android:padding="14dp"
+            android:visibility="gone">
 
-                    <View
-                        android:id="@+id/edit_hr1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="2dip"
-                        android:layout_below="@+id/route_rating" />
+            <RatingBar
+                android:id="@+id/route_rating"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:stepSize="1"
+                android:theme="@style/RatingBar" />
 
-                    <TextView
-                        android:id="@+id/route_comment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/edit_hr1"
-                        android:layout_gravity="start"
-                        android:layout_margin="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/route_name"
-                        tools:ignore="SpUsage" />
+            <TextView
+                android:id="@+id/route_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/route_content" />
 
-                    <View
-                        android:id="@+id/edit_hr2"
-                        android:layout_width="match_parent"
-                        android:layout_height="2dip"
-                        android:layout_below="@+id/route_comment"
-                        android:background="@color/backgroundColorPrimary" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:gravity="end"
+                android:orientation="horizontal">
 
-                    <ImageButton
-                        android:id="@+id/route_edit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/edit_hr2"
-                        android:layout_margin="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_toStartOf="@id/route_delete"
-                        android:background="@color/buttonColor"
-                        android:contentDescription="TODO"
-                        android:paddingEnd="30dp"
-                        android:src="@drawable/ic_pen"
-                        tools:ignore="RtlSymmetry" />
+                <ImageButton
+                    android:id="@+id/route_edit"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_action_surface"
+                    android:contentDescription="@string/action_edit"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_pen"
+                    android:tint="@color/colorPrimaryDark" />
 
-                    <ImageButton
-                        android:id="@+id/route_delete"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/edit_hr2"
-                        android:layout_alignParentEnd="true"
-                        android:layout_margin="5dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@color/buttonColor"
-                        android:contentDescription="TODO"
-                        android:src="@drawable/ic_trash" />
+                <ImageButton
+                    android:id="@+id/route_delete"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/bg_action_surface"
+                    android:contentDescription="@string/action_delete"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_trash"
+                    android:tint="@color/colorAccent" />
+            </LinearLayout>
+        </LinearLayout>
 
-                </RelativeLayout>
-            </TableRow>
+    </LinearLayout>
 
-        </TableLayout>
-
-    </androidx.cardview.widget.CardView>
-</RelativeLayout>
+</com.google.android.material.card.MaterialCardView>

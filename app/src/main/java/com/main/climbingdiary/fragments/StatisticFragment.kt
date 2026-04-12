@@ -1,5 +1,6 @@
 package com.main.climbingdiary.fragments
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
@@ -10,7 +11,6 @@ import com.main.climbingdiary.chart.RouteBarChartController
 import com.main.climbingdiary.chart.RouteLineChartController
 import com.main.climbingdiary.controller.AppBarMenu
 import com.main.climbingdiary.chart.TableView
-import com.main.climbingdiary.models.Colors
 import com.main.climbingdiary.models.MenuValues
 
 class StatisticFragment: Fragment(), RouteFragment {
@@ -42,7 +42,7 @@ class StatisticFragment: Fragment(), RouteFragment {
         //the Button Click Listener
         setLineChartBtn.setOnClickListener {
             resetButtonBackground()
-            setLineChartBtn.setBackgroundColor(Colors.activeColor)
+            setButtonActive(setLineChartBtn)
             routeLineChartController.show()
             tableView.hide()
             routeBarChartController.hide()
@@ -50,7 +50,7 @@ class StatisticFragment: Fragment(), RouteFragment {
         }
         setBarChartBtn.setOnClickListener {
             resetButtonBackground()
-            setBarChartBtn.setBackgroundColor(Colors.activeColor)
+            setButtonActive(setBarChartBtn)
             tableView.hide()
             routeLineChartController.hide()
             routeBarChartController.show()
@@ -58,7 +58,7 @@ class StatisticFragment: Fragment(), RouteFragment {
         }
         setTableBtn.setOnClickListener {
             resetButtonBackground()
-            setTableBtn.setBackgroundColor(Colors.activeColor)
+            setButtonActive(setTableBtn)
             routeBarChartController.hide()
             routeLineChartController.hide()
             tableView.show()
@@ -71,14 +71,24 @@ class StatisticFragment: Fragment(), RouteFragment {
 
     //XAxis Formatter
     fun resetButtonBackground() {
-        setLineChartBtn.setBackgroundColor(
+        val textColor = ContextCompat.getColor(view.context, R.color.colorPrimaryDark)
+        val background = ColorStateList.valueOf(
             ContextCompat.getColor(
                 view.context,
-                R.color.buttonColor
+                R.color.backgroundColorDark
             )
         )
-        setBarChartBtn.setBackgroundColor(ContextCompat.getColor(view.context, R.color.buttonColor))
-        setTableBtn.setBackgroundColor(ContextCompat.getColor(view.context, R.color.buttonColor))
+        listOf(setLineChartBtn, setBarChartBtn, setTableBtn).forEach {
+            it.backgroundTintList = background
+            it.setTextColor(textColor)
+        }
+    }
+
+    private fun setButtonActive(button: Button) {
+        button.backgroundTintList = ColorStateList.valueOf(
+            ContextCompat.getColor(view.context, R.color.colorAccent)
+        )
+        button.setTextColor(ContextCompat.getColor(view.context, R.color.white))
     }
 
     override fun refreshData() {

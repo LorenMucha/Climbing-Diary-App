@@ -2,49 +2,54 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColorPrimary">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/bg_toolbar"
+        android:elevation="0dp"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimaryDark"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:background="@android:color/transparent"
+            android:elevation="0dp"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:titleTextColor="@color/white" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_main"/>
+    <include layout="@layout/content_main" />
 
     <LinearLayout
         android:id="@+id/sliderLayout"
-        android:layout_gravity="bottom|end"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:orientation="vertical">
 
         <ImageButton
-            app:tint="@color/white"
-            android:visibility="gone"
             android:id="@+id/showTimeSlider"
+            android:layout_width="56dp"
+            android:layout_height="36dp"
             android:layout_gravity="bottom|center"
-            android:background="@drawable/round_corners"
+            android:background="@drawable/bg_action_surface"
+            android:padding="8dp"
+            android:visibility="gone"
             app:srcCompat="@android:drawable/arrow_up_float"
-            android:layout_width="50dp"
-            android:layout_height="30dp"
-            />
+            app:tint="@color/colorPrimaryDark" />
 
         <include
             android:id="@+id/showTimeLayout"
             layout="@layout/range_bar"
-            android:visibility="gone"
-            android:layout_gravity="bottom|end"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:visibility="gone" />
 
     </LinearLayout>
 
@@ -52,21 +57,22 @@
         android:id="@+id/floating_action_btn_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="@color/colorAccent"
         android:src="@drawable/ic_plus"
-        android:tintMode="@android:color/white"/>
+        android:visibility="gone"
+        app:backgroundTint="@color/colorAccent"
+        app:tint="@color/white" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_action_btn_locate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_locate"
-        android:tint="@android:color/white"/>
+        android:visibility="gone"
+        app:backgroundTint="@color/colorPrimary"
+        app:tint="@color/white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
